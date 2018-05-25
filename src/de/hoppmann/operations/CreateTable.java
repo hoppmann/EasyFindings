@@ -1,0 +1,212 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package de.hoppmann.operations;
+
+import de.hoppmann.gui.model.Catagory;
+import de.hoppmann.gui.model.TableData;
+import java.util.List;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.util.Callback;
+
+/**
+ *
+ * @author hoppmann
+ */
+public class CreateTable {
+
+
+    ///////////////////////////
+    //////// variables ////////
+    ///////////////////////////
+    private final TableView<TableData> tableView;
+    private TableColumn<TableData, Boolean> causalCol;
+    private TableColumn<TableData, Catagory> catagoryCol;
+	
+	
+	
+    /////////////////////////////
+    //////// constructor ////////
+    /////////////////////////////
+
+    public CreateTable(TableView<TableData> tableView) {
+	this.tableView = tableView;
+    }
+
+
+    
+	
+	
+	
+    /////////////////////////
+    //////// methods ////////
+    /////////////////////////
+
+    
+       //// prepare table
+
+    public void prepareTable(List<String> header) {
+        
+	// clear old header
+	tableView.getColumns().clear();
+	
+	
+	
+	//////////////////////////////////
+	//////// add checkbox to tableView
+	causalCol = new TableColumn<>("causal?");
+	
+	
+	//  define cell value factory
+	causalCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<TableData, Boolean>, ObservableValue<Boolean>>() {
+	    
+	    @Override
+	    public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<TableData, Boolean> param) {
+		TableData tableData = param.getValue();
+		SimpleBooleanProperty booleanProp = new SimpleBooleanProperty(tableData.isCausal());
+		
+		// add listener to notice when checkbox is marked
+		booleanProp.addListener(new ChangeListener<Boolean>() {
+		    @Override
+		    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+			tableData.setCausal(newValue);
+		    }
+		});
+		return booleanProp;
+	    }
+	});
+	
+	// define cell factory
+	causalCol.setCellFactory(new Callback<TableColumn<TableData, Boolean>, TableCell<TableData, Boolean>>() {
+	    @Override
+	    public TableCell<TableData, Boolean> call(TableColumn<TableData, Boolean> param) {
+		CheckBoxTableCell<TableData, Boolean> cell = new CheckBoxTableCell<>();
+		cell.setAlignment(Pos.CENTER);
+		return cell;
+	    }
+	});
+	causalCol.setEditable(true);
+	
+	// add column to table
+	tableView.getColumns().add(causalCol);
+		
+
+	
+	
+	
+	
+
+
+	/////////////////////////////////////
+	//////// add catagory dorpdown choice
+	catagoryCol = new TableColumn<>("catagory");
+	ObservableList<Catagory> catagoryList = FXCollections.observableArrayList(Catagory.values());
+
+	
+	// define cell value factory
+	catagoryCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<TableData, Catagory>, ObservableValue<Catagory>>() {
+	    @Override
+	    public ObservableValue<Catagory> call(TableColumn.CellDataFeatures<TableData, Catagory> param) {
+		TableData tableData = param.getValue();
+		// catagories
+		String catagoryString = tableData.getCatagory();
+		Catagory catagory = Catagory.getByCode(catagoryString);
+		return new SimpleObjectProperty<Catagory>(catagory);
+	    }
+	});
+	
+	// define cell factory
+	catagoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(catagoryList));
+	
+	// handle event of choosing a catagory
+	catagoryCol.setOnEditCommit((event) -> {
+	    TablePosition<TableData, Catagory> pos = event.getTablePosition();
+	    Catagory newCatagory = event.getNewValue();
+	    
+	    int row = pos.getRow();
+	    TableData tableData = event.getTableView().getItems().get(row);
+	    
+	    tableData.setCatagory(newCatagory.getCatagoryText());
+	});
+	
+	
+	
+	// add column to table
+	tableView.getColumns().add(catagoryCol);
+	
+
+
+
+
+
+	
+	
+	
+	
+
+	///////////////////////////////////
+        //////// add header from input file
+        for (int i = 0; i < header.size(); i++) {
+            
+	    // create final integer later needed
+	    final int finalIdx = i;
+	    
+	    // create new table column and load header
+	    TableColumn<TableData, String> column = new TableColumn<>(header.get(i));
+	    column.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getEntry(finalIdx)));
+	    
+	    // add column to table
+            tableView.getColumns().add(column);
+        }
+        
+    }
+	
+	
+    
+    
+    
+    //// fill table
+    public void fillTable (List<TableData> lines) {
+        
+	// clear old entries
+	tableView.getItems().clear();
+	
+	lines.forEach(curLine -> {
+	    tableView.getItems().add(curLine);
+	});
+        
+    }
+    
+    
+	
+	
+    /////////////////////////////////
+    //////// getter / setter ////////
+    /////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="EasyFindings.jnlp">
+  <information>
+    <title>EasyFindings</title>
+    <vendor>hoppmann</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="EasyFindings.jar" size="36501" download="eager" />
+    <jar href="lib/guava-23.0.jar" size="2614708" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="EasyFindings" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="de.hoppmann.EasyFindings"  name="EasyFindings" />
+  <update check="always"/>
+</jnlp>

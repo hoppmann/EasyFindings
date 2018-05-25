@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="de.hoppmann.gui.view.FindingGuiController">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TableView prefHeight="316.0" prefWidth="600.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" />
+            <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Button" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" />
+            <Button layoutX="524.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="10.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

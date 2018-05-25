@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.MainGuiController">
+   <children>
+      <Button fx:id="openButton" layoutX="20.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleOpenButtonAction" prefHeight="25.0" prefWidth="110.0" text="Open File" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <Button fx:id="closeButton" layoutX="505.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
+      <TableView fx:id="inputTable" layoutX="6.0" layoutY="6.0" prefHeight="218.0" prefWidth="596.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+         <columns>
+         </columns>
+      </TableView>
+      <Button fx:id="saveFindingButton" layoutX="143.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleSaveFindingsButtonAction" prefHeight="25.0" prefWidth="110.0" text="Save Finding" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0">
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Button>
+      <Button fx:id="newPatient" layoutX="264.0" layoutY="358.0" mnemonicParsing="false" onAction="#handleNewPatientButtonAction" text="New Patient" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />
+      <Button fx:id="findings" layoutX="360.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleFindingsButton" prefHeight="25.0" prefWidth="110.0" text="Findings" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="360.0" />
+   </children>
+</AnchorPane>
