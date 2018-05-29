@@ -6,17 +6,25 @@
 package de.hoppmann.gui.view;
 
 import de.hoppmann.gui.Messneges.CommonWarnings;
-import de.hoppmann.gui.model.TableData;
+import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.CreateTable;
-import de.hoppmann.operations.StoreFindings;
+import de.hoppmann.gui.modelsAndData.StoreFindings;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -32,7 +40,8 @@ public class FindingsGuiController implements Initializable {
     ///////////////////////////
     
     // general variables
-    private StoreFindings findings; 
+    private StoreFindings findings;
+//    private static Stage findingsStage;
     
     
     
@@ -59,6 +68,47 @@ public class FindingsGuiController implements Initializable {
     }
 
 
+    
+    @FXML
+    private void selectColumnsButton(ActionEvent event) {
+	
+	
+	
+	
+	
+	    
+	try {
+	    // open new window to show findings chosen so far
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SelectColumnsGui.fxml"));
+	    
+	    //// create controller for passing variables
+	    SelectColumnsGuiController controller = new SelectColumnsGuiController(findings.getHeader());
+	    
+	    
+	    // create new window
+	    fxmlLoader.setController(controller);
+	    Parent root = fxmlLoader.load();
+	    Stage stage = new Stage();
+	    stage.setTitle("Slect columns for findings");
+	    stage.setScene(new Scene(root));
+	    stage.initModality(Modality.APPLICATION_MODAL);
+	    stage.show();
+	    
+	    
+	} catch (IOException ex) {
+	    Logger.getLogger(FindingsGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	}
+
+
+	
+	
+    }
+    
+    
+    
+    
+    
+    
     
     //// remove variants that got unselected
     @FXML
@@ -161,9 +211,9 @@ public class FindingsGuiController implements Initializable {
     //////// Getter / Setter ////////
     /////////////////////////////////
 
-    public void setStore(StoreFindings store) {
-	this.findings = store;
-    }
+//    public void setStore(StoreFindings store) {
+//	this.findings = store;
+//    }
     
     
     

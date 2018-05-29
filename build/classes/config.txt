@@ -1,0 +1,10 @@
+#default columns
+geneCol=gene
+impactCol=0
+pNomCol=
+cNomCol=
+
+
+
+# default path
+inputPath=/media/hoppmann/Data/tmp/EasyFindings

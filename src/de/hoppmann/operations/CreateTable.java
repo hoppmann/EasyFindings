@@ -6,8 +6,8 @@
 
 package de.hoppmann.operations;
 
-import de.hoppmann.gui.model.Catagory;
-import de.hoppmann.gui.model.TableData;
+import de.hoppmann.gui.modelsAndData.Catagory;
+import de.hoppmann.gui.modelsAndData.TableData;
 import java.util.List;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleBooleanProperty;

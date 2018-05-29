@@ -7,7 +7,7 @@
 package de.hoppmann.operations;
 
 import de.hoppmann.gui.Messneges.CommonErrors;
-import de.hoppmann.gui.model.TableData;
+import de.hoppmann.gui.modelsAndData.TableData;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

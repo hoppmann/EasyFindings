@@ -21,7 +21,8 @@ public class EasyFindings extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("EasyFindings");
+        
+	stage.setTitle("EasyFindings");
         Parent root = FXMLLoader.load(getClass().getResource("gui/view/MainGui.fxml"));
         
         Scene scene = new Scene(root);

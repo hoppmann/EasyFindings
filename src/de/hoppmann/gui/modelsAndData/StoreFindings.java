@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 
-package de.hoppmann.operations;
+package de.hoppmann.gui.modelsAndData;
 
 import de.hoppmann.gui.Messneges.CommonWarnings;
-import de.hoppmann.gui.model.TableData;
+import de.hoppmann.gui.modelsAndData.TableData;
+import de.hoppmann.operations.LoadInputFile;
 import java.util.LinkedList;
 import java.util.List;
 

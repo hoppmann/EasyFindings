@@ -6,9 +6,10 @@
 package de.hoppmann.gui.view;
 
 import de.hoppmann.gui.Messneges.CommonWarnings;
-import de.hoppmann.gui.model.TableData;
+import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
-import de.hoppmann.operations.StoreFindings;
+import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.misc.handleConfig;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -56,11 +57,7 @@ public class MainGuiController implements Initializable {
     // show all stored findings
     @FXML
     private void handleFindingsButton(ActionEvent event) {
-	
-//	CreateTable table = new CreateTable(inputTable);
-//	table.prepareTable(findings.getHeader());
-//	table.fillTable(findings.getStoredData());
-	
+
 	try {
 	    
 	    
@@ -179,7 +176,6 @@ public class MainGuiController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
 	inputTable.setEditable(true);
-	
     }    
     
 }

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package de.hoppmann.gui.model;
+package de.hoppmann.gui.modelsAndData;
 
 import java.util.LinkedList;
 
