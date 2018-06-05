@@ -5,11 +5,11 @@
  */
 package de.hoppmann.gui.view;
 
-import de.hoppmann.gui.Messneges.CommonWarnings;
+import de.hoppmann.config.Config;
+import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
-import de.hoppmann.misc.handleConfig;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

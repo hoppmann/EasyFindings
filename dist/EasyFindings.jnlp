@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="EasyFindings.jar" size="51592" download="eager" />
+    <jar href="EasyFindings.jar" size="57878" download="eager" />
     <jar href="lib/guava-23.0.jar" size="2614708" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="EasyFindings" >

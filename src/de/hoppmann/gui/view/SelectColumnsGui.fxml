@@ -5,8 +5,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+
 <!--fx:controller="de.hoppmann.gui.view.SelectColumnsGuiController"-->
-<AnchorPane id="AnchorPane" prefHeight="320.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" >
+
+<AnchorPane id="AnchorPane" prefHeight="320.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <children>
 	<Label layoutX="14.0" layoutY="20.0" prefHeight="20.0" prefWidth="85.0" text="Gene" AnchorPane.leftAnchor="10.0">
          <font>

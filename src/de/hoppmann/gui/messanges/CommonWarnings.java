@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package de.hoppmann.gui.Messneges;
+package de.hoppmann.gui.messanges;
 
 import javafx.scene.control.Alert;
 
@@ -51,7 +51,6 @@ public class CommonWarnings {
 	alert.showAndWait();
 
     }
-	
 	
 	
     /////////////////////////////////

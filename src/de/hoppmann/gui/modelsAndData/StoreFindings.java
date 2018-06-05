@@ -6,7 +6,7 @@
 
 package de.hoppmann.gui.modelsAndData;
 
-import de.hoppmann.gui.Messneges.CommonWarnings;
+import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import java.util.LinkedList;

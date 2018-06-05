@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package de.hoppmann.gui.Messneges;
+package de.hoppmann.gui.messanges;
 
 import javafx.scene.control.Alert;
 
@@ -42,7 +42,16 @@ public class CommonErrors {
     }
 
 	
+    
+    public void fileNotFound(String file) {
 	
+	Alert alert = new Alert(Alert.AlertType.ERROR);
+	alert.setTitle("ERROR");
+	alert.setHeaderText(null);
+	alert.setContentText("File " + file + " not found.");
+	alert.showAndWait();
+
+    }
 	
     /////////////////////////////////
     //////// getter / setter ////////

@@ -6,7 +6,8 @@
 
 package de.hoppmann.operations;
 
-import de.hoppmann.gui.Messneges.CommonErrors;
+import de.hoppmann.config.Config;
+import de.hoppmann.gui.messanges.CommonErrors;
 import de.hoppmann.gui.modelsAndData.TableData;
 import java.io.BufferedReader;
 import java.io.File;
@@ -76,8 +77,20 @@ public class LoadInputFile {
         // create chooser to choose file
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Open input file");
-        chooser.setInitialDirectory(new File("/media/hoppmann/Data/tmp/EasyFindings"));
+	
+	// if config path exists take config path else new path
+	Config config = new Config();
+	if (new File(config.getInputPath()).exists()){
+	    chooser.setInitialDirectory(new File(config.getInputPath()));
+	} else {
+	    chooser.setInitialDirectory(null);
+	}
         file = chooser.showOpenDialog(new Stage());
+	
+	// store last used path
+	if (file.exists()) {
+	    config.setInputPath(file.getParent());
+	}
         
     }
     

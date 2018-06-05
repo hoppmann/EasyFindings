@@ -5,7 +5,7 @@
  */
 package de.hoppmann.gui.view;
 
-import de.hoppmann.gui.Messneges.CommonWarnings;
+import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.CreateTable;
 import de.hoppmann.gui.modelsAndData.StoreFindings;

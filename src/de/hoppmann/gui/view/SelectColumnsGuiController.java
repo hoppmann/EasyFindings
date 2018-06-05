@@ -5,7 +5,7 @@
  */
 package de.hoppmann.gui.view;
 
-import de.hoppmann.misc.handleConfig;
+import de.hoppmann.config.Config;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -104,7 +104,7 @@ public class SelectColumnsGuiController implements Initializable {
 
 
 	// init config file
-	handleConfig config = new handleConfig();
+	Config config = new Config();
 	config.loadConfig();
 
 	// prepare gene column
