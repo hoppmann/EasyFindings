@@ -9,7 +9,7 @@
    <children>
       <Button fx:id="openButton" layoutX="20.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleOpenButtonAction" prefHeight="25.0" prefWidth="110.0" text="Open File" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
       <Button fx:id="closeButton" layoutX="505.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
-      <TableView fx:id="inputTable" layoutX="6.0" layoutY="6.0" prefHeight="218.0" prefWidth="596.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+      <TableView fx:id="inputTable" layoutX="6.0" layoutY="6.0" prefHeight="315.0" prefWidth="741.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
          <columns>
          </columns>
       </TableView>
@@ -18,7 +18,7 @@
             <Insets left="10.0" />
          </padding>
       </Button>
-      <Button fx:id="newPatient" layoutX="264.0" layoutY="358.0" mnemonicParsing="false" onAction="#handleNewPatientButtonAction" text="New Patient" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />
-      <Button fx:id="findings" layoutX="360.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleFindingsButton" prefHeight="25.0" prefWidth="110.0" text="Findings" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="360.0" />
+      <Button fx:id="newPatient" layoutX="264.0" layoutY="358.0" mnemonicParsing="false" onAction="#handleNewPatientButtonAction" prefHeight="25.0" prefWidth="110.0" text="New Patient" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />
+      <Button fx:id="findings" layoutX="360.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleFindingsButton" prefHeight="25.0" prefWidth="110.0" text="Findings" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="370.0" />
    </children>
 </AnchorPane>

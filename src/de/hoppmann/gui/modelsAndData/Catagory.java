@@ -13,40 +13,40 @@ public enum Catagory {
     
     
     
-    CAUSAL("causal", "causal"), PROBCAUSAL("proabaly causal", "proabaly causal"), UNKNOWN("unknown significance", "unknown significance");
+    PATHOGEN("Path", "Pathogen"), PROBPATH("ProbPath", "Wahrscheinlich Pathogen"), UNCLEAR("Unclear", "Unklar"),
+    PROBBENIGN("ProbBenign", "Wahrscheinlich Benigne"), BENIGN("Benign", "Benigne");
 	
-	private final String text;
+	private final String name;
 	private final String code;
 
 	
 	// constructor
-	private Catagory(String text, String code) {
-	    this.text = text;
+	private Catagory(String code, String name) {
+	    this.name = name;
 	    this.code = code;
 	}
 	
 	
 	// getter / setter
 
-	public String getCatagoryText() {
-	    return text;
+	public String getCatagoryName() {
+	    return name;
 	}
 
 	public String getCatagoryCode() {
 	    return code;
 	}
 
-	public static Catagory getByCode(String catagoryCode) {
+	public static String getByCode(String catagoryCode) {
 	    for (Catagory cat : Catagory.values()){
 		if (cat.code.equals(catagoryCode)){
-		    return cat;
+		    return cat.code;
 		}
 	    }
-	    
+
 	    return null;
-	    
+
 	}
-    
-    
+
     
 }
