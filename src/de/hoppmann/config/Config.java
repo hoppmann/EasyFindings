@@ -6,13 +6,10 @@
 
 package de.hoppmann.config;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +18,7 @@ import java.util.logging.Logger;
  *
  * @author hoppmann
  */
+
 public class Config {
 
 
@@ -30,6 +28,7 @@ public class Config {
     
     // general
     private final String configFile = "config.properties";
+    private Properties prop;
     
     
     // columns
@@ -37,10 +36,10 @@ public class Config {
     private String geneCol;
     private final String impactColKey = "impactCol";
     private String impactCol;
-    private final String pNomColKey = "pNomCol";
-    private String pNomCol;
-    private final String cNomColKey = "cNomCol";
-    private String cNomCol;
+    private final String pNomenColKey = "proteinAnnotationCol";
+    private String pNomenCol;
+    private final String cNomenColKey = "cDnaAnnotationCol";
+    private String cNomenCol;
     
     // misc
     private final String inputPathKey = "inputPath";
@@ -66,13 +65,13 @@ public class Config {
     //// load config data
     public void loadConfig() {
 	
-	Properties prop = loadProp();
+	prop = loadProp();
 	
 	// read in config data
 	geneCol = prop.getProperty(geneColKey);
 	impactCol = prop.getProperty(impactColKey);
-	pNomCol = prop.getProperty(pNomColKey);
-	cNomCol = prop.getProperty(cNomColKey);
+	pNomenCol = prop.getProperty(pNomenColKey);
+	cNomenCol = prop.getProperty(cNomenColKey);
 	inputPath = prop.getProperty(inputPathKey);
 	
 	
@@ -153,10 +152,10 @@ public class Config {
     
     //////// save in config file
     
-    private void saveToConfig(String key, String value){
+    public void saveConfig(String key, String value){
 	
-	// load current propety fiel
-	Properties prop = loadProp();
+//	// load current propety fiel
+//	Properties prop = loadProp();
 	
 	// add new property
         prop.setProperty(key, value);
@@ -178,7 +177,7 @@ public class Config {
 
     public void setGeneCol(String geneCol) {
 	this.geneCol = geneCol;
-	saveToConfig(geneColKey, geneCol);
+	saveConfig(geneColKey, geneCol);
     }
 
     public String getImpactCol() {
@@ -187,25 +186,25 @@ public class Config {
 
     public void setImpactCol(String impactCol) {
 	this.impactCol = impactCol;
-	saveToConfig(impactColKey, impactCol);
+	saveConfig(impactColKey, impactCol);
     }
 
-    public String getpNomCol() {
-	return pNomCol;
+    public String getpNomenCol() {
+	return pNomenCol;
     }
 
-    public void setpNomCol(String pNomCol) {
-	this.pNomCol = pNomCol;
-	saveToConfig(pNomColKey, pNomCol);
+    public void setpNomenCol(String pNomCol) {
+	this.pNomenCol = pNomCol;
+	saveConfig(pNomenColKey, pNomCol);
     }
 
-    public String getcNomCol() {
-	return cNomCol;
+    public String getcNomenCol() {
+	return cNomenCol;
     }
 
-    public void setcNomCol(String cNomCol) {
-	this.cNomCol = cNomCol;
-	saveToConfig(cNomColKey, cNomCol);
+    public void setcNomenCol(String cDnaAnnoCol) {
+	this.cNomenCol = cDnaAnnoCol;
+	saveConfig(cNomenColKey, cDnaAnnoCol);
     }
 
     public String getInputPath() {
@@ -214,7 +213,7 @@ public class Config {
 
     public void setInputPath(String inputPath) {
 	this.inputPath = inputPath;
-	saveToConfig(inputPathKey, inputPath);
+	saveConfig(inputPathKey, inputPath);
     }
 
     

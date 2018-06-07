@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -82,7 +81,7 @@ public class FindingsGuiController implements Initializable {
 	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SelectColumnsGui.fxml"));
 	    
 	    //// create controller for passing variables
-	    SelectColumnsGuiController controller = new SelectColumnsGuiController(findings.getHeader());
+	    SelectColumnsGuiController controller = new SelectColumnsGuiController(findings);
 	    
 	    
 	    // create new window
@@ -125,7 +124,7 @@ public class FindingsGuiController implements Initializable {
 	
 	// recreate table
 	CreateTable createTable = new CreateTable(findingsTable);
-	createTable.prepareTable(findings.getHeader());
+	createTable.prepareTable(findings.getHeaderList());
 	createTable.fillTable(findings.getStoredData());
 
     }
@@ -153,7 +152,7 @@ public class FindingsGuiController implements Initializable {
 	    
 	    // create Table	
 	    CreateTable createTable = new CreateTable(findingsTable);
-	    createTable.prepareTable(findings.getHeader());
+	    createTable.prepareTable(findings.getHeaderList());
 	    createTable.fillTable(findings.getStoredData());
 
 	}

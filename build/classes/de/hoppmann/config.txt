@@ -1,3 +1,0 @@
-#default columns
-geneCol=0
-impactCol=0

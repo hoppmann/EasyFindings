@@ -5,7 +5,6 @@
  */
 package de.hoppmann.gui.view;
 
-import de.hoppmann.config.Config;
 import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;

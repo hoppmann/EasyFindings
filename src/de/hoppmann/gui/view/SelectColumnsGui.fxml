@@ -14,22 +14,22 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-	<ComboBox fx:id="col1" layoutX="123.0" layoutY="17.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" />
+	<ComboBox fx:id="geneCol" layoutX="123.0" layoutY="17.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" />
 	<Label layoutX="14.0" layoutY="60.0" prefHeight="20.0" prefWidth="85.0" text="Impact" AnchorPane.leftAnchor="10.0">
          <font>
             <Font size="14.0" />
          </font></Label>
-	<ComboBox fx:id="col2" layoutX="123.0" layoutY="57.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" />
-	<Label layoutX="14.0" layoutY="100.0" prefHeight="20.0" prefWidth="85.0" text="Column 3" AnchorPane.leftAnchor="10.0">
+	<ComboBox fx:id="impactCol" layoutX="123.0" layoutY="57.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" />
+	<Label layoutX="14.0" layoutY="100.0" prefHeight="20.0" prefWidth="85.0" text="cDNA" AnchorPane.leftAnchor="10.0">
          <font>
             <Font size="14.0" />
          </font></Label>
-	<ComboBox fx:id="col3" layoutX="123.0" layoutY="97.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" />
-	<Label layoutX="14.0" layoutY="140.0" prefHeight="20.0" prefWidth="85.0" text="Column 4" AnchorPane.leftAnchor="10.0">
+	<ComboBox fx:id="cNomenCol" layoutX="123.0" layoutY="97.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" />
+	<Label layoutX="14.0" layoutY="140.0" prefHeight="20.0" prefWidth="85.0" text="Protein" AnchorPane.leftAnchor="10.0">
          <font>
             <Font size="14.0" />
          </font></Label>
-	<ComboBox fx:id="col4" layoutX="123.0" layoutY="137.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" />
+	<ComboBox fx:id="pNomenCol" layoutX="123.0" layoutY="137.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" />
 	<Label layoutX="14.0" layoutY="180.0" prefHeight="20.0" prefWidth="85.0" text="Column 5" AnchorPane.leftAnchor="10.0">
          <font>
             <Font size="14.0" />
@@ -41,7 +41,7 @@
          </font></Label>
 	<ComboBox fx:id="col6" layoutX="123.0" layoutY="217.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" />
 	<Button fx:id="closeButton" layoutX="10.0" layoutY="291.0" mnemonicParsing="false" onAction="#closeButtonEvent" prefHeight="25.0" prefWidth="130.0" text="Close" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="5.0" />
-      <Button layoutX="140.0" layoutY="291.0" mnemonicParsing="false" prefHeight="3.0" prefWidth="130.0" text="Ok" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="145.0" />
-      <Button layoutX="12.0" layoutY="255.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" text="Save as Default" AnchorPane.leftAnchor="5.0" />
+      <Button fx:id="okButton" layoutX="140.0" layoutY="291.0" mnemonicParsing="false" onAction="#okButtonEvent" prefHeight="3.0" prefWidth="130.0" text="Ok" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="145.0" />
+      <Button fx:id="saveDefaultButton" layoutX="12.0" layoutY="255.0" mnemonicParsing="false" onAction="#saveDefaultButtonEvent" prefHeight="25.0" prefWidth="130.0" text="Save as Default" AnchorPane.leftAnchor="5.0" />
     </children>
 </AnchorPane>
