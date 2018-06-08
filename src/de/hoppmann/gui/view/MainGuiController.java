@@ -20,7 +20,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -45,12 +47,60 @@ public class MainGuiController implements Initializable {
     @FXML
     private TableView<TableData> inputTable = new TableView();
     
+    @FXML
+    private Label infoFiled;
+    
+    
     
     
     /////////////////////////
     //////// methods ////////
     /////////////////////////
 
+    
+    
+    // choose columns needed for automated catagorizing
+    @FXML
+    private void handleColumnsButton (ActionEvent event) {
+	
+	
+	if (findings == null) {
+	    infoFiled.setText("Needs findings to open window.");
+	    return;
+	}
+	
+	
+	
+	try {
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SelectColumnsGui.fxml"));
+	    
+	    //// create controller for passing variables
+	    SelectColumnsGuiController controller = new SelectColumnsGuiController(findings);
+	    
+	    
+	    // create new window
+	    fxmlLoader.setController(controller);
+	    Parent root = fxmlLoader.load();
+	    Stage stage = new Stage();
+	    stage.setTitle("Slect columns for findings");
+	    stage.setScene(new Scene(root));
+	    stage.initModality(Modality.APPLICATION_MODAL);
+	    stage.show();
+	    
+	    
+	    
+	    
+	} catch (IOException ex) {
+	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	
+	
+	
+    }
+    
+    
+    
+    
     
     
     // show all stored findings
@@ -92,6 +142,7 @@ public class MainGuiController implements Initializable {
     private void handleSaveFindingsButtonAction (ActionEvent event) {
 	
 	
+	
 	// check that a file was loaded first to avoid errors
 	if (loadFile == null) {
 	    new CommonWarnings().openFileFirst();
@@ -106,6 +157,8 @@ public class MainGuiController implements Initializable {
 	    
 	}
 	
+	// make info 
+	infoFiled.setText("Findings saved");
 	
     }
 
@@ -120,6 +173,7 @@ public class MainGuiController implements Initializable {
 	findings = null;
 	inputTable.getColumns().clear();
 	inputTable.getItems().clear();
+	infoFiled.setText("Entries cleared.");
     }
 
 
@@ -132,7 +186,7 @@ public class MainGuiController implements Initializable {
     private void handleOpenButtonAction (ActionEvent event) {
 
         // load input file after open button was pushed
-        loadFile = new LoadInputFile(inputTable);
+        loadFile = new LoadInputFile(inputTable, infoFiled);
         
         
     }

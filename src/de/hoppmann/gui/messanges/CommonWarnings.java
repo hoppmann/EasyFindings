@@ -7,6 +7,7 @@
 package de.hoppmann.gui.messanges;
 
 import javafx.scene.control.Alert;
+import javafx.scene.layout.Region;
 
 /**
  *
@@ -52,6 +53,18 @@ public class CommonWarnings {
 
     }
 	
+    
+    
+    public void customWaring(String text) {
+	Alert alert = new Alert(Alert.AlertType.WARNING);
+	alert.setTitle("Warning");
+	alert.setHeaderText(null);
+	alert.setContentText(text);
+	alert.setResizable(true);
+	alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+	alert.showAndWait();
+    }
+    
 	
     /////////////////////////////////
     //////// getter / setter ////////

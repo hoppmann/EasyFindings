@@ -40,7 +40,6 @@ public class FindingsGuiController implements Initializable {
     
     // general variables
     private StoreFindings findings;
-//    private static Stage findingsStage;
     
     
     
@@ -210,9 +209,6 @@ public class FindingsGuiController implements Initializable {
     //////// Getter / Setter ////////
     /////////////////////////////////
 
-//    public void setStore(StoreFindings store) {
-//	this.findings = store;
-//    }
     
     
     

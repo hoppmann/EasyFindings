@@ -20,7 +20,7 @@ public class TableData {
     ///////////////////////////
     private Boolean causal = false;
     private LinkedList<String> inputLine;
-    private String catagory = "Path";
+    private String catagory;
 	
 	
     /////////////////////////////

@@ -13,7 +13,7 @@ public enum Catagory {
     
     
     
-    PATHOGEN("Path", "Pathogen"), PROBPATH("ProbPath", "Wahrscheinlich Pathogen"), UNCLEAR("Unclear", "Unklar"),
+    PATHOGEN("Path", "Pathogen"), PROBPATHO("ProbPatho", "Wahrscheinlich Pathogen"), UNCLEAR("Unclear", "Unklar"),
     PROBBENIGN("ProbBenign", "Wahrscheinlich Benigne"), BENIGN("Benign", "Benigne");
 	
 	private final String name;
@@ -27,7 +27,9 @@ public enum Catagory {
 	}
 	
 	
-	// getter / setter
+	/////////////////////////////////
+	//////// getter / setter ////////
+	/////////////////////////////////
 
 	public String getCatagoryName() {
 	    return name;
@@ -37,10 +39,11 @@ public enum Catagory {
 	    return code;
 	}
 
-	public static String getByCode(String catagoryCode) {
+	
+	public static Catagory getByCode(String catagoryCode) {
 	    for (Catagory cat : Catagory.values()){
 		if (cat.code.equals(catagoryCode)){
-		    return cat.code;
+		    return cat;
 		}
 	    }
 
@@ -48,5 +51,22 @@ public enum Catagory {
 
 	}
 
+	public static String getPathoCode() {
+	    return Catagory.PATHOGEN.code;
+	}
+	
+	public static String getProbPathoCode(){
+	    return Catagory.PROBPATHO.code;
+	}
+	
+	public static String getUnclearCode() {
+	    return Catagory.UNCLEAR.code;
+	}
+	
+	public static String getProbBenignCod() {
+	    return Catagory.PROBBENIGN.code;
+	}
+		
+	
     
 }

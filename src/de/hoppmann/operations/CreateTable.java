@@ -11,6 +11,7 @@ import de.hoppmann.gui.modelsAndData.TableData;
 import java.util.List;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -37,8 +38,8 @@ public class CreateTable {
     ///////////////////////////
     private final TableView<TableData> tableView;
     private TableColumn<TableData, Boolean> causalCol;
-//    private TableColumn<TableData, Catagory> catagoryCol;
-    private TableColumn<TableData, String> catagoryCol;
+    private TableColumn<TableData, Catagory> catagoryCol;
+//    private TableColumn<TableData, String> catagoryCol;
 	
 	
 	
@@ -130,52 +131,42 @@ public class CreateTable {
 	catagoryCol = new TableColumn<>("catagory");
 	
 
+
 	// define cell value factory
-	catagoryCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<TableData, String>, ObservableValue<String>>() {
+	catagoryCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<TableData, Catagory>, ObservableValue<Catagory>>() {
 	    @Override
-	    public ObservableValue<String> call(TableColumn.CellDataFeatures<TableData, String> param) {
+	    public ObservableValue<Catagory> call(TableColumn.CellDataFeatures<TableData, Catagory> param) {
 		
 		TableData tableData = param.getValue();
 		
 		// select catagory
 		String catagoryString = tableData.getCatagory();
-		String catagory = Catagory.getByCode(catagoryString);
-		return new SimpleStringProperty(catagory);
-
+		Catagory catagory = Catagory.getByCode(catagoryString);
+		return new SimpleObjectProperty<>(catagory);
 	    }
 	});
 	
-	
-	// define cell factory
-	ObservableList<String> catagoryList = FXCollections.observableArrayList();
-	for (Catagory curCat : Catagory.values()) {
-	    catagoryList.add(curCat.getCatagoryCode());
-	}
-	catagoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(catagoryList));
 
+	// define cell factory
+	ObservableList<Catagory> catagoryList = FXCollections.observableArrayList(Catagory.values());
+	catagoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(catagoryList));
 	
-	//// handle event of choosing a catagory
+	
+	//  handle event of choosing a catagory
 	catagoryCol.setOnEditCommit((event) -> {
-	    TablePosition<TableData, String> pos = event.getTablePosition();
-	    String newCatagory = event.getNewValue();
+	    TablePosition<TableData, Catagory> pos = event.getTablePosition();
+	    Catagory newCatagory = event.getNewValue();
 	    
 	    int row = pos.getRow();
 	    TableData tableData = event.getTableView().getItems().get(row);
-	    tableData.setCatagory(newCatagory);
-	    
+	    tableData.setCatagory(newCatagory.getCatagoryCode());
+		    
 	});
+	
 	
 	
 	// add column to table
 	tableView.getColumns().add(catagoryCol);
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

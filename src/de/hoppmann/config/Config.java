@@ -40,6 +40,19 @@ public class Config {
     private String pNomenCol;
     private final String cNomenColKey = "cDnaAnnotationCol";
     private String cNomenCol;
+    private final String hgmdColKey = "hgmdCol";
+    private String hgmdCol;
+    private final String clinvarColKey = "clinvarCol";
+    private String clinvarCol;
+    private final String splice45ColKey = "splice45";
+    private String splice45Col;
+    private final String splice15ColKey = "splice15";
+    private String splice15Col;
+    private final String totPredColKey = "totalPredictions";
+    private String totPredCol;
+    private final String predScorColKey = "percentDamagingPredictions";
+    private String predScoreCol;
+
     
     // misc
     private final String inputPathKey = "inputPath";
@@ -63,7 +76,7 @@ public class Config {
     
         
     //// load config data
-    public void loadConfig() {
+    private void loadConfig() {
 	
 	prop = loadProp();
 	
@@ -73,6 +86,12 @@ public class Config {
 	pNomenCol = prop.getProperty(pNomenColKey);
 	cNomenCol = prop.getProperty(cNomenColKey);
 	inputPath = prop.getProperty(inputPathKey);
+	hgmdCol = prop.getProperty(hgmdColKey);
+	clinvarCol = prop.getProperty(clinvarColKey);
+	splice45Col = prop.getProperty(splice45ColKey);
+	splice15Col = prop.getProperty(splice15ColKey);
+	totPredCol = prop.getProperty(totPredColKey);
+	predScoreCol = prop.getProperty(predScorColKey);
 	
 	
 	    
@@ -216,6 +235,61 @@ public class Config {
 	saveConfig(inputPathKey, inputPath);
     }
 
+    public String getHgmdCol() {
+	return hgmdCol;
+    }
+
+    public void setHgmdCol(String hgmdCol) {
+	this.hgmdCol = hgmdCol;
+	saveConfig(hgmdColKey, hgmdCol);
+    }
+
+    public String getClinvarCol() {
+	return clinvarCol;
+    }
+
+    public void setClinvarCol(String clinvarCol) {
+	this.clinvarCol = clinvarCol;
+	saveConfig(clinvarColKey, clinvarCol);
+    }
+
+    public String getSplice45Col() {
+	return splice45Col;
+    }
+
+    public void setSplice45Col(String splice45Col) {
+	this.splice45Col = splice45Col;
+	saveConfig(splice45ColKey, splice45Col);
+    }
+
+    public String getSplice15Col() {
+	return splice15Col;
+    }
+
+    public void setSplice15Col(String splice15Col) {
+	this.splice15Col = splice15Col;
+	saveConfig(splice15ColKey, splice15Col);
+    }
+
+    public String getTotPredCol() {
+	return totPredCol;
+    }
+
+    public void setTotPredCol(String totPredCol) {
+	this.totPredCol = totPredCol;
+	saveConfig(totPredColKey, totPredCol);
+    }
+
+    public String getPredScoreCol() {
+	return predScoreCol;
+    }
+
+    public void setPredScoreCol(String predScoreCol) {
+	this.predScoreCol = predScoreCol;
+	saveConfig(predScorColKey, predScoreCol);
+    }
+
+    
     
 
 

@@ -8,9 +8,6 @@ package de.hoppmann.gui.view;
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,8 +50,23 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML
     private ComboBox<String> col5 = new ComboBox<>();
     @FXML
-    private ComboBox<String> col6 = new ComboBox<>();
-
+    private ComboBox<String> predScoreCol = new ComboBox<>();
+    @FXML
+    private ComboBox<String> totPredCol = new ComboBox<>();
+    @FXML
+    private ComboBox<String> hgmdCol = new ComboBox<>();
+    @FXML
+    private ComboBox<String> clinVarCol = new ComboBox<>();
+    @FXML
+    private ComboBox<String> HGMD = new ComboBox<>();
+    @FXML
+    private ComboBox<String> splice45Col = new ComboBox<>();
+    @FXML
+    private ComboBox<String> splice15Col = new ComboBox<>();
+    @FXML
+    private ComboBox<String> col7 = new ComboBox<>();
+    
+    
     @FXML
     private Button closeButton;
     @FXML
@@ -114,7 +126,7 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML
     private void okButtonEvent(ActionEvent event) {
 	
-	//////// store selected header for 
+	//////// store selection  
 	// geneCol
 	findings.addIndex(geneCol.getValue(), header.indexOf(geneCol.getValue()));
 	findings.setGeneCol(geneCol.getValue());
@@ -130,9 +142,6 @@ public class SelectColumnsGuiController implements Initializable {
 	//cNomenCol
 	findings.addIndex(cNomenCol.getValue(), header.indexOf(cNomenCol.getValue()));
 	findings.setcNomenCol(cNomenCol.getValue());
-	
-	
-	
 	
 	
 	
@@ -191,6 +200,12 @@ public class SelectColumnsGuiController implements Initializable {
 	config.setImpactCol(impactCol.getValue());
 	config.setcNomenCol(cNomenCol.getValue());
 	config.setpNomenCol(pNomenCol.getValue());
+	config.setClinvarCol(clinVarCol.getValue());
+	config.setHgmdCol(hgmdCol.getValue());
+	config.setPredScoreCol(predScoreCol.getValue());
+	config.setSplice15Col(splice15Col.getValue());
+	config.setSplice45Col(splice45Col.getValue());
+	config.setTotPredCol(totPredCol.getValue());
 	
     }
     
@@ -232,7 +247,7 @@ public class SelectColumnsGuiController implements Initializable {
 	this.findings = findings;
 	this.header = FXCollections.observableArrayList(findings.getHeaderList());
     }
-
+    
     
     /**
      * Initializes the controller class.
@@ -243,7 +258,6 @@ public class SelectColumnsGuiController implements Initializable {
 
 	// init config file
 	config = new Config();
-	config.loadConfig();
 
 	
 	
@@ -264,7 +278,6 @@ public class SelectColumnsGuiController implements Initializable {
 	} else if (checkStringList(header, config.getGeneCol()) == true) {
 	    geneCol.getSelectionModel().select(config.getGeneCol());
 	}
-	
 	
 	
 	// prepare impact column
@@ -290,6 +303,47 @@ public class SelectColumnsGuiController implements Initializable {
 	} else if(checkStringList(header, config.getpNomenCol()) == true){
 	    pNomenCol.getSelectionModel().select(config.getpNomenCol());
 	}
+	
+	
+	// prepare prediction Score column
+	predScoreCol.getItems().addAll(header);
+	if (checkStringList(header, config.getPredScoreCol())) {
+	    predScoreCol.getSelectionModel().select(config.getPredScoreCol());
+	}
+	
+	
+	// prepare total number of predictions column
+	totPredCol.getItems().addAll(header);
+	if (checkStringList(header, config.getTotPredCol())) {
+	    totPredCol.getSelectionModel().select(config.getTotPredCol());
+	}
+	
+	
+	// prepare ClinVar column
+	clinVarCol.getItems().addAll(header);
+	if (checkStringList(header, config.getClinvarCol())) {
+	    clinVarCol.getSelectionModel().select(config.getClinvarCol());
+	}
+	
+	// prepare HGMD column
+	hgmdCol.getItems().addAll(header);
+	if (checkStringList(header, config.getHgmdCol())) {
+	    hgmdCol.getSelectionModel().select(config.getHgmdCol());
+	}
+	
+	// prepare splice 15 reduction prediction column
+	splice15Col.getItems().addAll(header);
+	if (checkStringList(header, config.getSplice15Col())) {
+	    splice15Col.getSelectionModel().select(config.getSplice15Col());
+	}
+	
+	// prepare splice 45 reduction prediction column
+	splice45Col.getItems().addAll(header);
+	if (checkStringList(header, config.getSplice45Col())) {
+	    splice45Col.getSelectionModel().select(config.getSplice45Col());
+	}
+	
+	
 	
 	
 	
