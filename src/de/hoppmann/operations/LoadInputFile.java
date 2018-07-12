@@ -8,7 +8,6 @@ package de.hoppmann.operations;
 
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.messanges.CommonErrors;
-import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.TableData;
 import java.io.BufferedReader;
@@ -239,11 +238,13 @@ public class LoadInputFile {
      * HGMD: DM?
      * ClinVar: likely_Pathogenic
      * Nondescribed mutations
-     * - impact: stop_gained or frameshift_variant
+     * - impact: stop_gained or frameshift_variant or stop_lost
      * - impact:splice_region_variant, splice_acceptor_variant, splice_donor_variant
      *	-> splice reduction prediction >45% 
      * -at leas 3 prediction scores calling damaging
      */
+    
+    
     private boolean isLikelyPatho(TableData row, HashMap<String, Integer> catagories) {
 	
 	// create return boolean
@@ -269,12 +270,81 @@ public class LoadInputFile {
 	//////// ClinVar
 	
 	// check if ClinVar has entry likely_pathogenic
+	Integer clinvarIndex = catagories.get(config.getClinvarCol());
+	
+	// split all entries and check if they are pathogenic
+	List<String> allClinvarEntries = Arrays.asList(row.getEntry(clinvarIndex).split(","));
+	if (allClinvarEntries.contains("likely_pathogenic")) {
+	    isLikelyPatho = true;
+	}
+	
+	
+	////////////////////////
+	//////// nondescribed variants
+	
+	
+	//////// stop gain, stop loss and frame shift
+	// check if impact column has one of the following entries
+	// stop_gained or frameshift_variant 
+	Integer impactColIndex = catagories.get(config.getImpactCol());
+	
+	String[] impactOfInterest = {"stop_gained", "frameshift_variant", "stop_lost"};
+	
+	for (String curImpact : impactOfInterest){
+	    if (row.getEntry(impactColIndex).contains(curImpact)){
+		isLikelyPatho = true;
+	    }
+	
+	}
+	
+	
+	//////// splice variants
+	
+	// if variant is splice variant
+	// check if splice reduction > 45%
+	impactOfInterest = new String[] {"splice_region_variant", "splice_acceptor_variant", "splice_donor_variant"};
+	
+	Integer splice45DecIndex = catagories.get(config.getSplice45Col());
+	
+	for (String curImpcat : impactOfInterest) {
+	    if (row.getEntry(impactColIndex).contains(curImpcat)){
+		if (Double.parseDouble(row.getEntry(splice45DecIndex)) >= 0.5) {
+		    isLikelyPatho = true;
+		}
+	    }
+	}
 	
 	
 	
 	
 	
-	return true;
+	
+	//////// prediction tools
+	
+	// if variant is predicted by at least 3 tools, and >= 50% state damaging
+	// take as likely pathogenic
+	
+	Integer totPredColIndex = catagories.get(config.getTotPredCol());
+	Integer predScoreColIndex = catagories.get(config.getPredScoreCol());
+	
+	Integer totalPredictors = Integer.parseInt(row.getEntry(totPredColIndex));
+	// check if score = NA if so set 0.
+	Double predScore = 0.0;
+//	System.out.println(row.getEntry(predScoreColIndex));
+
+	if (!row.getEntry(predScoreColIndex).equals("NA")){
+	    System.out.println(row.getEntry(predScoreColIndex));
+	    predScore = Double.parseDouble(row.getEntry(predScoreColIndex));
+	}
+	
+	if (totalPredictors > 2 && predScore >= 0.5) {
+	    isLikelyPatho = true;
+	}
+	
+	
+	
+	
+	return isLikelyPatho;
     }
     
     
