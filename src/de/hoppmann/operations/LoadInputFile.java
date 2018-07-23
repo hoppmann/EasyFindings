@@ -197,6 +197,8 @@ public class LoadInputFile {
 		    row.setCatagory(Catagory.getPathoCode());
 		} else if (isLikelyPatho(row, catagories)) {
 		    row.setCatagory(Catagory.getProbPathoCode());
+		} else if (isUnclear(row, catagories)){
+		    row.setCatagory(Catagory.getUnclearCode());
 		}
 		
 
@@ -218,14 +220,88 @@ public class LoadInputFile {
     */
     
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     /*
+    
+    NOT TO BE USED
      * check if variant is unclear
-     * ClinVar: uncertain; likely pathogenic; likely benign
+     * ClinVar: uncertain; likely benign
      * MAF just beneath 1% (recessive, X-linked); 0.2% (dominat)
      * OR
      * Splice reduction < 45%
+    
+    TO BE USED
+    all variants that are neither Pathogenic or likely Pathogenic are uncertain
      */
+    
+    
+    private boolean isUnclear(TableData row, HashMap<String, Integer> catagories) {
+
+	
+	// create reurn boolean
+	boolean isUnclear = true;
+	
+//	////////////////
+//	//////// ClinVar
+//	//////// check if ClinVar has uncertain
+//	
+//	// check if ClinVar has entry likely_pathogenic
+//	Integer clinvarIndex = catagories.get(config.getClinvarCol());
+//	
+//	// split all entries and check if they are pathogenic
+//	List<String> allClinvarEntries = Arrays.asList(row.getEntry(clinvarIndex).split(","));
+//	if (allClinvarEntries.contains("uncertain")) {
+//	    isUnclear = true;
+//	}
+
+	
+	
+	
+	//////// check if splice reduction is < 45%
+	
+	
+	
+	//////// check if MAF just < cutoff
+	
+	
+	
+	return isUnclear;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -319,7 +395,7 @@ public class LoadInputFile {
 	
 	
 	
-	//////// prediction tools
+	//////// based on prediction tools
 	
 	// if variant is predicted by at least 3 tools, and >= 50% state damaging
 	// take as likely pathogenic
@@ -330,10 +406,8 @@ public class LoadInputFile {
 	Integer totalPredictors = Integer.parseInt(row.getEntry(totPredColIndex));
 	// check if score = NA if so set 0.
 	Double predScore = 0.0;
-//	System.out.println(row.getEntry(predScoreColIndex));
 
 	if (!row.getEntry(predScoreColIndex).equals("NA")){
-	    System.out.println(row.getEntry(predScoreColIndex));
 	    predScore = Double.parseDouble(row.getEntry(predScoreColIndex));
 	}
 	
@@ -346,6 +420,13 @@ public class LoadInputFile {
 	
 	return isLikelyPatho;
     }
+    
+    
+    
+    
+    
+    
+    
     
     
     

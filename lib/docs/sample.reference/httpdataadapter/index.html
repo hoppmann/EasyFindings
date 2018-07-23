@@ -1,0 +1,976 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JasperReports 6.6.0 - HTTP Data Adapter Sample</title>
+<style type="text/css">
+.title {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 28px;
+	font-weight: normal;
+}
+
+.toc {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.name {
+	font-family: Courier New, Courier, serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.label {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.description {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.value {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.element {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.attribute {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.code {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.copy {
+	font-decoration: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-style: normal;
+	color: #000000;
+}
+
+.subtitle {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: bold;
+	text-decoration: none;
+	color: inherit;
+}
+
+table.doctable {
+    border-collapse: collapse;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 10px 0;
+    text-align: left;
+}
+
+table.doctable th, table.doctable td {
+    border-bottom: 1px solid gray;
+    padding: 5px 10px;
+}
+
+table.doctable tr.full_border th, table.doctable tr.full_border td {
+    border: 1px solid gray;
+}
+
+table.doctable.alternate_bg tr:nth-child(even), tr.grey_bg {
+    background-color: #f2f2f2;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.large {
+    font-size: 20px;
+}
+
+.maxWidth170 {
+    max-width: 170px;
+}
+
+.minWidth300 {
+    min-width: 300px;
+}
+
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<a name="top"></a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td align="right" colspan="2"><span class="element"><a href="../../JasperReports-Ultimate-Guide-3.pdf">JasperReports Ultimate Guide</a> - <a href="../../sample.reference.html">Sample Reference</a> - <a href="../../schema.reference.html">Schema Reference</a> - <a href="../../config.reference.html">Configuration Reference</a> - <a href="http://jasperreports.sourceforge.net/api/index.html">API (Javadoc)</a></span>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+<tr valign="middle">
+<td nowrap="true"><span class="title">JasperReports - HTTP Data Adapter Sample (version 6.6.0)</span></td><td align="right"><img border="0" src="../../resources/jasperreports.svg"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+</table>
+<br>
+<span class="description"><span class="description">Shows how the HTTP data adapters can be used to fill reports.</span></span>
+<br>
+<br>
+<span class="element"><a href="http://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%206.6.0/jasperreports-6.6.0-project.zip/download" target="_blank">Download All Sample Source Files</a></span>
+<br>
+<span class="element"><a href="http://sourceforge.net/p/jasperreports/code/ci/jr-6-6-0/tree/jasperreports/demo/samples/httpdataadapter/" target="_blank">Browse Sample Source Files on Git</a></span>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td style="width: 20px;">
+<br>
+</td><td>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2"><span class="label">Main Features in This Sample</span></td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td><span class="element"><a href="#httpdataadapter">HTTP Data Adapter</a></span></td>
+</tr>
+<tr>
+<td colspan="2">
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2"><span class="label">Secondary Features</span></td>
+</tr>
+<tr>
+<td></td><td><span class="element"><a href="../jsonqldatasource/index.html#jsonqldatasource">JSONQL Data Source</a></span></td>
+</tr>
+<tr>
+<td></td><td><span class="element"><a href="../xmldatasource/index.html#xmldatasource">XML Data Source</a></span></td>
+</tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td><img height="1" width="20" border="0" src="../../resources/px.gif"></td><td><img height="1" width="20" border="0" src="../../resources/px.gif"></td><td><img height="1" width="20" border="0" src="../../resources/px.gif"></td><td><img height="1" width="20" border="0" src="../../resources/px.gif"></td><td width="80%">
+<br>
+</td><td width="20%">
+<br>
+</td>
+</tr>
+<tr>
+<td align="right" colspan="6"><a name="httpdataadapter"></a><a class="toc" href="#top">top</a></td>
+</tr>
+<tr>
+<td colspan="6">
+<hr size="1">
+</td>
+</tr>
+<tr valign="top">
+<td><img border="0" src="../../resources/jr-16x16.png"></td><td colspan="4"><span class="name">HTTP Data Adapter</span></td><td align="right"><span class="copy">Documented by 
+	<a href="mailto:shertage@users.sourceforge.net" class="copy">Sanda Zaharia</a></span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td nowrap="true"><span class="label">Description / Goal</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">
+How to fill a report using data from an HTTP request returning XML or JSON file.
+    </span></td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td colspan="1"><span class="label">Since</span></td><td>
+<br>
+</td><td colspan="3"><span class="description"></span></td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td nowrap="true"><span class="label">Other Samples</span></td><td>
+<br>
+</td><td colspan="3">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td><span class="element"><a href="../jsonqldatasource/index.html">/demo/samples/jsonqldatasource</a></span></td>
+</tr>
+<tr>
+<td><span class="element"><a href="../xmldatasource/index.html">/demo/samples/xmldatasource</a></span></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td colspan="5"><span class="description">
+<a name="httpDataAccess" href="../../sample.reference/httpdataadapter/index.html#httpDataAccess" class="subtitle">Accessing Data over HTTP</a>     
+
+<br>
+
+<br>
+An HTTP data adapter is a data file-based data adapter that uses an 
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/http/HttpDataLocation.html" target="_blank">HttpDataLocation</a></span> object, in 
+order to gain access to remote data over HTTP and retrieve content that can be mapped to a custom (usually JSONQL or 
+XML) data source.
+<br>
+
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/DataFile.html" target="_blank">DataFile</a></span>-based adapters (such as 
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/json/JsonDataAdapter.html" target="_blank">JsonDataAdapter</a></span> or 
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/xml/XmlDataAdapter.html" target="_blank">XmlDataAdapter</a></span>) can be converted into HTTP data 
+adapters by declaring their <span class="code"><code>DataFile</code></span> element of type <span class="code"><code>HttpDataLocation</code></span>:
+<pre>
+&lt;jsonDataAdapter class="net.sf.jasperreports.data.json.JsonDataAdapterImpl"&gt;
+  &lt;name&gt;JSON Http Data Adapter&lt;/name&gt;
+  &lt;dataFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="httpDataLocation"&gt;
+    ...
+  &lt;/dataFile&gt;
+  ...
+&lt;/jsonDataAdapter&gt;</pre>
+or
+<pre>
+&lt;xmlDataAdapter class="net.sf.jasperreports.data.xml.XmlDataAdapterImpl"&gt;
+  &lt;name&gt;XML Http Data Adapter&lt;/name&gt;
+  &lt;dataFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="httpDataLocation"&gt;
+    ...
+  &lt;/dataFile&gt;
+  ...
+&lt;/xmlDataAdapter&gt;</pre>
+The <span class="code"><code>HttpDataLocation</code></span> object encapsulates the following information, related to a given HTTP request:
+<ul>
+
+<li>
+<span class="code"><code><b>method</b></code></span> - the request method name, which may be one of the following (see <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/http/RequestMethod.html" target="_blank">RequestMethod</a></span>):
+<ul>
+
+<li>
+<span class="code"><code>GET</code></span>
+</li>
+
+<li>
+<span class="code"><code>POST</code></span>
+</li>
+
+<li>
+<span class="code"><code>PUT</code></span>
+</li>
+
+</ul>
+
+</li>
+
+<li>
+<span class="code"><code><b>url</b></code></span> - the data resource location URL</li>
+
+<li>
+<span class="code"><code><b>username</b></code></span> and <span class="code"><code><b>password</b></code></span> - user basic authentication info</li>
+
+<li>a list of <span class="code"><code><b>urlParameter</b></code></span> elements - representing request URL parameters, each one being defined by a <span class="code"><code>name</code></span> and a <span class="code"><code>value</code></span>
+</li>
+
+<li>
+<span class="code"><code><b>body</b></code></span> - a String representing the request body, in case of a <span class="code"><code>POST</code></span> (or <span class="code"><code>PUT</code></span>) method; it will be ignored by a <span class="code"><code>GET</code></span> method</li>
+
+<li>a list of <span class="code"><code><b>postParameter</b></code></span> elements - representing request <span class="code"><code>POST</code></span> parameters, each characterized by a <span class="code"><code>name</code></span> and a <span class="code"><code>value</code></span>; 
+they will be always ignored by a <span class="code"><code>GET</code></span> method. They will also be ignored if a <span class="code"><code><b>body</b></code></span> element was already specified</li>
+
+<li>a list of <span class="code"><code><b>header</b></code></span> elements - representing request headers, also each one characterized by a <span class="code"><code>name</code></span> and a <span class="code"><code>value</code></span>
+</li>
+
+</ul>
+
+<a name="httpParameterProperties" href="../../sample.reference/httpdataadapter/index.html#httpParameterProperties" class="subtitle">HTTP Parameter Properties</a>     
+
+<br>
+
+<br>
+None of the elements described above (<span class="code"><code><b>method</b></code></span>, <span class="code"><code><b>url</b></code></span>, <span class="code"><code><b>username</b></code></span>, <span class="code"><code><b>password</b></code></span>, <span class="code"><code><b>urlParameter</b></code></span>, 
+<span class="code"><code><b>body</b></code></span>, <span class="code"><code><b>postParameter</b></code></span> or <span class="code"><code><b>header</b></code></span>) are required in an HTTP data adapter. 
+<br>
+The only requirement is to have its type declared as <span class="code"><code>httpDataLocation</code></span> (<span class="code"><code>xsi:type="httpDataLocation"</code></span>).
+<br>
+
+<br>
+In case no <span class="code"><code><b>method</b></code></span> element is specified, the default method name depends on the presence/absence of the <span class="code"><code><b>body</b></code></span> element or the <span class="code"><code><b>postParameter</b></code></span> list:
+<ul>
+
+<li>when <span class="code"><code><b>body</b></code></span> and <span class="code"><code><b>postParameter</b></code></span> list are both missing, the <span class="code"><code><b>method</b></code></span> is <span class="code"><code>GET</code></span> by default</li>
+
+<li>if the <span class="code"><code><b>body</b></code></span> element is present, the <span class="code"><code><b>method</b></code></span> is <span class="code"><code>POST</code></span> by default</li>
+
+<li>if the <span class="code"><code><b>body</b></code></span> element is missing, but the <span class="code"><code><b>postParameter</b></code></span> list contains at least one element, the <span class="code"><code><b>method</b></code></span> is <span class="code"><code>POST</code></span> by default</li>
+
+</ul>
+Regarding the other elements (<span class="code"><code><b>url</b></code></span>, <span class="code"><code><b>username</b></code></span>, <span class="code"><code><b>urlParameter</b></code></span>, etc), we can send all this information 
+via the usual report parameters, since data adapters are in fact parameter contributor objects.
+<br>
+The following predefined parameter properties let us configure the HTTP request, and always override the similar information declared in data adapter:   
+<ol>
+
+<li>
+<a href="../../config.reference.html#net.sf.jasperreports.http.data.method" target="_blank" class="element">net.sf.jasperreports.http.data.method</a>
+
+<ul>
+
+<li>is specified per dataset or at report parameter level</li>
+
+<li>if declared per dataset, its value is mandatory and represents the HTTP request method used by the data adapter</li>
+
+<li>if declared at report parameter level, it needs no value and is used to mark the report parameter as HTTP request method provider</li>
+
+<li>if this property is specified in various report parameters, only the last one of them will be considered as HTTP request method provider</li>
+
+</ul>
+
+</li>
+
+<li>
+<a href="../../config.reference.html#net.sf.jasperreports.http.data.url" target="_blank" class="element">net.sf.jasperreports.http.data.url</a>
+
+<ul>
+
+<li>is specified per dataset or at report parameter level</li>
+
+<li>if declared per dataset, its value is mandatory and represents the base URL used by the HTTP data adapter</li>
+
+<li>if declared at report parameter level, it needs no value and is used to mark the report parameter as URL provider for the HTTP request</li>
+
+<li>overrides the deprecated parameter <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/http/HttpDataService.html#PARAMETER_URL" target="_blank">HTTP_DATA_URL</a></span>
+</li>
+
+<li>if this property is specified in various report parameters, only the last one of them will be considered as the URL provider</li>
+
+</ul>
+
+</li>
+
+<li>
+<a href="../../config.reference.html#net.sf.jasperreports.http.data.username" target="_blank" class="element">net.sf.jasperreports.http.data.username</a>
+
+<ul>
+
+<li>is specified per dataset or at report parameter level</li>
+
+<li>if declared per dataset, its value is mandatory and represents the user name to be used in HTTP data adapters with basic authentication.</li>
+
+<li>if declared at report parameter level, it needs no value and is used to mark the report parameter as user name provider for the HTTP request</li>
+
+<li>overrides the deprecated parameter <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/http/HttpDataService.html#PARAMETER_USERNAME" target="_blank">HTTP_DATA_USERNAME</a></span>
+</li>
+
+<li>if this property is specified in various report parameters, only the last one of them will be considered as the user name provider</li>
+
+</ul>
+
+</li>
+
+<li>
+<a href="../../config.reference.html#net.sf.jasperreports.http.data.password" target="_blank" class="element">net.sf.jasperreports.http.data.password</a>
+
+<ul>
+
+<li>is specified per dataset or at report parameter level</li>
+
+<li>if declared per dataset, its value is mandatory and represents the user password to be used in HTTP data adapters with basic authentication.</li>
+
+<li>if declared at report parameter level, it needs no value and is used to mark the report parameter as user password provider for the HTTP request</li>
+
+<li>overrides the deprecated parameter <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/http/HttpDataService.html#PARAMETER_PASSWORD" target="_blank">HTTP_DATA_PASSWORD</a></span>
+</li>
+
+<li>if this property is specified in various report parameters, only the last one of them will be considered as the user password provider</li>
+
+</ul>
+
+</li>
+
+<li>
+<a href="../../config.reference.html#net.sf.jasperreports.http.data.body" target="_blank" class="element">net.sf.jasperreports.http.data.body</a>
+
+<ul>
+
+<li>is specified per dataset or at report parameter level</li>
+
+<li>if declared per dataset, its value is mandatory and represents the HTTP request body</li>
+
+<li>if declared at report parameter level, it needs no value and is used to mark the report parameter as HTTP request body provider</li>
+
+<li>if this property is specified in various report parameters, only the last one of them will be considered as the request body provider</li>
+
+<li>the HTTP request body will be ignored by the <span class="code"><code>GET</code></span> method</li>
+
+</ul>
+
+</li>
+
+<li>
+<a href="../../config.reference.html#net.sf.jasperreports.http.data.url.parameter" target="_blank" class="element">net.sf.jasperreports.http.data.url.parameter</a>
+
+<ul>
+
+<li>is specified at report parameter level</li>
+
+<li>if the property has no value, it will be used to mark the report parameter as URL parameter to be appended to the base URL of the HTTP request; 
+the URL parameter will have the same <b>name and value</b> as the report parameter</li>
+
+<li>if the property has a given value, its <b>value</b> will be used as <b>name</b> for the related URL parameter; the <b>value</b> of the URL parameter 
+will be the same as the report parameter <b>value</b>
+</li>
+
+<li>overrides the deprecated parameter prefix <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/http/HttpDataService.html#PARAMETER_PREFIX_URL_PARAMETER" target="_blank">HTTP_DATA_URL_PARAMETER_</a></span>
+</li>
+
+<li>if this property is specified in various report parameters, the related URL parameter will be considered as parameter of type array, being sent multiple times</li>
+
+</ul>
+
+</li>
+
+<li>
+<a href="../../config.reference.html#net.sf.jasperreports.http.data.post.parameter" target="_blank" class="element">net.sf.jasperreports.http.data.post.parameter</a>
+
+<ul>
+
+<li>is specified at report parameter level</li>
+
+<li>if the property has no value, it will be used to mark the report parameter as HTTP request POST parameter; 
+the POST parameter will have the same <b>name and value</b> as the report parameter</li>
+
+<li>if the property has a given value, its <b>value</b> will be used as <b>name</b> for the related request POST parameter; the <b>value</b> of the POST parameter 
+will be the same as the report parameter <b>value</b>
+</li>
+
+<li>overrides the deprecated parameter prefix <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/http/HttpDataService.html#PARAMETER_PREFIX_POST_PARAMETER" target="_blank">HTTP_DATA_POST_PARAMETER_</a></span>
+</li>
+
+<li>if this property is specified in various report parameters, the related POST parameter will be considered as parameter of type array, being sent multiple times</li>
+
+<li>POST parameters will be ignored by the <span class="code"><code>GET</code></span> method</li>
+
+<li>POST parameters will be ignored if a request body is provided</li>
+
+</ul>
+
+</li>
+
+<li>
+<a href="../../config.reference.html#net.sf.jasperreports.http.data.header" target="_blank" class="element">net.sf.jasperreports.http.data.header</a>
+
+<ul>
+
+<li>is specified at report parameter level</li>
+
+<li>if the property has no value, it will be used to mark the report parameter as HTTP request header; 
+the header will have the same <b>name and value</b> as the report parameter</li>
+
+<li>if the property has a given value, its <b>value</b> will be used as <b>name</b> for the related request header; the <b>value</b> of the header 
+will be the same as the report parameter <b>value</b>
+</li>
+
+<li>if this property is specified in various report parameters, the related request header will be added multiple times to the request</li>
+
+</ul>
+
+</li>
+
+</ol>
+
+<a name="httpDataService" href="../../sample.reference/httpdataadapter/index.html#httpDataService" class="subtitle">HTTP Data Service</a>     
+
+<br>
+
+<br>
+The information stored in the <span class="code"><code>HttpDataLocation</code></span> object is collected and processed by the 
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/http/HttpDataService.html" target="_blank">HttpDataService</a></span> API, which builds a client object to 
+send a specific request over HTTP. 
+<br>
+As a result, a data file connection is obtained in the form of an <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/http/HttpDataConnection.html" target="_blank">HttpDataConnection</a></span> object. 
+<br>
+This object comes with an <span class="code"><code>InputStream</code></span> that can be extracted and interpreted as custom data source (usually in JSON or XML format), using the 
+available public methods of the class:
+<ul>
+
+<li>
+<span class="code"><code>public InputStream getInputStream()</code></span> - retrieves the InputStream from this object</li>
+
+<li>
+<span class="code"><code>public void dispose()</code></span> - closes the HTTP response and HTTP client streams and release resources associated with these objects</li>
+
+</ul> 
+
+<a name="jsonXmlHttpDataAdapter" href="../../sample.reference/httpdataadapter/index.html#jsonXmlHttpDataAdapter" class="subtitle">The JSON and XML HTTP Data Adapters</a>     
+
+<br>
+
+<br>
+This sample provides 2 examples based on the HTTP data adapter:
+<br>
+one of them will process the input in order to get a JSONQL data source, the other will prepare an XML data source by querying the same data. 
+<br>
+Following are the 2 data adapter definitions:
+<br>
+
+<br>
+
+<b>Content of the JSON Data Adapter </b>(see <span class="code"><code>data/JsonHttpDataAdapter.xml</code></span> file provided in this sample directory):
+<pre>
+&lt;jsonDataAdapter class="net.sf.jasperreports.data.json.JsonDataAdapterImpl"&gt;
+  &lt;name&gt;JSON Http Data Adapter&lt;/name&gt;
+  &lt;dataFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:type="httpDataLocation"&gt;
+    &lt;method&gt;GET&lt;/method&gt;
+    &lt;url&gt;&lt;![CDATA[http://www.omdbapi.com/?r=json]] &gt;&lt;/url&gt;
+  &lt;/dataFile&gt;
+  &lt;useConnection&gt;true&lt;/useConnection&gt;
+  &lt;timeZone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns:java="http://java.sun.com" xsi:type="java:java.lang.String"&gt;Europe/Bucharest&lt;/timeZone&gt;
+  &lt;locale xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns:java="http://java.sun.com" xsi:type="java:java.lang.String"&gt;ro_RO&lt;/locale&gt;
+  &lt;selectExpression&gt;&lt;/selectExpression&gt;
+&lt;/jsonDataAdapter&gt;</pre>
+
+<b>Content of the XML Data Adapter </b>(see <span class="code"><code>data/XmlHttpDataAdapter.xml</code></span> file provided in this sample directory):
+<pre>
+&lt;xmlDataAdapter class="net.sf.jasperreports.data.xml.XmlDataAdapterImpl"&gt;
+  &lt;name&gt;XML Http Data Adapter&lt;/name&gt;
+  &lt;dataFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:type="httpDataLocation"&gt;
+    &lt;method&gt;GET&lt;/method&gt;
+    &lt;url&gt;&lt;![CDATA[http://www.omdbapi.com/?r=xml]] &gt;&lt;/url&gt;
+  &lt;/dataFile&gt;
+  &lt;useConnection&gt;true&lt;/useConnection&gt;
+  &lt;timeZone xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns:java="http://java.sun.com" xsi:type="java:java.lang.String"&gt;Europe/Bucharest&lt;/timeZone&gt;
+  &lt;locale xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns:java="http://java.sun.com" xsi:type="java:java.lang.String"&gt;ro_RO&lt;/locale&gt;
+  &lt;selectExpression&gt;&lt;/selectExpression&gt;
+&lt;/xmlDataAdapter&gt;</pre>
+We can observe that the above data adapters are quite similar:
+<ul>
+
+<li>both of them provide a <span class="code"><code>&lt;dataFile/&gt;</code></span> element of type <span class="code"><code>httpDataLocation</code></span>, therefore they also became HTTP data adapters</li>
+
+<li>both of them are based on a HTTP request <span class="code"><code>GET</code></span> method</li>
+
+<li>both of them provide the same base URL: <a href="http://www.omdbapi.com" target="_blank" class="element">http://www.omdbapi.com</a> - a web service URL to retrieve various movies 
+information in terms of title, year, IMDb ID, type, poster image</li>
+
+<li>also the same settings are present for <span class="code"><code>&lt;useConnection/&gt;</code></span>, <span class="code"><code>&lt;timeZone/&gt;</code></span> and <span class="code"><code>&lt;locale/&gt;</code></span>
+</li>
+
+<li>a <span class="code"><code>selectExpression</code></span> is not provided, so that it has to be set in the related report</li>
+
+</ul>
+But:
+<ul>
+
+<li>the JSON data adapter is an instance of <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/json/JsonDataAdapterImpl.html" target="_blank">JsonDataAdapterImpl</a></span>, 
+while the XML data adapter is an instance of <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/data/xml/XmlDataAdapterImpl.html" target="_blank">XmlDataAdapterImpl</a></span>
+</li>
+
+<li>the request URL parameter <span class="code"><code>r</code></span> has different values in these 2 adapters: <span class="code"><code>r=json</code></span> in JSON data adapter and 
+<span class="code"><code>r=xml</code></span> in XML data adapter. 
+<br>
+This means that the response content will be delivered in JSON format for the first data adapter, 
+and in XML format for the second one.</li>
+
+</ul>
+Now let's take a look into JRXML files provided in this sample, in order to see how the remaining request input is provided via report parameters and 
+properties.
+<br>
+
+<br>
+
+<a name="jsonXmlReport" href="../../sample.reference/httpdataadapter/index.html#jsonXmlReport" class="subtitle">The JRXML files</a>     
+
+<br>
+
+<br>
+The JRXML files are found in the <span class="code"><code>reports</code></span> folder of this JasperReports sample. 
+<br>
+Like the above data adapters, they look almost similar, the only differences being related to data adapter type, query language and dataset field properties (because these are also related to 
+the query language). 
+<br>
+Each JRXML report 
+<ul>
+
+<li>contains 2 subdatasets (<span class="code"><code>FetchDataset</code></span> and <span class="code"><code>MoviesDataset</code></span>) with similar structure and purposes</li>
+
+<li>sends similar requests over HTTP</li>
+
+<li>perform similar queries on their data source</li>
+
+<li>provides the same output layout in the form of a paginated list of movies information.</li>
+
+</ul>
+Following are presented the settings in the <b>JsonHttpDataAdapterReport.jrxml</b> file:
+<pre>
+&lt;jasperReport ... name="JsonHttpDataAdapterReport" ...&gt;
+  &lt;property name="net.sf.jasperreports.data.adapter" value="data/JsonHttpDataAdapter.xml"/&gt;
+  &lt;subDataset name="FetchDataset" uuid="753275b1-35e7-428e-87be-88a1863e1c06"&gt;
+    &lt;parameter name="title" class="java.lang.String"/&gt;
+  &lt;/subDataset&gt;
+  &lt;subDataset name="MoviesDataset" uuid="bb6eeca6-9992-4268-8570-db12d8d5c79d"&gt;
+    &lt;property name="net.sf.jasperreports.data.adapter" value="data/JsonHttpDataAdapter.xml"/&gt;
+    &lt;parameter name="title" class="java.lang.String"&gt;
+      &lt;property name="net.sf.jasperreports.http.data.url.parameter" value="s"/&gt;
+    &lt;/parameter&gt;
+    &lt;parameter name="page" class="java.lang.Integer"&gt;
+      &lt;property name="net.sf.jasperreports.http.data.url.parameter"/&gt;
+    &lt;/parameter&gt;
+    &lt;queryString language="jsonql"&gt;
+      &lt;![CDATA[Search]] &gt;
+    &lt;/queryString&gt;
+    &lt;field name="title" class="java.lang.String"&gt;
+      &lt;property name="net.sf.jasperreports.jsonql.field.expression" value="Title"/&gt;
+    &lt;/field&gt;
+    &lt;field name="year" class="java.lang.Integer"&gt;
+      &lt;property name="net.sf.jasperreports.jsonql.field.expression" value="Year"/&gt;
+    &lt;/field&gt;
+    &lt;field name="type" class="java.lang.String"&gt;
+      &lt;property name="net.sf.jasperreports.jsonql.field.expression" value="Type"/&gt;
+    &lt;/field&gt;
+    &lt;field name="poster" class="java.lang.String"&gt;
+      &lt;property name="net.sf.jasperreports.jsonql.field.expression" value="Poster"/&gt;
+    &lt;/field&gt;
+  &lt;/subDataset&gt;
+  &lt;parameter name="title" class="java.lang.String" evaluationTime="Early"&gt;
+    &lt;property name="net.sf.jasperreports.http.data.url.parameter" value="s"/&gt;
+    &lt;defaultValueExpression&gt;&lt;![CDATA["aliens"]] &gt;&lt;/defaultValueExpression&gt;
+  &lt;/parameter&gt;
+  &lt;queryString language="jsonql"&gt;
+    &lt;![CDATA[]] &gt;
+  &lt;/queryString&gt;
+  &lt;field name="totalResults" class="java.lang.Integer"&gt;
+    &lt;property name="net.sf.jasperreports.jsonql.field.expression" value="totalResults"/&gt;
+  &lt;/field&gt;
+  ...
+&lt;/jasperReport&gt;</pre>
+Both the main dataset and <span class="code"><code>MoviesDataset</code></span> require information from <span class="code"><code><b>JsonHttpDataAdapter.xml</b></code></span> file 
+via <span class="code"><code><b>net.sf.jasperreports.data.adapter</b></code></span> property.
+<br>
+In the main dataset we have a report parameter named <span class="code"><code><b>title</b></code></span> that will serve also as HTTP request URL parameter, 
+as specified by the <span class="code"><code><b>net.sf.jasperreports.http.data.url.parameter</b></code></span> property:
+<pre>
+&lt;parameter name="title" class="java.lang.String" evaluationTime="Early"&gt;
+  &lt;property name="net.sf.jasperreports.http.data.url.parameter" value="s"/&gt;
+  &lt;defaultValueExpression&gt;&lt;![CDATA["aliens"]] &gt;&lt;/defaultValueExpression&gt;
+&lt;/parameter&gt;</pre>
+We see that this property has a value, and the value is <span class="code"><code><b>s</b></code></span>. 
+<br>
+It means that an URL parameter will be appended to the base request URL, with the name <span class="code"><code><b>s</b></code></span> and the default value <span class="code"><code><b>aliens</b></code></span> (as stated in <span class="code"><code>&lt;defaultValueExpression/&gt;</code></span>). 
+<br>
+With these settings, the web service URL will look like:
+<br>
+
+<br>
+
+<span class="code"><code><b>http://www.omdbapi.com/?r=json&amp;s=aliens</b></code></span>
+
+<br>
+
+<br>
+In response the web service will return a JSON object in the following format:
+<pre>
+{
+  "Search":[
+    {"Title":"Aliens","Year":"1986","imdbID":"tt0090605","Type":"movie","Poster":"https://.../...jpg"},
+    {"Title":"Cowboys &amp; Aliens","Year":"2011","imdbID":"tt0409847","Type":"movie","Poster":"https://.../...jpg"},
+    ...
+   ],
+  "totalResults":"213",
+  "Response":"True"
+}</pre>
+Here we have 
+<ul>
+
+<li>a <span class="code"><code><b>"Search"</b></code></span> property which is an array of the first 10 movies information objects</li>
+
+<li>a <span class="code"><code><b>"totalResults"</b></code></span> number that represents the number of records returned by this query</li>
+
+<li>a boolean <span class="code"><code><b>"Response"</b></code></span> which is <span class="code"><code>"True"</code></span> in our case, and lets us know that there were no errors/failures during this web service call</li>
+
+</ul>
+In the main dataset we are interested only in retrieving the <span class="code"><code><b>"totalResults"</b></code></span> number, in order to use it in the page header. 
+<br>
+To get it, we declared the report query language as <span class="code"><code><b>jsonql</b></code></span>, and set a related report field named <span class="code"><code><b>totalResults</b></code></span> 
+as follows:
+<pre>
+&lt;queryString language="jsonql"&gt;
+  &lt;![CDATA[]] &gt;
+&lt;/queryString&gt;
+&lt;field name="totalResults" class="java.lang.Integer"&gt;
+  &lt;property name="net.sf.jasperreports.jsonql.field.expression" value="totalResults"/&gt;
+&lt;/field&gt;</pre>
+One can observe the associated <span class="code"><code><b>net.sf.jasperreports.jsonql.field.expression</b></code></span> property that links the <span class="code"><code><b>totalResults</b></code></span> 
+field name to the <span class="code"><code><b>"totalResults"</b></code></span> number provided by the JSON object.
+<br>
+
+<br>
+
+<span class="code"><code>MoviesDataset</code></span> comes with 2 dataset parameters, which are related to request URL parameters via properties:
+<pre>
+&lt;parameter name="title" class="java.lang.String"&gt;
+  &lt;property name="net.sf.jasperreports.http.data.url.parameter" value="s"/&gt;
+&lt;/parameter&gt;
+&lt;parameter name="page" class="java.lang.Integer"&gt;
+  &lt;property name="net.sf.jasperreports.http.data.url.parameter"/&gt;
+&lt;/parameter&gt;</pre>
+The <span class="code"><code><b>title</b></code></span> parameter with the value <span class="code"><code><b>s</b></code></span> is the same as discussed above. The second parameter 
+named <span class="code"><code><b>page</b></code></span> adds pagination (each page contains by default 10 results) to the request URL. 
+<br>
+The <span class="code"><code><b>net.sf.jasperreports.http.data.url.parameter</b></code></span> 
+property has no value in this case, meaning that the name of the appended URL parameter is also <span class="code"><code><b>page</b></code></span>. 
+<br>
+Since there is no default value for this parameter, its value will be provided during report execution at runtime.
+<br>
+With these settings, for the second page of results, the web service URL will look like:
+<br>
+
+<br>
+
+<span class="code"><code><b>http://www.omdbapi.com/?r=json&amp;s=aliens&amp;page=2</b></code></span>
+
+<br>
+
+<br>
+
+<b>Note:</b> The <span class="code"><code><b>http://www.omdbapi.com/?r=json&amp;s=aliens</b></code></span> request URL has the same effect as 
+<span class="code"><code><b>http://www.omdbapi.com/?r=json&amp;s=aliens&amp;page=1</b></code></span>
+
+<br>
+
+<br>
+The query language in <span class="code"><code>MovieDataset</code></span> is also <span class="code"><code><b>jsonql</b></code></span>, but now we perform a JSONQL query on the 
+<span class="code"><code><b>"Search"</b></code></span> array member of the JSON object, in order to retrieve the movie information regarding title, year, movie type and 
+poster:
+<pre>
+ &lt;queryString language="jsonql"&gt;
+   &lt;![CDATA[Search]] &gt;
+ &lt;/queryString&gt;
+ &lt;field name="title" class="java.lang.String"&gt;
+   &lt;property name="net.sf.jasperreports.jsonql.field.expression" value="Title"/&gt;
+ &lt;/field&gt;
+ &lt;field name="year" class="java.lang.Integer"&gt;
+   &lt;property name="net.sf.jasperreports.jsonql.field.expression" value="Year"/&gt;
+ &lt;/field&gt;
+ &lt;field name="type" class="java.lang.String"&gt;
+   &lt;property name="net.sf.jasperreports.jsonql.field.expression" value="Type"/&gt;
+ &lt;/field&gt;
+ &lt;field name="poster" class="java.lang.String"&gt;
+   &lt;property name="net.sf.jasperreports.jsonql.field.expression" value="Poster"/&gt;
+ &lt;/field&gt;</pre>
+Here we have parameter properties with case sensitive values. 
+<br>
+For instance, the <span class="code"><code><b>title</b></code></span> report field is 
+linked to the <span class="code"><code><b>"Title"</b></code></span> member of the JSON object representing the movie information in the <span class="code"><code><b>"Search"</b></code></span> array. 
+<br>
+All these fields are used in a list component that uses the <span class="code"><code>MovieDataset</code></span> as dataset, based on <span class="code"><code><b>title</b></code></span> 
+and <span class="code"><code><b>page</b></code></span> parameter values:
+<pre>
+&lt;jr:list printOrder="Vertical"&gt;
+  &lt;datasetRun subDataset="MoviesDataset" uuid="134b029e-9e8b-401f-9bd1-2a6087ea1242"&gt;
+    &lt;datasetParameter name="title"&gt;
+      &lt;datasetParameterExpression&gt;&lt;![CDATA[$P{title}]] &gt;&lt;/datasetParameterExpression&gt;
+    &lt;/datasetParameter&gt;
+    &lt;datasetParameter name="page"&gt;
+      &lt;datasetParameterExpression&gt;&lt;![CDATA[$V{REPORT_COUNT}]] &gt;&lt;/datasetParameterExpression&gt;
+    &lt;/datasetParameter&gt;
+  &lt;/datasetRun&gt;
+  &lt;jr:listContents height="65" width="170"&gt;
+    ...
+  &lt;/jr:listContents&gt;
+&lt;/jr:list&gt;</pre>
+The other subdataset in the report (i.e <span class="code"><code>FetchDataset</code></span>) is used in conjunction with an empty data source, in order to allow 
+paginated results to be rendered page by page during the report execution. 
+<br>
+It contains a report parameter named <span class="code"><code><b>title</b></code></span> that will be collected from the main dataset at runtime:
+<pre>
+&lt;detail&gt;
+  &lt;band height="65" splitType="Stretch"&gt;
+    &lt;componentElement&gt;
+      &lt;reportElement x="0" y="0" width="170" height="65" uuid="a7ece49e-f10a-43eb-8c09-86353ba9225d"/&gt;
+      &lt;jr:list ... printOrder="Vertical"&gt;
+        &lt;datasetRun subDataset="FetchDataset" uuid="61c31d0f-e3b3-46c6-a11a-8c5d8b7016cf"&gt;
+          &lt;datasetParameter name="title"&gt;
+            &lt;datasetParameterExpression&gt;&lt;![CDATA[$P{title}]] &gt;&lt;/datasetParameterExpression&gt;
+          &lt;/datasetParameter&gt;
+          &lt;dataSourceExpression&gt;&lt;![CDATA[new JREmptyDataSource((int)(Math.ceil($F{totalResults} / 10d)))]] &gt;&lt;/dataSourceExpression&gt;
+        &lt;/datasetRun&gt;
+        &lt;jr:listContents height="65" width="170"&gt;
+          &lt;componentElement&gt;
+            ...
+          &lt;/componentElement&gt;
+        &lt;/jr:listContents&gt;
+      &lt;/jr:list&gt;
+    &lt;/componentElement&gt;
+  &lt;/band&gt;
+&lt;/detail&gt;</pre>
+As already stated, the <b>XmlHttpDataAdapterReport.jrxml</b> file looks similar to <b>JsonHttpDataAdapterReport.jrxml</b> file.
+<br>
+Report parameters definitions are the same in both JRXML files. Query languages and dataset field definitions are slightly different.
+<br>
+Following are presented the main differences exposed by <b>XmlHttpDataAdapterReport.jrxml</b>:
+<pre>
+&lt;jasperReport name="XmlHttpDataAdapterReport" ...&gt;
+&lt;property name="net.sf.jasperreports.data.adapter" value="data/XmlHttpDataAdapter.xml"/&gt;
+  &lt;subDataset name="FetchDataset" uuid="753275b1-35e7-428e-87be-88a1863e1c06"&gt;
+    &lt;parameter name="title" class="java.lang.String"/&gt;
+  &lt;/subDataset&gt;
+  &lt;subDataset name="MoviesDataset" uuid="bb6eeca6-9992-4268-8570-db12d8d5c79d"&gt;
+    &lt;property name="net.sf.jasperreports.data.adapter" value="data/XmlHttpDataAdapter.xml"/&gt;
+    &lt;parameter name="title" class="java.lang.String"&gt;
+      &lt;property name="net.sf.jasperreports.http.data.url.parameter" value="s"/&gt;
+    &lt;/parameter&gt;
+    &lt;parameter name="page" class="java.lang.Integer"&gt;
+      &lt;property name="net.sf.jasperreports.http.data.url.parameter"/&gt;
+    &lt;/parameter&gt;
+    &lt;queryString language="xPath"&gt;
+      &lt;![CDATA[/root/result]] &gt;
+    &lt;/queryString&gt;
+    &lt;field name="title" class="java.lang.String"&gt;
+      &lt;property name="net.sf.jasperreports.xpath.field.expression" value="@title"/&gt;
+    &lt;/field&gt;
+    &lt;field name="year" class="java.lang.Integer"&gt;
+      &lt;property name="net.sf.jasperreports.xpath.field.expression" value="@year"/&gt;
+    &lt;/field&gt;
+    &lt;field name="type" class="java.lang.String"&gt;
+      &lt;property name="net.sf.jasperreports.xpath.field.expression" value="@type"/&gt;
+    &lt;/field&gt;
+    &lt;field name="poster" class="java.lang.String"&gt;
+      &lt;property name="net.sf.jasperreports.xpath.field.expression" value="@poster"/&gt;
+    &lt;/field&gt;
+  &lt;/subDataset&gt;
+  &lt;parameter name="title" class="java.lang.String" evaluationTime="Early"&gt;
+    &lt;property name="net.sf.jasperreports.http.data.url.parameter" value="s"/&gt;
+    &lt;defaultValueExpression&gt;&lt;![CDATA["aliens"]] &gt;&lt;/defaultValueExpression&gt;
+  &lt;/parameter&gt;
+  &lt;queryString language="xPath"&gt;
+    &lt;![CDATA[/root]] &gt;
+  &lt;/queryString&gt;
+  &lt;field name="totalResults" class="java.lang.Integer"&gt;
+    &lt;property name="net.sf.jasperreports.xpath.field.expression" value="@totalResults"/&gt;
+  &lt;/field&gt;
+  ...
+&lt;/jasperReport&gt;</pre>
+
+<ul>
+
+<li>this JRXML file requires information from <span class="code"><code><b>data/XmlHttpDataAdapter.xml</b></code></span> data adapter for both main dataset and <span class="code"><code>MoviesDataset</code></span>
+</li>
+
+<li>
+The response content will be delivered in the following XML format:
+<pre>
+&lt;root totalResults="213" response="True"&gt;
+  &lt;result title="Aliens" year="1986" imdbID="tt0090605" type="movie" poster="https://.../...jpg"/&gt;
+  &lt;result title="Cowboys &amp; Aliens" year="2011" imdbID="tt0409847" type="movie" poster="https://.../...jpg"/&gt;
+  ...
+&lt;/root&gt;</pre>
+
+</li>
+
+<li>the query language is set to <span class="code"><code><b>xPath</b></code></span> (instead of <span class="code"><code><b>jsonql</b></code></span>) in both main dataset and <span class="code"><code>MoviesDataset</code></span>; 
+in <span class="code"><code>MoviesDataset</code></span> the xPath query is performed over the <span class="code"><code><b>/root/result</b></code></span> nodes</li>
+
+<li>the web service URL will look like: <span class="code"><code>http://www.omdbapi.com/?r=<b>xml</b>&amp;s=aliens</code></span> in main dataset 
+and <span class="code"><code>http://www.omdbapi.com/?r=<b>xml</b>&amp;s=aliens&amp;page=2</code></span> in <span class="code"><code>MoviesDataset</code></span>
+</li>
+
+<li>field properties have different names and values</li>
+
+</ul>
+in main dataset:
+<pre>
+&lt;field name="totalResults" class="java.lang.Integer"&gt;
+  &lt;property name="net.sf.jasperreports.xpath.field.expression" value="@totalResults"/&gt;
+&lt;/field&gt;</pre>
+and in <span class="code"><code>MoviesDataset</code></span>:
+<pre>
+&lt;field name="title" class="java.lang.String"&gt;
+  &lt;property name="net.sf.jasperreports.xpath.field.expression" value="@title"/&gt;
+&lt;/field&gt;
+&lt;field name="year" class="java.lang.Integer"&gt;
+  &lt;property name="net.sf.jasperreports.xpath.field.expression" value="@year"/&gt;
+&lt;/field&gt;
+&lt;field name="type" class="java.lang.String"&gt;
+  &lt;property name="net.sf.jasperreports.xpath.field.expression" value="@type"/&gt;
+&lt;/field&gt;
+&lt;field name="poster" class="java.lang.String"&gt;
+  &lt;property name="net.sf.jasperreports.xpath.field.expression" value="@poster"/&gt;
+&lt;/field&gt;</pre>
+
+<b>Running the Sample</b>
+
+<br>
+
+<br>
+Running the sample requires the <a href="http://ant.apache.org/" target="_blank" class="element">Apache Ant</a> library. Make sure that <span class="code"><code>ant</code></span> is already installed on your system (version 1.5 or later).
+<br>
+In a command prompt/terminal window set the current folder to <span class="code"><code>demo/samples/httpdataadapter</code></span> within the JasperReports source distro and run the <span class="code"><code>&gt; ant test view</code></span> command.
+<br>
+It will generate all supported document types containing the sample report in the <span class="code"><code>demo/samples/httpdataadapter/build/reports</code></span> directory. 
+<br>
+Then the report generated from <span class="code"><code>JsonHttpDataAdapterReport.jrxml</code></span> file will open in the JasperReports internal viewer.
+	</span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+</table>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<hr size="1">
+</td>
+</tr>
+<tr>
+<td align="center"><span class="copy">&copy; 2001-<script language="javascript">document.write((new Date()).getFullYear())</script> TIBCO Software Inc. <a class="copy" target="_blank" href="http://www.jaspersoft.com">www.jaspersoft.com</a></span></td>
+</tr>
+</table>
+</body>
+</html>

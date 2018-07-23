@@ -1,0 +1,539 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JasperReports 6.6.0 - Paragraph Sample</title>
+<style type="text/css">
+.title {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 28px;
+	font-weight: normal;
+}
+
+.toc {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.name {
+	font-family: Courier New, Courier, serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.label {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.description {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.value {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.element {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.attribute {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.code {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.copy {
+	font-decoration: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-style: normal;
+	color: #000000;
+}
+
+.subtitle {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: bold;
+	text-decoration: none;
+	color: inherit;
+}
+
+table.doctable {
+    border-collapse: collapse;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 10px 0;
+    text-align: left;
+}
+
+table.doctable th, table.doctable td {
+    border-bottom: 1px solid gray;
+    padding: 5px 10px;
+}
+
+table.doctable tr.full_border th, table.doctable tr.full_border td {
+    border: 1px solid gray;
+}
+
+table.doctable.alternate_bg tr:nth-child(even), tr.grey_bg {
+    background-color: #f2f2f2;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.large {
+    font-size: 20px;
+}
+
+.maxWidth170 {
+    max-width: 170px;
+}
+
+.minWidth300 {
+    min-width: 300px;
+}
+
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<a name="top"></a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td align="right" colspan="2"><span class="element"><a href="../../JasperReports-Ultimate-Guide-3.pdf">JasperReports Ultimate Guide</a> - <a href="../../sample.reference.html">Sample Reference</a> - <a href="../../schema.reference.html">Schema Reference</a> - <a href="../../config.reference.html">Configuration Reference</a> - <a href="http://jasperreports.sourceforge.net/api/index.html">API (Javadoc)</a></span>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+<tr valign="middle">
+<td nowrap="true"><span class="title">JasperReports - Paragraph Sample (version 6.6.0)</span></td><td align="right"><img border="0" src="../../resources/jasperreports.svg"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+</table>
+<br>
+<span class="description"><span class="description">Shows how to work with paragraphs.</span></span>
+<br>
+<br>
+<span class="element"><a href="http://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%206.6.0/jasperreports-6.6.0-project.zip/download" target="_blank">Download All Sample Source Files</a></span>
+<br>
+<span class="element"><a href="http://sourceforge.net/p/jasperreports/code/ci/jr-6-6-0/tree/jasperreports/demo/samples/paragraphs/" target="_blank">Browse Sample Source Files on Git</a></span>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td style="width: 20px;">
+<br>
+</td><td>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2"><span class="label">Main Features in This Sample</span></td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td><span class="element"><a href="#paragraphs">Paragraphs</a></span></td>
+</tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td><img height="1" width="20" border="0" src="../../resources/px.gif"></td><td><img height="1" width="20" border="0" src="../../resources/px.gif"></td><td><img height="1" width="20" border="0" src="../../resources/px.gif"></td><td><img height="1" width="20" border="0" src="../../resources/px.gif"></td><td width="80%">
+<br>
+</td><td width="20%">
+<br>
+</td>
+</tr>
+<tr>
+<td align="right" colspan="6"><a name="paragraphs"></a><a class="toc" href="#top">top</a></td>
+</tr>
+<tr>
+<td colspan="6">
+<hr size="1">
+</td>
+</tr>
+<tr valign="top">
+<td><img border="0" src="../../resources/jr-16x16.png"></td><td colspan="4"><span class="name">Paragraphs</span></td><td align="right"><span class="copy">Documented by 
+	<a href="mailto:shertage@users.sourceforge.org" class="copy">Sanda Zaharia</a></span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td nowrap="true"><span class="label">Description / Goal</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">
+How to format texts using paragraph properties.
+    </span></td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td colspan="1"><span class="label">Since</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">4.0.2</span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td colspan="5"><span class="description">
+<a name="overview" href="../../sample.reference/paragraphs/index.html#overview" class="subtitle">Working with Paragraphs</a>
+
+<br>
+
+<br>
+When we place text content in a report element, we may need to make it look like a distinct paragraph. 
+The information needed in this case can be retrieved either from the element's style (where we have attributes for text alignment), 
+or from the <span class="code"><code>&lt;paragraph/&gt;</code></span> tag that is available within <span class="code"><code>&lt;style/&gt;</code></span> and/or <span class="code"><code>&lt;textElement/&gt;</code></span>.
+<br>
+
+<br>
+Example:
+<pre>
+&lt;textField&gt;
+  &lt;reportElement .../&gt;
+  &lt;textElement textAlignment="Right"&gt;
+    &lt;paragraph lineSpacing="Fixed" lineSpacingSize="20.0"&gt;
+      &lt;tabStop position="20" alignment="Center"/&gt;
+      &lt;tabStop position="40" alignment="Center"/&gt;
+    &lt;/paragraph&gt;
+  &lt;/textElement&gt;
+  &lt;textFieldExpression&gt;...&lt;/textFieldExpression&gt;
+&lt;/textField&gt;</pre>
+
+<a name="alignment" href="../../sample.reference/paragraphs/index.html#alignment" class="subtitle">Paragraph Alignment</a>
+
+<br>
+
+<br>
+A paragraph can be aligned both horizontally and vertically. 
+<br>
+For the horizontal alignment we can choose one of the following options:
+<ul>
+
+<li>set the <span class="code"><code>textAlignment</code></span> attribute in the <span class="code"><code>&lt;textElement/&gt;</code></span> tag that is associated with the text element in the JRXML file</li>
+
+<li>set the <span class="code"><code>hTextAlign</code></span> attribute in a report style that will be applied to the text element</li>
+
+<li>set the <span class="code"><code>net.sf.jasperreports.style.hTextAlign</code></span> style feature property per report element</li>
+
+</ul>
+Possible values for the above settings are stored in <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/type/HorizontalTextAlignEnum.html" target="_blank">HorizontalTextAlignEnum</a></span> class: 
+<ul>
+
+<li>
+<span class="code"><code>Left</code></span> - default value</li>
+
+<li>
+<span class="code"><code>Center</code></span>
+</li>
+
+<li>
+<span class="code"><code>Right</code></span>
+</li>
+
+<li>
+<span class="code"><code>Justified</code></span>
+</li>
+
+</ul>
+For the vertical alignment, the following options are available:
+<ul>
+
+<li>set the <span class="code"><code>verticalAlignment</code></span> attribute in the <span class="code"><code>&lt;textElement/&gt;</code></span> tag that is associated with the text element in the JRXML file</li>
+
+<li>set the <span class="code"><code>vTextAlign</code></span> attribute in a report style that will be applied to the text element</li>
+
+<li>set the <span class="code"><code>net.sf.jasperreports.style.vTextAlign</code></span> style feature property per report element</li>
+
+</ul>
+Possible values for the vertical text alignment are stored in <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/type/VerticalTextAlignEnum.html" target="_blank">VerticalTextAlignEnum</a></span> class: 
+<ul>
+
+<li>
+<span class="code"><code>Top</code></span> - default value</li>
+
+<li>
+<span class="code"><code>Middle</code></span>
+</li>
+
+<li>
+<span class="code"><code>Bottom</code></span>
+</li>
+
+<li>
+<span class="code"><code>Justified</code></span>
+</li>
+
+</ul>
+Examples:
+<pre>
+&lt;style name="MyParagraphStyle" hTextAlign="Center" vTextAlign="Middle" ... /&gt;
+...
+&lt;textField&gt;
+  &lt;reportElement style="MyParagraphStyle".../&gt;
+  &lt;textElement/&gt;
+  &lt;textFieldExpression&gt;...&lt;/textFieldExpression&gt;
+&lt;/textField&gt;
+
+or:
+
+&lt;textField&gt;
+  &lt;reportElement .../&gt;
+  &lt;textElement textAlignment="Center" verticalAlignment="Middle" ... /&gt;
+  &lt;textFieldExpression&gt;...&lt;/textFieldExpression&gt;
+&lt;/textField&gt;
+
+or:
+
+&lt;textField&gt;
+  &lt;reportElement ...&gt;
+    &lt;property name="net.sf.jasperreports.style.hTextAlign" value="Center"/&gt;
+    &lt;property name="net.sf.jasperreports.style.vTextAlign" value="Middle"/&gt;
+  &lt;/reportElement&gt;
+  &lt;textElement/&gt;
+  &lt;textFieldExpression&gt;...&lt;/textFieldExpression&gt;
+&lt;/textField&gt;</pre>
+
+
+<a name="spacing" href="../../sample.reference/paragraphs/index.html#spacing" class="subtitle">Line Spacing</a>
+
+<br>
+
+<br>
+For a given paragraph one can apply various settings for line spacing, as attributes of the <span class="code"><code>&lt;paragraph/&gt;</code></span> tag associated with the text element:
+<ul>
+
+<li>
+<span class="code"><code>lineSpacing</code></span> - describes the type of line spacing for the paragraph. Possible values for this attribute are stored in the 
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/type/LineSpacingEnum.html" target="_blank">LineSpacingEnum</a></span> class:
+<ul>
+
+<li>
+<span class="code"><code>Single</code></span> - normal spacing between lines; this is the default value.</li>
+
+<li>
+<span class="code"><code>1_1_2</code></span> - spacing between lines set to 50% more than normal</li>
+
+<li>
+<span class="code"><code>Double</code></span> - spacing between lines set to double normal size</li>
+
+<li>
+<span class="code"><code>AtLeast</code></span> - spacing between lines set at least to a specified size indicated by <span class="code"><code>lineSpacingSize</code></span> attribute</li>
+
+<li>
+<span class="code"><code>Fixed</code></span> - spacing between lines set exactly as specified by <span class="code"><code>lineSpacingSize</code></span> attribute</li>
+
+<li>
+<span class="code"><code>Proportional</code></span> - spacing between lines set to a specified proportion of the normal line spacing</li>
+
+</ul>
+
+</li>
+
+<li>
+<span class="code"><code>lineSpacingSize</code></span> - numeric (floating-point) value that specifies the line spacing size to be used in combination with the above <span class="code"><code>lineSpacing</code></span> type</li>
+
+<li>
+<span class="code"><code>spacingBefore</code></span> - refers to the spacing before the paragraph (in pixels)</li>
+
+<li>
+<span class="code"><code>spacingAfter</code></span> - refers to the spacing after the paragraph (in pixels)</li>
+
+</ul>
+Example:
+<pre>
+&lt;textField isStretchWithOverflow="true"&gt;
+  &lt;reportElement .../&gt;
+  &lt;textElement ...&gt;
+    &lt;paragraph lineSpacing="Fixed" lineSpacingSize="20.0" spacingBefore="6" spacingAfter="12"&gt;
+  &lt;/textElement&gt;
+  &lt;textFieldExpression&gt;...&lt;/textFieldExpression&gt;
+&lt;/textField&gt;</pre>
+
+<a name="indentation" href="../../sample.reference/paragraphs/index.html#indentation" class="subtitle">Paragraph Indentation</a>
+
+<br>
+
+<br>
+JasperReports also supports paragraph indentation, which can be customized using the following attributes of the <span class="code"><code>&lt;paragraph/&gt;</code></span> tag:
+<ul>
+
+<li>
+<span class="code"><code>firstLineIndent</code></span> - represents the indent (in pixels) of the first line of text</li>
+
+<li>
+<span class="code"><code>leftIndent</code></span> - represents the left indent (in pixels) of the paragraph</li>
+
+<li>
+<span class="code"><code>rightIndent</code></span> - represents the right indent (in pixels) of the paragraph</li>
+
+</ul>
+Example:
+<pre>
+&lt;style name="indentStyle" isDefault="true" fontName="DejaVu Sans"&gt;
+  &lt;paragraph firstLineIndent="20" leftIndent="35" rightIndent="20"/&gt;
+&lt;/style&gt;</pre>
+
+
+<a name="tabstops" href="../../sample.reference/paragraphs/index.html#tabstops" class="subtitle">Tab Stops</a>
+
+<br>
+
+<br>
+In a given text element we can configure custom tab stops as well, by placing a sequence of <span class="code"><code>&lt;tabStop/&gt;</code></span> elements 
+inside a <span class="code"><code>&lt;paragraph/&gt;</code></span> tag. A custom tab stop is completely characterized by its position and alignment:
+<ul>
+
+<li>
+<span class="code"><code>position</code></span> - is required; represents the position (in pixels) of the custom tab stop</li>
+
+<li>
+<span class="code"><code>alignment</code></span> - optional; represents the alignment of the custom tab stop. Possible values for this attribute are 
+(see <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/type/TabStopAlignEnum.html" target="_blank">TabStopAlignEnum</a></span>):
+<ul>
+
+<li>
+<span class="code"><code>Left</code></span> - default value</li>
+
+<li>
+<span class="code"><code>Center</code></span>
+</li>
+
+<li>
+<span class="code"><code>Right</code></span>
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+Another useful setting is the tab stop width (in pixels) of the paragraph, that can be customized using the <span class="code"><code>tabStopWidth</code></span> attribute of the <span class="code"><code>&lt;paragraph/&gt;</code></span>.
+<br>
+
+<br>
+Examples:
+<pre>
+&lt;paragraph lineSpacing="Fixed" lineSpacingSize="20.0" tabStopWidth="20"/&gt;
+
+or
+
+&lt;paragraph lineSpacing="Fixed" lineSpacingSize="20.0"&gt;
+  &lt;tabStop position="20"/&gt;
+  &lt;tabStop position="40" alignment="Center"/&gt;
+  &lt;tabStop position="80" alignment="Right"/&gt;
+&lt;/paragraph&gt;</pre>
+
+<a name="defaults" href="../../sample.reference/paragraphs/index.html#defaults" class="subtitle">Default Values for Paragraph Settings</a>
+
+<br>
+
+<br>
+In case we need the same paragraph settings to be applied for all reports that share the same context, 
+we can use the following properties that can be set on the report context:
+<ul>
+
+<li>
+<span class="code"><code>net.sf.jasperreports.default.line.spacing.size</code></span> - sets the default value for the line spacing size</li>
+
+<li>
+<span class="code"><code>net.sf.jasperreports.default.first.line.indent</code></span> - sets the default value for the first line indent</li>
+
+<li>
+<span class="code"><code>net.sf.jasperreports.default.left.indent</code></span> - sets the default value for the left indent</li>
+
+<li>
+<span class="code"><code>net.sf.jasperreports.default.right.indent</code></span> - sets the default value for the right indent</li>
+
+<li>
+<span class="code"><code>net.sf.jasperreports.default.spacing.before</code></span> - sets the default value for the spacing before paragraph</li>
+
+<li>
+<span class="code"><code>net.sf.jasperreports.default.spacing.after</code></span> - sets the default value for the spacing after paragraph</li>
+
+<li>
+<span class="code"><code>net.sf.jasperreports.default.tab.stop.width</code></span> - sets the default value for the tab stop width</li>
+
+</ul>
+Following are the default values as stored in the <span class="code"><code>default.jasperreports.properties</code></span> file:
+<pre>
+net.sf.jasperreports.default.line.spacing.size=1
+net.sf.jasperreports.default.first.line.indent=0
+net.sf.jasperreports.default.left.indent=0
+net.sf.jasperreports.default.right.indent=0
+net.sf.jasperreports.default.spacing.before=0
+net.sf.jasperreports.default.spacing.after=0
+net.sf.jasperreports.default.tab.stop.width=40</pre>
+
+<b>Running the Sample</b>
+
+<br>
+
+<br>
+Running the sample requires the <a href="http://ant.apache.org/" target="_blank" class="element">Apache Ant</a> library. Make sure that <span class="code"><code>ant</code></span> is already installed on your system (version 1.5 or later).
+<br>
+In a command prompt/terminal window set the current folder to <span class="code"><code>demo/samples/paragraphs</code></span> within the JasperReports source project and run the <span class="code"><code>&gt; ant test view</code></span> command.
+<br>
+It will generate all supported document types containing the sample report in the <span class="code"><code>demo/samples/paragraphs/build/reports</code></span> directory. 
+<br>
+Then the report will open in the JasperReports internal viewer.
+    </span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+</table>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<hr size="1">
+</td>
+</tr>
+<tr>
+<td align="center"><span class="copy">&copy; 2001-<script language="javascript">document.write((new Date()).getFullYear())</script> TIBCO Software Inc. <a class="copy" target="_blank" href="http://www.jaspersoft.com">www.jaspersoft.com</a></span></td>
+</tr>
+</table>
+</body>
+</html>

@@ -8,8 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="EasyFindings.jar" size="31478" download="eager" />
+    <jar href="EasyFindings.jar" size="31546" download="eager" />
     <jar href="lib/guava-23.0.jar" size="2614708" download="eager" />
+    <jar href="lib/jasperreports-6.6.0.jar" size="5534555" download="eager" />
+    <jar href="lib/jasperreports-fonts-6.6.0.jar" size="2478073" download="eager" />
+    <jar href="lib/jasperreports-javaflow-6.6.0.jar" size="5543559" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="EasyFindings" >
     <param name="requiredFXVersion" value="8.0+"/>
