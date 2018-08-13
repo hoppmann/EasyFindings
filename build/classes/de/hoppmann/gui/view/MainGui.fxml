@@ -23,5 +23,6 @@
       <Button fx:id="findings" layoutX="368.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleFindingsButton" prefHeight="25.0" prefWidth="110.0" text="Findings" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="250.0" />
       <Label fx:id="infoFiled" layoutX="122.0" layoutY="365.0" prefHeight="25.0" prefWidth="486.0" text="INFO:" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="137.0" />
       <Button layoutX="639.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleColumnsButton" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.rightAnchor="20.0" />
+      <Button layoutX="391.0" layoutY="329.0" mnemonicParsing="false" onAction="#testButtonAction" prefWidth="110.0" text="Test" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="370.0" />
    </children>
 </AnchorPane>

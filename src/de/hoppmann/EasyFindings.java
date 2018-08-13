@@ -5,7 +5,6 @@
  */
 package de.hoppmann;
 
-import de.hoppmann.createPDF.CreateReport;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,8 +22,7 @@ public class EasyFindings extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-	new CreateReport();
-
+//	new CreateReport();
 
 
 
@@ -37,6 +35,12 @@ public class EasyFindings extends Application {
 
 	stage.setScene(scene);
         stage.show();
+	
+	
+	
+	
+//		new Test(stage, root);
+
         
     }
 

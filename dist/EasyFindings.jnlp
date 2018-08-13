@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="EasyFindings.jar" size="33373" download="eager" />
+    <jar href="EasyFindings.jar" size="43758" download="eager" />
     <jar href="lib/barcodes-7.0.7-javadoc.jar" size="194648" download="eager" />
     <jar href="lib/barcodes-7.0.7-sources.jar" size="149022" download="eager" />
     <jar href="lib/barcodes-7.0.7.jar" size="150286" download="eager" />
@@ -37,6 +37,7 @@
     <jar href="lib/sign-7.0.7-javadoc.jar" size="312256" download="eager" />
     <jar href="lib/sign-7.0.7-sources.jar" size="122149" download="eager" />
     <jar href="lib/sign-7.0.7.jar" size="121067" download="eager" />
+    <jar href="lib/sqlite-jdbc-3.8.10.1.jar" size="6623425" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="EasyFindings" >
     <param name="requiredFXVersion" value="8.0+"/>

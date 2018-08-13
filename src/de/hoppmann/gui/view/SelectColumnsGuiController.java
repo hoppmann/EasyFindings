@@ -101,27 +101,6 @@ public class SelectColumnsGuiController implements Initializable {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //////// save chosen values for current session only
     @FXML
     private void okButtonEvent(ActionEvent event) {

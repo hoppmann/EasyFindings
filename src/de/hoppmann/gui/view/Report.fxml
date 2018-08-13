@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" maxWidth="1240.0" prefHeight="594.5" prefWidth="420.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.ReportController">
+   <children>
+      <TextArea layoutX="15.0" layoutY="59.0" prefHeight="108.0" prefWidth="164.0" text="SENDER" AnchorPane.leftAnchor="15.0" />
+      <TextArea layoutX="236.0" layoutY="59.0" prefHeight="108.0" prefWidth="164.0" text="RECEIVER" AnchorPane.rightAnchor="15.0" />
+   </children>
+</AnchorPane>

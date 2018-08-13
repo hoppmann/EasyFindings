@@ -59,6 +59,47 @@ public class MainGuiController implements Initializable {
 
     
     
+    
+    
+    // test button to shortcut to desired window
+    
+    @FXML
+    private void testButtonAction (ActionEvent event) {
+	
+	
+	try {
+	    // open database window
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CheckDB.fxml"));
+	    
+	    
+	    // create new window
+	    Parent root = fxmlLoader.load();
+	    Stage stage = new Stage();
+	    stage.setTitle("Check databse");
+	    stage.setAlwaysOnTop(true);
+	    stage.setScene(new Scene(root));
+	    stage.show();
+	} catch (IOException ex) {
+	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	}
+
+	
+	
+	
+	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // choose columns needed for automated catagorizing
     @FXML
     private void handleColumnsButton (ActionEvent event) {

@@ -57,7 +57,8 @@ public class Config {
     // misc
     private final String inputPathKey = "inputPath";
     private String inputPath;
-    
+    private final String dbPathKey = "dbPath";
+    private String dbPath;
     
     /////////////////////////////
     //////// constructor ////////
@@ -92,6 +93,8 @@ public class Config {
 	splice15Col = prop.getProperty(splice15ColKey);
 	totPredCol = prop.getProperty(totPredColKey);
 	predScoreCol = prop.getProperty(predScorColKey);
+	dbPath = prop.getProperty(dbPathKey);
+	
 	
 	
 	    
@@ -287,6 +290,15 @@ public class Config {
     public void setPredScoreCol(String predScoreCol) {
 	this.predScoreCol = predScoreCol;
 	saveConfig(predScorColKey, predScoreCol);
+    }
+
+    public String getDbPath() {
+	return dbPath;
+    }
+
+    public void setDbPath(String dbPath) {
+	this.dbPath = dbPath;
+	saveConfig(dbPathKey, dbPath);
     }
 
     

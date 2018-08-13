@@ -56,8 +56,154 @@ public class FindingsGuiController implements Initializable {
     //////// Methods ////////
     /////////////////////////
 
+    
+    
+    
+    
+    
 
     //// FXML Methods
+    
+    
+    
+    @FXML
+    private void checkDbButtonAction(ActionEvent event) {
+	
+	
+	try {
+	    // open database window
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CheckDB.fxml"));
+	    
+	    
+	    // create new window
+	    Parent root = fxmlLoader.load();
+	    Stage stage = new Stage();
+	    stage.setTitle("Check databse");
+	    stage.setAlwaysOnTop(true);
+	    stage.setScene(new Scene(root));
+	    stage.showAndWait();
+	    
+//	    // setting controller for data transfer
+//	    CheckDBController controller = loader.getController();
+
+
+
+
+//	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Report.fxml"));
+//
+//	    	    // create new window
+//	    Parent root = fxmlLoader.load();
+//	    Stage stage = new Stage();
+//	    stage.setTitle("Report");
+//	    stage.setScene(new Scene(root));
+//	    stage.show();
+//	    
+//	     //// create controller for passing variables
+//	    ReportController controller = fxmlLoader.getController();
+
+	    
+	    
+	} catch (IOException ex) {
+	    Logger.getLogger(FindingsGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //// print report
+    @FXML
+    private void printReport (ActionEvent event) {
+	
+//	new Test(primaryStage, closeButton);
+	
+	
+	
+	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //// show report window
+    @FXML
+    private void showReportAction (ActionEvent event) {
+	
+	
+	try {
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Report.fxml"));
+	    
+	    
+	    // create new window
+	    Parent root = fxmlLoader.load();
+	    Stage stage = new Stage();
+	    stage.setTitle("Report");
+	    stage.setScene(new Scene(root));
+	    stage.show();
+	    
+	     //// create controller for passing variables
+	    ReportController controller = fxmlLoader.getController();
+
+//	    new Test(stage, root);
+	      
+	    
+	    
+	} catch (IOException ex) {
+	    Logger.getLogger(FindingsGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	}
+
+	
+	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @FXML
     private void closeButtonAction (ActionEvent event) {
 	

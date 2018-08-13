@@ -4,14 +4,17 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.FindingsGuiController">
+<AnchorPane id="AnchorPane" prefHeight="438.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.FindingsGuiController">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="400.0" prefWidth="530.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TableView fx:id="findingsTable" prefHeight="316.0" prefWidth="600.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" />
-            <Button fx:id="removeLines" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#removeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" />
-            <Button fx:id="closeButton" layoutX="524.0" layoutY="349.0" mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="10.0" />
-            <Button fx:id="SelectColumnsButtons" layoutX="137.0" layoutY="349.0" mnemonicParsing="false" onAction="#selectColumnsButton" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="130.0" />
+            <TableView fx:id="findingsTable" prefHeight="312.0" prefWidth="596.0" AnchorPane.bottomAnchor="124.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" />
+            <Button fx:id="removeLines" layoutX="10.0" layoutY="384.0" mnemonicParsing="false" onAction="#removeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="10.0" />
+            <Button fx:id="closeButton" layoutX="490.0" layoutY="384.0" mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="10.0" />
+            <Button fx:id="SelectColumnsButtons" layoutX="130.0" layoutY="384.0" mnemonicParsing="false" onAction="#selectColumnsButton" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="130.0" />
+            <Button fx:id="ShowReportButton" layoutX="250.0" layoutY="384.0" mnemonicParsing="false" onAction="#showReportAction" prefHeight="25.0" prefWidth="110.0" text="Show Report" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="250.0" />
+            <Button fx:id="printReportButton" layoutX="370.0" layoutY="384.0" mnemonicParsing="false" onAction="#showReportAction" prefHeight="25.0" prefWidth="110.0" text="Print Report" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="370.0" />
+            <Button layoutX="34.0" layoutY="379.0" mnemonicParsing="false" onAction="#checkDbButtonAction" prefWidth="110.0" text="CheckDB" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="10.0" />
          </children>
       </AnchorPane>
    </children>
