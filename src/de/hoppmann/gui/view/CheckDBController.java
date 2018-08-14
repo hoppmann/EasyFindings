@@ -5,13 +5,16 @@
  */
 package de.hoppmann.gui.view;
 
+import de.hoppmann.config.Config;
 import de.hoppmann.operations.GeneDB;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -36,10 +39,17 @@ public class CheckDBController implements Initializable {
     @FXML
     private TextArea geneInfoField;
     
+    @FXML
+    private Label infoLabel;
+    
+    @FXML
+    private Label dbLabel;
+    
     
     
     
     private GeneDB geneDB;
+    private Config config;
     
     
     
@@ -72,13 +82,26 @@ public class CheckDBController implements Initializable {
     
     
     
+    
+    
+    
+    
     //// open DB
     @FXML
     private void openDbButtonAction (ActionEvent event) {
 	
-	geneDB.openDB();
+	File dbFile = geneDB.openDB();
 	
+	if (dbFile != null) {
+	    geneDB.connect(dbFile);
+	}
     }
+    
+    
+    
+    
+    
+    
     
     
     
@@ -88,10 +111,22 @@ public class CheckDBController implements Initializable {
     @FXML
     private void newDbButtonAction (ActionEvent event) {
 	
-	geneDB.createNewDB();
+	File dbFile = geneDB.createNewDB();
+	if (dbFile != null) {
+	    geneDB.connect(dbFile);
+	}
 	
 	
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     @FXML 
@@ -99,12 +134,33 @@ public class CheckDBController implements Initializable {
 	
 	
 	String geneInfo = geneInfoField.getText();
+	
+	// get geneName and remove all nonalphanumeric elements
 	String geneName = geneNameFiled.getText();
+	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
+
 	
-	
-	geneDB.saveGene(geneInfo, geneName);
+	geneDB.saveGene(geneName, geneInfo);
 	
     }
+    
+   
+    
+    
+    
+    @FXML
+    private void showGeneInfoButtonAction(ActionEvent event) {
+	
+	// retrieve string and remove all non alphanumeric elements
+	String geneName = geneNameFiled.getText();
+	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
+
+	
+	geneInfoField.setText(geneDB.getGeneEntry(geneName));
+	
+	
+    }
+    
     
     
     
@@ -117,8 +173,22 @@ public class CheckDBController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 	
-	geneDB = new GeneDB();
-
+	geneDB = new GeneDB(dbLabel, infoLabel);
+	
+	// check if DB saved in cofig exists
+	// if so connect to it
+	
+	Config config = new Config();
+	if (config.getDbFullPath() != null){
+	    
+	    if (new File(config.getDbFullPath()).exists() && !new File(config.getDbFullPath()).isDirectory()){
+		File dbFile = new File(config.getDbFullPath());
+		geneDB.connect(dbFile);
+	    }
+	}
+	
+	
+	
     }    
     
 }
