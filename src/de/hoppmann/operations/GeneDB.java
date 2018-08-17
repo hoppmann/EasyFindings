@@ -33,7 +33,7 @@ public class GeneDB {
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
-    private static Connection conn = null;
+    private Connection conn = null;
     private final String driver = "org.sqlite.JDBC";
     private String dbPath;
     private final String geneTable = "genes";

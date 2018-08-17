@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package de.hoppmann.createPDF;
+package de.hoppmann.createReport;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Font;

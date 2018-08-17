@@ -9,6 +9,7 @@ package de.hoppmann.gui.modelsAndData;
 import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.operations.LoadInputFile;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -107,16 +108,26 @@ public class StoreFindings {
     }
 
 
-    public List <String> getDependentValueList(String headerKey, String dependKey, String dependValue) {
+    // get all stored values to a key given that it belongs to the dependend key
+    // if boolean split is true the result is splitted at splitString and each single entry added to list. 
+    public List <String> getDependentValueList(String headerKey, String dependKey, String dependValue, boolean split, String splitString) {
 	
 	List<String> list = new LinkedList<>();
 	
 	for (TableData curEntry : storedData) {
 	    String value = curEntry.getInputLine().get(header.get(headerKey));
 	    String dependency = curEntry.getInputLine().get(header.get(dependKey));
-	    
+
+	    // check if dependency is met
 	    if (dependency.equals(dependValue)) {
-		list.add(value);
+		
+		// check if result should be splitted or not
+		if (split){
+		    // split line and add each element to list
+		    list.addAll(Arrays.asList(value.split(splitString)));
+		} else {
+		    list.add(value);
+		}
 	    }
 	}
 	
