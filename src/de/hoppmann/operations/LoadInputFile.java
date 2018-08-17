@@ -54,6 +54,9 @@ public class LoadInputFile {
     
     public LoadInputFile(TableView inputTable, Label infoFiled) {
         
+	// init config
+	config = new Config();
+	
         // retrieve variables
         this.tableView = inputTable;
         this.infoField = infoFiled;
@@ -85,25 +88,26 @@ public class LoadInputFile {
     
     //// choose file to open
     private void chooseFile() {
-        
-        // create chooser to choose file
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Open input file");
-	
+
+	// create chooser to choose file
+	FileChooser chooser = new FileChooser();
+	chooser.setTitle("Open input file");
+
 	// if config path exists take config path else new path
-	Config config = new Config();
-	if (new File(config.getInputPath()).exists()){
+	if (new File(config.getInputPath()).exists()) {
 	    chooser.setInitialDirectory(new File(config.getInputPath()));
 	} else {
 	    chooser.setInitialDirectory(null);
 	}
-        file = chooser.showOpenDialog(new Stage());
-	
-	// store last used path
-	if (file.exists()) {
+
+	// check if file is chosen of it was canceld
+	file = chooser.showOpenDialog(new Stage());
+
+	// check if file was chosen then store last used path
+	if (file != null && file.exists()) {
 	    config.setInputPath(file.getParent());
 	}
-        
+
     }
     
     

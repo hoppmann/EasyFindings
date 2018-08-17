@@ -23,6 +23,7 @@ public class EasyFindings extends Application {
     public void start(Stage stage) throws Exception {
         
 //	new CreateReport();
+//	new Test(stage, root);
 
 
 
@@ -39,7 +40,6 @@ public class EasyFindings extends Application {
 	
 	
 	
-//		new Test(stage, root);
 
         
     }

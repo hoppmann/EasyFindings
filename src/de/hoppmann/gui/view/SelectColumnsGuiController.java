@@ -37,8 +37,6 @@ public class SelectColumnsGuiController implements Initializable {
     private ObservableList<String> header;
     private StoreFindings findings;
 
-//    private String geneCol = "gene";
-    
     @FXML
     private ComboBox<String> geneCol = new ComboBox<>();
     @FXML

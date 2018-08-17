@@ -9,6 +9,7 @@ package de.hoppmann.gui.modelsAndData;
 import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.operations.LoadInputFile;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,10 +42,13 @@ public class StoreFindings {
 
     public StoreFindings(List<String> header) {
 
+	// add coumun number to header
+	int coulumnInt = 0;
 	for (String curHeader : header) {
-	    this.header.put(curHeader, null);
+	    
+	    this.header.put(curHeader, coulumnInt);
+	    coulumnInt++;
 	}
-//	this.header = header;
 	storedData = new LinkedList<>();
 	
     }
@@ -89,6 +93,38 @@ public class StoreFindings {
     
     
     
+    // get all stored values of a key of choice
+    public List<String> getValueList(String headerKey) {
+
+	List<String> list = new LinkedList<>();
+
+	for (TableData curEntry : storedData) {
+	    list.add(curEntry.getInputLine().get(header.get(headerKey)));
+	}
+
+	return list;
+
+    }
+
+
+    public List <String> getDependentValueList(String headerKey, String dependKey, String dependValue) {
+	
+	List<String> list = new LinkedList<>();
+	
+	for (TableData curEntry : storedData) {
+	    String value = curEntry.getInputLine().get(header.get(headerKey));
+	    String dependency = curEntry.getInputLine().get(header.get(dependKey));
+	    
+	    if (dependency.equals(dependValue)) {
+		list.add(value);
+	    }
+	}
+	
+	
+	return list;
+    }
+    
+    
     
 	
     /////////////////////////////////
@@ -108,6 +144,9 @@ public class StoreFindings {
 	return header;
     }
 
+    
+    
+    
     
     
     public String getGeneCol() {

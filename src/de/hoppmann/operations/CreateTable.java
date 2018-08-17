@@ -12,7 +12,6 @@ import java.util.List;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -39,7 +38,6 @@ public class CreateTable {
     private final TableView<TableData> tableView;
     private TableColumn<TableData, Boolean> causalCol;
     private TableColumn<TableData, Catagory> catagoryCol;
-//    private TableColumn<TableData, String> catagoryCol;
 	
 	
 	
@@ -48,7 +46,7 @@ public class CreateTable {
     /////////////////////////////
 
     public CreateTable(TableView<TableData> tableView) {
-	this.tableView = tableView;
+    	this.tableView = tableView;
     }
 
 

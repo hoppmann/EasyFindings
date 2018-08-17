@@ -64,21 +64,32 @@ public class MainGuiController implements Initializable {
     // test button to shortcut to desired window
     
     @FXML
-    private void testButtonAction (ActionEvent event) {
+    private void databaseButtonAction (ActionEvent event) {
 	
 	
 	try {
 	    // open database window
 	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CheckDB.fxml"));
 	    
-	    
+
 	    // create new window
 	    Parent root = fxmlLoader.load();
 	    Stage stage = new Stage();
 	    stage.setTitle("Check databse");
 	    stage.setAlwaysOnTop(true);
 	    stage.setScene(new Scene(root));
+	    
+	    
+	    // run init 
+	    CheckDBController controller = fxmlLoader.getController();
+	    controller.init(findings);
+	    
+	    // show new vie
 	    stage.show();
+
+	    
+	    
+	    
 	} catch (IOException ex) {
 	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
 	}

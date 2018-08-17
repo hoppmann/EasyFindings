@@ -48,7 +48,7 @@ public class FindingsGuiController implements Initializable {
     private Button closeButton;
     
     @FXML
-    private TableView<TableData> findingsTable;
+    private TableView<TableData> findingsTable = new TableView<>();
     
     
     
@@ -75,32 +75,26 @@ public class FindingsGuiController implements Initializable {
 	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CheckDB.fxml"));
 	    
 	    
+
 	    // create new window
 	    Parent root = fxmlLoader.load();
 	    Stage stage = new Stage();
 	    stage.setTitle("Check databse");
 	    stage.setAlwaysOnTop(true);
 	    stage.setScene(new Scene(root));
+
+
+	    // get controller
+	    CheckDBController dbController = fxmlLoader.getController();
+	    dbController.init(findings);
+
+	    // show view
 	    stage.showAndWait();
+	    	    
+
+
+
 	    
-//	    // setting controller for data transfer
-//	    CheckDBController controller = loader.getController();
-
-
-
-
-//	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Report.fxml"));
-//
-//	    	    // create new window
-//	    Parent root = fxmlLoader.load();
-//	    Stage stage = new Stage();
-//	    stage.setTitle("Report");
-//	    stage.setScene(new Scene(root));
-//	    stage.show();
-//	    
-//	     //// create controller for passing variables
-//	    ReportController controller = fxmlLoader.getController();
-
 	    
 	    
 	} catch (IOException ex) {

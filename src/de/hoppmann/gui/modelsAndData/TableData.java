@@ -21,6 +21,7 @@ public class TableData {
     private Boolean causal = false;
     private LinkedList<String> inputLine;
     private String catagory;
+    private String geneName;
 	
 	
     /////////////////////////////

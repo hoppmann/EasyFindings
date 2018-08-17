@@ -6,16 +6,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="438.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.FindingsGuiController">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="530.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <TableView fx:id="findingsTable" prefHeight="312.0" prefWidth="596.0" AnchorPane.bottomAnchor="124.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" />
-            <Button fx:id="removeLines" layoutX="10.0" layoutY="384.0" mnemonicParsing="false" onAction="#removeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="10.0" />
-            <Button fx:id="closeButton" layoutX="490.0" layoutY="384.0" mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="10.0" />
-            <Button fx:id="SelectColumnsButtons" layoutX="130.0" layoutY="384.0" mnemonicParsing="false" onAction="#selectColumnsButton" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="130.0" />
-            <Button fx:id="ShowReportButton" layoutX="250.0" layoutY="384.0" mnemonicParsing="false" onAction="#showReportAction" prefHeight="25.0" prefWidth="110.0" text="Show Report" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="250.0" />
-            <Button fx:id="printReportButton" layoutX="370.0" layoutY="384.0" mnemonicParsing="false" onAction="#showReportAction" prefHeight="25.0" prefWidth="110.0" text="Print Report" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="370.0" />
-            <Button layoutX="34.0" layoutY="379.0" mnemonicParsing="false" onAction="#checkDbButtonAction" prefWidth="110.0" text="CheckDB" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="10.0" />
-         </children>
-      </AnchorPane>
+      <TableView fx:id="findingsTable" prefHeight="312.0" prefWidth="596.0" AnchorPane.bottomAnchor="124.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" />
+      <Button fx:id="removeLines" mnemonicParsing="false" onAction="#removeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="10.0" />
+      <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="480.0" />
+      <Button fx:id="SelectColumnsButtons" mnemonicParsing="false" onAction="#selectColumnsButton" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="130.0" />
+      <Button fx:id="ShowReportButton" mnemonicParsing="false" onAction="#showReportAction" prefHeight="25.0" prefWidth="110.0" text="Show Report" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="250.0" />
+      <Button fx:id="printReportButton" mnemonicParsing="false" onAction="#showReportAction" prefHeight="25.0" prefWidth="110.0" text="Print Report" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="370.0" />
+      <Button mnemonicParsing="false" onAction="#checkDbButtonAction" prefWidth="110.0" text="Database" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="10.0" />
    </children>
 </AnchorPane>
