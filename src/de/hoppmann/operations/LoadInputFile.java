@@ -38,9 +38,8 @@ public class LoadInputFile {
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
-    private final TableView<TableData> tableView;
+    private TableView<TableData> tableView = new TableView<>();
     private final List<String> header = new ArrayList<>();
-    private File file;
     private List<TableData> rowData;
     private Label infoField;
     private Config config;
@@ -67,11 +66,11 @@ public class LoadInputFile {
 	config = new Config();
 	
         // choose input file
-        chooseFile();
+        File file = chooseFile();
         
         // check if file chosen. If so continue loading and prepareing table
         if (file != null) {
-            openFile();
+            openFile(file);
 	    catagorize();
 	    createTable();
         }
@@ -87,7 +86,7 @@ public class LoadInputFile {
     
     
     //// choose file to open
-    private void chooseFile() {
+    private File chooseFile() {
 
 	// create chooser to choose file
 	FileChooser chooser = new FileChooser();
@@ -101,13 +100,14 @@ public class LoadInputFile {
 	}
 
 	// check if file is chosen of it was canceld
-	file = chooser.showOpenDialog(new Stage());
+	File file = chooser.showOpenDialog(new Stage());
 
 	// check if file was chosen then store last used path
 	if (file != null && file.exists()) {
 	    config.setInputPath(file.getParent());
 	}
 
+	return file;
     }
     
     
@@ -119,7 +119,7 @@ public class LoadInputFile {
     
     
     //// read in file
-    private void openFile() {
+    private void openFile(File file) {
 
         // prepare variables
         String line;

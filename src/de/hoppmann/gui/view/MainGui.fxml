@@ -24,5 +24,6 @@
       <Label fx:id="infoFiled" layoutX="122.0" layoutY="365.0" prefHeight="25.0" prefWidth="486.0" text="INFO:" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="137.0" />
       <Button layoutX="639.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleColumnsButton" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.leftAnchor="610.0" />
       <Button layoutX="391.0" layoutY="329.0" mnemonicParsing="false" onAction="#databaseButtonAction" prefWidth="110.0" text="Database" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="370.0" />
+      <Button layoutX="489.0" layoutY="329.0" mnemonicParsing="false" onAction="#reportButtonAction" prefWidth="110.0" text="Report" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="490.0" />
    </children>
 </AnchorPane>

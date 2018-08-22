@@ -11,25 +11,24 @@
 
 <AnchorPane id="AnchorPane" prefHeight="496.0" prefWidth="764.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.CheckDBController">
    <children>
-      <Button fx:id="closeButton" layoutX="634.0" layoutY="445.0" mnemonicParsing="false" onAction="#closeButtonAction" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="490.0" />
-      <Button fx:id="SaveButton" layoutX="233.0" layoutY="346.0" mnemonicParsing="false" onAction="#saveButtonAction" prefWidth="110.0" text="Save" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="250.0" />
+      <Button fx:id="closeButton" layoutX="248.0" layoutY="445.0" mnemonicParsing="false" onAction="#closeButtonAction" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="250.0" />
       <Button layoutX="14.0" layoutY="350.0" mnemonicParsing="false" onAction="#openDbButtonAction" prefWidth="110.0" text="Open DB" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" />
       <Button layoutX="129.0" layoutY="315.0" mnemonicParsing="false" onAction="#newDbButtonAction" prefWidth="110.0" text="New DB" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="130.0" />
       <Label fx:id="infoLabel" layoutX="17.0" layoutY="319.0" prefHeight="25.0" prefWidth="72.0" text="Info Field" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
       <Label layoutX="16.0" layoutY="19.0" prefHeight="16.0" prefWidth="126.0" text="Connected to DB:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
       <Label fx:id="dbLabel" layoutX="132.0" layoutY="21.0" prefHeight="16.0" prefWidth="180.0" AnchorPane.leftAnchor="135.0" AnchorPane.topAnchor="15.0" />
-      <Button layoutX="487.0" layoutY="444.0" mnemonicParsing="false" onAction="#removeButtonAction" prefWidth="110.0" text="Remove" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="370.0" />
       <TabPane fx:id="tabpane" layoutX="-2.0" layoutY="50.0" prefHeight="356.0" prefWidth="771.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab fx:id="findingsTab" text="Findings">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="findingsTable" layoutX="45.0" layoutY="14.0" prefHeight="323.0" prefWidth="756.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                        <TableView fx:id="findingsTable" layoutY="42.0" prefHeight="230.0" prefWidth="771.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
                         <Label layoutX="8.0" layoutY="16.0" prefHeight="16.0" prefWidth="80.0" text="Select Gene" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="15.0" />
-                        <ComboBox fx:id="findingsGeneNameBox" layoutX="107.0" layoutY="15.0" onAction="#findingsGeneBoxAction" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="10.0" />
-                        <Label layoutX="315.0" layoutY="17.0" prefHeight="16.0" prefWidth="97.0" text="Select Variant" AnchorPane.leftAnchor="310.0" AnchorPane.topAnchor="15.0" />
-                        <ComboBox fx:id="findingsVarNameBox" layoutX="407.0" layoutY="10.0" onAction="#findingsVarBoxAction" prefHeight="26.0" prefWidth="203.0" AnchorPane.leftAnchor="405.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <ComboBox fx:id="findingsGeneNameBox" layoutX="107.0" layoutY="15.0" onAction="#findingsGeneBoxAction" prefHeight="26.0" prefWidth="120.0" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="10.0" />
+                        <Label layoutX="225.0" layoutY="15.0" prefHeight="16.0" prefWidth="97.0" text="Select Variant" AnchorPane.leftAnchor="225.0" AnchorPane.topAnchor="15.0" />
+                        <ComboBox fx:id="findingsVarNameBox" layoutX="322.0" layoutY="10.0" onAction="#findingsVarBoxAction" prefHeight="26.0" prefWidth="326.0" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="10.0" />
+                        <Button layoutX="5.0" layoutY="289.0" mnemonicParsing="false" onAction="#findingsSaveButtonAction" prefWidth="110.0" text="Save" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" />
                      </children>
                   </AnchorPane>
               </content>
@@ -38,9 +37,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="306.0" prefWidth="756.0">
                      <children>
-                        <TextArea fx:id="geneInfoField" layoutX="-27.0" layoutY="50.0" prefHeight="270.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                        <TextArea fx:id="geneInfoField" layoutX="-27.0" layoutY="50.0" prefHeight="230.0" prefWidth="771.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
                         <Label layoutX="6.0" layoutY="6.0" prefHeight="16.0" prefWidth="80.0" text="Select Gene" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="15.0" />
                         <ComboBox fx:id="geneNameBox" layoutX="88.0" layoutY="13.0" onAction="#geneInfoGeneBoxAction" prefHeight="26.0" prefWidth="203.0" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="10.0" />
+                        <Button layoutX="14.0" layoutY="282.0" mnemonicParsing="false" onAction="#geneInfoTabSaveButtonAction" prefWidth="110.0" text="Save" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" />
+                        <Button layoutX="165.0" layoutY="292.0" mnemonicParsing="false" onAction="#geneInfoTabRemoveButtonAction" prefWidth="110.0" text="Remove" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="130.0" />
                      </children>
                   </AnchorPane>
               </content>
@@ -51,7 +52,9 @@
                      <children>
                         <ComboBox fx:id="varNameBox" layoutX="14.0" layoutY="14.0" onAction="#varInfoVarBoxAction" prefHeight="26.0" prefWidth="640.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="10.0" />
                         <Label prefHeight="16.0" prefWidth="95.0" text="Select Varinat" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="15.0" />
-                        <TextArea fx:id="varInfoField" layoutX="2.0" layoutY="40.0" prefHeight="270.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                        <TextArea fx:id="varInfoField" layoutX="2.0" layoutY="40.0" prefHeight="270.0" prefWidth="755.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                        <Button layoutX="9.0" layoutY="280.0" mnemonicParsing="false" onAction="#varInfoTabSaveButtonAction" prefWidth="110.0" text="Save" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" />
+                        <Button layoutX="161.0" layoutY="292.0" mnemonicParsing="false" onAction="#varInfoTabRemoveButtonAction" prefWidth="110.0" text="Remove" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="130.0" />
                      </children>
                   </AnchorPane>
               </content>

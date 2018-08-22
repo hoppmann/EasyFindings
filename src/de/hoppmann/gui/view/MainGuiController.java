@@ -5,12 +5,18 @@
  */
 package de.hoppmann.gui.view;
 
+import de.hoppmann.gui.messanges.CommonErrors;
 import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.web.HTMLEditor;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -60,8 +67,91 @@ public class MainGuiController implements Initializable {
     
     
     
+    // Report button 
+    @FXML
+    private void reportButtonAction (ActionEvent event) {
+	
+	String INITIAL_TEXT = "Lorem ipsum dolor sit "
+            + "amet, consectetur adipiscing elit. Nam tortor felis, pulvinar "
+            + "aliquam sagittis gravida eu dolor. Etiam sit amet ipsum "
+            + "sem.";
+	
+	
+//	try {
+//	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HTMLReport.fxml"));
+//	    
+//	    
+//	    
+//	    
+//	    // create new window
+//	    Parent root = fxmlLoader.load();
+//	    Stage stage = new Stage();
+//	    stage.setTitle("Report");
+//	    stage.setAlwaysOnTop(true);
+//	    stage.setScene(new Scene(root));
+//	   
+//	    HTMLReportController controller = fxmlLoader.getController();
+//
+//	    System.out.println(INITIAL_TEXT);
+//	    controller.init(INITIAL_TEXT);
+//	    
+//	    
+//	    // open window
+//	    stage.show();
+//	} catch (IOException ex) {
+//	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+//	}
+  
+	    
+	    HTMLEditor htmlEditor = new HTMLEditor();
+	    htmlEditor.setPrefHeight(245);
+	    Scene scene = new Scene(htmlEditor);
+	    Stage stage = new Stage();
+	    htmlEditor.setHtmlText(loadHtmlTemplate());
+	    stage.setScene(scene);
+	    stage.show();
+	    
+	    
+	    
+	
+	
+    }
     
-    // test button to shortcut to desired window
+    
+    private String loadHtmlTemplate() {
+	
+	
+	File inputFile = new File("/home/hoppmann/Dropbox/transfer/template.html");
+	
+	// prepare variables
+        String line;
+	List<String> input = new ArrayList<>();
+	try {
+            // read in file
+            BufferedReader br = new BufferedReader(new FileReader(inputFile));
+            while ((line = br.readLine()) != null) {
+		
+		// read in line split and save in row data object
+		input.add(line);
+            }
+            br.close();
+        } catch (IOException iOException) {
+	    new CommonErrors().cantOpen(inputFile.toString());
+        }
+	
+	
+	String htmlFile = input.toString();
+	
+	System.out.println(htmlFile);
+	
+	return htmlFile;
+	
+    }
+    
+    
+    
+    
+    // Button to jump to database window
     
     @FXML
     private void databaseButtonAction (ActionEvent event) {

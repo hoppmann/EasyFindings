@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/operations/GeneDB.java</file>
-            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/gui/view/CheckDBController.java</file>
-            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/gui/modelsAndData/StoreFindings.java</file>
+            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/gui/view/MainGuiController.java</file>
+            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/gui/view/HTMLReport.fxml</file>
+            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/gui/view/HTMLReportController.java</file>
         </group>
     </open-files>
 </project-private>

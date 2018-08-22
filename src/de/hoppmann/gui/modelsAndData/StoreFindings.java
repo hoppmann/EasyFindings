@@ -10,7 +10,6 @@ import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.operations.LoadInputFile;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
