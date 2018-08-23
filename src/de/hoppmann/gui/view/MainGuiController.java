@@ -22,13 +22,20 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -85,16 +92,48 @@ public class MainGuiController implements Initializable {
         String initialText = report.getTemplate();
         
         
-        HTMLEditor htmlEditor = new HTMLEditor();
-        htmlEditor.setPrefHeight(245);
-        Scene scene = new Scene(htmlEditor);
+//        HTMLEditor htmlEditor = new HTMLEditor();
+//        htmlEditor.setPrefHeight(245);
+//        Scene scene = new Scene(htmlEditor);
+//        Stage stage = new Stage();
+//        htmlEditor.setHtmlText(initialText);
+//        stage.setScene(scene);
+//        stage.show();
+
+        VBox root = new VBox();      
+        root.setPadding(new Insets(8, 8, 8, 8));
+        root.setSpacing(5);
+        root.setAlignment(Pos.BOTTOM_LEFT);
+        
+        
+                final HTMLEditor htmlEditor = new HTMLEditor();
+        htmlEditor.setPrefHeight(400);
+        htmlEditor.setHtmlText(initialText);       
+ 
+        final TextArea htmlCode = new TextArea();
+        htmlCode.setWrapText(true);
+    
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.getStyleClass().add("noborder-scroll-pane");
+        scrollPane.setContent(htmlCode);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefHeight(180);
+ 
+        Button showHTMLButton = new Button("Produce HTML Code");
+        root.setAlignment(Pos.CENTER);
+        showHTMLButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent arg0) {
+                htmlCode.setText(htmlEditor.getHtmlText());
+            }
+        });
+        
+        root.getChildren().addAll(htmlEditor, showHTMLButton, scrollPane);
+        Scene scene = new Scene(root);
+        scene.setRoot(root);
+ 
         Stage stage = new Stage();
-        htmlEditor.setHtmlText(initialText);
         stage.setScene(scene);
         stage.show();
-
-                
-        
         
         
         

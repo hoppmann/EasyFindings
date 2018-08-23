@@ -32,7 +32,19 @@ public class FillDataDummy {
     /////////////////////////
     
     public ReportDataModel fillModel () {
-        ReportDataModel dataModel = new ReportDataModel();
+        ReportDataModel model = new ReportDataModel();
+        
+        // fill receiver adress
+        model.setReceiverName("Dr. Maria Musterfrau");
+        model.setReceiverStreet("Hinterm Mond 1");
+        model.setReceiverCity("12345 Sonne");
+        
+        
+        // fill patient box
+        model.setDiagMethod("Multi-Gen-Panel-Analyse mittels Next Generation Sequencing (NGS)");
+        model.setPatient("SEEBER, Joshua Ruben, *25.12.2009, unsere Referenz P044");
+        model.setMaterial("EDTA-Blut, Eingang 21.09.2017");
+        model.setIndication("V.a. Mentale Retardierung, autosomal dominant");
         
         
         
@@ -45,9 +57,7 @@ public class FillDataDummy {
         
         
         
-        
-        
-        return dataModel;
+        return model;
     }
     
     

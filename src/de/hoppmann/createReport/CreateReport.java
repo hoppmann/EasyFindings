@@ -47,12 +47,32 @@ public class CreateReport {
     
     public void replaceValues() {
 
+        model = new FillDataDummy().fillModel();
+        
+        
         // add sender address
         replace(model.getSenderPH(), model.getSender("MVZ"));
         
-        // add receiver address
-        replace(template, template);
         
+        // add current date
+        replace(model.getDatePh(), "Freiburg, " + model.getDate());
+                
+        
+        
+        
+        // add receiver address
+        replace(model.getReveiverHeaderPH(), model.getReceiverHeader("MVZ"));
+        replace(model.getReceiverNamePH(), model.getReceiverName());
+        replace(model.getReceiverStreetPH(), model.getReceiverStreet());
+        replace(model.getReceiverCityPH(), model.getReceiverCity());
+        
+        
+        
+        // add patient box
+        replace(model.getDiagMethodPH(), model.getDiagMethod());
+        replace(model.getPatientPH(), model.getPatient());
+        replace(model.getMaterialPH(), model.getMaterial());
+        replace(model.getIndicationPH(), model.getIndication());
                 
         
     }

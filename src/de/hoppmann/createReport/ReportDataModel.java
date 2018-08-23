@@ -35,7 +35,7 @@ public class ReportDataModel {
     private final String patientPH = "${patient}";
     private final String materialPH = "${material}";
     private final String indicationPH = "${indication}";
-//    private final String ;
+    private final String datePh = "${date}";
 //    private final String ;
 //    private final String ;
 //    private final String ;
@@ -53,7 +53,6 @@ public class ReportDataModel {
     //// replacement values
     private String receiverName;
     private String receiverCity;
-    private String reveiverHeader;
     private String receiverStreet;
     private String uklLogo;
     private String diagMethod;
@@ -77,8 +76,7 @@ public class ReportDataModel {
     
     // sender variables
     private Map <String,String> sender = new HashMap<>();
-    private Map <String, String> senderHeader = new HashMap<>();
-    
+    private Map <String, String> receiverHeader = new HashMap<>();
     
     
     
@@ -90,6 +88,7 @@ public class ReportDataModel {
     public ReportDataModel() {
         
         prepareSender();
+        prepareReceiverHeader();
         
         
         
@@ -110,19 +109,38 @@ public class ReportDataModel {
         LocalDate localDate = LocalDate.now();
         return DateTimeFormatter.ofPattern("dd.MM.yyyy").format(localDate);
     }
+    
+    
+    // get receiver header dependeing on the key
+    public String getReceiverHeader(String key) {
+        return receiverHeader.get(key);
+    }
+    
+    // get sender depending on the key
+    public String getSender(String key){
+        return sender.get(key);
+    }
 
+    
+
+    
     
     // prepare sender
     private void prepareSender () {
 
     // sender choices
     sender.put("MVZ", "<p><strong>Medizinisches Versorgungszentrum</strong><br />Strahlentherapie<br />Humangenetik<br />Transfusionsmedizin</p>\n" +
-"<p>&nbsp;</p>\n" +
 "<p><strong>Humangenetik<br /></strong><strong>PD Dr. Ekkehart Lausch<br /></strong>Sektionsleiter P&auml;diatrische Genetik<br /> Robert-Koch-Str. 3, D-79106 Freiburg<br />Tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94440<br />Fax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94030<br />E-Mail&nbsp;&nbsp; ekkehart.lausch@uniklinik-freiburg.de</p>");
-    
         
     }
     
+    
+    // prepare receiver header choice
+    private void prepareReceiverHeader () {
+        
+        receiverHeader.put("MVZ", "<p><strong>MVZ des Universit&auml;tsklinikums Freiburg<br /></strong>Robert-Koch-Stra&szlig;e 3, 79106 Freiburg</p>");
+        
+    }
     
     
     
@@ -147,22 +165,8 @@ public class ReportDataModel {
         this.receiverCity = receiverCity;
     }
 
-    public String getSender(String key){
-        
-        return sender.get(key);
-    }
-    
-
     public String getSenderPH() {
         return senderPH;
-    }
-
-    public String getReveiverHeader() {
-        return reveiverHeader;
-    }
-
-    public void setReveiverHeader(String reveiverHeader) {
-        this.reveiverHeader = reveiverHeader;
     }
 
     public String getReceiverStreet() {
@@ -221,14 +225,6 @@ public class ReportDataModel {
         this.sender = sender;
     }
 
-    public Map<String, String> getSenderHeader() {
-        return senderHeader;
-    }
-
-    public void setSenderHeader(Map<String, String> senderHeader) {
-        this.senderHeader = senderHeader;
-    }
-
     public String getReceiverNamePH() {
         return receiverNamePH;
     }
@@ -263,6 +259,10 @@ public class ReportDataModel {
 
     public String getIndicationPH() {
         return indicationPH;
+    }
+
+    public String getDatePh() {
+        return datePh;
     }
     
     
