@@ -37,6 +37,7 @@ public class GeneDB {
     private final String driver = "org.sqlite.JDBC";
     private String dbPath;
     private final String geneTable = "genes";
+
     private final String geneCol = "gene";
     private final String geneInfoCol = "geneInfo";
     private final String varTable = "variants";
@@ -374,7 +375,9 @@ public class GeneDB {
     ///////////
     //// execute DB command
     private ResultSet execute(String cmd) {
-	
+        
+        
+        
 	ResultSet rs = null;
 	try {
 	    
@@ -400,8 +403,7 @@ public class GeneDB {
 	
 	// ceck DB connection
 	try {
-	
-	    if (conn.isClosed()) {
+	    if (conn == null || conn.isClosed()) {
 		isConnected = false;
 	    }
 	} catch (SQLException ex) {
@@ -419,7 +421,7 @@ public class GeneDB {
     //////////////////
     //// check if table exists
     
-    private boolean hasTable (String tableName) {
+    public boolean hasTable (String tableName) {
 	
 	boolean exists = false;
 	
@@ -444,9 +446,31 @@ public class GeneDB {
     }
     
     
+    //////////////////////////////
+    //// chekc if DB has any entry for a given table
     
-    
-    
+    public boolean tableHasEntry (String tableName) {
+        
+        boolean hasEntry = false;
+        
+        // prepare query
+        String query = "select * from " + tableName;
+        
+        // get results
+        ResultSet rs = execute(query);
+        
+        // check if there are any results. if so set boolean to true
+        try {
+            if (rs.isBeforeFirst()) {
+                hasEntry = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return hasEntry;
+        
+    }
     
     
     
@@ -462,7 +486,7 @@ public class GeneDB {
 	// read DB name from config
 	Config config = new Config();
 	FileChooser chooser = new FileChooser();
-        chooser.setTitle("Open input file");
+        chooser.setTitle("Open DB file");
 	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
 
 
@@ -481,7 +505,7 @@ public class GeneDB {
 
 	    // check for correct ending
 	    String extension = dbFile.getName().substring(dbFile.getName().lastIndexOf(".") + 1);
-	    if (!extension.equals(".db")) {
+	    if (!extension.equals("db")) {
 		String fileName = dbFile.getAbsolutePath() + ".db";
 		dbFile = new File(fileName);
 	    }
@@ -574,18 +598,16 @@ public class GeneDB {
 	    // if there allread is an connection close it
 	    if (conn != null){
 		conn.close();
-	    } else {
-		
-		// load SQL  driver
-		Class.forName(driver);
-		// connect to database
-		conn = DriverManager.getConnection(url, user, password);
-	    }
-	    
+            }
+            // load SQL  driver
+            Class.forName(driver);
 
+            // connect to database
+            conn = DriverManager.getConnection(url, user, password);
 
-	} catch (Exception ex) {
-	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
 	} 
 	
 	
@@ -605,6 +627,7 @@ public class GeneDB {
 	    execute(createTabelCmd);
 	}
 	
+        
 	// check variant table
 	if (! hasTable(varTable)) {
 	    
@@ -628,20 +651,32 @@ public class GeneDB {
 	
 	
     }
+
     
-	
-	
+    
+    //// close connection
+    public void closeDB(){
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     /////////////////////////////////
     //////// getter / setter ////////
     /////////////////////////////////
+    
+    
+    
+    public String getGeneTable() {
+        return geneTable;
+    }
 
-
-
-
-
-
-
-
+    public String getVarTable() {
+        return varTable;
+    }
 
 
 }

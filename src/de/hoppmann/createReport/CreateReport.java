@@ -3,226 +3,164 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package de.hoppmann.createReport;
 
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import de.hoppmann.config.Config;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-
-
-
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  *
  * @author hoppmann
  */
 public class CreateReport {
-
-
+    
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
-    public String dest = "/media/hoppmann/Data/tmp/test.pdf";
-    private Document report;
-    private PdfWriter pdfWriter;
+    private String template;
+    private ReportDataModel model = new ReportDataModel();
     
-	
-	
-    /////////////////////////////
-    //////// constructor ////////
-    /////////////////////////////
-	
+    ////////////////////////////
+    //////// costructor ////////
+    ////////////////////////////
+
     
-    public CreateReport() throws FileNotFoundException, DocumentException, BadElementException, IOException {
-	
-	// create reveiver for testing
-	String[] receiver = {"Herr", "Anselm", "Hoppmann", "Uferstr 67", "79115", "Freiburg"};
-	
-	
-	// create sender for testing
-	String[] sender = {"Humangenetik", "PD Dr. Ekkehart Lausch", "Robert-Koch-Str. 3", "D-79106", "Freiburg"};
-	
-	
-	PrepareHeader headerInfo = new PrepareHeader(sender, receiver);
-	
-	
-	
-	
-	create();
-	addHeader(headerInfo);
-	closeReport();
-	
-    }
-	
-	
-	
+    
+    
+    
+    
+    
     /////////////////////////
     //////// methods ////////
     /////////////////////////
-
     
     
+    /////////////////////
+    //// replaceValues values in template
     
-    //////// add Paragraph
-    
-    public void addHeader(PrepareHeader headerInfo) throws DocumentException, BadElementException, IOException  {
-	
-	///////////////////////////////////////////////
-	//////// starting new PDF from scratch ////////
-	///////////////////////////////////////////////
-	
-	////////////////
-	//// add logo Paragraph
-	
-	
-	//// Load UKL logo
-	String sep = File.separator;
-	String uklLogoPath = System.getProperty("user.dir") + sep + "Vorlagen" + sep + "ZKJKinderklinikJPG.jpg";
-	Image uklLogo = Image.getInstance(uklLogoPath);
-	uklLogo.scalePercent(10);
-	
-	uklLogo.setAlignment(Image.RIGHT);
-	
-	//// prepare paragraph and add logo
-	Paragraph logo = new Paragraph();
-	logo.add(new Chunk(uklLogo, 0, 0, true));
-	logo.setAlignment(Element.ALIGN_RIGHT);
-	logo.setSpacingAfter(10);
-	report.add(logo);
-	
-	
-	
+    public void replaceValues() {
 
-	
-
-	////////////////////
-	//////// add address
-	
-	
-	//// create sender rectangles
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/** 
-	 * create table of two columns. 
-	 * create 2 cells and fill them with sender and receiver
-	 */
-	
-	// create table
-	PdfPTable addressTable = new PdfPTable(2);
-	addressTable.setTotalWidth(report.getPageSize().getWidth() - 50);
-	addressTable.setLockedWidth(true);
-	
-	
-	// create sender
-	PdfPCell senderCell = new PdfPCell();
-	senderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	senderCell.setVerticalAlignment(Element.ALIGN_LEFT);
-	senderCell.addElement(headerInfo.getSender());
-	senderCell.setBorder(Rectangle.NO_BORDER);
-		
-	
-	
-	// create receiver
-	PdfPCell receiverCell = new PdfPCell();
-	receiverCell.setHorizontalAlignment(Element.ALIGN_TOP);
-	receiverCell.setVerticalAlignment(Element.ALIGN_RIGHT);
-	receiverCell.addElement(new Paragraph(headerInfo.getReceiver()));
-	receiverCell.setBorder(Rectangle.NO_BORDER);
-		
-	
-	
-	
-	
-	
-	
-	// add both cells to table and add table to report
-	addressTable.addCell(receiverCell);
-	addressTable.addCell(senderCell);
-	
-	report.add(addressTable);
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
+        // add sender address
+        replace(model.getSenderPH(), model.getSender("MVZ"));
+        
+        // add receiver address
+        replace(template, template);
+        
+                
+        
     }
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+//// replace value and hand back template
+    private void replace(String placeholder, String value) {
+        template = template.replace(placeholder, value);
+    }
     
     
     //////////////////
-    //////// open new PDF document 
-    public void create() throws FileNotFoundException, DocumentException {
-	
+    //// open template
+    
+    public void openTemplate() {
+        
+        // check if path to template exists in config else show open dialoge
+        File templateFile = null;
+        Config config = new Config();
+        
+        if (config.getHtmlTemplate() == null || ! new File(config.getHtmlTemplate()).exists()) {
+            templateFile = chooseTemplate();
+            
+            if (templateFile != null && templateFile.exists()) {
+                config.setHtmlTemplate(templateFile.getAbsolutePath());
+            } 
+        
+        } else {
+            templateFile = new File(config.getHtmlTemplate());
+        }
+        
 
-	// open PDF
-	// prepare Document
-	report = new Document(PageSize.A4);
-	report.setMargins(20, 20, 20, 20);
-		
-	    
-	// init PDF writer
-	pdfWriter = PdfWriter.getInstance(report, new FileOutputStream(dest));
-	
-	// open Document
-	report.open();
-	
-	}
-	
+        ////// read in template file
+        template = readInTemplate(templateFile);
+                
+    }
     
     
     
     
-    /////////////////
-    //////// close report
-    public void closeReport () {
-	report.close();
-	
+    
+    
+    //////////////////////
+    //// read in HTML template
+    public String readInTemplate (File file){
+        
+        String content = null;
+        try {
+            content = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
+        } catch (IOException ex) {
+            Logger.getLogger(CreateReport.class.getName()).log(Level.SEVERE, null, ex);
+        }            
+            
+        
+        return content;
+        
     }
     
 
 
 
-    /////////////////////////////////
-    //////// getter / setter ////////
-    /////////////////////////////////
+    
+    ////////////////////
+    //// choose Template
+    public File chooseTemplate() {
 
+        FileChooser chooser = new  FileChooser();
+        chooser.setTitle("Choose HTML template.");
+        File templateFile = chooser.showOpenDialog(new Stage());
+        
+        
+        return templateFile;
+    }
+    
+    
+    ///////////////////////////////
+    //////// getter/setter ////////
+    ///////////////////////////////
 
-
-
-
-
-
-
-
-
+    public String getTemplate() {
+        return template;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

@@ -5,6 +5,7 @@
  */
 package de.hoppmann.gui.view;
 
+import de.hoppmann.createReport.CreateReport;
 import de.hoppmann.gui.messanges.CommonErrors;
 import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.TableData;
@@ -71,10 +72,37 @@ public class MainGuiController implements Initializable {
     @FXML
     private void reportButtonAction (ActionEvent event) {
 	
-	String INITIAL_TEXT = "Lorem ipsum dolor sit "
-            + "amet, consectetur adipiscing elit. Nam tortor felis, pulvinar "
-            + "aliquam sagittis gravida eu dolor. Etiam sit amet ipsum "
-            + "sem.";
+        // load HTML template
+        CreateReport report = new CreateReport();
+        
+        // open template
+        report.openTemplate();
+        
+        // replace values
+        report.replaceValues();
+        
+        // get modified template as initial text
+        String initialText = report.getTemplate();
+        
+        
+        HTMLEditor htmlEditor = new HTMLEditor();
+        htmlEditor.setPrefHeight(245);
+        Scene scene = new Scene(htmlEditor);
+        Stage stage = new Stage();
+        htmlEditor.setHtmlText(initialText);
+        stage.setScene(scene);
+        stage.show();
+
+                
+        
+        
+        
+        
+//        
+//	String INITIAL_TEXT = "Lorem ipsum dolor sit "
+//            + "amet, consectetur adipiscing elit. Nam tortor felis, pulvinar "
+//            + "aliquam sagittis gravida eu dolor. Etiam sit amet ipsum "
+//            + "sem.";
 	
 	
 //	try {
@@ -103,15 +131,15 @@ public class MainGuiController implements Initializable {
 //	}
   
 	    
-	    HTMLEditor htmlEditor = new HTMLEditor();
-	    htmlEditor.setPrefHeight(245);
-	    Scene scene = new Scene(htmlEditor);
-	    Stage stage = new Stage();
-	    htmlEditor.setHtmlText(loadHtmlTemplate());
-	    stage.setScene(scene);
-	    stage.show();
-	    
-	    
+//	    HTMLEditor htmlEditor = new HTMLEditor();
+//	    htmlEditor.setPrefHeight(245);
+//	    Scene scene = new Scene(htmlEditor);
+//	    Stage stage = new Stage();
+//	    htmlEditor.setHtmlText(loadHtmlTemplate());
+//	    stage.setScene(scene);
+//	    stage.show();
+//	    
+//	    
 	    
 	
 	
@@ -166,7 +194,7 @@ public class MainGuiController implements Initializable {
 	    Parent root = fxmlLoader.load();
 	    Stage stage = new Stage();
 	    stage.setTitle("Check databse");
-	    stage.setAlwaysOnTop(true);
+//	    stage.setAlwaysOnTop(true);
 	    stage.setScene(new Scene(root));
 	    
 	    

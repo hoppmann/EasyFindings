@@ -156,29 +156,6 @@ public class FindingsGuiController implements Initializable {
     private void showReportAction (ActionEvent event) {
 	
 	
-	try {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Report.fxml"));
-	    
-	    
-	    // create new window
-	    Parent root = fxmlLoader.load();
-	    Stage stage = new Stage();
-	    stage.setTitle("Report");
-	    stage.setScene(new Scene(root));
-	    stage.show();
-	    
-	     //// create controller for passing variables
-	    ReportController controller = fxmlLoader.getController();
-
-//	    new Test(stage, root);
-	      
-	    
-	    
-	} catch (IOException ex) {
-	    Logger.getLogger(FindingsGuiController.class.getName()).log(Level.SEVERE, null, ex);
-	}
-
-	
 	
     }
     

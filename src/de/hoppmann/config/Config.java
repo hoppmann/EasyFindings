@@ -62,6 +62,10 @@ public class Config {
     private String dbPath;
     private final String dbNameKey = "dbName";
     private String dbName;
+    private final String htmlTemplateKey = "templatePath";
+    private String htmlTemplate;
+    
+    
     
     /////////////////////////////
     //////// constructor ////////
@@ -98,7 +102,7 @@ public class Config {
 	predScoreCol = prop.getProperty(predScorColKey);
 	dbPath = prop.getProperty(dbPathKey);
 	dbName = prop.getProperty(dbNameKey);
-	
+	htmlTemplate = prop.getProperty(htmlTemplateKey);
 	
 	
 	
@@ -328,6 +332,15 @@ public class Config {
     public String getDbFullPath () {
 	String fullPath = dbPath + File.separator + dbName;
 	return fullPath;
+    }
+
+    public String getHtmlTemplate() {
+        return htmlTemplate;
+    }
+
+    public void setHtmlTemplate(String htmlTemplate) {
+        this.htmlTemplate = htmlTemplate;
+        saveConfig(htmlTemplateKey, htmlTemplate);
     }
 
 

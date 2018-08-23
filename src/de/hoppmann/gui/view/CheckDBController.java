@@ -135,7 +135,9 @@ public class CheckDBController implements Initializable {
     //// open DB
     @FXML
     private void openDbButtonAction (ActionEvent event) {
-	
+        
+// check if there is already an open connection if so close it
+        
 	File dbFile = geneDB.openDB();
 	
 	if (dbFile != null) {
@@ -151,7 +153,11 @@ public class CheckDBController implements Initializable {
     //// create new database
     @FXML
     private void newDbButtonAction (ActionEvent event) {
-	
+        // check if there is already an open connection if so close it
+        if (geneDB.isConnected()) {
+            geneDB.closeDB();
+        }
+
 	File dbFile = geneDB.createNewDB();
 	if (dbFile != null) {
 	    geneDB.connect(dbFile);
@@ -815,6 +821,8 @@ public class CheckDBController implements Initializable {
 	
 	// check if DB saved in cofig exists
 	// if so connect to it
+        // then check if tables exist
+        // if so fill 
 	
 	if (config.getDbFullPath() != null){
 	    
@@ -843,7 +851,12 @@ public class CheckDBController implements Initializable {
 
 	// if a DB is connected fill gene name choices
 	if (geneDB.isConnected()) {
-	    loadAllGeneList(null);
+            // if DB has tables load lists
+            if (geneDB.hasTable(geneDB.getGeneTable())){
+                if (geneDB.tableHasEntry(geneDB.getGeneTable())){
+                    loadAllGeneList(null);
+                }
+            }
 	}
 	
 
