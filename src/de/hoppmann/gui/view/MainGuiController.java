@@ -12,8 +12,10 @@ import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -72,7 +75,40 @@ public class MainGuiController implements Initializable {
     //////// methods ////////
     /////////////////////////
 
-    
+    private void saveReport(HTMLEditor editor) {
+        
+        FileChooser chooser = new FileChooser();
+        File fileOut = chooser.showSaveDialog(null);
+        System.out.println(fileOut.getAbsoluteFile());
+                
+        
+        
+        BufferedWriter writer = null;
+        try {
+//            File fileOut = new File("C\\:\\Data\\EasyFindings\\findings.html");
+            writer = new BufferedWriter(new FileWriter(fileOut));
+            writer.write(editor.getHtmlText());
+            writer.close();
+//        try {
+        } catch (IOException ex) {
+            Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                writer.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        
+//            File fileOut = new File("C\\:\\Data\\EasyFindings\\findings.html");
+//            Writer writer = new FileWriter(fileOut);
+//            writer.write(editor.getHtmlText());
+//            writer.close();
+//        } catch (IOException ex) {
+//            Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
     
     
     // Report button 
@@ -120,14 +156,24 @@ public class MainGuiController implements Initializable {
         scrollPane.setPrefHeight(180);
  
         Button showHTMLButton = new Button("Produce HTML Code");
-        root.setAlignment(Pos.CENTER);
         showHTMLButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent arg0) {
                 htmlCode.setText(htmlEditor.getHtmlText());
             }
         });
         
-        root.getChildren().addAll(htmlEditor, showHTMLButton, scrollPane);
+        
+        Button saveFindingButton = new Button("Save");
+        root.setAlignment(Pos.CENTER_LEFT);
+        saveFindingButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                saveReport(htmlEditor);
+            }
+        });
+        
+        
+        root.getChildren().addAll(htmlEditor, saveFindingButton, showHTMLButton, scrollPane);
         Scene scene = new Scene(root);
         scene.setRoot(root);
  
