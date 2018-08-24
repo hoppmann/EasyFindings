@@ -22,6 +22,10 @@ public class TableData {
     private LinkedList<String> inputLine;
     private String catagory;
     private String geneName;
+    private String impact;
+    private String cNom;
+    private String rsId;
+    
 	
 	
     /////////////////////////////
@@ -40,8 +44,6 @@ public class TableData {
     //////// methods ////////
     /////////////////////////
 
-	
-	
 	
 	
     /////////////////////////////////

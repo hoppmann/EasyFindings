@@ -6,6 +6,9 @@
 package de.hoppmann.createReport;
 
 import de.hoppmann.config.Config;
+import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.gui.modelsAndData.TableData;
+import de.hoppmann.gui.view.FindingsGuiController;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,10 +29,17 @@ public class CreateReport {
     ///////////////////////////
     private String template;
     private ReportDataModel model = new ReportDataModel();
+    private StoreFindings findings;
+    
     
     ////////////////////////////
     //////// costructor ////////
     ////////////////////////////
+
+    public CreateReport(StoreFindings findings) {
+        this.findings = findings;
+        
+    }
 
     
     
@@ -74,10 +84,46 @@ public class CreateReport {
         replace(model.getMaterialPH(), model.getMaterial());
         replace(model.getIndicationPH(), model.getIndication());
                 
+        // add method box
+        replace(model.getSeqMethodPH(), model.getSeqMehtod("NGS_KiKli"));
+        
+        
+        // add causal genes
+        prepareCausalGenes();
         
     }
     
     
+    
+    //// add causal genes to document
+    private void prepareCausalGenes() {
+        
+        /* 
+        for each gene in findings
+            get gene name
+            get cDNA nomenclature
+            get impact 
+            get rsID
+        */
+        
+        System.out.println(findings.getStoredData().size());
+        
+        
+        
+        
+        
+        
+        
+        
+//        for (TableData curFinding : findings.getStoredData()){
+//            
+//            String curGene = curFinding.getCatagory();
+//            System.out.println(curGene);
+//        }
+//        System.out.println(findings.getStoredData().size());
+        
+        
+    }
     
     
     

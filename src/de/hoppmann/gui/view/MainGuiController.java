@@ -75,191 +75,40 @@ public class MainGuiController implements Initializable {
     //////// methods ////////
     /////////////////////////
 
-    private void saveReport(HTMLEditor editor) {
-        
-        FileChooser chooser = new FileChooser();
-        File fileOut = chooser.showSaveDialog(null);
-        System.out.println(fileOut.getAbsoluteFile());
-                
-        
-        
-        BufferedWriter writer = null;
-        try {
-//            File fileOut = new File("C\\:\\Data\\EasyFindings\\findings.html");
-            writer = new BufferedWriter(new FileWriter(fileOut));
-            writer.write(editor.getHtmlText());
-            writer.close();
-//        try {
-        } catch (IOException ex) {
-            Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                writer.close();
-            } catch (IOException ex) {
-                Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        
-//            File fileOut = new File("C\\:\\Data\\EasyFindings\\findings.html");
-//            Writer writer = new FileWriter(fileOut);
-//            writer.write(editor.getHtmlText());
-//            writer.close();
-//        } catch (IOException ex) {
-//            Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }
     
     
-    // Report button 
-    @FXML
-    private void reportButtonAction (ActionEvent event) {
-	
-        // load HTML template
-        CreateReport report = new CreateReport();
-        
-        // open template
-        report.openTemplate();
-        
-        // replace values
-        report.replaceValues();
-        
-        // get modified template as initial text
-        String initialText = report.getTemplate();
-        
-        
-//        HTMLEditor htmlEditor = new HTMLEditor();
-//        htmlEditor.setPrefHeight(245);
-//        Scene scene = new Scene(htmlEditor);
-//        Stage stage = new Stage();
-//        htmlEditor.setHtmlText(initialText);
-//        stage.setScene(scene);
-//        stage.show();
-
-        VBox root = new VBox();      
-        root.setPadding(new Insets(8, 8, 8, 8));
-        root.setSpacing(5);
-        root.setAlignment(Pos.BOTTOM_LEFT);
-        
-        
-                final HTMLEditor htmlEditor = new HTMLEditor();
-        htmlEditor.setPrefHeight(400);
-        htmlEditor.setHtmlText(initialText);       
- 
-        final TextArea htmlCode = new TextArea();
-        htmlCode.setWrapText(true);
     
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.getStyleClass().add("noborder-scroll-pane");
-        scrollPane.setContent(htmlCode);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setPrefHeight(180);
- 
-        Button showHTMLButton = new Button("Produce HTML Code");
-        showHTMLButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent arg0) {
-                htmlCode.setText(htmlEditor.getHtmlText());
-            }
-        });
-        
-        
-        Button saveFindingButton = new Button("Save");
-        root.setAlignment(Pos.CENTER_LEFT);
-        saveFindingButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                saveReport(htmlEditor);
-            }
-        });
-        
-        
-        root.getChildren().addAll(htmlEditor, saveFindingButton, showHTMLButton, scrollPane);
-        Scene scene = new Scene(root);
-        scene.setRoot(root);
- 
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-        
-        
-        
-//        
-//	String INITIAL_TEXT = "Lorem ipsum dolor sit "
-//            + "amet, consectetur adipiscing elit. Nam tortor felis, pulvinar "
-//            + "aliquam sagittis gravida eu dolor. Etiam sit amet ipsum "
-//            + "sem.";
-	
-	
+    
+    
+//    private String loadHtmlTemplate() {
+//	
+//	
+//	File inputFile = new File("/home/hoppmann/Dropbox/transfer/template.html");
+//	
+//	// prepare variables
+//        String line;
+//	List<String> input = new ArrayList<>();
 //	try {
-//	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HTMLReport.fxml"));
-//	    
-//	    
-//	    
-//	    
-//	    // create new window
-//	    Parent root = fxmlLoader.load();
-//	    Stage stage = new Stage();
-//	    stage.setTitle("Report");
-//	    stage.setAlwaysOnTop(true);
-//	    stage.setScene(new Scene(root));
-//	   
-//	    HTMLReportController controller = fxmlLoader.getController();
-//
-//	    System.out.println(INITIAL_TEXT);
-//	    controller.init(INITIAL_TEXT);
-//	    
-//	    
-//	    // open window
-//	    stage.show();
-//	} catch (IOException ex) {
-//	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
-//	}
-  
-	    
-//	    HTMLEditor htmlEditor = new HTMLEditor();
-//	    htmlEditor.setPrefHeight(245);
-//	    Scene scene = new Scene(htmlEditor);
-//	    Stage stage = new Stage();
-//	    htmlEditor.setHtmlText(loadHtmlTemplate());
-//	    stage.setScene(scene);
-//	    stage.show();
-//	    
-//	    
-	    
-	
-	
-    }
-    
-    
-    private String loadHtmlTemplate() {
-	
-	
-	File inputFile = new File("/home/hoppmann/Dropbox/transfer/template.html");
-	
-	// prepare variables
-        String line;
-	List<String> input = new ArrayList<>();
-	try {
-            // read in file
-            BufferedReader br = new BufferedReader(new FileReader(inputFile));
-            while ((line = br.readLine()) != null) {
-		
-		// read in line split and save in row data object
-		input.add(line);
-            }
-            br.close();
-        } catch (IOException iOException) {
-	    new CommonErrors().cantOpen(inputFile.toString());
-        }
-	
-	
-	String htmlFile = input.toString();
-	
-	System.out.println(htmlFile);
-	
-	return htmlFile;
-	
-    }
+//            // read in file
+//            BufferedReader br = new BufferedReader(new FileReader(inputFile));
+//            while ((line = br.readLine()) != null) {
+//		
+//		// read in line split and save in row data object
+//		input.add(line);
+//            }
+//            br.close();
+//        } catch (IOException iOException) {
+//	    new CommonErrors().cantOpen(inputFile.toString());
+//        }
+//	
+//	
+//	String htmlFile = input.toString();
+//	
+//	System.out.println(htmlFile);
+//	
+//	return htmlFile;
+//	
+//    }
     
     
     

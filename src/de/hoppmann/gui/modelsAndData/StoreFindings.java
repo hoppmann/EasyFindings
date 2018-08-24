@@ -59,6 +59,10 @@ public class StoreFindings {
     //////// methods ////////
     /////////////////////////
 
+    
+    
+    
+    // save data for later use
     public void storeFindings(LoadInputFile load){
 	
 	// check if load has data (there was a file chosen)

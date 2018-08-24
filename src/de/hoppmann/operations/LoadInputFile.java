@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
@@ -388,7 +389,11 @@ public class LoadInputFile {
 	
 	for (String curImpcat : impactOfInterest) {
 	    if (row.getEntry(impactColIndex).contains(curImpcat)){
-		if (Double.parseDouble(row.getEntry(splice45DecIndex)) >= 0.5) {
+                // check if entry is parsable to double
+                boolean isParseable = Pattern.matches(
+                        row.getEntry(splice45DecIndex), 
+                        "([0-9]*)\\.([0-9]*)");
+		if (isParseable && Double.parseDouble(row.getEntry(splice45DecIndex)) >= 0.5) {
 		    isLikelyPatho = true;
 		}
 	    }
