@@ -91,7 +91,8 @@ public class CheckDBController implements Initializable {
     
     private GeneDB geneDB;
     private StoreFindings findings;
-    private Config config;
+    private Config config = Config.getInstance();
+
     
     
     
@@ -119,6 +120,8 @@ public class CheckDBController implements Initializable {
     //// close window
     @FXML
     private void closeButtonAction (ActionEvent event) {
+	
+	geneDB.closeDB();
 	
 	Stage stage = (Stage) closeButton.getScene().getWindow();
 	stage.close();
@@ -545,7 +548,6 @@ public class CheckDBController implements Initializable {
 	findingsVarNameBox.getSelectionModel().selectFirst();
 
 
-	
         // check if gene is in DB
 	if (geneDB.getGeneList().contains(geneName)) {
 
@@ -755,16 +757,21 @@ public class CheckDBController implements Initializable {
 
 	
 	// check if any findings are stored if so fill table
-	if (findings != null) {
+	if (findings != null && findings.getStoredData().size() > 0) {
 
-	    
+
+		// check if databse is connected if not open DB
+	    if (!geneDB.isConnected()){
+		File dbFile = geneDB.openDB();
+		geneDB.connect(dbFile);
+	    }
 	    
 	    //// create findings table	
 	    CreateTable createTable = new CreateTable(findingsTable);
 	    createTable.prepareTable(findings.getHeaderList());
 	    createTable.fillTable(findings.getStoredData());
-	    
-	    
+
+
 	    
 	    /* 
 	    get all genes selected
@@ -781,7 +788,7 @@ public class CheckDBController implements Initializable {
     	    findingsGeneNameBox.getItems().addAll(geneList);
 	    findingsGeneNameBox.getSelectionModel().selectFirst();
 	    
-	    
+
 	    
 	    
 	    // fill findings variant name box
@@ -789,7 +796,7 @@ public class CheckDBController implements Initializable {
 	    findingsVarBoxAction(new ActionEvent());
 	    geneInfoGeneBoxAction(new ActionEvent());
 	    varInfoVarBoxAction(new ActionEvent());
-	    
+
 	}
 	
 	
@@ -812,9 +819,6 @@ public class CheckDBController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 	
-	// init conifg
-	config = new Config();
-	
 	//////// prepare DB connection if possible
 	
 	geneDB = new GeneDB(dbLabel, infoLabel);
@@ -824,16 +828,15 @@ public class CheckDBController implements Initializable {
         // then check if tables exist
         // if so fill 
 	
-	if (config.getDbFullPath() != null){
+	
+	
+	if (config.getDbPath() != null){
 	    
-	    if (new File(config.getDbFullPath()).exists() && !new File(config.getDbFullPath()).isDirectory()){
-		File dbFile = new File(config.getDbFullPath());
+	    if (new File(config.getDbPath()).exists() && !new File(config.getDbPath()).isDirectory()){
+		File dbFile = new File(config.getDbPath());
 		geneDB.connect(dbFile);
 	    }
 	}
-	
-	
-	
 	
 	
 	
@@ -848,9 +851,10 @@ public class CheckDBController implements Initializable {
 	//// prepare geneName box
 	geneNameBox.setEditable(true);
 
-
+	
 	// if a DB is connected fill gene name choices
 	if (geneDB.isConnected()) {
+
             // if DB has tables load lists
             if (geneDB.hasTable(geneDB.getGeneTable())){
                 if (geneDB.tableHasEntry(geneDB.getGeneTable())){
@@ -858,6 +862,7 @@ public class CheckDBController implements Initializable {
                 }
             }
 	}
+	
 	
 
     }    

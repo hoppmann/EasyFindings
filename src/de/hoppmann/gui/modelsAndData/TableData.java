@@ -6,7 +6,9 @@
 
 package de.hoppmann.gui.modelsAndData;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -45,6 +47,19 @@ public class TableData {
     /////////////////////////
 
 	
+    // hand back a split list of chosen entry
+    public List<String> getSplitEntry(int i, String delim) {
+	
+	List<String> entryList = new LinkedList<>();
+	
+	// get entry of choise and split
+	
+	entryList.addAll(Arrays.asList(inputLine.get(i).split(delim)));
+	
+	return entryList;
+	
+    }
+    
 	
     /////////////////////////////////
     //////// getter / setter ////////

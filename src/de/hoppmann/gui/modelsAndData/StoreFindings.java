@@ -28,8 +28,6 @@ public class StoreFindings {
     private String impactCol;
     private String pNomenCol;
     private String cNomenCol;
-    private String col5;
-    private String col6;
     private List<TableData> storedData;
     private LinkedHashMap<String, Integer> header = new LinkedHashMap<>();
     
@@ -140,6 +138,14 @@ public class StoreFindings {
     
     
     
+    // get header index
+    public int getColIndex (String colName) {
+	int index = header.get(colName);
+	return index;
+	
+    }
+    
+    
 	
     /////////////////////////////////
     //////// getter / setter ////////
@@ -159,11 +165,8 @@ public class StoreFindings {
     }
 
     
-    
-    
-    
-    
     public String getGeneCol() {
+		
 	return geneCol;
     }
 
@@ -194,26 +197,6 @@ public class StoreFindings {
     public void setcNomenCol(String cNomenCol) {
 	this.cNomenCol = cNomenCol;
     }
-
-    public String getCol5() {
-	return col5;
-    }
-
-    public void setCol5(String col5) {
-	this.col5 = col5;
-    }
-
-    public String getCol6() {
-	return col6;
-    }
-
-    public void setCol6(String col6) {
-	this.col6 = col6;
-    }
-
-    
-    
-    
 
 
 

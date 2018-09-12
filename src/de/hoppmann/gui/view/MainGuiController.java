@@ -5,41 +5,23 @@
  */
 package de.hoppmann.gui.view;
 
-import de.hoppmann.createReport.CreateReport;
-import de.hoppmann.gui.messanges.CommonErrors;
 import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.VBox;
-import javafx.scene.web.HTMLEditor;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -80,38 +62,6 @@ public class MainGuiController implements Initializable {
     
     
     
-//    private String loadHtmlTemplate() {
-//	
-//	
-//	File inputFile = new File("/home/hoppmann/Dropbox/transfer/template.html");
-//	
-//	// prepare variables
-//        String line;
-//	List<String> input = new ArrayList<>();
-//	try {
-//            // read in file
-//            BufferedReader br = new BufferedReader(new FileReader(inputFile));
-//            while ((line = br.readLine()) != null) {
-//		
-//		// read in line split and save in row data object
-//		input.add(line);
-//            }
-//            br.close();
-//        } catch (IOException iOException) {
-//	    new CommonErrors().cantOpen(inputFile.toString());
-//        }
-//	
-//	
-//	String htmlFile = input.toString();
-//	
-//	System.out.println(htmlFile);
-//	
-//	return htmlFile;
-//	
-//    }
-    
-    
-    
     
     // Button to jump to database window
     
@@ -128,15 +78,14 @@ public class MainGuiController implements Initializable {
 	    Parent root = fxmlLoader.load();
 	    Stage stage = new Stage();
 	    stage.setTitle("Check databse");
-//	    stage.setAlwaysOnTop(true);
 	    stage.setScene(new Scene(root));
 	    
 	    
 	    // run init 
 	    CheckDBController controller = fxmlLoader.getController();
 	    controller.init(findings);
-	    
-	    // show new vie
+
+	    // show new view
 	    stage.show();
 
 	    

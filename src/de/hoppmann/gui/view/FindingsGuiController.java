@@ -103,6 +103,25 @@ public class FindingsGuiController implements Initializable {
        
        
        
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
     // Report button 
     @FXML
     private void showReportButtonAction (ActionEvent event) {
@@ -119,7 +138,6 @@ public class FindingsGuiController implements Initializable {
         // get modified template as initial text
         String initialText = report.getTemplate();
         
-        
 //        HTMLEditor htmlEditor = new HTMLEditor();
 //        htmlEditor.setPrefHeight(245);
 //        Scene scene = new Scene(htmlEditor);
@@ -135,7 +153,7 @@ public class FindingsGuiController implements Initializable {
         
         
                 final HTMLEditor htmlEditor = new HTMLEditor();
-        htmlEditor.setPrefHeight(400);
+        htmlEditor.setPrefHeight(800);
         htmlEditor.setHtmlText(initialText);       
  
         final TextArea htmlCode = new TextArea();
@@ -153,7 +171,6 @@ public class FindingsGuiController implements Initializable {
                 htmlCode.setText(htmlEditor.getHtmlText());
             }
         });
-        
         
         Button saveFindingButton = new Button("Save");
         root.setAlignment(Pos.CENTER_LEFT);
@@ -221,6 +238,33 @@ public class FindingsGuiController implements Initializable {
 	
 	
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -411,13 +455,12 @@ public class FindingsGuiController implements Initializable {
     //// general methods
     
     public void init(StoreFindings findings){
-	
+
 	// retrieve variables
 	this.findings = findings;
 	
 	// set table options
 	findingsTable.setEditable(true);
-	
 	// check if any findings are stored else close window
 	if (findings == null) {
 	    new CommonWarnings().noDataAvailable();

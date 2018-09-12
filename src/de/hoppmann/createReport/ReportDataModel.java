@@ -37,6 +37,7 @@ public class ReportDataModel {
     private final String indicationPH = "${indication}";
     private final String datePh = "${date}";
     private final String seqMethodPH = "${seqMethod}";
+    private final String findingsPH = "${findings}";
 //    private final String ;
 //    private final String ;
 //    private final String ;
@@ -137,8 +138,8 @@ public class ReportDataModel {
     private void prepareSender () {
 
     // sender choices
-    sender.put("MVZ", "<p><strong>Medizinisches Versorgungszentrum</strong><br />Strahlentherapie<br />Humangenetik<br />Transfusionsmedizin</p>\n" +
-"<p><strong>Humangenetik<br /></strong><strong>PD Dr. Ekkehart Lausch<br /></strong>Sektionsleiter P&auml;diatrische Genetik<br /> Robert-Koch-Str. 3, D-79106 Freiburg<br />Tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94440<br />Fax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94030<br />E-Mail&nbsp;&nbsp; ekkehart.lausch@uniklinik-freiburg.de</p>");
+    sender.put("MVZ", "<p><strong><font size=\"1\">Medizinisches Versorgungszentrum</strong><br />Strahlentherapie<br />Humangenetik<br />Transfusionsmedizin</font></p>\n" +
+"<p><strong>Humangenetik<br /></strong><strong>PD Dr. Ekkehart Lausch<br /></strong>Sektionsleiter P&auml;diatrische Genetik<br /> Robert-Koch-Str. 3, D-79106 Freiburg<br />Tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94440<br />Fax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94030<br/><FONT SIZE=\"2\">E-Mail&nbsp;&nbsp;  ekkehart.lausch@uniklinik-freiburg.de</font></p>");
         
     }
     
@@ -281,6 +282,11 @@ public class ReportDataModel {
     public String getDatePh() {
         return datePh;
     }
+
+    public String getFindingsPH() {
+	return findingsPH;
+    }
+    
     
     
     

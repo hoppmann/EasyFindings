@@ -33,6 +33,7 @@ public class GeneDB {
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
+    private Config config = Config.getInstance();
     private Connection conn = null;
     private final String driver = "org.sqlite.JDBC";
     private String dbPath;
@@ -51,8 +52,8 @@ public class GeneDB {
     private final String password = "";
     
     // info fields
-    private Label dbInfo;
-    private Label infoLable;
+    private Label dbInfo = new Label();
+    private Label infoLable = new Label();
     
     
 	
@@ -62,11 +63,13 @@ public class GeneDB {
     
     public GeneDB (Label dbInfo, Label infoLable) {
 	
-	this.dbInfo = dbInfo;
-	this.infoLable = infoLable;
-	
+	    this.dbInfo = dbInfo;
+	    this.infoLable = infoLable;
     }
 	
+    public GeneDB () {
+	
+    }
 	
 	
     /////////////////////////
@@ -154,6 +157,12 @@ public class GeneDB {
     /////////////////
     //// get all entered genes
     public List getGeneList() {
+	
+	// check for existance of connection
+	if (isConnected() == false){
+	    return null;
+	}
+	
 	
 	List<String> geneList = new LinkedList<>();
 	
@@ -377,6 +386,10 @@ public class GeneDB {
     private ResultSet execute(String cmd) {
         
         
+	// check  if DB is connected
+	if (isConnected() == false){
+	    return null;
+	}
         
 	ResultSet rs = null;
 	try {
@@ -484,7 +497,6 @@ public class GeneDB {
 	//////// get DB name
 	
 	// read DB name from config
-	Config config = new Config();
 	FileChooser chooser = new FileChooser();
         chooser.setTitle("Open DB file");
 	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
@@ -511,7 +523,7 @@ public class GeneDB {
 	    }
 	    
 	    // save path in config
-	    config.setDbFullPath(dbFile.getAbsolutePath());
+	    config.setDbPath(dbFile.getAbsolutePath());
 
 	    // catch cancel
 	} else {
@@ -539,7 +551,6 @@ public class GeneDB {
 	//////// get DB name
 	
 	// read DB name from config
-	Config config = new Config();
 	FileChooser chooser = new FileChooser();
         chooser.setTitle("Open input file");
 	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
@@ -547,7 +558,8 @@ public class GeneDB {
 	
 
 	// check if db has entry in config and load opener correspoingly
-	if (new File(config.getDbPath()).exists()){
+	
+	if (config.getDbPath() != null && new File(config.getDbPath()).exists()){
 	    chooser.setInitialDirectory(new File(config.getDbPath()));
 	} else {
 	    chooser.setInitialDirectory(null);
@@ -562,7 +574,7 @@ public class GeneDB {
 
 	// save path in config
 	if (dbFile != null){
-	    config.setDbFullPath(dbFile.getAbsolutePath());
+	    config.setDbPath(dbFile.getAbsolutePath());
 	} else {
 	    
 	    return null;
@@ -591,6 +603,9 @@ public class GeneDB {
 	
 	
 	// define DB url
+	if (dbFile == null) {
+	    return;
+	}
 	url = "jdbc:sqlite:" + dbFile.getAbsoluteFile();
 	
 	try {
@@ -656,11 +671,15 @@ public class GeneDB {
     
     //// close connection
     public void closeDB(){
-        try {
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+	if (conn != null) {
+
+	    try {
+		conn.close();
+	    } catch (SQLException ex) {
+		Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+	    }
+	}
     }
     
     

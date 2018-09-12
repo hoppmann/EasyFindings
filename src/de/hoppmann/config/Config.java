@@ -6,7 +6,6 @@
 
 package de.hoppmann.config;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -22,10 +21,27 @@ import java.util.logging.Logger;
 
 public class Config {
 
+    ///////////////////////////////////
+    //////// singelton pattern ////////
+    ///////////////////////////////////
+    
+    // class variable 
+    private static Config instance;
+    
+    public static synchronized Config getInstance() {
+	if (Config.instance == null) {
+	    Config.instance = new Config();
+	}
+	return Config.instance;
+    }
+    
+    
+    
 
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
+    
     
     // general
     private final String configFile = "config.properties";
@@ -53,6 +69,12 @@ public class Config {
     private String totPredCol;
     private final String predScorColKey = "percentDamagingPredictions";
     private String predScoreCol;
+    private final String pubMedIdColKey = "pubMedIdCol";
+    private String pubMedIdCol;
+    private final String rsIdColKey = "rsIdCol";
+    private String rsIdCol;
+    private final String varTypeColKey = "varTypeCol";
+    private String varTypeCol;
 
     
     // misc
@@ -60,8 +82,6 @@ public class Config {
     private String inputPath;
     private final String dbPathKey = "dbPath";
     private String dbPath;
-    private final String dbNameKey = "dbName";
-    private String dbName;
     private final String htmlTemplateKey = "templatePath";
     private String htmlTemplate;
     
@@ -70,7 +90,8 @@ public class Config {
     /////////////////////////////
     //////// constructor ////////
     /////////////////////////////
-    public Config() {
+    // prevents external loading -> needed for singelton pattern
+    private Config() {
 	
 	loadConfig();
 	
@@ -100,8 +121,11 @@ public class Config {
 	splice15Col = prop.getProperty(splice15ColKey);
 	totPredCol = prop.getProperty(totPredColKey);
 	predScoreCol = prop.getProperty(predScorColKey);
+	pubMedIdCol = prop.getProperty(pubMedIdColKey);
+	rsIdCol = prop.getProperty(rsIdColKey);
+	varTypeCol = prop.getProperty(varTypeColKey);
+	
 	dbPath = prop.getProperty(dbPathKey);
-	dbName = prop.getProperty(dbNameKey);
 	htmlTemplate = prop.getProperty(htmlTemplateKey);
 	
 	
@@ -183,10 +207,7 @@ public class Config {
     
     //////// save in config file
     
-    public void saveConfig(String key, String value){
-	
-//	// load current propety fiel
-//	Properties prop = loadProp();
+    private void saveConfig(String key, String value){
 	
 	// add new property
         prop.setProperty(key, value);
@@ -310,30 +331,6 @@ public class Config {
 	saveConfig(dbPathKey, dbPath);
     }
 
-    public String getDbName() {
-	return dbName;
-    }
-
-    public void setDbName(String dbName) {
-	this.dbName = dbName;
-	saveConfig(dbNameKey, dbName);
-    }
-
-    public void setDbFullPath(String dbFull) {
-	
-	File dbFile = new File(dbFull);
-	// set dbPath
-	setDbPath(dbFile.getParent());
-	// set dbName
-	setDbName(dbFile.getName());
-	
-    }
-
-    public String getDbFullPath () {
-	String fullPath = dbPath + File.separator + dbName;
-	return fullPath;
-    }
-
     public String getHtmlTemplate() {
         return htmlTemplate;
     }
@@ -343,7 +340,36 @@ public class Config {
         saveConfig(htmlTemplateKey, htmlTemplate);
     }
 
+    public String getPubMedIdCol() {
+	return pubMedIdCol;
+    }
 
+    public void setPubMedIdCol(String pubMedIdCol) {
+	this.pubMedIdCol = pubMedIdCol;
+	saveConfig(pubMedIdColKey, pubMedIdCol);
+
+    }
+
+    public String getRsIdCol() {
+	return rsIdCol;
+    }
+
+    public void setRsIdCol(String rsIdCol) {
+	this.rsIdCol = rsIdCol;
+	saveConfig(rsIdColKey, rsIdCol);
+    }
+
+    public String getVarTypeCol() {
+	return varTypeCol;
+    }
+
+    public void setVarTypeCol(String varTypeCol) {
+	this.varTypeCol = varTypeCol;
+	saveConfig(varTypeColKey, varTypeCol);
+    }
+
+    
+    
 
 
 

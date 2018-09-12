@@ -43,7 +43,7 @@ public class LoadInputFile {
     private final List<String> header = new ArrayList<>();
     private List<TableData> rowData;
     private Label infoField;
-    private Config config;
+    private Config config = Config.getInstance();
     
     
     
@@ -54,17 +54,11 @@ public class LoadInputFile {
     
     public LoadInputFile(TableView inputTable, Label infoFiled) {
         
-	// init config
-	config = new Config();
-	
         // retrieve variables
         this.tableView = inputTable;
         this.infoField = infoFiled;
 	 // reset infoField
 	 infoFiled.setText("INFO:");
-        
-	// load config file
-	config = new Config();
 	
         // choose input file
         File file = chooseFile();

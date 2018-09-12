@@ -7,8 +7,6 @@ package de.hoppmann.createReport;
 
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
-import de.hoppmann.gui.modelsAndData.TableData;
-import de.hoppmann.gui.view.FindingsGuiController;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,6 +28,7 @@ public class CreateReport {
     private String template;
     private ReportDataModel model = new ReportDataModel();
     private StoreFindings findings;
+    private final Config config = Config.getInstance();
     
     
     ////////////////////////////
@@ -87,16 +86,16 @@ public class CreateReport {
         // add method box
         replace(model.getSeqMethodPH(), model.getSeqMehtod("NGS_KiKli"));
         
-        
         // add causal genes
-        prepareCausalGenes();
+        String htmlGeneTable = prepareCausalGenes();
+	replace(model.getFindingsPH(), htmlGeneTable);
         
     }
     
     
     
     //// add causal genes to document
-    private void prepareCausalGenes() {
+    private String prepareCausalGenes() {
         
         /* 
         for each gene in findings
@@ -104,26 +103,22 @@ public class CreateReport {
             get cDNA nomenclature
             get impact 
             get rsID
+	    
+	    get the corresponding gene and var info
+	
+	    prepare the table containing this info
+	
         */
-        
-        System.out.println(findings.getStoredData().size());
-        
-        
-        
-        
-        
-        
-        
-        
-//        for (TableData curFinding : findings.getStoredData()){
-//            
-//            String curGene = curFinding.getCatagory();
-//            System.out.println(curGene);
-//        }
-//        System.out.println(findings.getStoredData().size());
-        
+	
+	PrepareFindingsMethods prepareFindings = new PrepareFindingsMethods(findings);
+
+	String htmlGeneTable = prepareFindings.getHtmlGeneTable();
+	    
+        return htmlGeneTable;
         
     }
+    
+    
     
     
     
@@ -148,7 +143,6 @@ public class CreateReport {
         
         // check if path to template exists in config else show open dialoge
         File templateFile = null;
-        Config config = new Config();
         
         if (config.getHtmlTemplate() == null || ! new File(config.getHtmlTemplate()).exists()) {
             templateFile = chooseTemplate();

@@ -46,7 +46,7 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML
     private ComboBox<String> cNomenCol = new ComboBox<>();
     @FXML
-    private ComboBox<String> col5 = new ComboBox<>();
+    private ComboBox<String> pubMedIdCol = new ComboBox<>();
     @FXML
     private ComboBox<String> predScoreCol = new ComboBox<>();
     @FXML
@@ -62,7 +62,9 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML
     private ComboBox<String> splice15Col = new ComboBox<>();
     @FXML
-    private ComboBox<String> col7 = new ComboBox<>();
+    private ComboBox<String> rsIdCol = new ComboBox<>();
+    @FXML 
+    private ComboBox<String> varTypeCol = new ComboBox<>();
     
     
     @FXML
@@ -103,25 +105,25 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML
     private void okButtonEvent(ActionEvent event) {
 	
-	//////// store selection  
-	// geneCol
-	findings.addIndex(geneCol.getValue(), header.indexOf(geneCol.getValue()));
-	findings.setGeneCol(geneCol.getValue());
+//	//////// store selection  
+//	// geneCol
+//	findings.addIndex(geneCol.getValue(), header.indexOf(geneCol.getValue()));
+//	findings.setGeneCol(geneCol.getValue());
+//	
+//	// impactCol
+//	findings.addIndex(impactCol.getValue(), header.indexOf(impactCol.getValue()));
+//	findings.setImpactCol(impactCol.getValue());
+//	
+//	// protNomenCol
+//	findings.addIndex(pNomenCol.getValue(), header.indexOf(pNomenCol.getValue()));
+//	findings.setpNomenCol(pNomenCol.getValue());
+//	
+//	//cNomenCol
+//	findings.addIndex(cNomenCol.getValue(), header.indexOf(cNomenCol.getValue()));
+//	findings.setcNomenCol(cNomenCol.getValue());
+
 	
-	// impactCol
-	findings.addIndex(impactCol.getValue(), header.indexOf(impactCol.getValue()));
-	findings.setImpactCol(impactCol.getValue());
-	
-	// protNomenCol
-	findings.addIndex(pNomenCol.getValue(), header.indexOf(pNomenCol.getValue()));
-	findings.setpNomenCol(pNomenCol.getValue());
-	
-	//cNomenCol
-	findings.addIndex(cNomenCol.getValue(), header.indexOf(cNomenCol.getValue()));
-	findings.setcNomenCol(cNomenCol.getValue());
-	
-	
-	
+	saveDefault();
 	// close window
 	Stage stage = (Stage) okButton.getScene().getWindow();
 	stage.close();
@@ -170,8 +172,8 @@ public class SelectColumnsGuiController implements Initializable {
     
     
     //////// save chosen values as default
-    @FXML
-    private void saveDefaultButtonEvent(ActionEvent event) {
+//    @FXML
+    private void saveDefault() {
 	
 	config.setGeneCol(geneCol.getValue());
 	config.setImpactCol(impactCol.getValue());
@@ -183,6 +185,11 @@ public class SelectColumnsGuiController implements Initializable {
 	config.setSplice15Col(splice15Col.getValue());
 	config.setSplice45Col(splice45Col.getValue());
 	config.setTotPredCol(totPredCol.getValue());
+	config.setPubMedIdCol(pubMedIdCol.getValue());
+	config.setRsIdCol(rsIdCol.getValue());
+	config.setVarTypeCol(varTypeCol.getValue());
+	
+	
 	
     }
     
@@ -234,7 +241,7 @@ public class SelectColumnsGuiController implements Initializable {
 
 
 	// init config file
-	config = new Config();
+	config = Config.getInstance();
 
 	
 	
@@ -243,12 +250,13 @@ public class SelectColumnsGuiController implements Initializable {
 	
 	
 	
-	/**
-	 * 
-	 * prepare gene column
-	 * check if there is allready a column chosen previously if so use that one 
-	 * else use the one from the config file
+	/*
+	  prepare gene column
+	  check if there is allready a column chosen previously if so use that one 
+	  else use the one from the config file
 	*/
+	
+	
 	geneCol.getItems().addAll(header);
 	if (findings.getGeneCol() != null && checkStringList(header, findings.getGeneCol()) == true){
 	    geneCol.getSelectionModel().select(findings.getGeneCol());
@@ -321,9 +329,25 @@ public class SelectColumnsGuiController implements Initializable {
 	}
 	
 	
+	// prepare pubMed ID column
+	pubMedIdCol.getItems().addAll(header);
+	if(checkStringList(header, config.getPubMedIdCol())) {
+	    pubMedIdCol.getSelectionModel().select(config.getPubMedIdCol());
+	}
 	
 	
+	// prepare rsId column
+	rsIdCol.getItems().addAll(header);
+	if(checkStringList(header, config.getRsIdCol())) {
+	    rsIdCol.getSelectionModel().select(config.getRsIdCol());
+	}
+		
 	
+	// prepare vartype col
+	varTypeCol.getItems().addAll(header);
+	if (checkStringList(header, config.getVarTypeCol())) {
+	    varTypeCol.getSelectionModel().select(config.getVarTypeCol());
+	}
 	
 	
     }    
