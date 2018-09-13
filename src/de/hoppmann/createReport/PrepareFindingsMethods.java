@@ -222,8 +222,8 @@ public class PrepareFindingsMethods {
 	// table elements
 	tableElements.add("<td><strong>Gen</strong></td>");
 	tableElements.add("<td><strong>cDNA</strong></td>");
-	tableElements.add("<td><strong>Protein Effekt</strong></td>");
 	tableElements.add("<td><strong>variant Typ</strong></td>");
+	tableElements.add("<td><strong>Protein Effekt</strong></td>");
 	tableElements.add("<td><strong>dbSNP</strong></td>");
 	tableElements.add("<td><strong>PubMed ID</strong></td>");
 	
@@ -242,8 +242,8 @@ public class PrepareFindingsMethods {
 	    tableElements.add("<tr>");
 	    tableElements.add("<td>" + geneName + "</td>");
 	    tableElements.add("<td>" + varNameList.get(i) + "</td>");
-	    tableElements.add("<td>" + impact.get(i) + "</td>");
 	    tableElements.add("<td>" + varType.get(i) + "</td>");
+	    tableElements.add("<td>" + impact.get(i) + "</td>");
 	    tableElements.add("<td>" + rsID.get(i) + "</td>");
 	    tableElements.add("<td>" + pubmedID + "</td>");
 
