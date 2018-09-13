@@ -122,7 +122,7 @@ public class GeneDB {
     //////////////////
     //// save gene entry in DB
     
-    public void saveGeneInfo(String geneName, String GeneInfo) {
+    public void saveGeneInfo(String geneName, String geneInfo) {
 
 	// check connection
 	if ( conn == null || ! isConnected()) {
@@ -134,9 +134,12 @@ public class GeneDB {
 	////////////////
 	//// create db entry
 	
+	// replace ' by ` first one causes errors with sql
+	geneInfo = geneInfo.replaceAll("'", "´");
+	
 	// prepare command 
 	String addEntryCmd = "REPLACE INTO " + geneTable + " VALUES " 
-		+ "( " + "'" + geneName + "'" + ", " + "'" + GeneInfo + "'" + " )";
+		+ "( " + "'" + geneName + "'" + ", " + "'" + geneInfo + "'" + " )";
 	execute(addEntryCmd);
 		
 	
@@ -314,7 +317,7 @@ public class GeneDB {
     /////////////////
     //// save variant entry in DB
     
-    public void saveVar(String geneName, String varName, String varInfo) {
+    public void saveVarInfo(String geneName, String varName, String varInfo) {
 	
 	
 	// check connection
@@ -322,8 +325,12 @@ public class GeneDB {
 	    infoLable.setText("ERROR: Database not connected. Open DB first.");
 	    return;
 	}
-
-		// prepare command 
+	
+	// replace ' by ` to avoid SQL errors
+	varInfo = varInfo.replaceAll("'", "`");
+	
+	
+	// prepare command
 	String addEntryCmd = "REPLACE INTO " + varTable + " VALUES " 
 		+ "( " + "'" + varName + "'" 
 		+ ", '" + geneName + "'" 

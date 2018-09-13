@@ -170,96 +170,6 @@ public class CheckDBController implements Initializable {
     }
     
     
-    ///////////////////
-    //////// remove gene entry from DB
-    @FXML
-    private void removeButtonAction(ActionEvent event) {
-	
-
-	// get geneName and remove all nonalphanumeric elements
-	String geneName = geneNameBox.getValue();
-
-	
-	if (geneName == null) {
-	    infoLabel.setText("ERROR: No gene chosen.");
-	    return;
-	}
-	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
-
-	
-	
-	/* 
-	check current tab and proceed accordingly
-	if gene tab
-	    remove gene and all variants of gene
-	
-	if var tab
-	    remove chosen variant
-	*/
-	
-	
-	if (tabpane.getSelectionModel().getSelectedItem() == geneInfoTab) {
-	    
-
-	    // double check if deletion is desired
-	    Alert deletionDialog = new Alert(Alert.AlertType.CONFIRMATION);
-	    deletionDialog.setTitle("Remove " + geneName + " from database?");
-	    deletionDialog.setHeaderText(null);
-	    deletionDialog.setContentText("This deletion can't be undone.");
-	    deletionDialog.initOwner(infoLabel.getScene().getWindow());
-	    Optional<ButtonType> result = deletionDialog.showAndWait();
-
-	    // remove all entries of gene in DB if chosen
-	    if (result.get() == ButtonType.OK) {
-		geneDB.removeGeneEntry(geneName);
-	    }
-	    
-	    
-	    // update gene name list
-	    loadAllGeneList(null);
-	    geneInfoGeneBoxAction(new ActionEvent());
-	    
-	    
-	    // print out that gene was removed
-	    infoLabel.setText("Removed: " + geneName);
-	    
-	} else if (tabpane.getSelectionModel().getSelectedItem() == varInfoTab) {
-	    
-	    // retrieve var name 
-	    String varName = varNameBox.getValue().toString();
-	    varName = varName.replaceAll("\\s+", "");
-	    
-	    // double check if  variant should be deleated
-	    Alert delDiag = new Alert(Alert.AlertType.CONFIRMATION);
-	    delDiag.setTitle("Remove " + varName + " from database?");
-	    delDiag.setHeaderText(null);
-	    delDiag.setContentText("This deletion can't be undone.");
-	    delDiag.initOwner(infoLabel.getScene().getWindow());
-	    Optional<ButtonType> result = delDiag.showAndWait();
-	    
-	    // remove var if desired
-	    if (result.get() == ButtonType.OK) {
-		geneDB.removeVar(geneName, varName);
-	    }
-	    
-	    
-	    // update variant name list
-	    loadAllVarList(geneName, null);
-	    
-	    // print out that variant was removed
-	    infoLabel.setText("Removed: " + varName);
-	    
-	} 
-	
-	
-	
-	
-	
-	
-	
-    }
-    
-    
     
     ////////////////////////////////
     //////// handle different remove buttons
@@ -386,13 +296,13 @@ public class CheckDBController implements Initializable {
 	 */
 	if (!geneDB.getGeneList().contains(geneName)) {
 	    geneDB.saveGeneInfo(geneName, "");
-	    geneDB.saveVar(geneName, varName, "");
+	    geneDB.saveVarInfo(geneName, varName, "");
 
 	    // jump to gene tab
 	    tabpane.getSelectionModel().select(geneInfoTab);
 
 	} else if (!geneDB.getVarList(geneName).contains(varName)) {
-	    geneDB.saveVar(geneName, varName, "");
+	    geneDB.saveVarInfo(geneName, varName, "");
 
 	    // jump to var tab
 	    tabpane.getSelectionModel().select(varInfoTab);
@@ -505,7 +415,7 @@ public class CheckDBController implements Initializable {
 	    varInfo = varInfoField.getText();
 	}
 
-	geneDB.saveVar(geneName, varName, varInfo);
+	geneDB.saveVarInfo(geneName, varName, varInfo);
 
 	// refresh gene combobox choice
 	loadAllVarList(geneName, varName);
