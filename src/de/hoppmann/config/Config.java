@@ -51,8 +51,6 @@ public class Config {
     // columns
     private final String geneColKey = "geneCol";
     private String geneCol;
-    private final String impactColKey = "impactCol";
-    private String impactCol;
     private final String pNomenColKey = "proteinAnnotationCol";
     private String pNomenCol;
     private final String cNomenColKey = "cDnaAnnotationCol";
@@ -73,8 +71,12 @@ public class Config {
     private String pubMedIdCol;
     private final String rsIdColKey = "rsIdCol";
     private String rsIdCol;
-    private final String varTypeColKey = "varTypeCol";
-    private String varTypeCol;
+    private final String zygocityColKey = "zygocityCol";
+    private String zygocityCol;
+    private final String impactColKey = "impactCol";
+    private String impactCol; 
+    private final String mafColKey = "mafCol";
+    private String mafCol;
 
     
     // misc
@@ -111,7 +113,7 @@ public class Config {
 	
 	// read in config data
 	geneCol = prop.getProperty(geneColKey);
-	impactCol = prop.getProperty(impactColKey);
+	mafCol = prop.getProperty(mafColKey);
 	pNomenCol = prop.getProperty(pNomenColKey);
 	cNomenCol = prop.getProperty(cNomenColKey);
 	inputPath = prop.getProperty(inputPathKey);
@@ -123,7 +125,8 @@ public class Config {
 	predScoreCol = prop.getProperty(predScorColKey);
 	pubMedIdCol = prop.getProperty(pubMedIdColKey);
 	rsIdCol = prop.getProperty(rsIdColKey);
-	varTypeCol = prop.getProperty(varTypeColKey);
+	zygocityCol = prop.getProperty(zygocityColKey);
+	impactCol = prop.getProperty(impactColKey);
 	
 	dbPath = prop.getProperty(dbPathKey);
 	htmlTemplate = prop.getProperty(htmlTemplateKey);
@@ -210,10 +213,12 @@ public class Config {
     private void saveConfig(String key, String value){
 	
 	// add new property
+	if (key != null && value != null){
         prop.setProperty(key, value);
 	
 	// save new config file
 	storeProp(prop);
+	}
 	
     }
     
@@ -230,15 +235,6 @@ public class Config {
     public void setGeneCol(String geneCol) {
 	this.geneCol = geneCol;
 	saveConfig(geneColKey, geneCol);
-    }
-
-    public String getImpactCol() {
-	return impactCol;
-    }
-
-    public void setImpactCol(String impactCol) {
-	this.impactCol = impactCol;
-	saveConfig(impactColKey, impactCol);
     }
 
     public String getpNomenCol() {
@@ -359,15 +355,34 @@ public class Config {
 	saveConfig(rsIdColKey, rsIdCol);
     }
 
-    public String getVarTypeCol() {
-	return varTypeCol;
+    public String getMafCol() {
+	return mafCol;
     }
 
-    public void setVarTypeCol(String varTypeCol) {
-	this.varTypeCol = varTypeCol;
-	saveConfig(varTypeColKey, varTypeCol);
+    public void setMafCol(String mafCol) {
+	this.mafCol = mafCol;
+	saveConfig(mafColKey, mafCol);
     }
 
+    public String getZygocityCol() {
+	return zygocityCol;
+    }
+
+    public void setZygocityCol(String zygocityCol) {
+	this.zygocityCol = zygocityCol;
+	saveConfig(zygocityColKey, zygocityCol);
+    }
+
+    public String getImpactCol() {
+	return impactCol;
+    }
+
+    public void setImpactCol(String impactCol) {
+	this.impactCol = impactCol;
+	saveConfig(impactColKey, impactCol);
+    }
+
+    
     
     
 

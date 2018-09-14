@@ -78,11 +78,17 @@
          </font>
       </Label>
       <ComboBox fx:id="rsIdCol" layoutX="133.0" layoutY="227.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="260.0" />
-      <Label layoutX="381.0" layoutY="507.0" prefHeight="20.0" prefWidth="85.0" text="varType" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0">
+      <Label layoutX="381.0" layoutY="507.0" prefHeight="20.0" prefWidth="85.0" text="Zygocity" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="varTypeCol" layoutX="490.0" layoutY="504.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="100.0" />
+      <ComboBox fx:id="zygocityCol" layoutX="490.0" layoutY="504.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="100.0" />
+      <Label layoutX="6.0" layoutY="544.0" prefHeight="20.0" prefWidth="85.0" text="MAF" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="540.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="mafCol" layoutX="115.0" layoutY="541.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="540.0" />
     </children>
 </AnchorPane>

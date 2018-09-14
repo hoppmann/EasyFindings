@@ -16,13 +16,13 @@ public enum Catagory {
     PATHOGEN("Path", "Pathogen"), PROBPATHO("ProbPatho", "Wahrscheinlich Pathogen"), UNCLEAR("Unclear", "Unklar"),
     PROBBENIGN("ProbBenign", "Wahrscheinlich Benigne"), BENIGN("Benign", "Benigne");
 	
-	private final String name;
+	private final String value;
 	private final String code;
 
 	
 	// constructor
 	private Catagory(String code, String name) {
-	    this.name = name;
+	    this.value = name;
 	    this.code = code;
 	}
 	
@@ -32,7 +32,7 @@ public enum Catagory {
 	/////////////////////////////////
 
 	public String getCatagoryName() {
-	    return name;
+	    return value;
 	}
 
 	public String getCatagoryCode() {
@@ -40,7 +40,7 @@ public enum Catagory {
 	}
 
 	
-	public static Catagory getByCode(String catagoryCode) {
+	public static Catagory getCatagoryByCode(String catagoryCode) {
 	    for (Catagory cat : Catagory.values()){
 		if (cat.code.equals(catagoryCode)){
 		    return cat;
@@ -50,6 +50,18 @@ public enum Catagory {
 	    return null;
 
 	}
+	
+	
+	public static String getValueByCode(String catagoryCode) {
+	    for (Catagory cat : Catagory.values()) {
+		if (cat.code.equals(catagoryCode)) {
+		    return cat.value;
+		}
+	    }
+	    
+	    return null;
+	}
+	
 
 	public static String getPathoCode() {
 	    return Catagory.PATHOGEN.code;

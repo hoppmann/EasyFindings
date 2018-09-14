@@ -6,7 +6,9 @@
 package de.hoppmann.createReport;
 
 import de.hoppmann.config.Config;
+import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.gui.modelsAndData.TableData;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -86,38 +89,55 @@ public class CreateReport {
         // add method box
         replace(model.getSeqMethodPH(), model.getSeqMehtod("NGS_KiKli"));
         
-        // add causal genes
-        String htmlGeneTable = prepareCausalGenes();
+	
+	
+	
+	// add causal genes
+	String htmlGeneTable = prepareCausalGenes();
 	replace(model.getFindingsPH(), htmlGeneTable);
-        
+	
+	
     }
     
     
     
     //// add causal genes to document
     private String prepareCausalGenes() {
-        
-        /* 
-        for each gene in findings
-            get gene name
-            get cDNA nomenclature
-            get impact 
-            get rsID
-	    
-	    get the corresponding gene and var info
-	
-	    prepare the table containing this info
-	
-        */
-	
-	PrepareFindingsMethods prepareFindings = new PrepareFindingsMethods(findings);
 
-	String htmlGeneTable = prepareFindings.getHtmlGeneTable();
-	    
-        return htmlGeneTable;
-        
+	String htmlGeneTable = null;
+
+	/*
+	if causal variants
+	    -> positive findings
+	else 
+	    -> negative findings
+	 */
+	boolean positiveFinings = false;
+	for (TableData curFinding : findings.getStoredData()) {
+
+	    if (curFinding.getCatagory().equals(Catagory.getPathoCode())
+		    || curFinding.getCatagory().equals(Catagory.getProbPathoCode())) {
+		positiveFinings = true;
+	    }
+
+	}
+
+	// 
+	if (positiveFinings == true) {
+	    PreparePositiveFindingsMethods positivFindings = new PreparePositiveFindingsMethods(findings);
+	    htmlGeneTable = positivFindings.getHtmlGeneTable();
+
+	} else {
+
+	    // add negative finding
+	    PrepareNegativeFindings negFindings = new PrepareNegativeFindings(findings);
+	    htmlGeneTable = negFindings.getHtmlTable();
+	}
+
+	return htmlGeneTable;
+
     }
-    
+
     
     
     

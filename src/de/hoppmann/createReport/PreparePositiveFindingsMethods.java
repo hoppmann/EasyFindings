@@ -7,6 +7,7 @@
 package de.hoppmann.createReport;
 
 import de.hoppmann.config.Config;
+import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.GeneDB;
@@ -20,7 +21,7 @@ import java.util.Map;
  *
  * @author hoppmann
  */
-public class PrepareFindingsMethods {
+public class PreparePositiveFindingsMethods {
 
     ///////////////////////////
     //////// variables ////////
@@ -31,14 +32,16 @@ public class PrepareFindingsMethods {
 
     private String geneName = null;
     private List<String> varNameList = null;
-    private List<String> impact = null;
-    private List<String> varType = null;
     private List<String> rsID = null;
     private String pubmedID = null;
+    private List<String> pNomen = null;
+    private String predQuotient = null;
+    private String zygocity = null;
+    private List<String> maf = null;
     
     // infos from the gene DB
     private String geneInfo = null;
-    private Map<String, String> varInfo = new LinkedHashMap<>();
+    private Map<String, String> varInfo;
     private List<String> tableElements = new LinkedList<>();
     private String htmlGeneTable = null;
     
@@ -50,7 +53,8 @@ public class PrepareFindingsMethods {
     /////////////////////////////
     //////// constructor ////////
     /////////////////////////////
-    public PrepareFindingsMethods(StoreFindings findings) {
+    
+    public PreparePositiveFindingsMethods(StoreFindings findings) {
 	this.findings = findings;
 
 	// check if existing DB is saved in config if so connect to it
@@ -72,14 +76,20 @@ public class PrepareFindingsMethods {
 
 	for (TableData curFinding : findings.getStoredData()) {
 
-	    // prepare column entries
-	    prepareColEntries(curFinding);
+	    // check if current variant is classified as causal -> prepare findings state
+	    if (curFinding.getCatagory().equals(Catagory.getPathoCode()) ||
+		curFinding.getCatagory().equals(Catagory.getProbPathoCode())){
+		
 
-	    // get data from DB
-	    retrieveVariantDbEntry();
+		// prepare column entries
+		prepareColEntries(curFinding);
 
-	    // prepare html table
-	    prepareHtmlTable();
+		// get data from DB
+		retrieveVariantDbEntry();
+
+		// prepare html table
+		prepareHtmlTable();
+	    }
 
 	}
 
@@ -114,19 +124,46 @@ public class PrepareFindingsMethods {
 	geneName = retrieveEntries(curFinding, config.getGeneCol(), false).get(0);
 		
 	
-	
-	//// Impact 
-	impact = retrieveEntries(curFinding, config.getImpactCol(), true);
-
-	
 	//// RsID
 	rsID = retrieveEntries(curFinding, config.getRsIdCol(), true);
 
 
+	//// protein nomenclature
+	pNomen = retrieveEntries(curFinding, config.getpNomenCol(), true);
 
-	//// var type
-	varType = retrieveEntries(curFinding, config.getVarTypeCol(), true);
 	
+	//// zygocity 
+	int zygocityNumber = Integer.valueOf(retrieveEntries(curFinding, config.getZygocityCol(), false).get(0));
+	
+	switch (zygocityNumber) {
+	    case 0: zygocity = "HOM_REF";
+		break;
+	    case 1:  zygocity = "HET";
+		break;
+	    case 2: zygocity = "./.";
+		break;
+	    case 3: zygocity = "HOM";
+	}
+	
+	
+
+	//// minor allele frequency
+	maf = retrieveEntries(curFinding, config.getMafCol(), true);
+	
+	
+	
+	//quotient of prediciton tools
+	String totPred = retrieveEntries(curFinding, config.getTotPredCol(), false).get(0);
+	String percentDamaging = retrieveEntries(curFinding, config.getPredScoreCol(), false).get(0);
+	
+	if(!totPred.equals("NA") && !percentDamaging.equals("NA")){
+	    Double damagingDouble = Double.valueOf(percentDamaging) * Double.valueOf(totPred);
+	    int damaging = damagingDouble.intValue();
+	    predQuotient = damaging + "/" + totPred;
+	} else {
+	    predQuotient = "NA";
+	}
+
 	
 	
 	
@@ -143,9 +180,6 @@ public class PrepareFindingsMethods {
 	//// variant
 	// get list of all variant found in gene
 	varNameList = retrieveEntries(curFinding, config.getcNomenCol(), true);
-	
-//	varNameList = findings.getDependentValueList(config.getcNomenCol(), config.getGeneCol(), geneName, true, ",");
-	
 	
     }
     
@@ -180,7 +214,8 @@ public class PrepareFindingsMethods {
 	
 	// check if gene is known in DB
 	geneInfo = geneDb.getGeneInfo(geneName);
-
+	
+	varInfo = new LinkedHashMap<>();
 	// get infos for all variants listed and save them in hash
 	for (String varName : varNameList){
 	    varInfo.put(varName, geneDb.getVarInfo(geneName, varName));
@@ -203,7 +238,6 @@ public class PrepareFindingsMethods {
     private void prepareHtmlTable(){
 
 //	// prepare variables
-//	List<String> tableElements = new LinkedList<>();
 	 
 	// start table and define size
 	tableElements.add("<table width=\"100%\" >");
@@ -222,8 +256,10 @@ public class PrepareFindingsMethods {
 	// table elements
 	tableElements.add("<td><strong>Gen</strong></td>");
 	tableElements.add("<td><strong>cDNA</strong></td>");
-	tableElements.add("<td><strong>variant Typ</strong></td>");
-	tableElements.add("<td><strong>Protein Effekt</strong></td>");
+	tableElements.add("<td><strong>Protein</strong></td>");
+	tableElements.add("<td><strong>Zygotie</strong></td>");
+	tableElements.add("<td><strong>MAF</strong></td>");
+	tableElements.add("<td><strong>Pred</strong></td>");
 	tableElements.add("<td><strong>dbSNP</strong></td>");
 	tableElements.add("<td><strong>PubMed ID</strong></td>");
 	
@@ -233,22 +269,28 @@ public class PrepareFindingsMethods {
 
 	
 	// Add current gene and all variants
-//	for (String curVar : varInfo.keySet()) {
 	    
 	for (int i = 0 ; i < varNameList.size(); i++){
 	    
+//	    // check if variant has info if not do not add it
+	    if (varInfo.get(varNameList.get(i)) != null) {
+//	    
+		// new line
+		tableElements.add("<tr>");
+		tableElements.add("<td><small>" + geneName + "</small></td>");
+		tableElements.add("<td><small>" + varNameList.get(i) + "</small></td>");
+		tableElements.add("<td><small>" + pNomen.get(i) + "</small></td>");
+		tableElements.add("<td><small>" + zygocity + "</small></td>");
+		tableElements.add("<td><small>" + maf.get(i) + "</small></td>");
+		tableElements.add("<td><small>" + predQuotient + "</small></td>");
+		tableElements.add("<td><small>" + rsID.get(i) + "</small></td>");
+		tableElements.add("<td><small>" + pubmedID + "</small></td>");
+		
+		// end line
+		tableElements.add("</tr>");
+	    }
+//	    }
 	    
-	    // new line
-	    tableElements.add("<tr>");
-	    tableElements.add("<td>" + geneName + "</td>");
-	    tableElements.add("<td>" + varNameList.get(i) + "</td>");
-	    tableElements.add("<td>" + varType.get(i) + "</td>");
-	    tableElements.add("<td>" + impact.get(i) + "</td>");
-	    tableElements.add("<td>" + rsID.get(i) + "</td>");
-	    tableElements.add("<td>" + pubmedID + "</td>");
-
-	    // end line
-	    tableElements.add("</tr>");
 	}
 
 	// end table
@@ -283,33 +325,6 @@ public class PrepareFindingsMethods {
     //////// getter / setter ////////
     /////////////////////////////////
 
-    public String getGeneName() {
-	return geneName;
-    }
-
-    public List<String> getImpact() {
-	return impact;
-    }
-
-    public List<String> getRsID() {
-	return rsID;
-    }
-
-    public String getPubmedID() {
-	return pubmedID;
-    }
-
-    public List<String> getVarNameList() {
-	return varNameList;
-    }
-
-    public String getGeneInfo() {
-	return geneInfo;
-    }
-
-    public Map<String, String> getVarInfo() {
-	return varInfo;
-    }
 
     public String getHtmlGeneTable() {
 	return htmlGeneTable;

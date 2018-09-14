@@ -139,7 +139,7 @@ public class CreateTable {
 		
 		// select catagory
 		String catagoryString = tableData.getCatagory();
-		Catagory catagory = Catagory.getByCode(catagoryString);
+		Catagory catagory = Catagory.getCatagoryByCode(catagoryString);
 		return new SimpleObjectProperty<>(catagory);
 	    }
 	});

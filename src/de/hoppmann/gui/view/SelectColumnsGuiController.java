@@ -56,15 +56,15 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML
     private ComboBox<String> clinVarCol = new ComboBox<>();
     @FXML
-    private ComboBox<String> HGMD = new ComboBox<>();
-    @FXML
     private ComboBox<String> splice45Col = new ComboBox<>();
     @FXML
     private ComboBox<String> splice15Col = new ComboBox<>();
     @FXML
     private ComboBox<String> rsIdCol = new ComboBox<>();
     @FXML 
-    private ComboBox<String> varTypeCol = new ComboBox<>();
+    private ComboBox<String> mafCol = new ComboBox<>();
+    @FXML
+    private ComboBox<String> zygocityCol = new ComboBox<>();
     
     
     @FXML
@@ -72,8 +72,6 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML
     private Button okButton;
     
-    @FXML
-    private ChoiceBox<String> choice = new ChoiceBox<>();
     
     
     
@@ -105,25 +103,10 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML
     private void okButtonEvent(ActionEvent event) {
 	
-//	//////// store selection  
-//	// geneCol
-//	findings.addIndex(geneCol.getValue(), header.indexOf(geneCol.getValue()));
-//	findings.setGeneCol(geneCol.getValue());
-//	
-//	// impactCol
-//	findings.addIndex(impactCol.getValue(), header.indexOf(impactCol.getValue()));
-//	findings.setImpactCol(impactCol.getValue());
-//	
-//	// protNomenCol
-//	findings.addIndex(pNomenCol.getValue(), header.indexOf(pNomenCol.getValue()));
-//	findings.setpNomenCol(pNomenCol.getValue());
-//	
-//	//cNomenCol
-//	findings.addIndex(cNomenCol.getValue(), header.indexOf(cNomenCol.getValue()));
-//	findings.setcNomenCol(cNomenCol.getValue());
-
-	
+	// save in config
 	saveDefault();
+	
+	
 	// close window
 	Stage stage = (Stage) okButton.getScene().getWindow();
 	stage.close();
@@ -143,36 +126,7 @@ public class SelectColumnsGuiController implements Initializable {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //////// save chosen values as default
-//    @FXML
     private void saveDefault() {
 	
 	config.setGeneCol(geneCol.getValue());
@@ -187,8 +141,9 @@ public class SelectColumnsGuiController implements Initializable {
 	config.setTotPredCol(totPredCol.getValue());
 	config.setPubMedIdCol(pubMedIdCol.getValue());
 	config.setRsIdCol(rsIdCol.getValue());
-	config.setVarTypeCol(varTypeCol.getValue());
-	
+	config.setImpactCol(impactCol.getValue());
+	config.setMafCol(mafCol.getValue());
+	config.setZygocityCol(zygocityCol.getValue());
 	
 	
     }
@@ -341,13 +296,19 @@ public class SelectColumnsGuiController implements Initializable {
 	if(checkStringList(header, config.getRsIdCol())) {
 	    rsIdCol.getSelectionModel().select(config.getRsIdCol());
 	}
-		
 	
-	// prepare vartype col
-	varTypeCol.getItems().addAll(header);
-	if (checkStringList(header, config.getVarTypeCol())) {
-	    varTypeCol.getSelectionModel().select(config.getVarTypeCol());
+	// prepare zygocity column
+	zygocityCol.getItems().addAll(header);
+	if (checkStringList(header, config.getZygocityCol())){
+	    zygocityCol.getSelectionModel().select(config.getZygocityCol());
 	}
+	
+	// prepare maf column
+	mafCol.getItems().addAll(header);
+	if (checkStringList(header, config.getMafCol())){
+	    mafCol.getSelectionModel().select(config.getMafCol());
+	}
+	
 	
 	
     }    

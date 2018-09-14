@@ -152,8 +152,10 @@ public class FindingsGuiController implements Initializable {
         root.setAlignment(Pos.BOTTOM_LEFT);
         
         
-                final HTMLEditor htmlEditor = new HTMLEditor();
+        final HTMLEditor htmlEditor = new HTMLEditor();
         htmlEditor.setPrefHeight(800);
+	
+	
         htmlEditor.setHtmlText(initialText);       
  
         final TextArea htmlCode = new TextArea();

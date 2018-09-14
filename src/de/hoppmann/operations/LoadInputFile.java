@@ -163,7 +163,7 @@ public class LoadInputFile {
 	HashMap<String, Integer> catagories = new LinkedHashMap<>();
 	catagories.put(config.getClinvarCol(), null);
 	catagories.put(config.getHgmdCol(), null);
-	catagories.put(config.getImpactCol(), null);
+//	catagories.put(config.getImpactCol(), null);
 	catagories.put(config.getPredScoreCol(), null);
 	catagories.put(config.getSplice15Col(), null);
 	catagories.put(config.getSplice45Col(), null);
@@ -364,14 +364,16 @@ public class LoadInputFile {
 	Integer impactColIndex = catagories.get(config.getImpactCol());
 	
 	String[] impactOfInterest = {"stop_gained", "frameshift_variant", "stop_lost"};
-	
-	for (String curImpact : impactOfInterest){
-	    if (row.getEntry(impactColIndex).contains(curImpact)){
-		isLikelyPatho = true;
+	impactColIndex = 0;
+	/// check if index is known els don't check -> else causes crashes.
+	if (impactColIndex != null) {
+	    for (String curImpact : impactOfInterest){
+		if (row.getEntry(impactColIndex).contains(curImpact)){
+		    isLikelyPatho = true;
+		}
+
 	    }
-	
 	}
-	
 	
 	//////// splice variants
 	
