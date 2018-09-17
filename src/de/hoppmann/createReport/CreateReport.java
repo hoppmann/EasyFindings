@@ -17,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -28,8 +27,8 @@ public class CreateReport {
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
-    private String template;
-    private ReportDataModel model = new ReportDataModel();
+    private String report;
+    private ReportDataModel dataModel;
     private StoreFindings findings;
     private final Config config = Config.getInstance();
     
@@ -38,8 +37,9 @@ public class CreateReport {
     //////// costructor ////////
     ////////////////////////////
 
-    public CreateReport(StoreFindings findings) {
+    public CreateReport(StoreFindings findings, ReportDataModel dataModel) {
         this.findings = findings;
+	this.dataModel = dataModel;
         
     }
 
@@ -59,42 +59,40 @@ public class CreateReport {
     
     public void replaceValues() {
 
-        model = new FillDataDummy().fillModel();
+//        dataModel = new FillDataDummy().fillModel();
         
         
         // add sender address
-        replace(model.getSenderPH(), model.getSender("MVZ"));
+        replace(dataModel.getSenderPH(), dataModel.getSender("MVZ"));
         
         
         // add current date
-        replace(model.getDatePh(), "Freiburg, " + model.getDate());
+        replace(dataModel.getDatePh(), "Freiburg, " + dataModel.getDate());
                 
         
         
         
         // add receiver address
-        replace(model.getReveiverHeaderPH(), model.getReceiverHeader("MVZ"));
-        replace(model.getReceiverNamePH(), model.getReceiverName());
-        replace(model.getReceiverStreetPH(), model.getReceiverStreet());
-        replace(model.getReceiverCityPH(), model.getReceiverCity());
+        replace(dataModel.getReveiverHeaderPH(), dataModel.getReceiverHeader("MVZ"));
+        replace(dataModel.getReceiverNamePH(), dataModel.getReceiverName());
+        replace(dataModel.getReceiverStreetPH(), dataModel.getReceiverStreet());
+        replace(dataModel.getReceiverCityPH(), dataModel.getReceiverCity());
         
         
         
         // add patient box
-        replace(model.getDiagMethodPH(), model.getDiagMethod());
-        replace(model.getPatientPH(), model.getPatient());
-        replace(model.getMaterialPH(), model.getMaterial());
-        replace(model.getIndicationPH(), model.getIndication());
+        replace(dataModel.getDiagMethodPH(), dataModel.getDiagMethod());
+        replace(dataModel.getPatientPH(), dataModel.getPatient());
+        replace(dataModel.getMaterialPH(), dataModel.getMaterial());
+        replace(dataModel.getIndicationPH(), dataModel.getIndication());
                 
         // add method box
-        replace(model.getSeqMethodPH(), model.getSeqMehtod("NGS_KiKli"));
+        replace(dataModel.getSeqMethodPH(), dataModel.getSeqMehtod("NGS_KiKli"));
         
 	
 	
-	
 	// add causal genes
-	String htmlGeneTable = prepareCausalGenes();
-	replace(model.getFindingsPH(), htmlGeneTable);
+	replace(dataModel.getFindingsPH(), dataModel.getFindingsGeneTable());
 	
 	
     }
@@ -102,7 +100,7 @@ public class CreateReport {
     
     
     //// add causal genes to document
-    private String prepareCausalGenes() {
+    public void prepareFindingGenesTable() {
 
 	String htmlGeneTable = null;
 
@@ -133,8 +131,10 @@ public class CreateReport {
 	    PrepareNegativeFindings negFindings = new PrepareNegativeFindings(findings);
 	    htmlGeneTable = negFindings.getHtmlTable();
 	}
-
-	return htmlGeneTable;
+	
+	
+	// store table in data model
+	dataModel.setFindingsGeneTable(htmlGeneTable);
 
     }
 
@@ -152,7 +152,7 @@ public class CreateReport {
 
 //// replace value and hand back template
     private void replace(String placeholder, String value) {
-        template = template.replace(placeholder, value);
+        report = report.replace(placeholder, value);
     }
     
     
@@ -177,7 +177,7 @@ public class CreateReport {
         
 
         ////// read in template file
-        template = readInTemplate(templateFile);
+        report = readInTemplate(templateFile);
                 
     }
     
@@ -223,8 +223,8 @@ public class CreateReport {
     //////// getter/setter ////////
     ///////////////////////////////
 
-    public String getTemplate() {
-        return template;
+    public String getReport() {
+        return report;
     }
     
     

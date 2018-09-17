@@ -24,7 +24,6 @@ public class ReportDataModel {
     
     
     //// placeholder
-    
     private final String senderPH = "${sender}";
     private final String receiverNamePH = "${receiverName}";
     private final String reveiverHeaderPH = "${reiceiverHeader}";
@@ -38,40 +37,19 @@ public class ReportDataModel {
     private final String datePh = "${date}";
     private final String seqMethodPH = "${seqMethod}";
     private final String findingsPH = "${findings}";
-//    private final String ;
-//    private final String ;
-//    private final String ;
-//    private final String ;
-//    private final String ;
-//    private final String ;
-//    private final String ;
-//    private final String ;
-//    private final String ;
-    
-    
     
     
     
     //// replacement values
-    private String receiverName;
-    private String receiverCity;
-    private String receiverStreet;
-    private String uklLogo;
-    private String diagMethod;
-    private String patient;
-    private String material;
-    private String indication;
-
-
-
-//    private String 
-//    private String 
-//    private String 
-//    private String 
-//    private String 
-//    private String 
-//    private String 
-//    private String 
+    private String receiverName = "Name";
+    private String receiverStreet = "Straße";
+    private String receiverCity = "Stadt";
+    private String uklLogo = "NA";
+    private String diagMethod = "Method";
+    private String patient = "Patient";
+    private String material = "Matherial";
+    private String indication = "Indikation";
+    private String findingsGeneTable = "NA";
 
 
 
@@ -164,7 +142,6 @@ public class ReportDataModel {
     
     private void prepareSeqMethod () {
         
-//        seqMethod.put("NGS_KiKli", "DNA-Extraktion. Multi-Gen-Panel-Analyse nach GOP-Ziffer 11513 (Panelgr&ouml;&szlig;e 22.689 kb). Die kodierenden Bereiche sowie die angrenzenden Intronbereiche der im Anhang aufgef&uuml;hrten Gene wurden mittels Agilent/SureSelect XT angereichert und anschlie&szlig;end mittels Hochdurchsatz-Sequenzierung auf einem Illumina/ NextSeq-System sequenziert. Eventuell festgestellte, bekannte Polymorphismen mit einer Frequenz &ge; 1% (rezessiver Erbgang) bzw. &ge; 0,2% (dominanter Erbgang) werden als Normalbefund gewertet. Die nachgewiesene pathogene Variante wurde mittels PCR-Amplifikation und direkter Sanger-Sequenzierung des betreffenden Exons und der angrenzenden Intronbereiche methodisch unabh&auml;ngig best&auml;tigt. Die Untersuchung wurde im Labor der Sektion f&uuml;r p&auml;diatrische Genetik im Zentrum f&uuml;r Kinder- und Jugendmedizin (ZKJ) des Universit&auml;tsklinikums Freiburg durchgef&uuml;hrt.");
         seqMethod.put("NGS_KiKli", "DNA-Extraktion. Multi-Gen-Panel-Analyse nach GOP-Ziffer 11513 (Panelgröße 22.689 kb). Die kodierenden Bereiche sowie die angrenzenden Intronbereiche der im Anhang aufgeführten Gene wurden mittels Agilent/SureSelect XT angereichert und anschließend mittels Hochdurchsatz-Sequenzierung auf einem Illumina/ NextSeq-System sequenziert. Eventuell festgestellte, bekannte Polymorphismen mit einer Frequenz ≥ 1% (rezessiver Erbgang) bzw. ≥ 0,2% (dominanter Erbgang) werden als Normalbefund gewertet. Die nachgewiesene pathogene Variante wurde mittels PCR-Amplifikation und direkter Sanger-Sequenzierung des betreffenden Exons und der angrenzenden Intronbereiche methodisch unabhängig bestätigt. Die Untersuchung wurde im Labor der Sektion für pädiatrische Genetik im Zentrum für Kinder- und Jugendmedizin (ZKJ) des Universitätsklinikums Freiburg durchgeführt.");
     }
     
@@ -296,6 +273,15 @@ public class ReportDataModel {
     public String getFindingsPH() {
 	return findingsPH;
     }
+
+    public String getFindingsGeneTable() {
+	return findingsGeneTable;
+    }
+
+    public void setFindingsGeneTable(String findingsGeneTable) {
+	this.findingsGeneTable = findingsGeneTable;
+    }
+    
     
     
     
