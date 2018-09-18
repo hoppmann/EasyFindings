@@ -426,14 +426,26 @@ public class ReportViewerController implements Initializable {
     
 
     
-	//// save report 
-	@FXML
-	private void saveReportButtonAction (ActionEvent event) {
+    //// save report 
+    @FXML
+    private void saveReportButtonAction(ActionEvent event) {
 
-	    // choose file where to save
-	    FileChooser chooser = new FileChooser();
-	    File fileOut = chooser.showSaveDialog(null);
+	// choose file where to save
+	FileChooser chooser = new FileChooser();
+	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("html doc(*.html)", "*.html"));
+	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Word doc (*.doc)", "*.doc"));
+	File fileOut = chooser.showSaveDialog(null);
+	
+	
+	
+	// check if choice was abborted
+	if (fileOut != null) {
 
+	    // check / add default ending
+	    if (! fileOut.getName().contains(".doc") || ! fileOut.getName().contains(".html")) {
+		fileOut = new File(fileOut.getAbsolutePath() + ".html");
+	    }
+	    
 	    // write report in file
 	    BufferedWriter writer = null;
 	    try {
@@ -449,6 +461,7 @@ public class ReportViewerController implements Initializable {
 		    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	    }
+	}
     }
 
     

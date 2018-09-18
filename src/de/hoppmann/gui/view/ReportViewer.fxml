@@ -63,7 +63,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" />
+      <Button mnemonicParsing="false" onAction="#saveReportButtonAction" prefHeight="25.0" prefWidth="110.0" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" />
       <Button mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
       <Button layoutX="145.0" layoutY="419.0" mnemonicParsing="false" onAction="#refreshButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="135.0" />
    </children>
