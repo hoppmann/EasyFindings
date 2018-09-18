@@ -8,18 +8,28 @@ package de.hoppmann.gui.view;
 import de.hoppmann.createReport.CreateReport;
 import de.hoppmann.createReport.ReportDataModel;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputEvent;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -38,14 +48,23 @@ public class ReportViewerController implements Initializable {
     
     // editor tab 
     @FXML HTMLEditor htmlEditor;
-    @FXML Tab ReportTab;
+    @FXML Tab reportTab;
     
     
     // entry mask tab
     @FXML Tab entryMaskTab;
     @FXML TextField nameField;
-    @FXML TextField street;
-    @FXML TextField City;
+    @FXML TextField streetField;
+    @FXML TextField coFiled;
+    @FXML TextField cityField;
+    @FXML TextField patientfield;
+    @FXML TextField materialField;
+    @FXML TextField indicationField;
+    @FXML TextField assessmentField;
+    @FXML ComboBox<String> senderChoice = new ComboBox<>();
+    @FXML ComboBox<String> seqMethodChoice = new ComboBox<>();
+    @FXML ComboBox<String> diagMethodChoice = new ComboBox<>();
+    
     
     
     
@@ -56,9 +75,9 @@ public class ReportViewerController implements Initializable {
 
     
     //// other variables    
-    private String report;
+    private String report = "";
     private StoreFindings findings;
-    private ReportDataModel reportData;
+    private ReportDataModel reportData = new ReportDataModel();
     private CreateReport createReport; 
    
     
@@ -73,9 +92,15 @@ public class ReportViewerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+	
 	//////////////////////
 	//// add listener ////
 	//////////////////////
+	
+	/*
+	Textfiled listener
+	    if texts are entered save them in ReportDataModel
+	*/
 	
 	
 	//////////////
@@ -83,19 +108,158 @@ public class ReportViewerController implements Initializable {
 	nameField.textProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		System.out.println(newValue);
 		reportData.setReceiverName(newValue);
 	    }
 	});
 	
+	
+	//// street field
+	streetField.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setReceiverStreet(newValue);
+	    }
+	});
+	
+	
+	
+	//// co field
+	coFiled.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setReceiverCoLine(newValue);
+	    }
+	});
 
 	
+	//// city field
+	cityField.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setReceiverCity(newValue);
+	    }
+	});
+	
+	
+	//// patient field
+	patientfield.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setPatientInfo(newValue);
+    	    }
+	});
+	
+	
+	//// material field
+	materialField.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setMaterial(newValue);
+	    }
+	});
+	
+	
+	//// indication field
+	indicationField.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setIndication(newValue);
+	    }
+	});
+	
+	
+	//// assessment field
+	assessmentField.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setAssessment(newValue);
+	    }
+	});
 	
 	
 	
 	
+	
+	
+	/////// add listener to html report tab text field to manipulate entire report
+	htmlTextArea.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		report = newValue;
+	    }
+	});
+	
+	
+	
+	
+	
+	
+	//////// add listener to html editor
+	htmlEditor.addEventHandler(InputEvent.ANY, new EventHandler<InputEvent>() {
+	    @Override
+	    public void handle(InputEvent event) {
+		report = htmlEditor.getHtmlText();
+	    }
+	});
+	
+	
+	
+	//////////////////////////////////////////
+	//////// tab change listener
+	////////    if tab is chosen execute method
+
+	// change to entry mask tab.
+	entryMaskTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+	    @Override
+	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+		storeEntryMaskTextFields();
+	    }
+	});
+	
+	
+	// change to report mask -> reload report
+	reportTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+	    @Override
+	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+		htmlEditor.setHtmlText(report);
+	    }
+	});
+	
+	
+	//// change to html report tab
+	htmlReportTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+	    @Override
+	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+		htmlTextArea.setText(report);
+	    }
+	});
+	
+	
+	
+	
+	
+	////////////////////////////
+	//////// prepare comboboxes
+	
+	////////
+	// add choice -> key set of underlying hashes 
+	// set prechoice -> default key
+	
+	senderChoice.getItems().setAll(reportData.getSender().keySet());
+	senderChoice.getSelectionModel().select(reportData.getSenderKey());
+	
+	
+	seqMethodChoice.getItems().setAll(reportData.getSeqMethod().keySet());
+	seqMethodChoice.getSelectionModel().select(reportData.getSeqMethodKey());
+	
+
+	diagMethodChoice.getItems().setAll(reportData.getDiagMethod().keySet());
+	diagMethodChoice.getSelectionModel().select(reportData.getDiagMethodKey());
 	
     }    
+    
+    
+    
     
     
     
@@ -104,8 +268,6 @@ public class ReportViewerController implements Initializable {
 	
 	// retrieve variables and instanciate variables
 	this.findings = findings;
-	reportData = new ReportDataModel();
-	
 	
 	prepareInitialReport();
 	
@@ -124,24 +286,82 @@ public class ReportViewerController implements Initializable {
     //////// methods ////////
     /////////////////////////
     
+    ////////////////
+    //////// non FXML
     
-    //// if a field was filled add it to reprot model
-    @FXML
-    private void nameEntryAction (ActionEvent event) {
-	
-//	System.out.println(nameField.getText());
-//	reportData.setReceiverName(nameField.getText());
-//	System.out.println(reportData.getReceiverName());
-//	createReport.replaceValues();
-//	report = createReport.getReport();
-//	htmlEditor.setHtmlText(report);
+    // fill text fields
+    private void storeEntryMaskTextFields() {
+	nameField.setText(reportData.getReceiverName());
+	streetField.setText(reportData.getReceiverStreet());
+	coFiled.setText(reportData.getReceiverCoLine());
+	cityField.setText(reportData.getReceiverCity());
+	patientfield.setText(reportData.getPatientInfo());
+	materialField.setText(reportData.getMaterial());
+	indicationField.setText(reportData.getIndication());
+	assessmentField.setText(reportData.getAssessment());
 	
     }
     
     
-    // accept changes
+    // reload report
+    private void reloadReport() {
+	
+	createReport.replaceValues();
+	report = createReport.getReport();
+	htmlEditor.setHtmlText(report);
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /////////////
+    //////// FXML
+    
+    
+    
+    //////// handle combobox choices
+    
+    // sender choice box
     @FXML
-    private void acceptButtonAciton (ActionEvent event) {
+    private void senderChoiceAction (ActionEvent event) {
+	reportData.setSenderKey(senderChoice.getValue());
+    }
+    
+    
+    // seq method choice box
+    @FXML
+    private void seqMethodChoiceAction (ActionEvent event) {
+	reportData.setSeqMethodKey(seqMethodChoice.getValue());
+    }
+    
+    // diag method choice 
+    @FXML
+    private void diagMethodChoiceAction (ActionEvent event) {
+	reportData.setDiagMethodKey(diagMethodChoice.getValue());
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // reload report based on template
+    @FXML
+    private void refreshButtonAction (ActionEvent event) {
 	
 	createReport.replaceValues();
 	report = createReport.getReport();
@@ -150,35 +370,8 @@ public class ReportViewerController implements Initializable {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
     //// handle switching to report tab
     @FXML
     private void chooseReportTabAction (ActionEvent event) {
@@ -231,33 +424,32 @@ public class ReportViewerController implements Initializable {
     }
     
     
+
     
-    
-    
-    //    //// FXML Methods
-//       private void saveReport(HTMLEditor editor) {
-//        
-//        FileChooser chooser = new FileChooser();
-//        File fileOut = chooser.showSaveDialog(null);
-//        System.out.println(fileOut.getAbsoluteFile());
-//                
-//        
-//        
-//        BufferedWriter writer = null;
-//        try {
-//            writer = new BufferedWriter(new FileWriter(fileOut));
-//            writer.write(editor.getHtmlText());
-//            writer.close();
-//        } catch (IOException ex) {
-//            Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                writer.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
+	//// save report 
+	@FXML
+	private void saveReportButtonAction (ActionEvent event) {
+
+	    // choose file where to save
+	    FileChooser chooser = new FileChooser();
+	    File fileOut = chooser.showSaveDialog(null);
+
+	    // write report in file
+	    BufferedWriter writer = null;
+	    try {
+		writer = new BufferedWriter(new FileWriter(fileOut));
+		writer.write(htmlEditor.getHtmlText());
+		writer.close();
+	    } catch (IOException ex) {
+		Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	    } finally {
+		try {
+		    writer.close();
+		} catch (IOException ex) {
+		    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	    }
+    }
 
     
     

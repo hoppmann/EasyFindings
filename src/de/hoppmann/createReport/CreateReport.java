@@ -29,7 +29,7 @@ public class CreateReport {
     ///////////////////////////
     private String report;
     private String reportTemplate;
-    private ReportDataModel dataModel;
+    private ReportDataModel reportData;
     private StoreFindings findings;
     private final Config config = Config.getInstance();
     
@@ -40,7 +40,7 @@ public class CreateReport {
 
     public CreateReport(StoreFindings findings, ReportDataModel dataModel) {
         this.findings = findings;
-	this.dataModel = dataModel;
+	this.reportData = dataModel;
         
     }
 
@@ -64,36 +64,38 @@ public class CreateReport {
 	report = reportTemplate;
         
         // add sender address
-        replace(dataModel.getSenderPH(), dataModel.getSender("MVZ"));
+        replace(reportData.getSenderPH(), reportData.getSender().get(reportData.getSenderKey()));
         
         
         // add current date
-        replace(dataModel.getDatePh(), "Freiburg, " + dataModel.getDate());
+        replace(reportData.getDatePh(), "Freiburg, " + reportData.getDate());
                 
         
         
         
         // add receiver address
-        replace(dataModel.getReveiverHeaderPH(), dataModel.getReceiverHeader("MVZ"));
-	replace(dataModel.getReceiverNamePH(), dataModel.getReceiverName());
-        replace(dataModel.getReceiverStreetPH(), dataModel.getReceiverStreet());
-        replace(dataModel.getReceiverCityPH(), dataModel.getReceiverCity());
-        
-        
+        replace(reportData.getReveiverHeaderPH(), reportData.getReceiverHeader().get(reportData.getReceiverHeaderKey()));
+	replace(reportData.getReceiverNamePH(), reportData.getReceiverName());
+        replace(reportData.getReceiverStreetPH(), reportData.getReceiverStreet());
+        replace(reportData.getReceiverCityPH(), reportData.getReceiverCity());
+        replace(reportData.getReceiverCoLinePH(), reportData.getReceiverCoLine());
         
         // add patient box
-        replace(dataModel.getDiagMethodPH(), dataModel.getDiagMethod());
-        replace(dataModel.getPatientPH(), dataModel.getPatient());
-        replace(dataModel.getMaterialPH(), dataModel.getMaterial());
-        replace(dataModel.getIndicationPH(), dataModel.getIndication());
+        replace(reportData.getDiagMethodPH(), reportData.getDiagMethod().get(reportData.getDiagMethodKey()));
+        replace(reportData.getPatientPH(), reportData.getPatientInfo());
+        replace(reportData.getMaterialPH(), reportData.getMaterial());
+        replace(reportData.getIndicationPH(), reportData.getIndication());
                 
         // add method box
-        replace(dataModel.getSeqMethodPH(), dataModel.getSeqMehtod("NGS_KiKli"));
-        
+        replace(reportData.getSeqMethodPH(), reportData.getSeqMethod().get(reportData.getSeqMethodKey()));
+	
+	
+	// add assessment
+	replace(reportData.getAssessmentPH(), reportData.getAssessment());
 	
 	
 	// add causal genes
-	replace(dataModel.getFindingsPH(), dataModel.getFindingsGeneTable());
+	replace(reportData.getFindingsPH(), reportData.getFindingsGeneTable());
 	
 	
     }
@@ -135,7 +137,7 @@ public class CreateReport {
 	
 	
 	// store table in data model
-	dataModel.setFindingsGeneTable(htmlGeneTable);
+	reportData.setFindingsGeneTable(htmlGeneTable);
 
     }
 

@@ -42,7 +42,7 @@ public class FillDataDummy {
         
         // fill patient box
         model.setDiagMethod("Multi-Gen-Panel-Analyse mittels Next Generation Sequencing (NGS)");
-        model.setPatient("Musterknabe, Heinz, *25.12.2009, unsere Referenz P007");
+        model.setPatientInfo("Musterknabe, Heinz, *25.12.2009, unsere Referenz P007");
         model.setMaterial("EDTA-Blut, Eingang 21.09.2018");
         model.setIndication("V.a. Mentale Retardierung, autosomal dominant");
         
