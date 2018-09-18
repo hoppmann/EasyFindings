@@ -28,6 +28,7 @@ public class CreateReport {
     //////// variables ////////
     ///////////////////////////
     private String report;
+    private String reportTemplate;
     private ReportDataModel dataModel;
     private StoreFindings findings;
     private final Config config = Config.getInstance();
@@ -59,8 +60,8 @@ public class CreateReport {
     
     public void replaceValues() {
 
-//        dataModel = new FillDataDummy().fillModel();
-        
+	// reset report to template
+	report = reportTemplate;
         
         // add sender address
         replace(dataModel.getSenderPH(), dataModel.getSender("MVZ"));
@@ -74,7 +75,7 @@ public class CreateReport {
         
         // add receiver address
         replace(dataModel.getReveiverHeaderPH(), dataModel.getReceiverHeader("MVZ"));
-        replace(dataModel.getReceiverNamePH(), dataModel.getReceiverName());
+	replace(dataModel.getReceiverNamePH(), dataModel.getReceiverName());
         replace(dataModel.getReceiverStreetPH(), dataModel.getReceiverStreet());
         replace(dataModel.getReceiverCityPH(), dataModel.getReceiverCity());
         
@@ -177,7 +178,7 @@ public class CreateReport {
         
 
         ////// read in template file
-        report = readInTemplate(templateFile);
+        reportTemplate = readInTemplate(templateFile);
                 
     }
     

@@ -10,9 +10,12 @@ import de.hoppmann.createReport.ReportDataModel;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -40,7 +43,7 @@ public class ReportViewerController implements Initializable {
     
     // entry mask tab
     @FXML Tab entryMaskTab;
-    @FXML TextField name;
+    @FXML TextField nameField;
     @FXML TextField street;
     @FXML TextField City;
     
@@ -70,7 +73,28 @@ public class ReportViewerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+	//////////////////////
+	//// add listener ////
+	//////////////////////
+	
+	
+	//////////////
+	//// name text field
+	nameField.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		System.out.println(newValue);
+		reportData.setReceiverName(newValue);
+	    }
+	});
+	
 
+	
+	
+	
+	
+	
+	
     }    
     
     
@@ -105,9 +129,50 @@ public class ReportViewerController implements Initializable {
     @FXML
     private void nameEntryAction (ActionEvent event) {
 	
-	reportData.setReceiverName(name.getText());
+//	System.out.println(nameField.getText());
+//	reportData.setReceiverName(nameField.getText());
+//	System.out.println(reportData.getReceiverName());
+//	createReport.replaceValues();
+//	report = createReport.getReport();
+//	htmlEditor.setHtmlText(report);
 	
     }
+    
+    
+    // accept changes
+    @FXML
+    private void acceptButtonAciton (ActionEvent event) {
+	
+	createReport.replaceValues();
+	report = createReport.getReport();
+	htmlEditor.setHtmlText(report);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -118,8 +183,9 @@ public class ReportViewerController implements Initializable {
     @FXML
     private void chooseReportTabAction (ActionEvent event) {
 	
-	nameEntryAction(new ActionEvent());
+//	nameEntryAction(new ActionEvent());
 	createReport.replaceValues();
+	report = createReport.getReport();
 	htmlEditor.setHtmlText(report);
 	
 	
