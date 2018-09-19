@@ -9,11 +9,15 @@ import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.operations.CreateTable;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +25,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -44,11 +50,18 @@ public class MainGuiController implements Initializable {
     
     
     //// FXML variables
-    @FXML
-    private TableView<TableData> inputTable = new TableView();
+    // main view tab
+    @FXML private Tab dataTab;
+    @FXML private TableView<TableData> inputTable = new TableView();
     
-    @FXML
-    private Label infoFiled;
+    // findings tab
+    @FXML private Tab findingsTab;
+    @FXML private TableView<TableData> findingsTable = new TableView();
+    
+    
+    //all tabs
+    @FXML private Label infoFiled;
+    @FXML private TabPane tabPane;
     
     
     
@@ -185,32 +198,7 @@ public class MainGuiController implements Initializable {
     
     
     
-    // save findings button
-    @FXML
-    private void handleSaveFindingsButtonAction (ActionEvent event) {
-	
-	
-	
-	// check that a file was loaded first to avoid errors
-	if (loadFile == null) {
-	    new CommonWarnings().openFileFirst();
-	} else {
-	    // check if there is existing data else create new object
-	    if (findings == null) {
-		findings = new StoreFindings(loadFile.getHeader());
-	    }
-
-	    // save findigs for later use
-	    findings.storeFindings(loadFile);
-	    
-	}
-	
-	// make info 
-	infoFiled.setText("Findings saved");
-	
-    }
-
-    
+   
     
     
 
@@ -219,6 +207,7 @@ public class MainGuiController implements Initializable {
     private void handleNewPatientButtonAction (ActionEvent event) {
 	// reset objects
 	findings = null;
+        loadFile = null;
 	inputTable.getColumns().clear();
 	inputTable.getItems().clear();
 	infoFiled.setText("Entries cleared.");
@@ -257,9 +246,115 @@ public class MainGuiController implements Initializable {
     }
     
     
+    // refresh button
+    @FXML
+    private void handleRefreshButtonAction (ActionEvent event) {
+        // remove lines that got unmarked
+	for (Iterator<TableData> iter = findings.getStoredData().listIterator(); iter.hasNext();){
+	    TableData entry = iter.next();
+	    if (entry.isCausal() == false) {
+		iter.remove();
+	    }
+	}
+        
+        
+        // refresh table
+        refreshFindingsTable();
+    }
     
     
     
+    //// show report window
+    @FXML
+    private void showReportAction(ActionEvent event) {
+
+        // do nothing if findings == null
+        if (findings == null) {
+            return;
+        }
+        
+        try {
+
+            // prepare new page
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReportViewer.fxml"));
+
+            // create new window
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Report");
+            stage.setScene(new Scene(root));
+            System.out.println("");
+
+            // get controller of new window and pass findings list
+            ReportViewerController controller = fxmlLoader.getController();
+            controller.init(findings);
+
+            // show window
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(FindingsGuiController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    
+    
+    /////////////////////////
+    //////// non FXML methods
+    
+    private void refreshFindingsTable() {
+
+        /* 
+        check if any findings are stored 
+            -> create table containing these variants
+         */
+        if (findings != null) {
+
+            // remove lines that got unmarked
+            for (Iterator<TableData> iter = findings.getStoredData().listIterator(); iter.hasNext();) {
+                TableData entry = iter.next();
+                if (entry.isCausal() == false) {
+                    iter.remove();
+                }
+            }
+
+            findingsTable.setEditable(true);
+
+            CreateTable createTable = new CreateTable(findingsTable);
+            createTable.prepareTable(findings.getHeaderList());
+            createTable.fillTable(findings.getStoredData());
+
+        }
+
+    }
+    
+    
+    
+     // save findings button
+    @FXML
+    private void saveFindings () {
+	
+	
+	
+	// check that a file was loaded first to avoid errors
+	if (loadFile != null) {
+	    // check if there is existing data else create new object
+	    if (findings == null) {
+		findings = new StoreFindings(loadFile.getHeader());
+	    }
+
+	    // save findigs for later use
+	    findings.storeFindings(loadFile);
+	   
+            // make info 
+            infoFiled.setText("Findings saved");
+	}
+	
+	
+	
+    }
+
     
     
     
@@ -275,8 +370,35 @@ public class MainGuiController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-	inputTable.setEditable(true);
+
+         // prepare tables
+        inputTable.setEditable(true);
+        findingsTable.setEditable(true);
+        
+        
+        //// add listener to tabs
+        // changing to findings tab reload findings table
+        findingsTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                // if changed to tab refresh table 
+                if (newValue) {
+                     refreshFindingsTable();
+                 }    
+            }
+        });
+        
+        // changing from data Tab save findings
+        dataTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (! newValue) {
+                    saveFindings();
+                }
+            }
+        });
+        
+        
     }    
     
 }

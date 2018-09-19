@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="EasyFindings.jar" size="76059" download="eager" />
+    <jar href="EasyFindings.jar" size="78714" download="eager" />
     <jar href="lib\barcodes-7.0.7-javadoc.jar" size="194648" download="eager" />
     <jar href="lib\barcodes-7.0.7-sources.jar" size="149022" download="eager" />
     <jar href="lib\barcodes-7.0.7.jar" size="150286" download="eager" />

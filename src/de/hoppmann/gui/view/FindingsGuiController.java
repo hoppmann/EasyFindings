@@ -9,9 +9,6 @@ import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.CreateTable;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
@@ -26,8 +23,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
-import javafx.scene.web.HTMLEditor;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -193,13 +188,6 @@ public class FindingsGuiController implements Initializable {
     
     
     
-    //// show report window
-    @FXML
-    private void showReportAction (ActionEvent event) {
-	
-	
-	
-    }
     
     
     
@@ -301,7 +289,8 @@ public class FindingsGuiController implements Initializable {
 	
 	// set table options
 	findingsTable.setEditable(true);
-	// check if any findings are stored else close window
+	
+        // check if any findings are stored else close window
 	if (findings == null) {
 	    new CommonWarnings().noDataAvailable();
 	    closeButtonAction(new ActionEvent());
