@@ -3,27 +3,51 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" minHeight="400.0" minWidth="745.0" prefHeight="400.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.MainGuiController">
+<AnchorPane id="AnchorPane" minHeight="400.0" minWidth="745.0" prefHeight="400.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.MainGuiController">
    <children>
       <Button fx:id="openButton" layoutX="20.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleOpenButtonAction" prefHeight="25.0" prefWidth="110.0" text="Open File" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
       <Button fx:id="closeButton" layoutX="505.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="610.0" />
-      <TableView fx:id="inputTable" layoutX="6.0" layoutY="6.0" prefHeight="315.0" prefWidth="741.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
-         <columns>
-         </columns>
-      </TableView>
-      <Button fx:id="saveFindingButton" layoutX="217.0" layoutY="326.0" mnemonicParsing="false" onAction="#handleSaveFindingsButtonAction" prefHeight="25.0" prefWidth="110.0" text="Save Finding" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="130.0">
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-      </Button>
-      <Button fx:id="newPatient" layoutX="250.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleNewPatientButtonAction" prefHeight="25.0" prefWidth="110.0" text="New Patient" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="10.0" />
-      <Button fx:id="findings" layoutX="368.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleFindingsButton" prefHeight="25.0" prefWidth="110.0" text="Findings" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="250.0" />
       <Label fx:id="infoFiled" layoutX="122.0" layoutY="365.0" prefHeight="25.0" prefWidth="486.0" text="INFO:" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="137.0" />
-      <Button layoutX="639.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleColumnsButton" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="610.0" />
-      <Button layoutX="391.0" layoutY="329.0" mnemonicParsing="false" onAction="#databaseButtonAction" prefWidth="110.0" text="Database" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="370.0" />
-      <Button layoutX="489.0" layoutY="329.0" mnemonicParsing="false" prefWidth="110.0" text="Report" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="490.0" />
+      <TabPane prefHeight="400.0" prefWidth="745.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="File Data">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="inputTable" layoutX="99.0" layoutY="33.0" prefHeight="371.0" prefWidth="745.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button mnemonicParsing="false" prefWidth="110.0" text="Report" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="490.0" />
+                        <Button fx:id="saveFindingButton" mnemonicParsing="false" onAction="#handleSaveFindingsButtonAction" prefHeight="25.0" prefWidth="110.0" text="Save Finding" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="newPatient" mnemonicParsing="false" onAction="#handleNewPatientButtonAction" prefHeight="25.0" prefWidth="110.0" text="New Patient" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+                        <Button fx:id="findings" mnemonicParsing="false" onAction="#handleFindingsButton" prefHeight="25.0" prefWidth="110.0" text="Findings" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />
+                        <Button mnemonicParsing="false" onAction="#handleColumnsButton" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="610.0" />
+                        <Button mnemonicParsing="false" onAction="#databaseButtonAction" prefWidth="110.0" text="Database" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="370.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="Findings">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="99.0" layoutY="131.0" prefHeight="331.0" prefWidth="745.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button layoutX="23.0" layoutY="292.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+                        <Button layoutX="147.0" layoutY="296.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.leftAnchor="130.0" />
+                        <Button layoutX="215.0" layoutY="296.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Show Report" AnchorPane.leftAnchor="250.0" />
+                        <Button layoutX="380.0" layoutY="296.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Database" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="370.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
