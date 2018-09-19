@@ -20,7 +20,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -411,14 +410,17 @@ public class ReportViewerController implements Initializable {
 	createReport = new CreateReport(findings, reportData);
 
 	// open template
-	createReport.openTemplate();
+	boolean templateOk = createReport.openTemplate();
 
+        
 	// prepare gene table
 	createReport.prepareFindingGenesTable();
 	
-	// replace values
-	createReport.replaceValues();
-
+        
+        if (templateOk) {
+            // replace values
+            createReport.replaceValues();
+        }
 	// get modified template as initial text
 	report = createReport.getReport();
     }

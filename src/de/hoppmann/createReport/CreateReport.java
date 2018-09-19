@@ -162,10 +162,11 @@ public class CreateReport {
     //////////////////
     //// open template
     
-    public void openTemplate() {
+    public boolean openTemplate() {
         
         // check if path to template exists in config else show open dialoge
         File templateFile = null;
+        boolean templateOk = false;
         
         if (config.getHtmlTemplate() == null || ! new File(config.getHtmlTemplate()).exists()) {
             templateFile = chooseTemplate();
@@ -180,8 +181,12 @@ public class CreateReport {
         
 
         ////// read in template file
-        reportTemplate = readInTemplate(templateFile);
+        if (templateFile != null && templateFile.exists()) {
+            reportTemplate = readInTemplate(templateFile);
+            templateOk = true;
+        }
                 
+        return templateOk;
     }
     
     

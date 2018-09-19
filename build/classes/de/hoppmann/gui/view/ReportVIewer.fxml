@@ -1,40 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.web.HTMLEditor?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="de.hoppmann.gui.view.ReportVIewerController">
+<AnchorPane id="AnchorPane" prefHeight="455.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.ReportViewerController">
    <children>
-      <TabPane layoutX="14.0" layoutY="6.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane layoutX="14.0" layoutY="6.0" prefHeight="455.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="Report">
+          <Tab fx:id="reportTab" text="Report">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <HTMLEditor fx:id="htmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="6.0" layoutY="7.0" prefHeight="200.0" prefWidth="506.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <HTMLEditor fx:id="htmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="-43.0" layoutY="58.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>
           </Tab>
-          <Tab text="Entry Mask">
+          <Tab fx:id="entryMaskTab" text="Entry Mask">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="15.0" layoutY="28.0" prefHeight="25.0" prefWidth="90.0" text="Name" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <TextField fx:id="nameField" layoutX="97.0" layoutY="20.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="10.0" />
+                        <Label layoutX="10.0" layoutY="67.0" prefHeight="25.0" prefWidth="90.0" text="Street" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0" />
+                        <TextField fx:id="streetField" layoutX="92.0" layoutY="59.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="50.0" />
+                        <Label layoutX="10.0" layoutY="88.0" prefHeight="25.0" prefWidth="90.0" text="C/O" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="90.0" />
+                        <TextField fx:id="coFiled" layoutX="125.0" layoutY="87.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="90.0" />
+                        <Label layoutX="10.0" layoutY="129.0" prefHeight="25.0" prefWidth="90.0" text="City" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="130.0" />
+                        <TextField fx:id="cityField" layoutX="100.0" layoutY="129.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="130.0" />
+                        <Label layoutX="10.0" layoutY="228.0" prefHeight="25.0" prefWidth="90.0" text="Patient" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="170.0" />
+                        <TextField fx:id="patientfield" layoutX="100.0" layoutY="228.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="170.0" />
+                        <Label layoutY="266.0" prefHeight="25.0" prefWidth="90.0" text="Material" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="210.0" />
+                        <TextField fx:id="materialField" layoutX="90.0" layoutY="266.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="210.0" />
+                        <Label layoutX="10.0" layoutY="276.0" prefHeight="25.0" prefWidth="90.0" text="Indications" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="250.0" />
+                        <TextField fx:id="indicationField" layoutX="100.0" layoutY="276.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="250.0" />
+                        <Label layoutX="14.0" layoutY="324.0" prefHeight="25.0" prefWidth="90.0" text="Assessment" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="290.0" />
+                        <TextField fx:id="assessmentField" layoutX="104.0" layoutY="324.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="290.0" />
+                        <ComboBox fx:id="senderChoice" layoutX="426.0" layoutY="10.0" onAction="#senderChoiceAction" prefWidth="170.0" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="10.0" />
+                        <Label layoutX="334.0" layoutY="15.0" prefHeight="25.0" prefWidth="90.0" text="Sender" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="10.0" />
+                        <ComboBox fx:id="seqMethodChoice" layoutX="412.0" layoutY="35.0" onAction="#diagMethodChoiceAction" prefWidth="170.0" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="50.0" />
+                        <Label layoutX="320.0" layoutY="40.0" prefHeight="25.0" prefWidth="90.0" text="Diag Method" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="50.0" />
+                        <ComboBox fx:id="diagMethodChoice" layoutX="404.0" layoutY="75.0" onAction="#seqMethodChoiceAction" prefWidth="170.0" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="90.0" />
+                        <Label layoutX="312.0" layoutY="80.0" prefHeight="25.0" prefWidth="90.0" text="Seq Method" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="90.0" />
+                     </children></AnchorPane>
             </content>
           </Tab>
-            <Tab text="HTML Report">
+            <Tab fx:id="htmlReportTab" text="HTML Report">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextArea layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextArea fx:id="htmlTextArea" layoutX="14.0" layoutY="14.0" prefHeight="422.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
               </content>
             </Tab>
         </tabs>
       </TabPane>
+      <Button mnemonicParsing="false" onAction="#saveReportButtonAction" prefHeight="25.0" prefWidth="110.0" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" />
+      <Button mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <Button layoutX="145.0" layoutY="419.0" mnemonicParsing="false" onAction="#refreshButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="135.0" />
    </children>
 </AnchorPane>

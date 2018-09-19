@@ -58,11 +58,6 @@ public class MainGuiController implements Initializable {
     /////////////////////////
 
     
-    
-    
-    
-    
-    
     // Button to jump to database window
     
     @FXML
