@@ -163,7 +163,6 @@ public class LoadInputFile {
 	HashMap<String, Integer> catagories = new LinkedHashMap<>();
 	catagories.put(config.getClinvarCol(), null);
 	catagories.put(config.getHgmdCol(), null);
-//	catagories.put(config.getImpactCol(), null);
 	catagories.put(config.getPredScoreCol(), null);
 	catagories.put(config.getSplice15Col(), null);
 	catagories.put(config.getSplice45Col(), null);
@@ -492,11 +491,14 @@ public class LoadInputFile {
     
     
     //// create table
-    private void createTable() {
-	CreateTable table = new CreateTable(tableView);
+    public void createTable() {
+	
+        
+        CreateTable table = new CreateTable(tableView);
 	table.prepareTable(header);
 	table.fillTable(rowData);
     }
+    
     
     
 

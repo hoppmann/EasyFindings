@@ -249,6 +249,7 @@ public class MainGuiController implements Initializable {
     // refresh button
     @FXML
     private void handleRefreshButtonAction (ActionEvent event) {
+        
         // remove lines that got unmarked
 	for (Iterator<TableData> iter = findings.getStoredData().listIterator(); iter.hasNext();){
 	    TableData entry = iter.next();
@@ -398,6 +399,22 @@ public class MainGuiController implements Initializable {
             }
         });
         
+        
+        // changing to the data tab refresh view
+        dataTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                // check if tab was just selected
+                if (newValue){
+                    // check if a file already is opened to avoid errors
+                    if (loadFile != null) {
+                        // reload table
+                        loadFile.createTable();
+                    }
+                }
+            }
+        });
+                
         
     }    
     

@@ -9,9 +9,9 @@
 
 <AnchorPane id="AnchorPane" minHeight="400.0" minWidth="745.0" prefHeight="400.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.MainGuiController">
    <children>
-      <Button fx:id="openButton" layoutX="20.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleOpenButtonAction" prefHeight="25.0" prefWidth="110.0" text="Open File" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-      <Button fx:id="closeButton" layoutX="505.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="610.0" />
-      <Label fx:id="infoFiled" layoutX="122.0" layoutY="365.0" prefHeight="25.0" prefWidth="486.0" text="INFO:" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="137.0" />
+      <Button fx:id="openButton" layoutX="20.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleOpenButtonAction" prefHeight="25.0" prefWidth="110.0" text="Open" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <Button fx:id="closeButton" layoutX="505.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0" />
+      <Label fx:id="infoFiled" layoutX="122.0" layoutY="365.0" prefHeight="25.0" prefWidth="486.0" text="INFO:" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="9.0" />
       <TabPane fx:id="tabPane" prefHeight="400.0" prefWidth="745.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab fx:id="dataTab" text="Data">
@@ -19,7 +19,7 @@
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <TableView fx:id="inputTable" layoutX="99.0" layoutY="33.0" prefHeight="371.0" prefWidth="745.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <Button fx:id="newPatient" mnemonicParsing="false" onAction="#handleNewPatientButtonAction" prefHeight="25.0" prefWidth="110.0" text="New Patient" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+                        <Button fx:id="newPatient" mnemonicParsing="false" onAction="#handleNewPatientButtonAction" prefHeight="25.0" prefWidth="110.0" text="Clear" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -31,7 +31,7 @@
                         <TableView fx:id="findingsTable" layoutX="99.0" layoutY="131.0" prefHeight="331.0" prefWidth="745.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <Button layoutX="23.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleRefreshButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
                         <Button layoutX="147.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleColumnsButton" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.leftAnchor="130.0" />
-                        <Button layoutX="215.0" layoutY="296.0" mnemonicParsing="false" onAction="#showReportAction" prefHeight="25.0" prefWidth="110.0" text="Show Report" AnchorPane.leftAnchor="250.0" />
+                        <Button layoutX="215.0" layoutY="296.0" mnemonicParsing="false" onAction="#showReportAction" prefHeight="25.0" prefWidth="110.0" text="Report" AnchorPane.leftAnchor="250.0" />
                         <Button layoutX="380.0" layoutY="296.0" mnemonicParsing="false" onAction="#databaseButtonAction" prefHeight="25.0" prefWidth="110.0" text="Database" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="370.0" />
                      </children>
                   </AnchorPane>

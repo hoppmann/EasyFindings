@@ -237,11 +237,9 @@ public class PreparePositiveFindingsMethods {
     //// prepare the HTML code for a table consising of all infos needed for findings
     private void prepareHtmlTable(){
 
-//	// prepare variables
-	 
 	// start table and define size
 	tableElements.add("<table width=\"100%\" >");
-	tableElements.add("<tbody>");
+	tableElements.add("\t<tbody>");
 
 	
 	/*  
@@ -251,17 +249,17 @@ public class PreparePositiveFindingsMethods {
 	*/
 	
 	// new line
-	tableElements.add("<tr>");
+	tableElements.add("\t\t<tr>");
 	
 	// table elements
-	tableElements.add("<td><strong>Gen</strong></td>");
-	tableElements.add("<td><strong>cDNA</strong></td>");
-	tableElements.add("<td><strong>Protein</strong></td>");
-	tableElements.add("<td><strong>Zygotie</strong></td>");
-	tableElements.add("<td><strong>MAF</strong></td>");
-	tableElements.add("<td><strong>Pred</strong></td>");
-	tableElements.add("<td><strong>dbSNP</strong></td>");
-	tableElements.add("<td><strong>PubMed ID</strong></td>");
+	tableElements.add("\t\t\t<td><strong>Gen</strong></td>");
+	tableElements.add("\t\t\t<td><strong>cDNA</strong></td>");
+	tableElements.add("\t\t\t<td><strong>Protein</strong></td>");
+	tableElements.add("\t\t\t<td><strong>Zygotie</strong></td>");
+	tableElements.add("\t\t\t<td><strong>MAF</strong></td>");
+	tableElements.add("\t\t\t<td><strong>Pred</strong></td>");
+	tableElements.add("\t\t\t<td><strong>dbSNP</strong></td>");
+	tableElements.add("\t\t\t<td><strong>PubMed ID</strong></td>");
 	
 	// end line
 	tableElements.add("</tr>");
@@ -276,18 +274,18 @@ public class PreparePositiveFindingsMethods {
 	    if (varInfo.get(varNameList.get(i)) != null) {
 //	    
 		// new line
-		tableElements.add("<tr>");
-		tableElements.add("<td><small>" + geneName + "</small></td>");
-		tableElements.add("<td><small>" + varNameList.get(i) + "</small></td>");
-		tableElements.add("<td><small>" + pNomen.get(i) + "</small></td>");
-		tableElements.add("<td><small>" + zygocity + "</small></td>");
-		tableElements.add("<td><small>" + maf.get(i) + "</small></td>");
-		tableElements.add("<td><small>" + predQuotient + "</small></td>");
-		tableElements.add("<td><small>" + rsID.get(i) + "</small></td>");
-		tableElements.add("<td><small>" + pubmedID + "</small></td>");
+		tableElements.add("\t\t<tr>");
+		tableElements.add("\t\t\t<td><small>" + geneName + "</small></td>");
+		tableElements.add("\t\t\t<td><small>" + varNameList.get(i) + "</small></td>");
+		tableElements.add("\t\t\t<td><small>" + pNomen.get(i) + "</small></td>");
+		tableElements.add("\t\t\t<td><small>" + zygocity + "</small></td>");
+		tableElements.add("\t\t\t<td><small>" + maf.get(i) + "</small></td>");
+		tableElements.add("\t\t\t<td><small>" + predQuotient + "</small></td>");
+		tableElements.add("\t\t\t<td><small>" + rsID.get(i) + "</small></td>");
+		tableElements.add("\t\t\t<td><small>" + pubmedID + "</small></td>");
 		
 		// end line
-		tableElements.add("</tr>");
+		tableElements.add("\t\t</tr>");
 	    }
 //	    }
 	    
