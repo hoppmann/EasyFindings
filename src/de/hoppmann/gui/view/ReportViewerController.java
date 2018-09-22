@@ -30,6 +30,8 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * FXML Controller class
@@ -434,8 +436,9 @@ public class ReportViewerController implements Initializable {
 
 	// choose file where to save
 	FileChooser chooser = new FileChooser();
-	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("html doc(*.html)", "*.html"));
-	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Word doc (*.doc)", "*.doc"));
+	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Word document (*.doc)", "*.doc"));
+       	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("html document (*.html)", "*.html"));
+
 	File fileOut = chooser.showSaveDialog(null);
 	
 	
@@ -444,9 +447,13 @@ public class ReportViewerController implements Initializable {
 	if (fileOut != null) {
 
 	    // check / add default ending
-	    if (! fileOut.getName().contains(".doc") || ! fileOut.getName().contains(".html")) {
-		fileOut = new File(fileOut.getAbsolutePath() + ".html");
-	    }
+            // check if .doc or .html is chosen else add suffix to file
+            if (FilenameUtils.getExtension(fileOut.getName()).equalsIgnoreCase(".doc") && FilenameUtils.getExtension(fileOut.getName()).equalsIgnoreCase(".html")){
+                fileOut = new File(fileOut.getAbsolutePath() + ".doc");
+            }
+//	    if (! fileOut.getName().contains(".doc") && ! fileOut.getName().contains(".html")) {
+//		fileOut = new File(fileOut.getAbsolutePath() + ".doc");
+//	    }
 	    
 	    // write report in file
 	    BufferedWriter writer = null;
