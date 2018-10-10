@@ -62,7 +62,7 @@ public class PreparePositiveFindingsMethods {
 	if (config.getDbPath() != null && new File(config.getDbPath()).exists()) {
 	    geneDb.connect(new File(config.getDbPath()));
 	} else {
-	    File dbPath = geneDb.openDB();
+	    File dbPath = geneDb.openGeneDB();
 	    geneDb.connect(dbPath);
 	}
 

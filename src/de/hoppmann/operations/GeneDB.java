@@ -9,34 +9,28 @@ package de.hoppmann.operations;
 import de.hoppmann.config.Config;
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Label;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 /**
  *
  * @author hoppmann
  */
-public class GeneDB {
+public class GeneDB extends Database {
 
 
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
     private Config config = Config.getInstance();
-    private Connection conn = null;
     private final String driver = "org.sqlite.JDBC";
-    private String dbPath;
+//    private String dbPath;
     private final String geneTable = "genes";
 
     private final String geneCol = "gene";
@@ -62,13 +56,11 @@ public class GeneDB {
     /////////////////////////////
     
     public GeneDB (Label dbInfo, Label infoLable) {
-	
 	    this.dbInfo = dbInfo;
 	    this.infoLable = infoLable;
     }
 	
     public GeneDB () {
-	
     }
 	
 	
@@ -76,6 +68,7 @@ public class GeneDB {
     //////// methods ////////
     /////////////////////////
 
+    
     
     
     ///////////////////////////////////////
@@ -281,7 +274,6 @@ public class GeneDB {
     public List<String> getVarList(String geneName) {
 	
 	
-//	ObservableList<String> varList = FXCollections.observableArrayList();
 	List<String> varList = new LinkedList<>();
 	
 	// prepare query to get all genes
@@ -381,258 +373,21 @@ public class GeneDB {
     
     
     
+   
+    
     ////////////////////////////////////
     //////// general operations ////////
     ////////////////////////////////////
     
+    ///////////////////////////
+    //////// connect to gene DB
     
-    
-    
-    ///////////
-    //// execute DB command
-    private ResultSet execute(String cmd) {
-        
-        
-	// check  if DB is connected
-	if (isConnected() == false){
-	    return null;
-	}
-        
-	ResultSet rs = null;
-	try {
-	    
-	    Statement stmt = conn.createStatement();
-	    stmt.execute(cmd);
-	    rs = stmt.getResultSet();
-	    
-	} catch (SQLException ex) {
-	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-	}
+    public void connectGenenDB(File dbFile) {
 	
-	return rs;
-	
-    }
-    
-    
-    
-    /////////////
-    //// check DB connection
-    public boolean isConnected() {
-	
-	boolean isConnected = true;
-	
-	// ceck DB connection
-	try {
-	    if (conn == null || conn.isClosed()) {
-		isConnected = false;
-	    }
-	} catch (SQLException ex) {
-	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-	}
-
-	return isConnected;
-	
-    }
-    
-    
-    
-    
-    
-    //////////////////
-    //// check if table exists
-    
-    public boolean hasTable (String tableName) {
-	
-	boolean exists = false;
-	
-	// check if connected DB has table of interest
-	try {
-	    DatabaseMetaData meta = conn.getMetaData();
-	    ResultSet tables = meta.getTables(null, null, tableName, null);
-	
-	    if (tables.next()){
-		exists = true;
-	    }
-	    
-	    
-	    
-	} catch (SQLException ex) {
-	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-	}
-	
-	
-	return exists;
-	
-    }
-    
-    
-    //////////////////////////////
-    //// chekc if DB has any entry for a given table
-    
-    public boolean tableHasEntry (String tableName) {
-        
-        boolean hasEntry = false;
-        
-        // prepare query
-        String query = "select * from " + tableName;
-        
-        // get results
-        ResultSet rs = execute(query);
-        
-        // check if there are any results. if so set boolean to true
-        try {
-            if (rs.isBeforeFirst()) {
-                hasEntry = true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return hasEntry;
-        
-    }
-    
-    
-    
-    
-    
-    ////////////////
-    //// create new DB
-    
-    public File createNewDB() {
-	
-	//////// get DB name
-	
-	// read DB name from config
-	FileChooser chooser = new FileChooser();
-        chooser.setTitle("Open DB file");
-	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
-
-
-	// check if db has entry in config and load opener correspoingly
-	if (new File(config.getDbPath()).exists()) {
-	    chooser.setInitialDirectory(new File(config.getDbPath()));
-	} else {
-	    chooser.setInitialDirectory(null);
-	}
-
-	// choos file to open if aborded, chosen chose new file
-	File dbFile = chooser.showSaveDialog(new Stage());
-	
-	
-	if (dbFile != null){
-
-	    // check for correct ending
-	    String extension = dbFile.getName().substring(dbFile.getName().lastIndexOf(".") + 1);
-	    if (!extension.equals("db")) {
-		String fileName = dbFile.getAbsolutePath() + ".db";
-		dbFile = new File(fileName);
-	    }
-	    
-	    // save path in config
-	    config.setDbPath(dbFile.getAbsolutePath());
-
-	    // catch cancel
-	} else {
-	    return null;
-	}
-	
-	
-	return dbFile;
-	
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    //////////////////////////
-    //// choose Database and remember in config.
-    
-    public File openDB() {
-	
-	
-	//////// get DB name
-	
-	// read DB name from config
-	FileChooser chooser = new FileChooser();
-        chooser.setTitle("Open input file");
-	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
-	
+	// connect to DB
+	conn = connect(dbFile);
 	
 
-	// check if db has entry in config and load opener correspoingly
-	
-	if (config.getDbPath() != null && new File(config.getDbPath()).exists()){
-	    chooser.setInitialDirectory(new File(config.getDbPath()));
-	} else {
-	    chooser.setInitialDirectory(null);
-	}
-	
-	
-	// choos file to open if aborded, chosen chose new file
-	File dbFile = chooser.showOpenDialog(new Stage());
-
-
-
-
-	// save path in config
-	if (dbFile != null){
-	    config.setDbPath(dbFile.getAbsolutePath());
-	} else {
-	    
-	    return null;
-	    
-	}
-	
-	
-	
-	return dbFile;
-	
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /////////////////
-    //////// connect to DB
-    public void connect(File dbFile) {
-	
-	
-	// define DB url
-	if (dbFile == null) {
-	    return;
-	}
-	url = "jdbc:sqlite:" + dbFile.getAbsoluteFile();
-	
-	try {
-	    
-	    // if there allread is an connection close it
-	    if (conn != null){
-		conn.close();
-            }
-            // load SQL  driver
-            Class.forName(driver);
-
-            // connect to database
-            conn = DriverManager.getConnection(url, user, password);
-
-            
-        } catch (Exception ex) {
-            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-	} 
-	
-	
 	////////////////////////
 	//////// check if tables are available else create
 
@@ -666,28 +421,407 @@ public class GeneDB {
 	}
 	
 	
-	
 	// give out if DB is connected and name of connected DB
 	infoLable.setText("Connected to " + dbFile.getAbsolutePath() + " established!");
 	dbInfo.setText(dbFile.getName());
 	
 	
+	
     }
-
     
     
-    //// close connection
-    public void closeDB(){
-        
-	if (conn != null) {
-
-	    try {
-		conn.close();
-	    } catch (SQLException ex) {
-		Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-	    }
+    
+    
+    ////////////////////////////
+    //////// create new gene DB
+    public File createNewGeneDB () {
+	
+	// check if db has entry in config and load opener correspoingly
+	String dbPath = null;
+	
+	if (config.getDbPath() != null && new File(config.getDbPath()).exists()) {
+	    dbPath = new File(config.getDbPath()).getParent();
 	}
+	
+	File geneDB = createNewDB(dbPath);
+
+	if (geneDB != null) {
+	    // save path in config
+	    config.setDbPath(geneDB.getAbsolutePath());
+	}
+	
+	return geneDB;
+	
     }
+    
+    
+    
+    /////////////////////
+    //////// open gene DB
+    public File openGeneDB () {
+
+	// check if db has entry in config and load opener correspoingly
+	String dbPath = null;
+	if (config.getDbPath() != null && new File(config.getDbPath()).exists()){
+	   dbPath = new File(config.getDbPath()).getParent();
+	} 
+
+
+	// open DB file
+	File dbFile = openDB(dbPath);
+	
+	
+	
+	// save path in config
+	if (dbFile != null){
+	    config.setDbPath(dbFile.getAbsolutePath());
+	} else {
+	    return null;
+	}
+	
+	return dbFile;
+	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    
+//    
+//    ///////////
+//    //// execute DB command
+//    private ResultSet execute(String cmd) {
+//        
+//        
+//	// check  if DB is connected
+//	if (isConnected() == false){
+//	    return null;
+//	}
+//        
+//	ResultSet rs = null;
+//	try {
+//	    
+//	    Statement stmt = conn.createStatement();
+//	    stmt.execute(cmd);
+//	    rs = stmt.getResultSet();
+//	    
+//	} catch (SQLException ex) {
+//	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+//	}
+//	
+//	return rs;
+//	
+//    }
+//    
+//    
+//    
+//    /////////////
+//    //// check DB connection
+//    public boolean isConnected() {
+//	
+//	boolean isConnected = true;
+//	
+//	// ceck DB connection
+//	try {
+//	    if (conn == null || conn.isClosed()) {
+//		isConnected = false;
+//	    }
+//	} catch (SQLException ex) {
+//	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+//	}
+//
+//	return isConnected;
+//	
+//    }
+//    
+//    
+//    
+//    
+//    
+//    //////////////////
+//    //// check if table exists
+//    
+//    public boolean hasTable (String tableName) {
+//	
+//	boolean exists = false;
+//	
+//	// check if connected DB has table of interest
+//	try {
+//	    DatabaseMetaData meta = conn.getMetaData();
+//	    ResultSet tables = meta.getTables(null, null, tableName, null);
+//	
+//	    if (tables.next()){
+//		exists = true;
+//	    }
+//	    
+//	    
+//	    
+//	} catch (SQLException ex) {
+//	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+//	}
+//	
+//	
+//	return exists;
+//	
+//    }
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    //////////////////////////////
+//    //// chekc if DB has any entry for a given table
+//    
+//    public boolean tableHasEntry (String tableName) {
+//        
+//        boolean hasEntry = false;
+//        
+//        // prepare query
+//        String query = "select * from " + tableName;
+//        
+//        // get results
+//        ResultSet rs = execute(query);
+//        
+//        // check if there are any results. if so set boolean to true
+//        try {
+//            if (rs.isBeforeFirst()) {
+//                hasEntry = true;
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//        return hasEntry;
+//        
+//    }
+//    
+//    
+//    
+//    
+//    
+//    ////////////////
+//    //// create new DB
+//    
+//    public File createNewDB() {
+//	
+//	//////// get DB name
+//	
+//	// read DB name from config
+//	FileChooser chooser = new FileChooser();
+//        chooser.setTitle("Open DB file");
+//	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
+//
+//
+//	// check if db has entry in config and load opener correspoingly
+//	if (new File(config.getDbPath()).exists()) {
+//	    chooser.setInitialDirectory(new File(config.getDbPath()));
+//	} else {
+//	    chooser.setInitialDirectory(null);
+//	}
+//
+//	// choos file to open if aborded, chosen chose new file
+//	File dbFile = chooser.showSaveDialog(new Stage());
+//	
+//	
+//	if (dbFile != null){
+//
+//	    // check for correct ending
+//	    String extension = dbFile.getName().substring(dbFile.getName().lastIndexOf(".") + 1);
+//	    if (!extension.equals("db")) {
+//		String fileName = dbFile.getAbsolutePath() + ".db";
+//		dbFile = new File(fileName);
+//	    }
+//	    
+//	    // save path in config
+//	    config.setDbPath(dbFile.getAbsolutePath());
+//
+//	    // catch cancel
+//	} else {
+//	    return null;
+//	}
+//	
+//	
+//	return dbFile;
+//	
+//    }
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    //////////////////////////
+//    //// choose Database and remember in config.
+//    
+//    public File openDB() {
+//	
+//	
+//	//////// get DB name
+//	
+//	// read DB name from config
+//	FileChooser chooser = new FileChooser();
+//        chooser.setTitle("Open gene database");
+//	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
+//	
+//	
+//
+//	// check if db has entry in config and load opener correspoingly
+//	
+//	if (config.getDbPath() != null && new File(config.getDbPath()).exists()){
+//	    chooser.setInitialDirectory(new File(config.getDbPath()));
+//	} else {
+//	    chooser.setInitialDirectory(null);
+//	}
+//	
+//	
+//	// choos file to open if aborded, chosen chose new file
+//	File dbFile = chooser.showOpenDialog(new Stage());
+//
+//
+//
+//
+//	// save path in config
+//	if (dbFile != null){
+//	    config.setDbPath(dbFile.getAbsolutePath());
+//	} else {
+//	    
+//	    return null;
+//	    
+//	}
+//	
+//	
+//	
+//	return dbFile;
+//	
+//    }
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    /////////////////
+//    //////// connect to DB
+//    public void connect(File dbFile) {
+//	
+//	
+//	// define DB url
+//	if (dbFile == null) {
+//	    return;
+//	}
+//	url = "jdbc:sqlite:" + dbFile.getAbsoluteFile();
+//	
+//	try {
+//	    
+//	    // if there allread is an connection close it
+//	    if (conn != null){
+//		conn.close();
+//            }
+//            // load SQL  driver
+//            Class.forName(driver);
+//
+//            // connect to database
+//            conn = DriverManager.getConnection(url, user, password);
+//
+//            
+//        } catch (Exception ex) {
+//            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+//	} 
+//	
+//	
+//	////////////////////////
+//	//////// check if tables are available else create
+//
+//	// check gene table
+//	if (! hasTable(geneTable)){
+//	    
+//	    // prepare command
+//	    String createTabelCmd = "create table " + geneTable
+//		    + " (" + geneCol + " VARCHAR(60) not NULL, "
+//		    + geneInfoCol + " TEXT, "
+//		    + "PRIMARY KEY ( " + geneCol + " ))";
+//	    
+//	    // execute command
+//	    execute(createTabelCmd);
+//	}
+//	
+//        
+//	// check variant table
+//	if (! hasTable(varTable)) {
+//	    
+//	    // prepare command
+//	    String createTableCmd = "CREATE TABLE " + varTable
+//		    + " (" + varCol + " VARCHAR(60) not NULL, "
+//		    + geneCol + " VARCHAR(60), "
+//		    + varInfoCol + " TEXT, "
+//		    + "PRIMARY KEY ( " + varCol + " ))";
+//	    
+//	    // execute command
+//	    execute(createTableCmd);
+//	    
+//	}
+//	
+//	
+//	
+//	// give out if DB is connected and name of connected DB
+//	infoLable.setText("Connected to " + dbFile.getAbsolutePath() + " established!");
+//	dbInfo.setText(dbFile.getName());
+//	
+//	
+//    }
+//
+//    
+//    
+//    
+//    /////////////////////////
+//    //////// close connection
+//    public void closeDB(){
+//        
+//	if (conn != null) {
+//
+//	    try {
+//		conn.close();
+//	    } catch (SQLException ex) {
+//		Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+//	    }
+//	}
+//    }
+//    
+//    
     
     
     /////////////////////////////////

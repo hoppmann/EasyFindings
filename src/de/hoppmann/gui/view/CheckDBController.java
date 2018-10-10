@@ -141,11 +141,17 @@ public class CheckDBController implements Initializable {
         
 // check if there is already an open connection if so close it
         
-	File dbFile = geneDB.openDB();
+	File dbFile = geneDB.openGeneDB();
 	
 	if (dbFile != null) {
-	    geneDB.connect(dbFile);
+	    geneDB.connectGenenDB(dbFile);
 	}
+	
+	
+	// refresh gene combobox choice
+	loadAllGeneList(null);
+	
+	
     }
     
     
@@ -161,9 +167,9 @@ public class CheckDBController implements Initializable {
             geneDB.closeDB();
         }
 
-	File dbFile = geneDB.createNewDB();
+	File dbFile = geneDB.createNewGeneDB();
 	if (dbFile != null) {
-	    geneDB.connect(dbFile);
+	    geneDB.connectGenenDB(dbFile);
 	}
 	
 	
@@ -670,10 +676,10 @@ public class CheckDBController implements Initializable {
 	if (findings != null && findings.getStoredData().size() > 0) {
 
 
-		// check if databse is connected if not open DB
+	    // check if databse is connected if not open DB
 	    if (!geneDB.isConnected()){
-		File dbFile = geneDB.openDB();
-		geneDB.connect(dbFile);
+		File dbFile = geneDB.openGeneDB();
+		geneDB.connectGenenDB(dbFile);
 	    }
 	    
 	    //// create findings table	
@@ -689,7 +695,8 @@ public class CheckDBController implements Initializable {
 	    */
 	    
 	    List<String> geneList = findings.getValueList(config.getGeneCol());
-	    // uniquify gene list
+	    
+	    // mamke gene list uniqe
 	    geneList = geneList.stream().distinct().collect(Collectors.toList());
 	    Collections.sort(geneList);
 	    
@@ -744,7 +751,7 @@ public class CheckDBController implements Initializable {
 	    
 	    if (new File(config.getDbPath()).exists() && !new File(config.getDbPath()).isDirectory()){
 		File dbFile = new File(config.getDbPath());
-		geneDB.connect(dbFile);
+		geneDB.connectGenenDB(dbFile);
 	    }
 	}
 	

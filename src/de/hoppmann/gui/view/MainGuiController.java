@@ -5,7 +5,6 @@
  */
 package de.hoppmann.gui.view;
 
-import de.hoppmann.gui.messanges.CommonWarnings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
@@ -163,35 +162,35 @@ public class MainGuiController implements Initializable {
     
     
     
-    
-    // show all stored findings
-    @FXML
-    private void handleFindingsButton(ActionEvent event) {
-
-	try {
-	    
-	    
-	    // open new window to show findings chosen so far
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FindingsGui.fxml"));
-
-	    // create new window
-	    Parent root = fxmlLoader.load();
-	    Stage stage = new Stage();
-	    stage.setTitle("Current Findings");
-	    stage.setScene(new Scene(root));
-	    stage.show();
-	    
-	    // setting controller for datatransfer
-	    FindingsGuiController controller = fxmlLoader.getController();
-	    controller.init(findings);
-		    
-
-	} catch (IOException ex) {
-	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
-	}
-	
-	
-    }
+//    
+//    // show all stored findings
+//    @FXML
+//    private void handleFindingsButton(ActionEvent event) {
+//
+//	try {
+//	    
+//	    
+//	    // open new window to show findings chosen so far
+//	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FindingsGui.fxml"));
+//
+//	    // create new window
+//	    Parent root = fxmlLoader.load();
+//	    Stage stage = new Stage();
+//	    stage.setTitle("Current Findings");
+//	    stage.setScene(new Scene(root));
+//	    stage.show();
+//	    
+//	    // setting controller for datatransfer
+//	    FindingsGuiController controller = fxmlLoader.getController();
+//	    controller.init(findings);
+//		    
+//
+//	} catch (IOException ex) {
+//	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+//	}
+//	
+//	
+//    }
     
     
     
@@ -269,33 +268,31 @@ public class MainGuiController implements Initializable {
     @FXML
     private void showReportAction(ActionEvent event) {
 
-        // do nothing if findings == null
-        if (findings == null) {
-            return;
-        }
-        
-        try {
+	try {
+	    // do nothing if findings == null
+	    if (findings == null) {
+		return;
+	    }
 
-            // prepare new page
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReportViewer.fxml"));
+	    // prepare new page
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReportViewer.fxml"));
 
-            // create new window
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Report");
-            stage.setScene(new Scene(root));
-            System.out.println("");
+	    // create new window
+	    Parent root = fxmlLoader.load();
+	    Stage stage = new Stage();
+	    stage.setTitle("Report");
+	    stage.setScene(new Scene(root));
 
-            // get controller of new window and pass findings list
-            ReportViewerController controller = fxmlLoader.getController();
-            controller.init(findings);
+	    // get controller of new window and pass findings list
+	    ReportViewerController controller = fxmlLoader.getController();
+	    controller.init(findings);
 
-            // show window
-            stage.show();
+	    // show window
+	    stage.show();
 
-        } catch (IOException ex) {
-            Logger.getLogger(FindingsGuiController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	} catch (IOException ex) {
+	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	}
 
     }
 
