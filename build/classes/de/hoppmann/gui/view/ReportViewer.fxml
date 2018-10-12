@@ -49,6 +49,8 @@
                         <Label layoutX="320.0" layoutY="40.0" prefHeight="25.0" prefWidth="90.0" text="Diag Method" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="50.0" />
                         <ComboBox fx:id="diagMethodChoice" layoutX="404.0" layoutY="75.0" onAction="#seqMethodChoiceAction" prefWidth="170.0" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="90.0" />
                         <Label layoutX="312.0" layoutY="80.0" prefHeight="25.0" prefWidth="90.0" text="Seq Method" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="90.0" />
+                        <Label layoutX="329.0" layoutY="135.0" text="List of Panel Genes" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="130.0" />
+                        <TextArea fx:id="genePanelArea" layoutX="320.0" layoutY="150.0" prefHeight="171.0" prefWidth="261.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

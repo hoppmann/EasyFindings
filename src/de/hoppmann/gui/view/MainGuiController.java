@@ -162,39 +162,6 @@ public class MainGuiController implements Initializable {
     
     
     
-//    
-//    // show all stored findings
-//    @FXML
-//    private void handleFindingsButton(ActionEvent event) {
-//
-//	try {
-//	    
-//	    
-//	    // open new window to show findings chosen so far
-//	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FindingsGui.fxml"));
-//
-//	    // create new window
-//	    Parent root = fxmlLoader.load();
-//	    Stage stage = new Stage();
-//	    stage.setTitle("Current Findings");
-//	    stage.setScene(new Scene(root));
-//	    stage.show();
-//	    
-//	    // setting controller for datatransfer
-//	    FindingsGuiController controller = fxmlLoader.getController();
-//	    controller.init(findings);
-//		    
-//
-//	} catch (IOException ex) {
-//	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
-//	}
-//	
-//	
-//    }
-    
-    
-    
-    
     
     
    
@@ -223,8 +190,13 @@ public class MainGuiController implements Initializable {
 
         // load input file after open button was pushed
         loadFile = new LoadInputFile(inputTable, infoFiled);
+	boolean loadedCorrectly = loadFile.load();
         
-        
+	// check if file is loaded correctly ti avoid error 
+	if (!loadedCorrectly){
+	    loadFile = null;
+	}
+	
     }
     
     
@@ -266,7 +238,7 @@ public class MainGuiController implements Initializable {
     
     //// show report window
     @FXML
-    private void showReportAction(ActionEvent event) {
+    private void reportButtonAction(ActionEvent event) {
 
 	try {
 	    // do nothing if findings == null

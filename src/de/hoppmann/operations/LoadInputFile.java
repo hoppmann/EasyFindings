@@ -57,18 +57,10 @@ public class LoadInputFile {
         // retrieve variables
         this.tableView = inputTable;
         this.infoField = infoFiled;
-	 // reset infoField
-	 infoFiled.setText("INFO:");
+	 
 	
-        // choose input file
-        File file = chooseFile();
-        
-        // check if file chosen. If so continue loading and prepareing table
-        if (file != null) {
-            openFile(file);
-	    catagorize();
-	    createTable();
-        }
+	
+       
         
     }
 	
@@ -77,6 +69,27 @@ public class LoadInputFile {
     //////// methods ////////
     /////////////////////////
 
+    // load file
+    public boolean load () {
+	
+	boolean isLoaded = false;
+	// reset infoField
+	infoField.setText("INFO:");
+	
+	// choose input file
+        File file = chooseFile();
+        
+        // check if file chosen. If so continue loading and prepareing table
+        if (file != null) {
+            openFile(file);
+	    catagorize();
+	    createTable();
+	    isLoaded = true;
+        }
+	
+	return isLoaded;
+	
+    }
     
     
     

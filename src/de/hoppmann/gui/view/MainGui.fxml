@@ -31,7 +31,7 @@
                         <TableView fx:id="findingsTable" layoutX="99.0" layoutY="131.0" prefHeight="331.0" prefWidth="745.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <Button layoutX="23.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleRefreshButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
                         <Button layoutX="147.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleColumnsButton" prefHeight="25.0" prefWidth="110.0" text="Columns" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0" />
-                        <Button layoutX="215.0" layoutY="296.0" mnemonicParsing="false" onAction="#showReportAction" prefHeight="25.0" prefWidth="110.0" text="Report" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />
+                        <Button layoutX="215.0" layoutY="296.0" mnemonicParsing="false" onAction="#reportButtonAction" prefHeight="25.0" prefWidth="110.0" text="Report" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />
                         <Button layoutX="380.0" layoutY="296.0" mnemonicParsing="false" onAction="#databaseButtonAction" prefHeight="25.0" prefWidth="110.0" text="Database" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="370.0" />
                      </children>
                   </AnchorPane>

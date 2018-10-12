@@ -5,23 +5,16 @@
             <url>src/de/hoppmann/createReport/ReportDataModel.java</url>
             <bookmark id="1">
                 <name/>
-                <line>61</line>
+                <line>62</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
+            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/createReport/ReportDataModel.java</file>
             <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/gui/view/ReportViewerController.java</file>
-=======
-            <file>file:/C:/Users/hoppmann/Documents/GitHub/EasyFindings/src/de/hoppmann/gui/view/MainGuiController.java</file>
-            <file>file:/C:/Users/hoppmann/Documents/GitHub/EasyFindings/src/de/hoppmann/createReport/PreparePositiveFindingsMethods.java</file>
-            <file>file:/C:/Users/hoppmann/Documents/GitHub/EasyFindings/src/de/hoppmann/operations/LoadInputFile.java</file>
-            <file>file:/C:/Users/hoppmann/Documents/GitHub/EasyFindings/src/de/hoppmann/gui/view/FindingsGuiController.java</file>
-            <file>file:/C:/Users/hoppmann/Documents/GitHub/EasyFindings/src/de/hoppmann/gui/view/ReportViewerController.java</file>
-            <file>file:/C:/Users/hoppmann/Documents/GitHub/EasyFindings/src/de/hoppmann/operations/CreateTable.java</file>
->>>>>>> 6d794136f68de898aca3511ed341262886fd51d5
+            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/createReport/PreparePanelTable.java</file>
         </group>
     </open-files>
 </project-private>

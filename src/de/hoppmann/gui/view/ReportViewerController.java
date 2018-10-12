@@ -6,6 +6,7 @@
 package de.hoppmann.gui.view;
 
 import de.hoppmann.createReport.CreateReport;
+import de.hoppmann.createReport.PreparePanelTable;
 import de.hoppmann.createReport.ReportDataModel;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import java.io.BufferedWriter;
@@ -61,6 +62,7 @@ public class ReportViewerController implements Initializable {
     @FXML TextField materialField;
     @FXML TextField indicationField;
     @FXML TextField assessmentField;
+    @FXML TextArea genePanelArea;
     @FXML ComboBox<String> senderChoice = new ComboBox<>();
     @FXML ComboBox<String> seqMethodChoice = new ComboBox<>();
     @FXML ComboBox<String> diagMethodChoice = new ComboBox<>();
@@ -79,6 +81,7 @@ public class ReportViewerController implements Initializable {
     private StoreFindings findings;
     private ReportDataModel reportData = new ReportDataModel();
     private CreateReport createReport; 
+    private String panelGenes;
    
     
     
@@ -173,6 +176,15 @@ public class ReportViewerController implements Initializable {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		reportData.setAssessment(newValue);
+	    }
+	});
+	
+	
+	// add listener for gene panel area
+	genePanelArea.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		panelGenes = newValue;
 	    }
 	});
 	
@@ -363,6 +375,7 @@ public class ReportViewerController implements Initializable {
     @FXML
     private void refreshButtonAction (ActionEvent event) {
 	
+	PreparePanelTable table = new PreparePanelTable(panelGenes);
 	createReport.replaceValues();
 	report = createReport.getReport();
 	htmlEditor.setHtmlText(report);
@@ -428,6 +441,11 @@ public class ReportViewerController implements Initializable {
     
     
 
+    
+    
+    
+    
+    
     
     //// save report 
     @FXML

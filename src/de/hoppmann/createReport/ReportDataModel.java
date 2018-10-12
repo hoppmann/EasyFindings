@@ -9,6 +9,8 @@ package de.hoppmann.createReport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,7 +50,6 @@ public class ReportDataModel {
     private String receiverCity = "Stadt";
     private String receiverCoLine = "";
     private String uklLogo = "NA";
-//    private String diagMethod = "Method";
     private String patientInfo = "Patient";
     private String material = "Material";
     private String indication = "Indikation";
@@ -69,6 +70,12 @@ public class ReportDataModel {
     
     
     
+    
+    // gene panel information
+    
+    
+    
+    
     ////////////////////////////
     //////// costructor ////////
     ////////////////////////////
@@ -79,7 +86,6 @@ public class ReportDataModel {
         prepareReceiverHeader();
         prepareSeqMethod();
 	prepareDiagMethods();
-        
         
 
     }
