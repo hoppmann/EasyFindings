@@ -9,8 +9,6 @@ package de.hoppmann.createReport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +39,7 @@ public class ReportDataModel {
     private final String seqMethodPH = "${seqMethod}";
     private final String findingsPH = "${findings}";
     private final String assessmentPH = "${conclusion}";
+    private final String genePanelTablePH = "${genePanelTable}";
     
     
     
@@ -55,6 +54,7 @@ public class ReportDataModel {
     private String indication = "Indikation";
     private String findingsGeneTable = "NA";
     private String assessment = "NA";
+    private String genePanelTable = "NA";
 
 
     
@@ -328,6 +328,14 @@ public class ReportDataModel {
     public void setAssessment(String assessment) {
 	this.assessment = assessment;
     }
+
+    public String getGenePanelTable() {
+	return genePanelTable;
+    }
+
+    public void setGenePanelTable(String genePanelTable) {
+	this.genePanelTable = genePanelTable;
+    }
     
     
     
@@ -393,6 +401,11 @@ public class ReportDataModel {
 	return assessmentPH;
     }
 
+    public String getGenePanelTablePH() {
+	return genePanelTablePH;
+    }
+
+    
     
     
     

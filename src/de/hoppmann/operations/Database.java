@@ -33,14 +33,6 @@ public class Database {
     protected Connection conn = null;
     private final String driver = "org.sqlite.JDBC";
     private String dbPath;
-    private final String geneTable = "genes";
-
-    private final String geneCol = "gene";
-    private final String geneInfoCol = "geneInfo";
-    private final String varTable = "variants";
-    private final String varCol = "var";
-    private final String varInfoCol = "varInfo";
-    
     
     // connect to db
     private String url;

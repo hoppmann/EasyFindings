@@ -97,6 +97,9 @@ public class CreateReport {
 	// add causal genes
 	replace(reportData.getFindingsPH(), reportData.getFindingsGeneTable());
 	
+	// add panel gene table
+	replace(reportData.getGenePanelTablePH(), reportData.getGenePanelTable());
+	
 	
     }
     

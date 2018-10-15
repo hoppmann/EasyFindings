@@ -8,7 +8,6 @@ package de.hoppmann.operations;
 
 import de.hoppmann.config.Config;
 import java.io.File;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -29,8 +28,7 @@ public class GeneDB extends Database {
     //////// variables ////////
     ///////////////////////////
     private Config config = Config.getInstance();
-    private final String driver = "org.sqlite.JDBC";
-//    private String dbPath;
+    
     private final String geneTable = "genes";
 
     private final String geneCol = "gene";
@@ -421,7 +419,7 @@ public class GeneDB extends Database {
 	}
 	
 	
-	// give out if DB is connected and name of connected DB
+	// print out if DB is connected and name of connected DB
 	infoLable.setText("Connected to " + dbFile.getAbsolutePath() + " established!");
 	dbInfo.setText(dbFile.getName());
 	

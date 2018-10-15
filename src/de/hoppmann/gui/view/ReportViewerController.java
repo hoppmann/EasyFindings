@@ -82,7 +82,7 @@ public class ReportViewerController implements Initializable {
     private ReportDataModel reportData = new ReportDataModel();
     private CreateReport createReport; 
     private String panelGenes;
-   
+   PreparePanelTable panelTable = new PreparePanelTable();
     
     
     ////////////////////////////////
@@ -375,7 +375,11 @@ public class ReportViewerController implements Initializable {
     @FXML
     private void refreshButtonAction (ActionEvent event) {
 	
-	PreparePanelTable table = new PreparePanelTable(panelGenes);
+//	PreparePanelTable table = new PreparePanelTable(panelGenes);
+	panelTable.create(panelGenes);
+	String genePanelTable = panelTable.getPanelTable();
+	reportData.setGenePanelTable(genePanelTable);
+	System.out.println(genePanelTable);
 	createReport.replaceValues();
 	report = createReport.getReport();
 	htmlEditor.setHtmlText(report);
