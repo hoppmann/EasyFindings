@@ -11,11 +11,12 @@ import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,9 +32,10 @@ public class PreparePanelTable extends Database {
     ///////////////////////////
     
     private String panelTable;
+    private String billingTable;
     
     
-    private List<String> panelGenes = new LinkedList<>();
+    private Set<String> panelGenes = new TreeSet<>();
     private final String dbName = "geneInfos.db";
     private final String tableHg19 = "hg19";
     private File geneInfoDB;
@@ -83,34 +85,50 @@ public class PreparePanelTable extends Database {
     //////// methods ////////
     /////////////////////////
 
+    ///////////////////////
+    //////// guide methods
     
-    // guide method
-    public void create(String inputText) {
+    // create table for reprort (no multiplier)
+    public void createReportTable(String inputText) {
 	
-	List<String> geneList = createPanelList(inputText);
+	Set<String> geneList = createPanelList(inputText);
 	gatherGeneInfos(geneList);
-	panelTable = prepareTable(geneList);
-	
+	panelTable = prepareTable(geneList, false);
 	
 		
     }
     
     
     
+    // create table for billing (include multiplier)
+    public void createBillingTable(String inputText) {
+	Set<String> geneList = createPanelList(inputText);
+	gatherGeneInfos(geneList);
+	billingTable = prepareTable(geneList, true);
+	System.out.println(billingTable);
+    }
     
     
     
     
-    // form list for text field
-    private List createPanelList(String inputText) {
+
+
+    
+    
+    
+    /////////////////////////////////
+    // create gene set from textfiled
+    private Set createPanelList(String inputText) {
 	
-	// check if input not null if  so split text into list 
-	List<String> geneList = new LinkedList<>();
+	// check if input not null if so split text into set (avoid duplications
+	Set<String> geneList = new TreeSet<>();
 	if (inputText != null) {
+	    
 	    
 	    // remove white spaces
 	    List<String> tmpList = Arrays.asList(inputText.split("\n"));
 	    for (String curGene : tmpList) {
+	
 		// skip empty lines or lines containing only white spaces
 		if (curGene.replaceAll("\\s", "").equals("")){
 		    continue;
@@ -118,11 +136,6 @@ public class PreparePanelTable extends Database {
 		geneList.add(curGene.replaceAll("\\s", ""));
 	    }
 	}
-	
-	
-	
-	
-
 	return geneList;
 	
     }
@@ -135,28 +148,29 @@ public class PreparePanelTable extends Database {
     
     
     
-    // collect infos for gene list
-    private void gatherGeneInfos(List<String> geneList) {
+    // gather infos for gene list from database
+    private void gatherGeneInfos(Set<String> geneList) {
 	
 	
 	///////////////
 	//// check if gene list contains new genes
 
 	
-	// check for equality
-	Collections.sort(geneList);
-	Collections.sort(panelGenes);
-	
+	/*
+	check if already queried list equals new list
+	if so skip database query
+	*/
 	if (panelGenes.equals(geneList)){
-	   return;
-	} else {
-	    panelGenes = geneList;
+	    return;
 	}
 	
 	
 	
 	// prepare query
-	for (String curGene : panelGenes) {
+	for (String curGene : geneList) {
+	   if (panelGenes.contains(curGene)) {
+	       continue;
+	   }
 	    try {
 		
 		curGene = curGene.toUpperCase();
@@ -190,21 +204,21 @@ public class PreparePanelTable extends Database {
 		    geneInfoData.setPheno(rs.getString(phenoCol));
 		    geneInfoData.setPhenoMim(rs.getString(phenoMimCol));
 		    
-		    // combine mois and store
-		    StringBuilder moi = new StringBuilder();
+		    // combine mois and store in string
+		    Set<String> moi = new TreeSet();
 		    if (rs.getBoolean(arCol)){
-			moi.append("AR");
+			moi.add("AR");
 		    }
 		    if (rs.getBoolean(adCol)) {
-			moi.append("AD");
+			moi.add("AD");
 		    }
 		    if (rs.getBoolean(xlrCol)){
-			moi.append("XLR");
+			moi.add("XLR");
 		    }
 		    if (rs.getBoolean(xldCol)){
-			moi.append("XLD");
+			moi.add("XLD");
 		    }
-		    geneInfoData.setMoi(moi.toString());
+		    geneInfoData.setMoi(String.join(", ", moi));
 		    
 		}
 	    }
@@ -213,6 +227,10 @@ public class PreparePanelTable extends Database {
 		Logger.getLogger(PreparePanelTable.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 	}
+	
+	// save new gene list for later comparisment
+	panelGenes = geneList;
+	
 	
     }
     
@@ -224,7 +242,7 @@ public class PreparePanelTable extends Database {
     
     // preapare table
     
-    private String prepareTable(List<String> geneList) {
+    private String prepareTable(Set<String> geneList, boolean forBilling) {
     
 	// start HTML table
 	List<String> elements = new LinkedList<>();
@@ -232,32 +250,29 @@ public class PreparePanelTable extends Database {
 
 	// prepare size elements
 	elements.add("<table style=\"width: 100%\" border=\"1\">");
-	elements.add("\t<col style=\"width: 12.5%\">");
-	elements.add("\t<col style=\"width: 12.5%\">");
-	elements.add("\t<col style=\"width: 12.5%\">");
-	elements.add("\t<col style=\"width: 12.5%\">");
-	elements.add("\t<col style=\"width: 12.5%\">");
-	elements.add("\t<col style=\"width: 12.5%\">");
-	elements.add("\t<col style=\"width: 12.5%\">");
 	
 	// prepare body
 	elements.add("\t<tbody>");
 	elements.add("\t\t<tr>");
 	
 	// preapare header
-	elements.add("\t\t\t<td>Gen</td>");
-	elements.add("\t\t\t<td>OMIM Gen</td>");
-	elements.add("\t\t\t<td>Vererbung</td>");
-	elements.add("\t\t\t<td>NCBI RefSeq</td>");
-	elements.add("\t\t\t<td>kodierender Bereich (kb)</td>");
-	elements.add("\t\t\t<td>Erkrankung</td>");
-	elements.add("\t\t\t<td>OMIM Erkrankung</td>");
+	elements.add("\t\t\t<td><small><small>Gen</small></small></td>");
+	elements.add("\t\t\t<td><small><small>OMIM Gen</small></small></td>");
+	elements.add("\t\t\t<td><small><small>Vererbung</small></small></td>");
+	elements.add("\t\t\t<td><small><small>NCBI RefSeq</small></small></td>");
+	elements.add("\t\t\t<td><small><small>kodierender Bereich (kb)</small></small></td>");
+	if (forBilling){
+	    	elements.add("\t\t\t<td><small><small>Muliplikator</small></small></td>");
+	}
+	elements.add("\t\t\t<td><small><small>Erkrankung</small></small></td>");
+	elements.add("\t\t\t<td><small><small>OMIM Erkrankung</small></small></td>");
 	elements.add("\t\t</tr>");
 
 
 	
 	// add gene informations
-	
+	int panelSize = 0;
+	int totalMultiplier = 0;
 	for (String curGene : geneList){
 
 
@@ -266,24 +281,58 @@ public class PreparePanelTable extends Database {
 	    
 	    // check if gene has entry
 	    elements.add("\t\t<tr>");
-	    elements.add("\t\t\t<td>" + curGene + "</td>");
+	    elements.add("\t\t\t<td><small><small>" + curGene + "</small></small></td>");
 	    if (geneInfos.get(curGene) != null) {
 
-		elements.add("\t\t\t<td>" + geneInfos.get(curGene).getGeneMim() + "</td>");
-		elements.add("\t\t\t<td>" + geneInfos.get(curGene).getMoi() + "</td>");
-		elements.add("\t\t\t<td>" + geneInfos.get(curGene).getNcbiRefSeq() + "</td>");
-		elements.add("\t\t\t<td>" + geneInfos.get(curGene).getCodingRegion() + "</td>");
-		elements.add("\t\t\t<td>" + geneInfos.get(curGene).getPheno() + "</td>");
-		elements.add("\t\t\t<td>" + geneInfos.get(curGene).getPhenoMim() + "</td>");
+		
+		
+		// if phenotype data is available split in case of multiple entries
+		String pheno = "";
+		String phenoMim = "";
+		if (geneInfos.get(curGene).getPheno() != null){
+		    List<String> split = Arrays.asList(geneInfos.get(curGene).getPheno().split(";"));
+		    pheno = String.join("<br>", split);
+		}
+		if (geneInfos.get(curGene).getPhenoMim() != null) {
+		    List<String> split = Arrays.asList(geneInfos.get(curGene).getPhenoMim().split(";"));
+		    phenoMim = String.join("<br>", split);
+		}
+		
+		
+		elements.add("\t\t\t<td><small><small>" + geneInfos.get(curGene).getGeneMim() + "</small></small></td>");
+		elements.add("\t\t\t<td><small><small>" + geneInfos.get(curGene).getMoi() + "</small></small></td>");
+		elements.add("\t\t\t<td><small><small>" + geneInfos.get(curGene).getNcbiRefSeq() + "</small></small></td>");
+		elements.add("\t\t\t<td><small><small>" + (double) geneInfos.get(curGene).getCodingRegion() / 1000 + "</small></small></td>");
+		
+		// if table for billing add multiplier 
+    		if(forBilling){
+		    int multiplier = geneInfos.get(curGene).getCodingRegion() / 250;
+		    elements.add("\t\t\t<td><small><small>" + multiplier + "</small></small></td>");
+		    totalMultiplier += multiplier;
+		}
+		elements.add("\t\t\t<td><small><small>" + pheno + "</small></small></td>");
+		elements.add("\t\t\t<td><small><small>" + phenoMim + "</small></small></td>");
+		
+		// add transcript size to panelsize
+		panelSize += geneInfos.get(curGene).getCodingRegion();
 	    }
 	    elements.add("\t\t</tr>");
 	}
 
-	elements.add("\t\t\t");
-	elements.add("");
-	elements.add("");
-	elements.add("");
-	elements.add("");
+	
+	// add sum of transcript length
+	elements.add("\t\t</tr>");
+	elements.add("\t\t\t<td><small><small><b>&sum;</b></small></small></td>");
+	elements.add("\t\t\t<td><small><small><b></b></small></small></td>");
+	elements.add("\t\t\t<td><small><small><b></b></small></small></td>");
+	elements.add("\t\t\t<td><small><small><b></b></small></small></td>");
+	elements.add("\t\t\t<td><small><small><b>" + (double) panelSize/1000 + "</b></small></small></td>");
+	if (forBilling){
+	    elements.add("\t\t\t<td><small><small><b>" + totalMultiplier + "</b></small></small></td>");
+
+	}
+	elements.add("\t\t\t<td><small><small><b></b></small></small></td>");
+	elements.add("\t\t\t<td><small><small><b></b></small></small></td>");
 	
 	
 	elements.add("\t</tbody>");
@@ -295,14 +344,10 @@ public class PreparePanelTable extends Database {
     
     
     
+
     
     
     
-    // add sum of coding region
-    
-    // add muliplyer
-	
-	
 	
     /////////////////////////////////
     //////// getter / setter ////////
@@ -312,6 +357,9 @@ public class PreparePanelTable extends Database {
 	return panelTable;
     }
 
+    public String getBillingTable() {
+	return billingTable;
+    }
 
     
     

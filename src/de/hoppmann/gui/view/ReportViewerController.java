@@ -25,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputEvent;
@@ -46,6 +47,10 @@ public class ReportViewerController implements Initializable {
     ///////////////////////////
     
     //// FXML variables
+    
+    // tab pane
+    @FXML TabPane tabPane;
+    
     
     // editor tab 
     @FXML HTMLEditor htmlEditor;
@@ -75,6 +80,10 @@ public class ReportViewerController implements Initializable {
     @FXML TextArea htmlTextArea;
     
 
+    // billing report tab
+    @FXML Tab billingTab;
+    @FXML HTMLEditor billingEditor;
+    
     
     //// other variables    
     private String report = "";
@@ -375,14 +384,26 @@ public class ReportViewerController implements Initializable {
     @FXML
     private void refreshButtonAction (ActionEvent event) {
 	
-//	PreparePanelTable table = new PreparePanelTable(panelGenes);
-	panelTable.create(panelGenes);
+	// create panel table
+	panelTable.createReportTable(panelGenes);
 	String genePanelTable = panelTable.getPanelTable();
 	reportData.setGenePanelTable(genePanelTable);
-	System.out.println(genePanelTable);
+
+	// replace values
 	createReport.replaceValues();
+	
+	// create report
 	report = createReport.getReport();
 	htmlEditor.setHtmlText(report);
+	
+	// add billing table to billing tab
+	panelTable.createBillingTable(panelGenes);
+	String billingTable = panelTable.getBillingTable();
+	billingEditor.setHtmlText(billingTable);
+	
+	// switch to html tab
+	tabPane.getSelectionModel().select(reportTab);
+	
     }
     
     
@@ -393,7 +414,6 @@ public class ReportViewerController implements Initializable {
     @FXML
     private void chooseReportTabAction (ActionEvent event) {
 	
-//	nameEntryAction(new ActionEvent());
 	createReport.replaceValues();
 	report = createReport.getReport();
 	htmlEditor.setHtmlText(report);
@@ -457,6 +477,7 @@ public class ReportViewerController implements Initializable {
 
 	// choose file where to save
 	FileChooser chooser = new FileChooser();
+	chooser.setTitle("Save report");
 	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Word document (*.doc)", "*.doc"));
        	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("html document (*.html)", "*.html"));
 
@@ -469,12 +490,12 @@ public class ReportViewerController implements Initializable {
 
 	    // check / add default ending
             // check if .doc or .html is chosen else add suffix to file
-            if (FilenameUtils.getExtension(fileOut.getName()).equalsIgnoreCase(".doc") && FilenameUtils.getExtension(fileOut.getName()).equalsIgnoreCase(".html")){
-                fileOut = new File(fileOut.getAbsolutePath() + ".doc");
-            }
-//	    if (! fileOut.getName().contains(".doc") && ! fileOut.getName().contains(".html")) {
-//		fileOut = new File(fileOut.getAbsolutePath() + ".doc");
-//	    }
+//            if (!FilenameUtils.getExtension(fileOut.getName()).equalsIgnoreCase(".doc") && !FilenameUtils.getExtension(fileOut.getName()).equalsIgnoreCase(".html")){
+//                fileOut = new File(fileOut.getAbsolutePath() + ".doc");
+//            }
+	    if (! fileOut.getName().contains(".doc") && ! fileOut.getName().contains(".html")) {
+		fileOut = new File(fileOut.getAbsolutePath() + ".doc");
+	    }
 	    
 	    // write report in file
 	    BufferedWriter writer = null;

@@ -151,7 +151,6 @@ public class PreparePositiveFindingsMethods {
 	maf = retrieveEntries(curFinding, config.getMafCol(), true);
 	
 	
-	
 	//quotient of prediciton tools
 	String totPred = retrieveEntries(curFinding, config.getTotPredCol(), false).get(0);
 	String percentDamaging = retrieveEntries(curFinding, config.getPredScoreCol(), false).get(0);
@@ -195,10 +194,14 @@ public class PreparePositiveFindingsMethods {
 	List<String> entryList = curFinding.getSplitEntry(findings.getColIndex(colName), ",");
 	
 	// check each element if empty. If so set NA
-	for (int i = 0 ; i < entryList.size(); i++) {
-	    if (entryList.get(i) == null || entryList.get(i).equals("")) {
-		entryList.set(i, "NA");
+	if (entryList.size() > 0) {
+	    for (int i = 0; i < entryList.size(); i++) {
+		if (entryList.get(i) == null || entryList.get(i).equals("")) {
+		    entryList.set(i, "NA");
+		}
 	    }
+	} else {
+	    entryList.add("NA");
 	}
 	
 	return entryList;
