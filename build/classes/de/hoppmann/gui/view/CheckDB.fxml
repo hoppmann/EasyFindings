@@ -25,9 +25,9 @@
                      <children>
                         <TableView fx:id="findingsTable" layoutY="42.0" prefHeight="230.0" prefWidth="771.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
                         <Label layoutX="8.0" layoutY="16.0" prefHeight="16.0" prefWidth="80.0" text="Select Gene" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="15.0" />
-                        <ComboBox fx:id="findingsGeneNameBox" layoutX="107.0" layoutY="15.0" onAction="#findingsGeneBoxAction" prefHeight="26.0" prefWidth="120.0" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="10.0" />
+                        <ComboBox fx:id="findingsTabGeneNameBox" layoutX="107.0" layoutY="15.0" onAction="#findingsGeneBoxAction" prefHeight="26.0" prefWidth="120.0" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="10.0" />
                         <Label layoutX="225.0" layoutY="15.0" prefHeight="16.0" prefWidth="97.0" text="Select Variant" AnchorPane.leftAnchor="225.0" AnchorPane.topAnchor="15.0" />
-                        <ComboBox fx:id="findingsVarNameBox" layoutX="322.0" layoutY="10.0" onAction="#findingsVarBoxAction" prefHeight="26.0" prefWidth="326.0" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="10.0" />
+                        <ComboBox fx:id="findingsTabVarNameBox" layoutX="322.0" layoutY="10.0" onAction="#findingsVarBoxAction" prefHeight="26.0" prefWidth="326.0" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="10.0" />
                         <Button layoutX="5.0" layoutY="289.0" mnemonicParsing="false" onAction="#findingsSaveButtonAction" prefWidth="110.0" text="Save" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" />
                      </children>
                   </AnchorPane>

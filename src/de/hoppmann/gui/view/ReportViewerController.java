@@ -5,8 +5,10 @@
  */
 package de.hoppmann.gui.view;
 
+import de.hoppmann.config.Config;
 import de.hoppmann.createReport.CreateReport;
 import de.hoppmann.createReport.PreparePanelTable;
+import de.hoppmann.createReport.ReceiverDB;
 import de.hoppmann.createReport.ReportDataModel;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import java.io.BufferedWriter;
@@ -28,11 +30,12 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.InputEvent;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.apache.commons.io.FilenameUtils;
+import org.controlsfx.control.textfield.TextFields;
 
 /**
  * FXML Controller class
@@ -59,15 +62,18 @@ public class ReportViewerController implements Initializable {
     
     // entry mask tab
     @FXML Tab entryMaskTab;
-    @FXML TextField nameField;
-    @FXML TextField streetField;
-    @FXML TextField coFiled;
+    @FXML TextField titleField;
+    @FXML TextField addressField;
     @FXML TextField cityField;
+    @FXML TextField zipCodeField;
+    @FXML TextField countryField;
+    @FXML TextField coFiled;
     @FXML TextField patientfield;
     @FXML TextField materialField;
     @FXML TextField indicationField;
     @FXML TextField assessmentField;
     @FXML TextArea genePanelArea;
+    @FXML ComboBox<String> receiverName = new ComboBox<>();
     @FXML ComboBox<String> senderChoice = new ComboBox<>();
     @FXML ComboBox<String> seqMethodChoice = new ComboBox<>();
     @FXML ComboBox<String> diagMethodChoice = new ComboBox<>();
@@ -91,7 +97,8 @@ public class ReportViewerController implements Initializable {
     private ReportDataModel reportData = new ReportDataModel();
     private CreateReport createReport; 
     private String panelGenes;
-   PreparePanelTable panelTable = new PreparePanelTable();
+    private PreparePanelTable panelTable = new PreparePanelTable();
+    private ReceiverDB receiverDB = new ReceiverDB();
     
     
     ////////////////////////////////
@@ -115,34 +122,22 @@ public class ReportViewerController implements Initializable {
 	*/
 	
 	
-	//////////////
-	//// name text field
-	nameField.textProperty().addListener(new ChangeListener<String>() {
+	//// title filed
+	titleField.textProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		reportData.setReceiverName(newValue);
+		reportData.setTitle(newValue);
 	    }
 	});
 	
-	
 	//// street field
-	streetField.textProperty().addListener(new ChangeListener<String>() {
+	addressField.textProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		reportData.setReceiverStreet(newValue);
 	    }
 	});
 	
-	
-	
-	//// co field
-	coFiled.textProperty().addListener(new ChangeListener<String>() {
-	    @Override
-	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		reportData.setReceiverCoLine(newValue);
-	    }
-	});
-
 	
 	//// city field
 	cityField.textProperty().addListener(new ChangeListener<String>() {
@@ -152,6 +147,34 @@ public class ReportViewerController implements Initializable {
 	    }
 	});
 	
+	
+	//// zip code field
+	zipCodeField.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setZipCode(newValue);
+	    }
+	});
+	
+	
+	//// country field
+	countryField.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setCountry(newValue);
+	    }
+	});
+	
+	
+	//// co field
+	coFiled.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setReceiverCoLine(newValue);
+	    }
+	});
+	coFiled.setTooltip(new Tooltip("Multiple entries seperated by \";\""));
+
 	
 	//// patient field
 	patientfield.textProperty().addListener(new ChangeListener<String>() {
@@ -233,7 +256,7 @@ public class ReportViewerController implements Initializable {
 	entryMaskTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
 	    @Override
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-		storeEntryMaskTextFields();
+		retrieveEntryMaskTextFields();
 	    }
 	});
 	
@@ -277,14 +300,62 @@ public class ReportViewerController implements Initializable {
 	diagMethodChoice.getItems().setAll(reportData.getDiagMethod().keySet());
 	diagMethodChoice.getSelectionModel().select(reportData.getDiagMethodKey());
 	
+	
+	/* 
+	init receiver name combo box
+	add auto compleation
+	Add action listener
+	if name is written check if address is available 
+	    if so auto fill other fields
+	*/
+		
+	
+	receiverName.getItems().setAll(receiverDB.getNameList());
+	receiverName.setEditable(true);
+	TextFields.bindAutoCompletion(receiverName.getEditor(), receiverDB.getNameList());
+	receiverName.valueProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		fillReceiverData(newValue);
+		reportData.setReceiverName(newValue);
+	    }
+	});
+	
     }    
     
     
     
     
     
+    //////////////////////
+    ///// fill receiver data from database
+    private void fillReceiverData(String receiverName) {
+	
+	boolean success = receiverDB.queryAddress(receiverName);
+	if (success){
+	    addressField.setText(receiverDB.getPostalAddress());
+	    cityField.setText(receiverDB.getZipCode() + " " + receiverDB.getCity());
+	}
+	
+    }
     
-     //// init editor and get initial report document
+    
+    
+    
+    
+    
+    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+    
+    //////////////////////
+    //// init editor and get initial report document
     public void init (StoreFindings findings) {
 	
 	// retrieve variables and instanciate variables
@@ -311,11 +382,14 @@ public class ReportViewerController implements Initializable {
     //////// non FXML
     
     // fill text fields
-    private void storeEntryMaskTextFields() {
-	nameField.setText(reportData.getReceiverName());
-	streetField.setText(reportData.getReceiverStreet());
-	coFiled.setText(reportData.getReceiverCoLine());
+    private void retrieveEntryMaskTextFields() {
+	titleField.setText(reportData.getTitle());
+	receiverName.setValue(reportData.getReceiverName());
+	addressField.setText(reportData.getReceiverStreet());
 	cityField.setText(reportData.getReceiverCity());
+	zipCodeField.setText(reportData.getZipCode());
+	countryField.setText(reportData.getCountry());
+	coFiled.setText(reportData.getReceiverCoLine());
 	patientfield.setText(reportData.getPatientInfo());
 	materialField.setText(reportData.getMaterial());
 	indicationField.setText(reportData.getIndication());
@@ -376,6 +450,42 @@ public class ReportViewerController implements Initializable {
     
     
     
+    //////////////////////
+    //// store receiver data
+    @FXML
+    private void storeReceiverButtonAction () {
+	
+	// set variables
+	receiverDB.setTitle(titleField.getText());
+	receiverDB.setFullName(receiverName.getValue());
+	receiverDB.setPostalAddress(addressField.getText());
+	receiverDB.setCity(cityField.getText());
+	receiverDB.setZipCode(zipCodeField.getText());
+	receiverDB.setCountry(countryField.getText());
+	
+	
+	
+	// update DB
+	receiverDB.storeReceiver();
+	
+	// update choosable list
+	receiverName.getItems().setAll(receiverDB.getNameList());
+	
+    }
+    
+    
+    ///////////////////
+    //// remove receiver data
+    @FXML
+    private void removeReceiverButtonAction() {
+	// remove entry
+	receiverDB.removeData();
+	
+	// update Combobox choice
+	receiverName.getItems().setAll(receiverDB.getNameList());
+    }
+    
+    
     
     
     
@@ -428,6 +538,9 @@ public class ReportViewerController implements Initializable {
     @FXML
     public void closeButtonAction(ActionEvent event) {
 	
+	// close connection to receiverDB
+	receiverDB.closeDB();
+	
 	Stage stage = (Stage) htmlEditor.getScene().getWindow();
 	stage.close();
 	
@@ -475,6 +588,9 @@ public class ReportViewerController implements Initializable {
     @FXML
     private void saveReportButtonAction(ActionEvent event) {
 
+//	new TestDoc(htmlEditor.getHtmlText());
+	
+	
 	// choose file where to save
 	FileChooser chooser = new FileChooser();
 	chooser.setTitle("Save report");
@@ -490,9 +606,6 @@ public class ReportViewerController implements Initializable {
 
 	    // check / add default ending
             // check if .doc or .html is chosen else add suffix to file
-//            if (!FilenameUtils.getExtension(fileOut.getName()).equalsIgnoreCase(".doc") && !FilenameUtils.getExtension(fileOut.getName()).equalsIgnoreCase(".html")){
-//                fileOut = new File(fileOut.getAbsolutePath() + ".doc");
-//            }
 	    if (! fileOut.getName().contains(".doc") && ! fileOut.getName().contains(".html")) {
 		fileOut = new File(fileOut.getAbsolutePath() + ".doc");
 	    }
@@ -519,7 +632,31 @@ public class ReportViewerController implements Initializable {
     
     
    
-    
+    //// choose different template
+    @FXML 
+    private void templateButtonAction (ActionEvent e) {
+	Config config = Config.getInstance();
+	
+	// choose file
+	FileChooser chooser = new FileChooser();
+	chooser.setTitle("Select report template");
+	
+	if (new File(config.getHtmlTemplate()).exists()){
+	    chooser.setInitialDirectory(new File(config.getHtmlTemplate()).getParentFile());
+	} else {
+	    chooser.setInitialDirectory(null);
+	}
+	
+	
+	File template = chooser.showOpenDialog(new Stage());
+	
+	
+	if (template != null && template.exists()){
+	    Config.getInstance().setHtmlTemplate(template.getAbsolutePath());
+	}
+	
+	
+    }
     
    
     

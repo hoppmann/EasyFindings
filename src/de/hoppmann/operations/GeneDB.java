@@ -130,7 +130,7 @@ public class GeneDB extends Database {
 	
 	// prepare command 
 	String addEntryCmd = "REPLACE INTO " + geneTable + " VALUES " 
-		+ "( " + "'" + geneName + "'" + ", " + "'" + geneInfo + "'" + " )";
+		+ "( '" + geneName + "' , '" + geneInfo + "')";
 	execute(addEntryCmd);
 		
 	

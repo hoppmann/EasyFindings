@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.FileChooser;
@@ -74,10 +76,9 @@ public class CreateReport {
         
         
         // add receiver address
-        replace(reportData.getReveiverHeaderPH(), reportData.getReceiverHeader().get(reportData.getReceiverHeaderKey()));
-	replace(reportData.getReceiverNamePH(), reportData.getReceiverName());
-        replace(reportData.getReceiverStreetPH(), reportData.getReceiverStreet());
-        replace(reportData.getReceiverCityPH(), reportData.getReceiverCity());
+        String receiverAddress = prepareReceiverAddress();
+	replace(reportData.getReveiverHeaderPH(), reportData.getReceiverHeader().get(reportData.getReceiverHeaderKey()));
+	replace(reportData.getReceiverAddressPH(), receiverAddress);
         replace(reportData.getReceiverCoLinePH(), reportData.getReceiverCoLine());
         
         // add patient box
@@ -103,6 +104,25 @@ public class CreateReport {
 	
     }
     
+    
+    //// put together all inforamtion to creat receiver address
+    private String prepareReceiverAddress() {
+	
+	List<String> addressParts = new LinkedList<>();
+	if (reportData.getTitle().equals("")) {
+	    addressParts.add(reportData.getReceiverName());
+	} else {
+	    addressParts.add(reportData.getTitle() + " " + reportData.getReceiverName());
+	}
+	addressParts.add(reportData.getReceiverStreet());
+	addressParts.add("<strong>" + reportData.getZipCode() + " " + reportData.getReceiverCity() + "</strong>");
+	addressParts.add(reportData.getCountry());
+
+	// return address as string
+	return  String.join("<br>\n", addressParts);
+
+	
+    }
     
     
     //// add causal genes to document

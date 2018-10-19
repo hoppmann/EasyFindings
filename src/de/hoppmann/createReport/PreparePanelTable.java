@@ -41,16 +41,16 @@ public class PreparePanelTable extends Database {
     private File geneInfoDB;
 
     private String geneName;
-    protected String geneNameCol =  "geneName";
-    protected String geneMimCol = "GeneMim";
-    protected String arCol = "AR";
-    protected String adCol = "AD";
-    protected String xlrCol = "XLR";
-    protected String xldCol = "XLD";
-    protected String ncbiRefSeqCol = "NCBI_RefSeq";
-    protected String codingRegionCol = "TranscriptLength";
-    protected String phenoCol = "Phenotypes";
-    protected String phenoMimCol = "PhenoMim";
+    protected final String geneNameCol =  "geneName";
+    protected final String geneMimCol = "GeneMim";
+    protected final String arCol = "AR";
+    protected final String adCol = "AD";
+    protected final String xlrCol = "XLR";
+    protected final String xldCol = "XLD";
+    protected final String ncbiRefSeqCol = "NCBI_RefSeq";
+    protected final String codingRegionCol = "TranscriptLength";
+    protected final String phenoCol = "Phenotypes";
+    protected final String phenoMimCol = "PhenoMim";
 
 
     private Map<String, GeneInfoModel> geneInfos = new HashMap<String, GeneInfoModel>();
@@ -93,8 +93,12 @@ public class PreparePanelTable extends Database {
 	
 	Set<String> geneList = createPanelList(inputText);
 	gatherGeneInfos(geneList);
-	panelTable = prepareTable(geneList, false);
 	
+	// if panel genes are given, prepare table, else deleat table if exists
+	panelTable = "";
+	if(geneList.size() > 0){
+	    panelTable = prepareTable(geneList, false);
+	}
 		
     }
     
@@ -105,7 +109,6 @@ public class PreparePanelTable extends Database {
 	Set<String> geneList = createPanelList(inputText);
 	gatherGeneInfos(geneList);
 	billingTable = prepareTable(geneList, true);
-	System.out.println(billingTable);
     }
     
     
@@ -249,6 +252,7 @@ public class PreparePanelTable extends Database {
 
 
 	// prepare size elements
+	elements.add("<h3>Untersuchte Gene</h3>");
 	elements.add("<table style=\"width: 100%\" border=\"1\">");
 	
 	// prepare body

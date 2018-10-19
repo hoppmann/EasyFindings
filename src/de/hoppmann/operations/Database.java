@@ -6,7 +6,6 @@
 
 package de.hoppmann.operations;
 
-import de.hoppmann.config.Config;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

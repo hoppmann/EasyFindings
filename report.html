@@ -1,0 +1,304 @@
+<html dir="ltr">
+	<head>
+
+	<!-- set charset to utf-8 to be able to use umlaute -->
+	<meta charset="utf-8">
+
+	<!-- define general style of the document -->
+	<style type = "text/css" media="all">
+		<!--
+			@page {
+				size:210mm 297mm;
+				margin: 20mm;
+
+				@bottom-left{
+					content: element(footer);
+				}
+				@top-center{
+					content: element(header);
+				}
+			}
+
+			#page-header {
+			display: block;
+			position: running(header);
+			}
+
+			#page-footer {
+			display: block;
+			position: running(footer);
+			}
+
+		-->
+		body {
+			/* set size of view to size of A4*/
+			/* height:297mm; */
+			/* width:210mm; */
+
+			/* to centre page on screen*/
+			margin-left: auto;
+			margin-right:auto;
+			/* margin-top: 30mm; */
+			/* margin-bottom: 30mm; */
+		}
+
+		html {
+			/* set standard font */
+			font-family: arial;
+			font-size: 12
+
+
+			/* set charset to utf-8 to be able to use umlaute */
+
+		}
+
+		table {
+			margin-left: auto;
+			margin-right: auto;
+			font-family: arial;
+			font-size: 12;
+		}
+
+
+	</style>
+  </head>
+
+
+
+
+<!-- here starts the main part -->
+<body contenteditable="true">
+	<div id="page-header">
+		<p>Header text</p>
+	</div>
+
+	<div id="page-footer">
+		<p>Footer text</p>
+	</div>
+
+	<div id="page-content">
+		<p>Body text</p>
+	</div>
+
+	<!-- header table containing sender and receiver address as well as the UKL logo-->
+	<!-- <table style="height: 408px; width: 737px;" border="0"> -->
+	<table style="height: 45mm; width: 100%;" border="0" align="center">
+
+		<tbody>
+
+			<tr style="height: 45mm;">
+				<!-- receiver information  -->
+				<td style="105mm;">
+					<p>
+						<small>
+							</small></p><p><small><strong>MVZ des Universitätsklinikums Freiburg<br></strong>Robert-Koch-Straße 3, 79106 Freiburg</small></p><small>
+						</small>
+					<p></p>
+					<p>
+							Name<br>
+							Straße<br>
+							<strong> Stadt </strong>
+					</p>
+					<p>&nbsp;</p>
+					<p>
+						<small>
+
+						</small>
+					</p>
+				</td>
+
+
+
+				<!-- sender information -->
+				<td style="width: 105mm">
+					<p></p><p><strong><font size="1">Medizinisches Versorgungszentrum</font></strong><font size="1"><br>Strahlentherapie<br>Humangenetik<br>Transfusionsmedizin</font></p><p><strong>Humangenetik<br></strong><strong>PD Dr. Ekkehart Lausch<br></strong>Sektionsleiter Pädiatrische Genetik<br> Robert-Koch-Str. 3, D-79106 Freiburg<br>Tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94440<br>Fax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94030<br><small>E-Mail&nbsp;&nbsp;  ekkehart.lausch@uniklinik-freiburg.de</small></p><p></p>
+					<p align="right">Freiburg, 17.10.2018</p>
+					<p>&nbsp;</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- place holder to header anf titel-->
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+
+	<h2 style="text-align: center;">
+		Molekulargenetischer Befund und humangenetische Beurteilung
+	</h2>
+	<p>&nbsp;</p>
+
+
+
+
+	<!-- here starts the patient box -->
+	<table style="height: 93px; width: 100%;" frame="box">
+		<colgroup><col style="width: 25%">
+		</colgroup><tbody>
+
+			<!-- diagnostics text -->
+			<tr>
+				<td>
+					<strong>Diagnostik:</strong>
+				</td>
+				<td>
+					Multi-Gen-Panel-Analyse mittels Next Generation Sequencing (NGS)
+				</td>
+			</tr>
+
+			<!-- patient text -->
+			<tr>
+				<td>
+					<strong>Patient:</strong>
+				</td>
+				<td>
+					Patient
+				</td>
+			</tr>
+
+			<!-- material text -->
+			<tr>
+				<td>
+					<strong>Untersuchungsmaterial:</strong>
+				</td>
+				<td>
+					Material
+				</td>
+			</tr>
+
+			<!-- indication text -->
+			<tr>
+				<td>
+					<strong>Indikation</strong>
+				</td>
+				<td>
+					Indikation
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+	<!-- starting main findings section -->
+	<p>
+		<strong>Untersuchung: </strong>
+		<small>DNA-Extraktion. Multi-Gen-Panel-Analyse nach GOP-Ziffer 11513 (Panelgröße 22.689 kb). Die kodierenden Bereiche sowie die angrenzenden Intronbereiche der im Anhang aufgeführten Gene wurden mittels Agilent/SureSelect XT angereichert und anschließend mittels Hochdurchsatz-Sequenzierung auf einem Illumina/ NextSeq-System sequenziert. Eventuell festgestellte, bekannte Polymorphismen mit einer Frequenz ≥ 1% (rezessiver Erbgang) bzw. ≥ 0,2% (dominanter Erbgang) werden als Normalbefund gewertet. Die nachgewiesene pathogene Variante wurde mittels PCR-Amplifikation und direkter Sanger-Sequenzierung des betreffenden Exons und der angrenzenden Intronbereiche methodisch unabhängig bestätigt. Die Untersuchung wurde im Labor der Sektion für pädiatrische Genetik im Zentrum für Kinder- und Jugendmedizin (ZKJ) des Universitätsklinikums Freiburg durchgeführt.</small>
+	</p>
+
+	<!-- here starts the findings table which will be added later -->
+	<p>&nbsp;</p>
+
+	<h3>Befund</h3>
+
+	<table width="100%">
+	<tbody>
+		<tr>
+			<td><strong>Gen</strong></td>
+			<td><strong>cDNA</strong></td>
+			<td><strong>Protein</strong></td>
+			<td><strong>Zygotie</strong></td>
+			<td><strong>MAF</strong></td>
+			<td><strong>Pred</strong></td>
+			<td><strong>dbSNP</strong></td>
+			<td><strong>PubMed ID</strong></td>
+</tr>
+		<tr>
+			<td><small>SLX4</small></td>
+			<td><small>NM_032444.3:c.2854G&gt;A</small></td>
+			<td><small>p.Ala952Thr</small></td>
+			<td><small>HET</small></td>
+			<td><small>0.066852</small></td>
+			<td><small>1/2</small></td>
+			<td><small>rs59939128</small></td>
+			<td><small>NA</small></td>
+		</tr>
+</tbody>
+</table>
+<p> <strong>SLX4</strong> <br>Vier Maurer saßen einst auf einem Dach.
+Da sprach der erste: "Ach!"
+Der zweite: "Wie ists möglich dann?"
+Der dritte: "Daß das Dach halten kann!!!"
+Der vierte: "Ist doch kein Träger dran!!!!!!"
+Und mit einem Krach
+Brach das Dach.</p>
+<p> <strong>NM_032444.3:c.2854G&gt;A</strong> <br>  "indigo indigo
+"Trambahn Schlafsack
+"Wanz und Floh
+"indigo indigai
+"umbaliska
+"bumm DADAI</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+	<p>
+		<strong>Beurteilung: </strong>
+		NA
+	</p>
+
+
+
+	<!-- here goes the tabe of used genes -->
+	<p>&nbsp;</p>
+	<h3>Untersuchte Gene</h3>
+<table style="width: 100%" border="1">
+	<tbody>
+		<tr>
+			<td><small><small>Gen</small></small></td>
+			<td><small><small>OMIM Gen</small></small></td>
+			<td><small><small>Vererbung</small></small></td>
+			<td><small><small>NCBI RefSeq</small></small></td>
+			<td><small><small>kodierender Bereich (kb)</small></small></td>
+			<td><small><small>Erkrankung</small></small></td>
+			<td><small><small>OMIM Erkrankung</small></small></td>
+		</tr>
+		<tr>
+			<td><small><small>APOE</small></small></td>
+			<td><small><small>107741</small></small></td>
+			<td><small><small>AD, AR</small></small></td>
+			<td><small><small>NM_001302688.1</small></small></td>
+			<td><small><small>1.301</small></small></td>
+			<td><small><small>Alzheimer disease-2<br>Coronary artery disease, severe, susceptibility to, 617347 (3)<br>Hyperlipoproteinemia, type III, 617347 (3)<br>Lipoprotein glomerulopathy, 611771 (3)<br>?Macular degeneration, age-related<br>Sea-blue histiocyte disease</small></small></td>
+			<td><small><small>104310<br>603075<br>269600</small></small></td>
+		</tr>
+		<tr>
+			<td><small><small>BRAF</small></small></td>
+			<td><small><small>164757</small></small></td>
+			<td><small><small>AD</small></small></td>
+			<td><small><small>NM_004333.4</small></small></td>
+			<td><small><small>2.965</small></small></td>
+			<td><small><small>Adenocarcinoma of lung, somatic, 211980 (3)<br>Cardiofaciocutaneous syndrome<br>Colorectal cancer, somatic (3)<br>LEOPARD syndrome 3<br>Melanoma, malignant, somatic (3)<br>Nonsmall cell lung cancer, somatic (3)<br>Noonan syndrome 7</small></small></td>
+			<td><small><small>115150<br>613707<br>613706</small></small></td>
+		</tr>
+		<tr>
+			<td><small><small>BRCA2</small></small></td>
+			<td><small><small>600185</small></small></td>
+			<td><small><small>AD, AR</small></small></td>
+			<td><small><small>NM_000059.3</small></small></td>
+			<td><small><small>11.413</small></small></td>
+			<td><small><small>Breast cancer, male, susceptibility to<br>Breast-ovarian cancer, familial, 2<br>Fanconi anemia, complementation group D1<br>Glioblastoma 3<br>Medulloblastoma<br>Pancreatic cancer 2, 613347 (3)<br>Prostate cancer<br>Wilms tumor</small></small></td>
+			<td><small><small>114480<br>612555<br>605724<br>613029<br>155255<br>176807<br>194070</small></small></td>
+		</tr>
+		<tr>
+			<td><small><small>CBL</small></small></td>
+			<td><small><small>165360</small></small></td>
+			<td><small><small>AD</small></small></td>
+			<td><small><small>NM_005188.3</small></small></td>
+			<td><small><small>11.247</small></small></td>
+			<td><small><small>?Juvenile myelomonocytic leukemia<br>Noonan syndrome-like disorder with or without juvenile myelomonocytic leukemia</small></small></td>
+			<td><small><small>607785<br>613563</small></small></td>
+		</tr>
+
+			<tr><td><small><small><b>∑</b></small></small></td>
+			<td><small><small><b></b></small></small></td>
+			<td><small><small><b></b></small></small></td>
+			<td><small><small><b></b></small></small></td>
+			<td><small><small><b>26.926</b></small></small></td>
+			<td><small><small><b></b></small></small></td>
+			<td><small><small><b></b></small></small></td>
+	</tr></tbody>
+
+
+
+
+
+</table></body></html>

@@ -26,10 +26,8 @@ public class ReportDataModel {
     //// placeholder
     private final String senderPH = "${sender}";
     private final String reveiverHeaderPH = "${reiceiverHeader}";
-    private final String receiverNamePH = "${receiverName}";
+    private final String receiverAddressPH = "${receiverAddress}";
     private final String receiverCoLinePH= "${c/o}";
-    private final String receiverStreetPH = "${receiverStreet}";
-    private final String receiverCityPH = "${receiverCity}";
     private final String uklLogoPH = "${uklLogo}";
     private final String diagMethodPH = "${diagnostikMethod}";
     private final String patientPH = "${patient}";
@@ -43,10 +41,14 @@ public class ReportDataModel {
     
     
     
+    
     //// replacement values
+    private String title = "";
     private String receiverName = "Name";
     private String receiverStreet = "Straße";
     private String receiverCity = "Stadt";
+    private String zipCode = "";
+    private String country = "";
     private String receiverCoLine = "";
     private String uklLogo = "NA";
     private String patientInfo = "Patient";
@@ -222,6 +224,10 @@ public class ReportDataModel {
 	this.diagMethodKey = diagMethokey;
     }
 
+    public String getReceiverAddressPH() {
+	return receiverAddressPH;
+    }
+
     
     
     
@@ -318,7 +324,9 @@ public class ReportDataModel {
     }
 
     public void setReceiverCoLine(String receiverCoLine) {
-	this.receiverCoLine = receiverCoLine;
+	
+	// replace ";" by "<br> -> for cases of multiple adresses
+	this.receiverCoLine = receiverCoLine.replaceAll(";", "<br>");
     }
 
     public String getAssessment() {
@@ -336,6 +344,32 @@ public class ReportDataModel {
     public void setGenePanelTable(String genePanelTable) {
 	this.genePanelTable = genePanelTable;
     }
+
+    public String getTitle() {
+	return title;
+    }
+
+    public void setTitle(String title) {
+	this.title = title;
+    }
+
+    public String getZipCode() {
+	return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+	this.zipCode = zipCode;
+    }
+
+    public String getCountry() {
+	return country;
+    }
+
+    public void setCountry(String country) {
+	this.country = country;
+    }
+    
+    
     
     
     
@@ -348,21 +382,8 @@ public class ReportDataModel {
     
     
     //////// place holder name getter
-
-    public String getReceiverNamePH() {
-        return receiverNamePH;
-    }
-
     public String getReveiverHeaderPH() {
         return reveiverHeaderPH;
-    }
-
-    public String getReceiverStreetPH() {
-        return receiverStreetPH;
-    }
-
-    public String getReceiverCityPH() {
-        return receiverCityPH;
     }
 
     public String getUklLogoPH() {

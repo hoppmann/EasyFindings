@@ -48,7 +48,7 @@ public class CheckDBController implements Initializable {
     private Button closeButton;
     
     @FXML
-    private ComboBox<String> geneNameBox;
+    private ComboBox<String> geneInfoTabGeneNameBox;
     
     @FXML
     private TextArea geneInfoField;
@@ -63,7 +63,7 @@ public class CheckDBController implements Initializable {
     private Label dbLabel;
     
     @FXML
-    private ComboBox<String> varNameBox;
+    private ComboBox<String> VarInfotabVarNameBox;
     
     @FXML
     private TabPane tabpane;
@@ -81,10 +81,10 @@ public class CheckDBController implements Initializable {
     private TableView<TableData> findingsTable;
     
     @FXML
-    private ComboBox<String> findingsGeneNameBox;
+    private ComboBox<String> findingsTabGeneNameBox;
     
     @FXML 
-    private ComboBox<String> findingsVarNameBox;
+    private ComboBox<String> findingsTabVarNameBox;
 
     
     
@@ -190,7 +190,7 @@ public class CheckDBController implements Initializable {
     private void geneInfoTabRemoveButtonAction (ActionEvent event) {
 	
 	// get geneName and remove all nonalphanumeric elements
-	String geneName = geneNameBox.getValue();
+	String geneName = geneInfoTabGeneNameBox.getValue();
 
 	if (geneName == null) {
 	    infoLabel.setText("ERROR: No gene chosen.");
@@ -229,7 +229,7 @@ public class CheckDBController implements Initializable {
     private void varInfoTabRemoveButtonAction (ActionEvent event) {
 	
 	// get geneName and remove all nonalphanumeric elements
-	String geneName = geneNameBox.getValue();
+	String geneName = geneInfoTabGeneNameBox.getValue();
 	if (geneName == null) {
 	    infoLabel.setText("ERROR: No gene chosen.");
 	    return;
@@ -238,7 +238,7 @@ public class CheckDBController implements Initializable {
 
 	
 	// retrieve var name 
-	String varName = varNameBox.getValue();
+	String varName = VarInfotabVarNameBox.getValue();
 	if (varName == null){
 	    infoLabel.setText("ERROR: No variant chosen");
 	}
@@ -286,13 +286,13 @@ public class CheckDBController implements Initializable {
 	String geneName = null;
 
 	// get selectd gene and variant
-	geneName = findingsGeneNameBox.getValue();
-	if (findingsGeneNameBox.getValue() != null){
+	geneName = findingsTabGeneNameBox.getValue();
+	if (findingsTabGeneNameBox.getValue() != null){
 	    geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
 	}
 	
-	varName = findingsVarNameBox.getValue();
-	if (findingsVarNameBox.getValue() != null) {
+	varName = findingsTabVarNameBox.getValue();
+	if (findingsTabVarNameBox.getValue() != null) {
 	    varName = varName.replaceAll("\\s+", "");
 	}
 	
@@ -348,11 +348,11 @@ public class CheckDBController implements Initializable {
 	String geneName = null;
 
 	// get selectd gene and variant
-	geneName = findingsGeneNameBox.getValue();
+	geneName = findingsTabGeneNameBox.getValue();
 
 	// get geneName and remove all nonalphanumeric elements
-	geneName = geneNameBox.getValue();
-	if (geneNameBox.getValue() == null || geneName.equals("")) {
+	geneName = geneInfoTabGeneNameBox.getValue();
+	if (geneInfoTabGeneNameBox.getValue() == null || geneName.equals("")) {
 	    infoLabel.setText("ERROR: No gene chosen.");
 	    return;
 	}
@@ -396,7 +396,7 @@ public class CheckDBController implements Initializable {
 	String geneName = null;
 	
 	// get geneName and remove all nonalphanumeric elements
-	geneName = geneNameBox.getValue();
+	geneName = geneInfoTabGeneNameBox.getValue();
 	if (geneName == null || geneName.equals("")) {
 	    infoLabel.setText("ERROR: No gene chosen.");
 	    return;
@@ -404,7 +404,7 @@ public class CheckDBController implements Initializable {
 	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
 
 	// get variant name
-	varName = varNameBox.getValue();
+	varName = VarInfotabVarNameBox.getValue();
 	if (varName == null || varName.equals("")) {
 	    infoLabel.setText("ERROR: No variant name given.");
 	    return;
@@ -445,7 +445,7 @@ public class CheckDBController implements Initializable {
     private void findingsGeneBoxAction(ActionEvent event) {
 	
 	// get selected gene name
-	String geneName = findingsGeneNameBox.getValue().toString();
+	String geneName = findingsTabGeneNameBox.getValue().toString();
 	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
 	
 	
@@ -459,9 +459,9 @@ public class CheckDBController implements Initializable {
 	Collections.sort(varList);
 	
 	// add list of variants to choice box
-	findingsVarNameBox.getItems().clear();
-	findingsVarNameBox.getItems().addAll(varList);
-	findingsVarNameBox.getSelectionModel().selectFirst();
+	findingsTabVarNameBox.getItems().clear();
+	findingsTabVarNameBox.getItems().addAll(varList);
+	findingsTabVarNameBox.getSelectionModel().selectFirst();
 
 
         // check if gene is in DB
@@ -494,15 +494,15 @@ public class CheckDBController implements Initializable {
 
 
 	// get selected gene name
-	String geneName = findingsGeneNameBox.getValue().toString();
+	String geneName = findingsTabGeneNameBox.getValue().toString();
 	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
 
 
 	//	 get current selected variant
 	// handle the case all variants are cleared to avoid error
 	String varName = null;
-	if (findingsVarNameBox.getValue() != null) {
-	    varName = findingsVarNameBox.getValue().toString();
+	if (findingsTabVarNameBox.getValue() != null) {
+	    varName = findingsTabVarNameBox.getValue().toString();
 	    varName = varName.replaceAll("\\s+", "");
 	    
 	    // cehck if DB contains variant 
@@ -547,8 +547,8 @@ public class CheckDBController implements Initializable {
     private void geneInfoGeneBoxAction (ActionEvent event) {
 	
 	// retrieve string and remove all non alphanumeric elements
-	    String geneName = geneNameBox.getValue();
-	    if (geneNameBox.getValue() != null){
+	    String geneName = geneInfoTabGeneNameBox.getValue();
+	    if (geneInfoTabGeneNameBox.getValue() != null){
 		geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
 	    }
 	    
@@ -572,14 +572,14 @@ public class CheckDBController implements Initializable {
     private void varInfoVarBoxAction (ActionEvent event) {
 	
 	   // retrieve string and remove all non alphanumeric elements
-	    String geneName = geneNameBox.getValue();
-	    if (geneNameBox.getValue() != null){
+	    String geneName = geneInfoTabGeneNameBox.getValue();
+	    if (geneInfoTabGeneNameBox.getValue() != null){
 		geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
 	    }
 	    // retrieve variant
-	    String varName = varNameBox.getValue();
+	    String varName = VarInfotabVarNameBox.getValue();
 
-	    if (varNameBox.getValue() != null){
+	    if (VarInfotabVarNameBox.getValue() != null){
 		varName = varName.replaceAll("\\s+", "");
 	    }
 	    // fill var info filed
@@ -614,15 +614,15 @@ public class CheckDBController implements Initializable {
     private void loadAllGeneList(String curGene) {
 	// get list and sort it
 	List geneList = geneDB.getGeneList();
-	geneNameBox.getItems().clear();
-	geneNameBox.getItems().addAll(geneList);
+	geneInfoTabGeneNameBox.getItems().clear();
+	geneInfoTabGeneNameBox.getItems().addAll(geneList);
 	
 	if (curGene == null || curGene.equals("")) {
 	    curGene = geneList.get(0).toString();
 	}
     
-	geneNameBox.getSelectionModel().select(curGene);
-	TextFields.bindAutoCompletion(geneNameBox.getEditor(), geneNameBox.getItems());
+	geneInfoTabGeneNameBox.getSelectionModel().select(curGene);
+	TextFields.bindAutoCompletion(geneInfoTabGeneNameBox.getEditor(), geneInfoTabGeneNameBox.getItems());
 
     }
     
@@ -632,8 +632,8 @@ public class CheckDBController implements Initializable {
 	
 	// get list of variant for current gene
 	List varList = geneDB.getVarList(geneName);
-	varNameBox.getItems().clear();
-	varNameBox.getItems().addAll(varList);
+	VarInfotabVarNameBox.getItems().clear();
+	VarInfotabVarNameBox.getItems().addAll(varList);
 	
 	
 	// check if there is a current var
@@ -647,8 +647,8 @@ public class CheckDBController implements Initializable {
 	    }
 	}
 	
-	varNameBox.getSelectionModel().select(curVar);
-	TextFields.bindAutoCompletion(varNameBox.getEditor(), varNameBox.getItems());
+	VarInfotabVarNameBox.getSelectionModel().select(curVar);
+	TextFields.bindAutoCompletion(VarInfotabVarNameBox.getEditor(), VarInfotabVarNameBox.getItems());
     }
     
     
@@ -696,14 +696,14 @@ public class CheckDBController implements Initializable {
 	    
 	    List<String> geneList = findings.getValueList(config.getGeneCol());
 	    
-	    // mamke gene list uniqe
+	    // make gene list uniqe
 	    geneList = geneList.stream().distinct().collect(Collectors.toList());
 	    Collections.sort(geneList);
 	    
 	    // fill gene name box
-	    findingsGeneNameBox.getItems().clear();
-    	    findingsGeneNameBox.getItems().addAll(geneList);
-	    findingsGeneNameBox.getSelectionModel().selectFirst();
+	    findingsTabGeneNameBox.getItems().clear();
+    	    findingsTabGeneNameBox.getItems().addAll(geneList);
+	    findingsTabGeneNameBox.getSelectionModel().selectFirst();
 	    
 
 	    
@@ -762,11 +762,11 @@ public class CheckDBController implements Initializable {
 	
 	//////// prepare FXML elemets
 	// prepare varinat chooser box
-	varNameBox.setEditable(true);
+	VarInfotabVarNameBox.setEditable(true);
 	
 	/////////
 	//// prepare geneName box
-	geneNameBox.setEditable(true);
+	geneInfoTabGeneNameBox.setEditable(true);
 
 	
 	// if a DB is connected fill gene name choices

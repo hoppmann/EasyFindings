@@ -10,14 +10,22 @@ import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import de.hoppmann.gui.modelsAndData.TableData;
+import de.hoppmann.operations.Database;
+import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author hoppmann
  */
-public class PrepareNegativeFindings {
+public class PrepareNegativeFindings extends Database {
 
 
 
@@ -41,7 +49,11 @@ public class PrepareNegativeFindings {
     private List<String> tableElements = new LinkedList<>();
     
 
-    
+    // geneInfoDB variables
+    private final String dbName = "geneInfos.db";
+    private final String tableHg19 = "hg19";
+
+
     
     
     
@@ -56,7 +68,9 @@ public class PrepareNegativeFindings {
 	this.findings = findings;
 	
 	
-
+	connectGeneInfoDB();
+	
+	
 	/* 
 	prepare table with header and specifications
 	
@@ -88,6 +102,7 @@ public class PrepareNegativeFindings {
 	// join element to one string
 	htmlTable = String.join("\n", tableElements);
 
+	closeDB();
 	    
     }
 
@@ -127,6 +142,8 @@ public class PrepareNegativeFindings {
 	// get gene  name of current gene
 	geneName = retrieveEntries(curFinding, config.getGeneCol(), false).get(0);
 	
+	// get moi of current gene
+	moi = getMoi(geneName);
 	
 	// get current variant (cDNA)
 	cDna = retrieveEntries(curFinding, config.getcNomenCol(), true);
@@ -166,6 +183,108 @@ public class PrepareNegativeFindings {
     }
 	
 	
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /////////////////////////////7
+    //////// retriev MOI from database
+    
+    
+    
+    // below code should be outsourced
+    
+    
+    private void connectGeneInfoDB () {
+
+	// get current path of program
+	String curDir = System.getProperty("user.dir");
+	File geneInfoDB = new File(curDir + File.separator + "DBs" + File.separator + dbName);
+
+	// connect to geneInfo.db
+	conn = connect(geneInfoDB);
+
+    }
+    
+    
+    // retrieve MOI inforamtion of current gene
+    private String getMoi(String geneName) {
+
+	
+	String moi = "";
+	try {
+	    String geneNameCol = "geneName";
+	    String arCol = "AR";
+	    String adCol = "AD";
+	    String xlrCol = "XLR";
+	    String xldCol = "XLD";
+	    
+	    // get MOI
+	    String query = "SELECT " + arCol + ", " + adCol + ", " + xlrCol + ", " + xldCol
+		    + " from hg19 where " + geneNameCol + " == '" + geneName + "'";
+	    
+	    ResultSet rs = execute(query);
+	    Set<String> moiSet = new TreeSet();
+	    if (rs.next()) {
+		if (rs.getBoolean(arCol)) {
+		    moiSet.add("AR");
+		}
+		if (rs.getBoolean(adCol)) {
+		    moiSet.add("AD");
+		}
+		if (rs.getBoolean(xlrCol)) {
+		    moiSet.add("XLR");
+		}
+		if (rs.getBoolean(xldCol)) {
+		    moiSet.add("XLD");
+		}
+	    }
+	    
+	    moi = String.join(", ", moiSet);
+
+	} catch (SQLException ex) {
+	    Logger.getLogger(PrepareNegativeFindings.class.getName()).log(Level.SEVERE, null, ex);
+	}
+
+	
+	return moi;
+		
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<AnchorPane id="AnchorPane" prefHeight="455.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.ReportViewerController">
+<AnchorPane id="AnchorPane" prefHeight="552.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.ReportViewerController">
    <children>
       <TabPane fx:id="tabPane" layoutX="14.0" layoutY="6.0" prefHeight="455.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -27,22 +27,28 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="15.0" layoutY="28.0" prefHeight="25.0" prefWidth="90.0" text="Name" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                        <TextField fx:id="nameField" layoutX="97.0" layoutY="20.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="10.0" />
-                        <Label layoutX="10.0" layoutY="67.0" prefHeight="25.0" prefWidth="90.0" text="Street" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0" />
-                        <TextField fx:id="streetField" layoutX="92.0" layoutY="59.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="50.0" />
-                        <Label layoutX="10.0" layoutY="88.0" prefHeight="25.0" prefWidth="90.0" text="C/O" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="90.0" />
-                        <TextField fx:id="coFiled" layoutX="125.0" layoutY="87.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="90.0" />
-                        <Label layoutX="10.0" layoutY="129.0" prefHeight="25.0" prefWidth="90.0" text="City" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="130.0" />
-                        <TextField fx:id="cityField" layoutX="100.0" layoutY="129.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="130.0" />
-                        <Label layoutX="10.0" layoutY="228.0" prefHeight="25.0" prefWidth="90.0" text="Patient" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="170.0" />
-                        <TextField fx:id="patientfield" layoutX="100.0" layoutY="228.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="170.0" />
-                        <Label layoutY="266.0" prefHeight="25.0" prefWidth="90.0" text="Material" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="210.0" />
-                        <TextField fx:id="materialField" layoutX="90.0" layoutY="266.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="210.0" />
-                        <Label layoutX="10.0" layoutY="276.0" prefHeight="25.0" prefWidth="90.0" text="Indications" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="250.0" />
-                        <TextField fx:id="indicationField" layoutX="100.0" layoutY="276.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="250.0" />
-                        <Label layoutX="14.0" layoutY="324.0" prefHeight="25.0" prefWidth="90.0" text="Assessment" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="290.0" />
-                        <TextField fx:id="assessmentField" layoutX="104.0" layoutY="324.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="290.0" />
+                        <Label layoutX="14.0" layoutY="15.0" prefHeight="25.0" prefWidth="90.0" text="Title" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <TextField fx:id="titleField" layoutX="100.0" layoutY="10.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="10.0" />
+                        <Label layoutX="10.0" layoutY="50.0" prefHeight="25.0" prefWidth="90.0" text="Name" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0" />
+                        <ComboBox fx:id="receiverName" layoutX="100.0" layoutY="50.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="50.0" />
+                        <Label layoutX="10.0" layoutY="90.0" prefHeight="25.0" prefWidth="90.0" text="Address" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="90.0" />
+                        <TextField fx:id="addressField" layoutX="100.0" layoutY="90.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="90.0" />
+                        <Label layoutX="10.0" layoutY="130.0" prefHeight="25.0" prefWidth="90.0" text="City" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="130.0" />
+                        <TextField fx:id="cityField" layoutX="100.0" layoutY="130.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="130.0" />
+                        <Label layoutX="7.0" layoutY="174.0" prefHeight="25.0" prefWidth="90.0" text="Zip code" />
+                        <TextField fx:id="zipCodeField" layoutX="100.0" layoutY="169.0" prefHeight="25.0" prefWidth="200.0" />
+                        <Label layoutX="21.0" layoutY="169.0" prefHeight="25.0" prefWidth="90.0" text="Country" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="210.0" />
+                        <TextField fx:id="countryField" layoutX="100.0" layoutY="164.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="210.0" />
+                        <Label layoutX="10.0" layoutY="201.0" prefHeight="25.0" prefWidth="90.0" text="C/O" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="250.0" />
+                        <TextField fx:id="coFiled" layoutX="100.0" layoutY="201.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="250.0" />
+                        <Label layoutX="10.0" layoutY="241.0" prefHeight="25.0" prefWidth="90.0" text="Patient" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="290.0" />
+                        <TextField fx:id="patientfield" layoutX="100.0" layoutY="241.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="290.0" />
+                        <Label layoutX="10.0" layoutY="281.0" prefHeight="25.0" prefWidth="90.0" text="Material" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="330.0" />
+                        <TextField fx:id="materialField" layoutX="100.0" layoutY="281.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="330.0" />
+                        <Label layoutX="10.0" layoutY="321.0" prefHeight="25.0" prefWidth="90.0" text="Indications" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="370.0" />
+                        <TextField fx:id="indicationField" layoutX="100.0" layoutY="321.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="370.0" />
+                        <Label layoutX="10.0" layoutY="361.0" prefHeight="25.0" prefWidth="90.0" text="Assessment" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="410.0" />
+                        <TextField fx:id="assessmentField" layoutX="100.0" layoutY="361.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="410.0" />
                         <ComboBox fx:id="senderChoice" layoutX="426.0" layoutY="10.0" onAction="#senderChoiceAction" prefWidth="170.0" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="10.0" />
                         <Label layoutX="334.0" layoutY="15.0" prefHeight="25.0" prefWidth="90.0" text="Sender" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="10.0" />
                         <ComboBox fx:id="seqMethodChoice" layoutX="412.0" layoutY="35.0" onAction="#diagMethodChoiceAction" prefWidth="170.0" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="50.0" />
@@ -51,6 +57,8 @@
                         <Label layoutX="312.0" layoutY="80.0" prefHeight="25.0" prefWidth="90.0" text="Seq Method" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="90.0" />
                         <Label layoutX="329.0" layoutY="135.0" text="List of Panel Genes" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="130.0" />
                         <TextArea fx:id="genePanelArea" layoutX="320.0" layoutY="150.0" prefHeight="171.0" prefWidth="261.0" />
+                        <Button layoutX="10.0" layoutY="332.0" mnemonicParsing="false" onAction="#storeReceiverButtonAction" prefHeight="25.0" prefWidth="110.0" text="Store" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="130.0" />
+                        <Button layoutX="414.0" layoutY="370.0" mnemonicParsing="false" onAction="#removeReceiverButtonAction" prefHeight="25.0" prefWidth="110.0" text="Remove" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -77,5 +85,6 @@
       <Button mnemonicParsing="false" onAction="#saveReportButtonAction" prefHeight="25.0" prefWidth="110.0" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" />
       <Button mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
       <Button layoutX="145.0" layoutY="419.0" mnemonicParsing="false" onAction="#refreshButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="135.0" />
+      <Button layoutX="253.0" layoutY="419.0" mnemonicParsing="false" onAction="#templateButtonAction" prefHeight="25.0" prefWidth="110.0" text="Template" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="255.0" />
    </children>
 </AnchorPane>
