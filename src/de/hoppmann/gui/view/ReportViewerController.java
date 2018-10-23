@@ -333,8 +333,12 @@ public class ReportViewerController implements Initializable {
 	
 	boolean success = receiverDB.queryAddress(receiverName);
 	if (success){
+	    titleField.setText(receiverDB.getTitle());
 	    addressField.setText(receiverDB.getPostalAddress());
-	    cityField.setText(receiverDB.getZipCode() + " " + receiverDB.getCity());
+	    cityField.setText(receiverDB.getCity());
+	    zipCodeField.setText(receiverDB.getZipCode());
+	    countryField.setText(receiverDB.getCountry());
+	    
 	}
 	
     }
@@ -450,6 +454,16 @@ public class ReportViewerController implements Initializable {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //////////////////////
     //// store receiver data
     @FXML
@@ -484,6 +498,14 @@ public class ReportViewerController implements Initializable {
 	// update Combobox choice
 	receiverName.getItems().setAll(receiverDB.getNameList());
     }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

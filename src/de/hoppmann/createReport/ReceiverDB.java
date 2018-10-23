@@ -27,10 +27,13 @@ public class ReceiverDB extends Database {
     //////// variables ////////
     ///////////////////////////
     
-    private String dbName = "address.db";
+//    private String dbName = "address.db";
+    private String dbName = "EasyCCI.db";
     private File dbFile;
     private final String receiverTable = "receiver";
 	
+    private final String IdKey = "ID";
+    private String id;
     private final String titleKey = "Title";
     private String title; 
     private final String fullNameKey = "Full_name";
@@ -115,6 +118,7 @@ public class ReceiverDB extends Database {
 	try {
 	    if (rs.next()){
 		success = true;
+		id = rs.getString(IdKey);
 		title = rs.getString(titleKey);
 		fullName = rs.getString(fullNameKey);
 		address = rs.getString(addressKey);
@@ -143,9 +147,11 @@ public class ReceiverDB extends Database {
     //// store new receiver information
     public void storeReceiver () {
 
+	
+	
 	// perpare update command
-	String updateCmd = "REPLACE INTO " + receiverTable + " VALUES ( '" +
-		title + "', '" + fullName + "', '" + address + "', '" +
+	String updateCmd = "REPLACE INTO " + receiverTable + " VALUES ( '" + id +
+		"', '" + title + "', '" + fullName + "', '" + address + "', '" +
 		zipCode + "', '" + city + "', '" +  country + "')";
 	
 	
@@ -161,9 +167,8 @@ public class ReceiverDB extends Database {
     public void removeData () {
 	
 	// prepare cmd
-	String removeCmd = "DELETE FROM " + receiverTable + " WHERE " + fullNameKey + 
-		" == '" + fullName + "' AND " + cityKey + " == '" + city +"' and " +
-		addressKey + " == '" + address + "'";
+	String removeCmd = "DELETE FROM " + receiverTable + " WHERE " + IdKey + 
+		" == '" + id + "'";
 	
 	execute(removeCmd);
 	
