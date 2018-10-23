@@ -63,7 +63,7 @@ public class CheckDBController implements Initializable {
     private Label dbLabel;
     
     @FXML
-    private ComboBox<String> VarInfotabVarNameBox;
+    private ComboBox<String> varInfotabVarNameBox;
     
     @FXML
     private TabPane tabpane;
@@ -146,7 +146,6 @@ public class CheckDBController implements Initializable {
 	if (dbFile != null) {
 	    geneDB.connectGenenDB(dbFile);
 	}
-	
 	
 	// refresh gene combobox choice
 	loadAllGeneList(null);
@@ -238,7 +237,7 @@ public class CheckDBController implements Initializable {
 
 	
 	// retrieve var name 
-	String varName = VarInfotabVarNameBox.getValue();
+	String varName = varInfotabVarNameBox.getValue();
 	if (varName == null){
 	    infoLabel.setText("ERROR: No variant chosen");
 	}
@@ -404,7 +403,7 @@ public class CheckDBController implements Initializable {
 	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
 
 	// get variant name
-	varName = VarInfotabVarNameBox.getValue();
+	varName = varInfotabVarNameBox.getValue();
 	if (varName == null || varName.equals("")) {
 	    infoLabel.setText("ERROR: No variant name given.");
 	    return;
@@ -577,9 +576,9 @@ public class CheckDBController implements Initializable {
 		geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
 	    }
 	    // retrieve variant
-	    String varName = VarInfotabVarNameBox.getValue();
+	    String varName = varInfotabVarNameBox.getValue();
 
-	    if (VarInfotabVarNameBox.getValue() != null){
+	    if (varInfotabVarNameBox.getValue() != null){
 		varName = varName.replaceAll("\\s+", "");
 	    }
 	    // fill var info filed
@@ -612,12 +611,15 @@ public class CheckDBController implements Initializable {
     
     // add gene names to gene box
     private void loadAllGeneList(String curGene) {
+	
+	
 	// get list and sort it
 	List geneList = geneDB.getGeneList();
 	geneInfoTabGeneNameBox.getItems().clear();
 	geneInfoTabGeneNameBox.getItems().addAll(geneList);
 	
-	if (curGene == null || curGene.equals("")) {
+	
+	if ((curGene == null || curGene.equals("")) && geneList.size() > 0) {
 	    curGene = geneList.get(0).toString();
 	}
     
@@ -632,8 +634,8 @@ public class CheckDBController implements Initializable {
 	
 	// get list of variant for current gene
 	List varList = geneDB.getVarList(geneName);
-	VarInfotabVarNameBox.getItems().clear();
-	VarInfotabVarNameBox.getItems().addAll(varList);
+	varInfotabVarNameBox.getItems().clear();
+	varInfotabVarNameBox.getItems().addAll(varList);
 	
 	
 	// check if there is a current var
@@ -647,8 +649,8 @@ public class CheckDBController implements Initializable {
 	    }
 	}
 	
-	VarInfotabVarNameBox.getSelectionModel().select(curVar);
-	TextFields.bindAutoCompletion(VarInfotabVarNameBox.getEditor(), VarInfotabVarNameBox.getItems());
+	varInfotabVarNameBox.getSelectionModel().select(curVar);
+	TextFields.bindAutoCompletion(varInfotabVarNameBox.getEditor(), varInfotabVarNameBox.getItems());
     }
     
     
@@ -762,7 +764,7 @@ public class CheckDBController implements Initializable {
 	
 	//////// prepare FXML elemets
 	// prepare varinat chooser box
-	VarInfotabVarNameBox.setEditable(true);
+	varInfotabVarNameBox.setEditable(true);
 	
 	/////////
 	//// prepare geneName box
