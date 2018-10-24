@@ -9,7 +9,8 @@ import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.CreateTable;
-import de.hoppmann.operations.GeneDB;
+import de.hoppmann.Database.GeneDB;
+import de.hoppmann.Database.UserDB;
 import java.io.File;
 import java.net.URL;
 import java.util.Collections;
@@ -90,6 +91,7 @@ public class CheckDBController implements Initializable {
     
     
     private GeneDB geneDB;
+    private UserDB userDB;
     private StoreFindings findings;
     private Config config = Config.getInstance();
 
@@ -105,16 +107,6 @@ public class CheckDBController implements Initializable {
     
     
     //////// FXML Methods
-    
-
-
-
-
-
-
-
-
-
 
 
     //// close window
@@ -144,12 +136,11 @@ public class CheckDBController implements Initializable {
 	File dbFile = geneDB.openGeneDB();
 	
 	if (dbFile != null) {
-	    geneDB.connectGenenDB(dbFile);
+	    geneDB.connectDB(dbFile);
 	}
 	
 	// refresh gene combobox choice
 	loadAllGeneList(null);
-	
 	
     }
     
@@ -168,9 +159,8 @@ public class CheckDBController implements Initializable {
 
 	File dbFile = geneDB.createNewGeneDB();
 	if (dbFile != null) {
-	    geneDB.connectGenenDB(dbFile);
+	    geneDB.connectDB(dbFile);
 	}
-	
 	
     }
     
@@ -681,7 +671,7 @@ public class CheckDBController implements Initializable {
 	    // check if databse is connected if not open DB
 	    if (!geneDB.isConnected()){
 		File dbFile = geneDB.openGeneDB();
-		geneDB.connectGenenDB(dbFile);
+		geneDB.connectDB(dbFile);
 	    }
 	    
 	    //// create findings table	
@@ -753,7 +743,8 @@ public class CheckDBController implements Initializable {
 	    
 	    if (new File(config.getDbPath()).exists() && !new File(config.getDbPath()).isDirectory()){
 		File dbFile = new File(config.getDbPath());
-		geneDB.connectGenenDB(dbFile);
+//		userDB.connectDB(dbFile);
+		geneDB.connectDB(dbFile);
 	    }
 	}
 	

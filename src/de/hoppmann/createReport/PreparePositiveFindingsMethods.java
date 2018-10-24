@@ -10,7 +10,7 @@ import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import de.hoppmann.gui.modelsAndData.TableData;
-import de.hoppmann.operations.GeneDB;
+import de.hoppmann.Database.GeneDB;
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -60,10 +60,10 @@ public class PreparePositiveFindingsMethods {
 	// check if existing DB is saved in config if so connect to it
 	geneDb = new GeneDB();
 	if (config.getDbPath() != null && new File(config.getDbPath()).exists()) {
-	    geneDb.connect(new File(config.getDbPath()));
+	    geneDb.connectDB(new File(config.getDbPath()));
 	} else {
 	    File dbPath = geneDb.openGeneDB();
-	    geneDb.connect(dbPath);
+	    geneDb.connectDB(dbPath);
 	}
 
 	

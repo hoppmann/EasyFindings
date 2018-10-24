@@ -10,7 +10,7 @@ import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import de.hoppmann.gui.modelsAndData.TableData;
-import de.hoppmann.operations.Database;
+import de.hoppmann.Database.Database;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,7 +43,7 @@ public class PrepareNegativeFindings extends Database {
     private String zygocity = null;
     private List<String> rsId = null;
     private String catagory = null; 
-    private List<String> varNameList = null;
+    private List<String> cNomenList = null;
     
     private String htmlTable;
     private List<String> tableElements = new LinkedList<>();
@@ -176,7 +176,7 @@ public class PrepareNegativeFindings extends Database {
 	
 	
 	//// get a list of all variant found in gene
-	varNameList = retrieveEntries(curFinding, config.getcNomenCol(), true);
+	cNomenList = retrieveEntries(curFinding, config.getcNomenCol(), true);
 
 	
 	
@@ -368,7 +368,6 @@ public class PrepareNegativeFindings extends Database {
 	tableElements.add("<td><small><small><strong>rsID</small></small></strong></td>");
 	tableElements.add("<td><small><small><strong>Anlass</small></small></strong></td>");
 	tableElements.add("<td><small><small><strong>Effekt der variante auf das Protein</small></small></strong></td>");
-	tableElements.add("<td><small><small><strong>Klinische Relevanz</small></small></strong></td>");
 	tableElements.add("<td><small><small><strong>Kommentar</small></small></strong></td>");
 	
 	// end line
@@ -389,24 +388,24 @@ public class PrepareNegativeFindings extends Database {
 	    pNomen
 	    zygocity
 	    rsId
+	    Anlass -> will be ACMG criteria
 	    catagory
 	*/
 	
 	// Add current gene and all variants
 	    
-	for (int i = 0 ; i < varNameList.size(); i++){
+	for (int i = 0 ; i < cNomenList.size(); i++){
 //	    
 	    // new line
 	    tableElements.add("<tr>");
 	    tableElements.add("<td><small><small>" + geneName + "</small></small></td>");
 	    tableElements.add("<td><small><small>" + moi + "</small></small></td>");
-	    tableElements.add("<td><small><small>" + varNameList.get(i) + "</small></small></td>");
+	    tableElements.add("<td><small><small>" + cNomenList.get(i) + "</small></small></td>");
 	    tableElements.add("<td><small><small>" + pNomen.get(i) + "</small></small></td>");
 	    tableElements.add("<td><small><small>" + zygocity + "</small></small></td>");
 	    tableElements.add("<td><small><small>" + rsId.get(i) + "</small></small></td>");
 	    tableElements.add("<td><small><small>&nbsp</small></small></td>");
 	    tableElements.add("<td><small><small>" + catagory + "</small></small></td>");
-	    tableElements.add("<td><small><small>&nbsp</small></small></td>");
 	    tableElements.add("<td><small><small>&nbsp</small></small></td>");
 	    
 

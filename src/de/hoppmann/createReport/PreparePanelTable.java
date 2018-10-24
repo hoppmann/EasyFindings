@@ -6,7 +6,7 @@
 
 package de.hoppmann.createReport;
 
-import de.hoppmann.operations.Database;
+import de.hoppmann.Database.Database;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;

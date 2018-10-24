@@ -8,7 +8,7 @@ package de.hoppmann.gui.view;
 import de.hoppmann.config.Config;
 import de.hoppmann.createReport.CreateReport;
 import de.hoppmann.createReport.PreparePanelTable;
-import de.hoppmann.createReport.ReceiverDB;
+import de.hoppmann.Database.ReceiverDB;
 import de.hoppmann.createReport.ReportDataModel;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import java.io.BufferedWriter;
@@ -26,6 +26,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -73,6 +74,7 @@ public class ReportViewerController implements Initializable {
     @FXML TextField indicationField;
     @FXML TextField assessmentField;
     @FXML TextArea genePanelArea;
+    @FXML TextField dateOfMaterialArrival;
     @FXML ComboBox<String> receiverName = new ComboBox<>();
     @FXML ComboBox<String> senderChoice = new ComboBox<>();
     @FXML ComboBox<String> seqMethodChoice = new ComboBox<>();
@@ -90,6 +92,9 @@ public class ReportViewerController implements Initializable {
     @FXML Tab billingTab;
     @FXML HTMLEditor billingEditor;
     
+    
+    // misc
+    @FXML Label infoLable;
     
     //// other variables    
     private String report = "";
@@ -247,6 +252,14 @@ public class ReportViewerController implements Initializable {
 	});
 	
 	
+	//// add listener to arrival date field
+	dateOfMaterialArrival.textProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		reportData.setMaterialRecielvalDate(newValue);
+	    }
+	});
+	
 	
 	//////////////////////////////////////////
 	//////// tab change listener
@@ -385,19 +398,32 @@ public class ReportViewerController implements Initializable {
     ////////////////
     //////// non FXML
     
+    
+    // fill receiver filds
+    private void fillReceiverInfo () {
+	titleField.setText(receiverDB.getTitle());
+	receiverName.setValue(receiverDB.getFullName());
+	addressField.setText(receiverDB.getPostalAddress());
+	cityField.setText(receiverDB.getCity());
+	zipCodeField.setText(receiverDB.getZipCode());
+	countryField.setText(receiverDB.getCountry());
+
+    }
+    
+    
+    
+    
     // fill text fields
     private void retrieveEntryMaskTextFields() {
-	titleField.setText(reportData.getTitle());
-	receiverName.setValue(reportData.getReceiverName());
-	addressField.setText(reportData.getReceiverStreet());
-	cityField.setText(reportData.getReceiverCity());
-	zipCodeField.setText(reportData.getZipCode());
-	countryField.setText(reportData.getCountry());
+	
+	fillReceiverInfo();
+
 	coFiled.setText(reportData.getReceiverCoLine());
 	patientfield.setText(reportData.getPatientInfo());
 	materialField.setText(reportData.getMaterial());
 	indicationField.setText(reportData.getIndication());
 	assessmentField.setText(reportData.getAssessment());
+	dateOfMaterialArrival.setText(reportData.getMaterialRecielvalDate());
 	
     }
     
@@ -412,7 +438,19 @@ public class ReportViewerController implements Initializable {
     }
     
     
-    
+    // reset address fields
+    private void resetAddressFields () {
+	
+	// set all values null
+	receiverDB.setTitle("");
+	receiverDB.setFullName("");
+	receiverDB.setPostalAddress("");
+	receiverDB.setCity("");
+	receiverDB.setZipCode("");
+	receiverDB.setCountry("");
+
+	
+    }
     
     
     
@@ -458,8 +496,22 @@ public class ReportViewerController implements Initializable {
     
     
     
-    
-    
+    //////////////////
+    //// new receiver
+    @FXML
+    private void newReceiverButtonAction () {
+	
+	resetAddressFields();
+	
+	receiverDB.insert();
+
+	// reset fields
+	fillReceiverInfo();
+	
+	infoLable.setText("Created a new entry.");
+
+	
+    }
     
     
     
@@ -467,8 +519,8 @@ public class ReportViewerController implements Initializable {
     //////////////////////
     //// store receiver data
     @FXML
-    private void storeReceiverButtonAction () {
-	
+    private void storeReceiverButtonAction() {
+
 	// set variables
 	receiverDB.setTitle(titleField.getText());
 	receiverDB.setFullName(receiverName.getValue());
@@ -476,16 +528,30 @@ public class ReportViewerController implements Initializable {
 	receiverDB.setCity(cityField.getText());
 	receiverDB.setZipCode(zipCodeField.getText());
 	receiverDB.setCountry(countryField.getText());
+
 	
-	
-	
-	// update DB
-	receiverDB.storeReceiver();
+	// check if entry is new (no ID so far)
+	if (receiverDB.getId() != null) {
+
+	    // update DB
+	    receiverDB.update();
+	    infoLable.setText(receiverName.getValue() + " updated.");
+	} else {
+	    receiverDB.insert();
+	    infoLable.setText(receiverName.getValue() + " added to DB.");
+	}
+
 	
 	// update choosable list
 	receiverName.getItems().setAll(receiverDB.getNameList());
-	
+
     }
+    
+    
+    
+    
+    
+    
     
     
     ///////////////////
@@ -493,10 +559,14 @@ public class ReportViewerController implements Initializable {
     @FXML
     private void removeReceiverButtonAction() {
 	// remove entry
-	receiverDB.removeData();
+	receiverDB.remove();
 	
-	// update Combobox choice
+	// update choices and fields
+	resetAddressFields();
+	fillReceiverInfo();
 	receiverName.getItems().setAll(receiverDB.getNameList());
+	
+	infoLable.setText(receiverName.getValue() + " deleted from DB.");
     }
     
     

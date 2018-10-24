@@ -77,7 +77,7 @@ public class CreateReport {
         
         // add receiver address
         String receiverAddress = prepareReceiverAddress();
-	replace(reportData.getReveiverHeaderPH(), reportData.getReceiverHeader().get(reportData.getReceiverHeaderKey()));
+	replace(reportData.getReveiverHeaderPH(), reportData.getReceiverHeader().get(reportData.getSenderKey()));
 	replace(reportData.getReceiverAddressPH(), receiverAddress);
         replace(reportData.getReceiverCoLinePH(), reportData.getReceiverCoLine());
         
@@ -85,6 +85,7 @@ public class CreateReport {
         replace(reportData.getDiagMethodPH(), reportData.getDiagMethod().get(reportData.getDiagMethodKey()));
         replace(reportData.getPatientPH(), reportData.getPatientInfo());
         replace(reportData.getMaterialPH(), reportData.getMaterial());
+	replace(reportData.getMaterialRecievalDatePH(), reportData.getMaterialRecielvalDate());
         replace(reportData.getIndicationPH(), reportData.getIndication());
                 
         // add method box

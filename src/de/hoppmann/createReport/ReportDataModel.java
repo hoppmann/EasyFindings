@@ -38,6 +38,7 @@ public class ReportDataModel {
     private final String findingsPH = "${findings}";
     private final String assessmentPH = "${conclusion}";
     private final String genePanelTablePH = "${genePanelTable}";
+    private final String materialRecievalDatePH = "${materialReceival}";
     
     
     
@@ -57,6 +58,7 @@ public class ReportDataModel {
     private String findingsGeneTable = "NA";
     private String assessment = "NA";
     private String genePanelTable = "NA";
+    private String materialRecielvalDate = "NA";
 
 
     
@@ -64,7 +66,7 @@ public class ReportDataModel {
     private Map <String, String> sender = new HashMap<>();
     private String senderKey = "MVZ";
     private Map <String, String> receiverHeader = new HashMap<>();
-    private String receiverHeaderKey = "MVZ";
+//    private String receiverHeaderKey = "MVZ";
     private Map <String, String> seqMethod = new HashMap<>();
     private String seqMethodKey = "NGS_KiKli";
     private Map <String, String> diagMethod = new HashMap<>();
@@ -123,17 +125,21 @@ public class ReportDataModel {
 
     // MVZ sender
     sender.put("MVZ", "<p>"
-	    + "<strong>"
 	    + "<font size = 1>"
-	    + "Medizinisches Versorgungszentrum"
-	    + "</strong><br>Strahlentherapie<br>Humangenetik<br>Transfusionsmedizin</font></p>"
-	    + "<p><strong>Humangenetik<br></strong>"
-	    + "<strong>PD Dr. Ekkehart Lausch<br>"
-	    + "</strong>Sektionsleiter P&auml;diatrische Genetik<br> "
-	    + "Robert-Koch-Str. 3, D-79106 Freiburg<br>"
-	    + "Tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94440<br>"
-	    + "Fax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94030<br/>"
-	    + "<small>E-Mail&nbsp;&nbsp;  ekkehart.lausch@uniklinik-freiburg.de</small></p>");
+	    + "<strong>Medizinisches Versorgungszentrum</strong>"
+	    + "<br>Strahlentherapie"
+	    + "<br>Humangenetik"
+	    + "<br>Transfusionsmedizin"
+	    + "</font></p>"
+	    + "<p>"
+	    + "<strong>Humangenetik</strong>"
+	    + "<br><strong>PD Dr. Ekkehart Lausch"
+	    + "<br></strong>Sektionsleiter Pädiatrische Genetik"
+	    + "<br>Robert-Koch-Str. 3, D-79106 Freiburg"
+	    + "<br>Tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94440"
+	    + "<br>Fax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +49 (0)761 270-94030"
+	    + "<br><small>E-Mail&nbsp;&nbsp;  ekkehart.lausch@uniklinik-freiburg.de</small>"
+	    + "</p>"); 
         
     
     sender.put("KiKli", "Another Adress");
@@ -152,8 +158,12 @@ public class ReportDataModel {
     // prepare receiver header choice
     private void prepareReceiverHeader () {
         
-        receiverHeader.put("MVZ", "<p><strong>MVZ des Universit&auml;tsklinikums Freiburg<br /></strong>Robert-Koch-Stra&szlig;e 3, 79106 Freiburg</p>");
+        receiverHeader.put("MVZ", "<p><small><strong>MVZ des Universitätsklinikums Freiburg<br /></strong>Robert-Koch-Straße 3, 79106 Freiburg</small></p>");
         
+	
+	receiverHeader.put("KiKli", "<p><small><strong>Something else</strong></small></p>");
+	
+	
     }
     
     
@@ -198,14 +208,6 @@ public class ReportDataModel {
 
     public void setSenderKey(String senderKey) {
 	this.senderKey = senderKey;
-    }
-
-    public String getReceiverHeaderKey() {
-	return receiverHeaderKey;
-    }
-
-    public void setReceiverHeaderKey(String receiverHeaderKey) {
-	this.receiverHeaderKey = receiverHeaderKey;
     }
 
     public String getSeqMethodKey() {
@@ -368,6 +370,16 @@ public class ReportDataModel {
     public void setCountry(String country) {
 	this.country = country;
     }
+
+    public String getMaterialRecielvalDate() {
+	return materialRecielvalDate;
+    }
+
+    public void setMaterialRecielvalDate(String materialRecielvalDate) {
+	this.materialRecielvalDate = materialRecielvalDate;
+    }
+
+    
     
     
     
@@ -426,6 +438,11 @@ public class ReportDataModel {
 	return genePanelTablePH;
     }
 
+    public String getMaterialRecievalDatePH() {
+	return materialRecievalDatePH;
+    }
+    
+    
     
     
     
