@@ -10,6 +10,7 @@ import de.hoppmann.gui.modelsAndData.StoreFindings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.CreateTable;
 import de.hoppmann.Database.GeneDB;
+import de.hoppmann.Database.ReceiverDB;
 import de.hoppmann.Database.UserDB;
 import java.io.File;
 import java.net.URL;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +34,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -45,52 +49,53 @@ public class CheckDBController implements Initializable {
     //////// Variables ////////
     ///////////////////////////
     
-    @FXML
-    private Button closeButton;
+    //// main pane
     
-    @FXML
-    private ComboBox<String> geneInfoTabGeneNameBox;
-    
-    @FXML
-    private TextArea geneInfoField;
-    
-    @FXML
-    private TextArea varInfoField;
-    
-    @FXML
-    private Label infoLabel;
-    
-    @FXML
-    private Label dbLabel;
-    
-    @FXML
-    private ComboBox<String> varInfotabVarNameBox;
-    
-    @FXML
-    private TabPane tabpane;
-    
-    @FXML
-    private Tab varInfoTab;
-    
-    @FXML
-    private Tab geneInfoTab;
-
-    @FXML
-    private Tab findingsTab;
-    
-    @FXML
-    private TableView<TableData> findingsTable;
-    
-    @FXML
-    private ComboBox<String> findingsTabGeneNameBox;
-    
-    @FXML 
-    private ComboBox<String> findingsTabVarNameBox;
+    @FXML private Button closeButton;
+    @FXML private Label infoLabel;
+    @FXML private Label dbLabel;
+    @FXML private TabPane tabpane;
 
     
     
     
-    private GeneDB geneDB;
+    
+    //// variants tab
+     private GeneDB geneDB;
+    
+    // findings
+    @FXML private TableView<TableData> findingsTable;
+    @FXML private ComboBox<String> findingsTabGeneNameBox;
+    @FXML private ComboBox<String> findingsTabVarNameBox;
+
+    
+    // gene info
+    @FXML private Tab geneInfoTab;
+    @FXML private ComboBox<String> geneInfoTabGeneNameBox;
+    @FXML private TextArea geneInfoField;
+    
+
+    
+    
+    // variant info
+    @FXML private Tab varInfoTab;
+    @FXML private ComboBox<String> varInfotabVarNameBox;
+    @FXML private TextArea varInfoField;
+    
+   
+    //// address tab
+    private ReceiverDB receiverDB;
+    @FXML private TextField titleField;
+    @FXML private ComboBox<String> nameField;
+    @FXML private TextField addressField;
+    @FXML private TextField cityField;
+    @FXML private TextField zipCodeField;
+    @FXML private TextField countryField;
+    
+    
+    
+   
+    //// general variables
     private UserDB userDB;
     private StoreFindings findings;
     private Config config = Config.getInstance();
@@ -109,6 +114,9 @@ public class CheckDBController implements Initializable {
     //////// FXML Methods
 
 
+    //////////////////
+    //////// Main Pane 
+    
     //// close window
     @FXML
     private void closeButtonAction (ActionEvent event) {
@@ -120,18 +128,17 @@ public class CheckDBController implements Initializable {
 	
     }
     
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     //// open DB
     @FXML
     private void openDbButtonAction (ActionEvent event) {
         
-// check if there is already an open connection if so close it
+    // check if there is already an open connection if so close it
         
 	File dbFile = geneDB.openGeneDB();
 	
@@ -140,7 +147,7 @@ public class CheckDBController implements Initializable {
 	}
 	
 	// refresh gene combobox choice
-	loadAllGeneList(null);
+	addGeneList(null);
 	
     }
     
@@ -162,12 +169,23 @@ public class CheckDBController implements Initializable {
 	    geneDB.connectDB(dbFile);
 	}
 	
+	addGeneList(null);
+	
     }
     
     
     
-    ////////////////////////////////
-    //////// handle different remove buttons
+    
+    
+    
+    
+    
+    /////////////////////
+    //////// Variants Tab    
+
+    
+    
+    //////// gene tab
     
     
     /* 
@@ -201,7 +219,7 @@ public class CheckDBController implements Initializable {
 	}
 
 	// update gene name list
-	loadAllGeneList(null);
+	addGeneList(null);
 	geneInfoGeneBoxAction(new ActionEvent());
 
 	// print out that gene was removed
@@ -210,6 +228,114 @@ public class CheckDBController implements Initializable {
 
     }
     
+    
+    
+    
+     /*
+    gene info tab save button
+    get gene name and save gene info to corresponding gene name
+    */
+    
+    @FXML
+    private void geneInfoTabSaveButtonAction(ActionEvent event) {
+
+	String varName = null;
+	String geneName = null;
+
+	// get selectd gene and variant
+	geneName = findingsTabGeneNameBox.getValue();
+
+	// get geneName and remove all nonalphanumeric elements
+	geneName = geneInfoTabGeneNameBox.getValue();
+	if (geneInfoTabGeneNameBox.getValue() == null || geneName.equals("")) {
+	    infoLabel.setText("ERROR: No gene chosen.");
+	    return;
+	}
+	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
+
+	// get gene info text
+	String geneInfo;
+
+	if (geneInfoField.getText() == null) {
+	    geneInfo = "";
+	} else {
+	    geneInfo = geneInfoField.getText();
+	}
+
+	// save gene info
+	geneDB.saveGeneInfo(geneName, geneInfo);
+	
+	// refresh gene combobox choice
+	addGeneList(geneName);
+
+
+    }
+
+    
+    
+    
+    
+    
+      
+    
+    //// selection of genes in the gene info tab
+    @FXML
+    private void geneInfoGeneBoxAction (ActionEvent event) {
+	
+	// retrieve string and remove all non alphanumeric elements
+	    String geneName = geneInfoTabGeneNameBox.getValue();
+	    if (geneInfoTabGeneNameBox.getValue() != null){
+		geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
+	    }
+	    
+	    
+	    // get gene info
+	    geneInfoField.setText(geneDB.getGeneInfo(geneName));
+
+	    
+	    // fill varNameBox with possible choices and load first entry
+	    addVarList(geneName, null);
+	    
+    }
+    
+    
+    
+    
+    
+    
+     
+    // add gene names to gene box
+    private void addGeneList(String curGene) {
+	
+	
+	// get list and sort it
+	List geneList = geneDB.getGeneList();
+	geneInfoTabGeneNameBox.getItems().clear();
+	geneInfoTabGeneNameBox.getItems().addAll(geneList);
+	
+	
+	if ((curGene == null || curGene.equals("")) && geneList.size() > 0) {
+	    curGene = geneList.get(0).toString();
+	}
+    
+	geneInfoTabGeneNameBox.getSelectionModel().select(curGene);
+	TextFields.bindAutoCompletion(geneInfoTabGeneNameBox.getEditor(), geneInfoTabGeneNameBox.getItems());
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //////// variants tab
     
     
 
@@ -249,7 +375,7 @@ public class CheckDBController implements Initializable {
 	}
 
 	// update variant name list
-	loadAllVarList(geneName, null);
+	addVarList(geneName, null);
 
 	// print out that variant was removed
 	infoLabel.setText("Removed: " + varName);
@@ -257,8 +383,132 @@ public class CheckDBController implements Initializable {
     }
     
     
-    //////////////////////////
-    //////// handle different save buttons
+    
+    
+    
+    
+    
+    
+    
+    
+    /* 
+    variant info tab save button
+    get gene name and var name and save var info to var name given gene name
+    */
+    
+    @FXML
+    private void varInfoTabSaveButtonAction(ActionEvent event) {
+
+	// define variables
+	String varName = null;
+	String geneName = null;
+	
+	// get geneName and remove all nonalphanumeric elements
+	geneName = geneInfoTabGeneNameBox.getValue();
+	if (geneName == null || geneName.equals("")) {
+	    infoLabel.setText("ERROR: No gene chosen.");
+	    return;
+	}
+	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
+
+	// get variant name
+	varName = varInfotabVarNameBox.getValue();
+	if (varName == null || varName.equals("")) {
+	    infoLabel.setText("ERROR: No variant name given.");
+	    return;
+	}
+	// remove all alphanumeric element from variant
+	varName = varName.replaceAll("\\s+", "");
+
+	
+	// get variant info
+	String varInfo;
+	if (varInfoField.getText() == null) {
+	    varInfo = "";
+	} else {
+	    varInfo = varInfoField.getText();
+	}
+
+	geneDB.saveVarInfo(geneName, varName, varInfo);
+
+	// refresh gene combobox choice
+	addVarList(geneName, varName);
+
+    }
+
+
+
+
+     //// selection of a variant in the variant box
+    @FXML
+    private void varInfoVarBoxAction (ActionEvent event) {
+	
+	   // retrieve string and remove all non alphanumeric elements
+	    String geneName = geneInfoTabGeneNameBox.getValue();
+	    if (geneInfoTabGeneNameBox.getValue() != null){
+		geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
+	    }
+	    // retrieve variant
+	    String varName = varInfotabVarNameBox.getValue();
+
+	    if (varInfotabVarNameBox.getValue() != null){
+		varName = varName.replaceAll("\\s+", "");
+	    }
+	    // fill var info filed
+	    varInfoField.setText(geneDB.getVarInfo(geneName, varName));
+	    
+	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    // add variant names to varNameBox
+    private void addVarList(String geneName, String curVar) {
+	
+	// get list of variant for current gene
+	List varList = geneDB.getVarList(geneName);
+	varInfotabVarNameBox.getItems().clear();
+	varInfotabVarNameBox.getItems().addAll(varList);
+	
+	
+	// check if there is a current var
+	if (curVar == null || curVar.equals("")) {
+	    if (varList.size() > 0) {
+		curVar = varList.get(0).toString();
+	    } else {
+		
+		// reset var
+		curVar = "";
+	    }
+	}
+	
+	varInfotabVarNameBox.getSelectionModel().select(curVar);
+	TextFields.bindAutoCompletion(varInfotabVarNameBox.getEditor(), varInfotabVarNameBox.getItems());
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //////// findings tab
     
     
     /* 
@@ -314,8 +564,8 @@ public class CheckDBController implements Initializable {
 	}
 	
 	// refresh gene combobox choice
-        loadAllGeneList(geneName);
-        loadAllVarList(geneName, varName);
+        addGeneList(geneName);
+        addVarList(geneName, varName);
 
     }
     
@@ -324,109 +574,8 @@ public class CheckDBController implements Initializable {
     
     
     
+     
     
-    /*
-    gene info tab save button
-    get gene name and save gene info to corresponding gene name
-    */
-    
-    @FXML
-    private void geneInfoTabSaveButtonAction(ActionEvent event) {
-
-	String varName = null;
-	String geneName = null;
-
-	// get selectd gene and variant
-	geneName = findingsTabGeneNameBox.getValue();
-
-	// get geneName and remove all nonalphanumeric elements
-	geneName = geneInfoTabGeneNameBox.getValue();
-	if (geneInfoTabGeneNameBox.getValue() == null || geneName.equals("")) {
-	    infoLabel.setText("ERROR: No gene chosen.");
-	    return;
-	}
-	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
-
-	// get gene info text
-	String geneInfo;
-
-	if (geneInfoField.getText() == null) {
-	    geneInfo = "";
-	} else {
-	    geneInfo = geneInfoField.getText();
-	}
-
-	// save gene info
-	geneDB.saveGeneInfo(geneName, geneInfo);
-	
-	// refresh gene combobox choice
-	loadAllGeneList(geneName);
-
-
-    }
-
-    
-    
-    
-    
-    
-    
-    
-    /* 
-    variant info tab save button
-    get gene name and var name and save var info to var name given gene name
-    */
-    
-    @FXML
-    private void varInfoTabSaveButtonAction(ActionEvent event) {
-
-	// define variables
-	String varName = null;
-	String geneName = null;
-	
-	// get geneName and remove all nonalphanumeric elements
-	geneName = geneInfoTabGeneNameBox.getValue();
-	if (geneName == null || geneName.equals("")) {
-	    infoLabel.setText("ERROR: No gene chosen.");
-	    return;
-	}
-	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
-
-	// get variant name
-	varName = varInfotabVarNameBox.getValue();
-	if (varName == null || varName.equals("")) {
-	    infoLabel.setText("ERROR: No variant name given.");
-	    return;
-	}
-	// remove all alphanumeric element from variant
-	varName = varName.replaceAll("\\s+", "");
-
-	
-	// get variant info
-	String varInfo;
-	if (varInfoField.getText() == null) {
-	    varInfo = "";
-	} else {
-	    varInfo = varInfoField.getText();
-	}
-
-	geneDB.saveVarInfo(geneName, varName, varInfo);
-
-	// refresh gene combobox choice
-	loadAllVarList(geneName, varName);
-
-    }
-
-
-
-
-
-
-
-
-    
-    
-    ////////////////////////////////
     /* if gene is selected in findings 
     add corresponding list of variants to variant combobox
     */
@@ -457,7 +606,7 @@ public class CheckDBController implements Initializable {
 	if (geneDB.getGeneList().contains(geneName)) {
 
     	    // fill gene info tab
-	    loadAllGeneList(geneName);
+	    addGeneList(geneName);
 	    
 	    
 	    
@@ -475,7 +624,9 @@ public class CheckDBController implements Initializable {
     
     
     
-    ////////////////
+    
+    
+    
     //// findings variant box action
     // check if variant is in DB if so save as current default
     @FXML
@@ -506,7 +657,7 @@ public class CheckDBController implements Initializable {
 	
 	
 	
-	loadAllVarList(geneName, varName);
+	addVarList(geneName, varName);
 
 	
 	
@@ -522,126 +673,150 @@ public class CheckDBController implements Initializable {
     
     
     
+   
     
     
     
     
+    ///////////////////
+    //////// Adress tab
     
     
     
+    // reset address fields
+    private void resetAddressFields () {
+	
+	// set all values null
+	receiverDB.setTitle("");
+	receiverDB.setFullName("");
+	receiverDB.setPostalAddress("");
+	receiverDB.setCity("");
+	receiverDB.setZipCode("");
+	receiverDB.setCountry("");
+
+	
+    }
     
-    ///////////////////////////
-    //// selection of genes in the gene info tab
+     
+    //// new receiver
     @FXML
-    private void geneInfoGeneBoxAction (ActionEvent event) {
+    private void newReceiverButtonAction () {
 	
-	// retrieve string and remove all non alphanumeric elements
-	    String geneName = geneInfoTabGeneNameBox.getValue();
-	    if (geneInfoTabGeneNameBox.getValue() != null){
-		geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
-	    }
-	    
-	    
-	    // get gene info
-	    geneInfoField.setText(geneDB.getGeneInfo(geneName));
+	resetAddressFields();
+	
+	receiverDB.insert();
 
-	    
-	    // fill varNameBox with possible choices and load first entry
-	    loadAllVarList(geneName, null);
-	    
+	// reset fields
+	fillReceiverInfo();
+	
+	infoLabel.setText("Created a new entry.");
+
+	
+    }
+    
+    
+    
+    // fill receiver filds
+    private void fillReceiverInfo () {
+	titleField.setText(receiverDB.getTitle());
+	nameField.setValue(receiverDB.getFullName());
+	addressField.setText(receiverDB.getPostalAddress());
+	cityField.setText(receiverDB.getCity());
+	zipCodeField.setText(receiverDB.getZipCode());
+	countryField.setText(receiverDB.getCountry());
+
     }
     
     
     
     
     
-    ////////////////////
-    //// selection of a variant in the variant box
+    
+    //// store receiver data
     @FXML
-    private void varInfoVarBoxAction (ActionEvent event) {
-	
-	   // retrieve string and remove all non alphanumeric elements
-	    String geneName = geneInfoTabGeneNameBox.getValue();
-	    if (geneInfoTabGeneNameBox.getValue() != null){
-		geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
-	    }
-	    // retrieve variant
-	    String varName = varInfotabVarNameBox.getValue();
+    private void storeReceiverButtonAction() {
 
-	    if (varInfotabVarNameBox.getValue() != null){
-		varName = varName.replaceAll("\\s+", "");
-	    }
-	    // fill var info filed
-	    varInfoField.setText(geneDB.getVarInfo(geneName, varName));
+	// set variables
+	receiverDB.setTitle(titleField.getText());
+	receiverDB.setFullName(nameField.getValue());
+	receiverDB.setPostalAddress(addressField.getText());
+	receiverDB.setCity(cityField.getText());
+	receiverDB.setZipCode(zipCodeField.getText());
+	receiverDB.setCountry(countryField.getText());
+
+	
+	// check if entry is new (no ID so far)
+	if (receiverDB.getId() != null) {
+
+	    // update DB
+	    receiverDB.update();
+	    infoLabel.setText(nameField.getValue() + " saved.");
+	} else {
+	    receiverDB.insert();
+	    infoLabel.setText(nameField.getValue() + " added to DB.");
+	}
+
+	
+	// update choosable list
+	nameField.getItems().setAll(receiverDB.getNameList());
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    //// remove receiver data
+    @FXML
+    private void removeReceiverButtonAction() {
+	// remove entry
+	receiverDB.remove();
+	
+	// update choices and fields
+	resetAddressFields();
+	fillReceiverInfo();
+	nameField.getItems().setAll(receiverDB.getNameList());
+	
+	infoLabel.setText(nameField.getValue() + " deleted from DB.");
+    }
+    
+    
+    
+    ///// fill receiver data from database
+    private void fillReceiverData(String receiverName) {
+	
+	boolean success = receiverDB.queryAddress(receiverName);
+	if (success){
+	    titleField.setText(receiverDB.getTitle());
+	    addressField.setText(receiverDB.getPostalAddress());
+	    cityField.setText(receiverDB.getCity());
+	    zipCodeField.setText(receiverDB.getZipCode());
+	    countryField.setText(receiverDB.getCountry());
 	    
-	
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /////////////////////////
-    //////// non FXML methods
-
-    
-
-    
-    // add gene names to gene box
-    private void loadAllGeneList(String curGene) {
-	
-	
-	// get list and sort it
-	List geneList = geneDB.getGeneList();
-	geneInfoTabGeneNameBox.getItems().clear();
-	geneInfoTabGeneNameBox.getItems().addAll(geneList);
-	
-	
-	if ((curGene == null || curGene.equals("")) && geneList.size() > 0) {
-	    curGene = geneList.get(0).toString();
-	}
-    
-	geneInfoTabGeneNameBox.getSelectionModel().select(curGene);
-	TextFields.bindAutoCompletion(geneInfoTabGeneNameBox.getEditor(), geneInfoTabGeneNameBox.getItems());
-
-    }
-    
-    
-    // add variant names to varNameBox
-    private void loadAllVarList(String geneName, String curVar) {
-	
-	// get list of variant for current gene
-	List varList = geneDB.getVarList(geneName);
-	varInfotabVarNameBox.getItems().clear();
-	varInfotabVarNameBox.getItems().addAll(varList);
-	
-	
-	// check if there is a current var
-	if (curVar == null || curVar.equals("")) {
-	    if (varList.size() > 0) {
-		curVar = varList.get(0).toString();
-	    } else {
-		
-		// reset var
-		curVar = "";
-	    }
 	}
 	
-	varInfotabVarNameBox.getSelectionModel().select(curVar);
-	TextFields.bindAutoCompletion(varInfotabVarNameBox.getEditor(), varInfotabVarNameBox.getItems());
     }
+
+
+
+
+   
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+   
+    
     
     
     
@@ -663,6 +838,7 @@ public class CheckDBController implements Initializable {
 	// retrieve variants
 	this.findings = findings;
 
+	
 	
 	// check if any findings are stored if so fill table
 	if (findings != null && findings.getStoredData().size() > 0) {
@@ -722,6 +898,9 @@ public class CheckDBController implements Initializable {
     
     
     
+    
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -730,8 +909,11 @@ public class CheckDBController implements Initializable {
 	
 	//////// prepare DB connection if possible
 	
-	geneDB = new GeneDB(dbLabel, infoLabel);
+//	geneDB = new GeneDB(dbLabel, infoLabel);
 	
+	userDB = new UserDB();
+
+
 	// check if DB saved in cofig exists
 	// if so connect to it
         // then check if tables exist
@@ -743,13 +925,23 @@ public class CheckDBController implements Initializable {
 	    
 	    if (new File(config.getDbPath()).exists() && !new File(config.getDbPath()).isDirectory()){
 		File dbFile = new File(config.getDbPath());
-//		userDB.connectDB(dbFile);
-		geneDB.connectDB(dbFile);
+		userDB.connectDB(dbFile);
 	    }
 	}
 	
 	
 	
+	/* 
+	check if connection is established if so init gene and address class
+	using the connection of the superclass
+	*/
+	
+	if (userDB.isConnected()) {
+	    
+	    geneDB = new GeneDB(dbLabel, infoLabel, userDB.getConn());
+	    receiverDB = new ReceiverDB(userDB.getConn());
+	    
+	}
 	
 	
 	
@@ -768,10 +960,32 @@ public class CheckDBController implements Initializable {
             // if DB has tables load lists
             if (geneDB.hasTable(geneDB.getGeneTable())){
                 if (geneDB.tableHasEntry(geneDB.getGeneTable())){
-                    loadAllGeneList(null);
+                    addGeneList(null);
                 }
             }
 	}
+	
+	
+	/* 
+	init receiver name combo box
+	add auto compleation
+	Add action listener
+	if name is written check if address is available 
+	    if so auto fill other fields
+	*/
+		
+	
+	nameField.getItems().setAll(receiverDB.getNameList());
+	nameField.setEditable(true);
+	TextFields.bindAutoCompletion(nameField.getEditor(), receiverDB.getNameList());
+	nameField.valueProperty().addListener(new ChangeListener<String>() {
+	    @Override
+	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		fillReceiverData(newValue);
+	    }
+	});
+	
+	
 	
 	
 

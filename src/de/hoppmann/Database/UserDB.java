@@ -8,6 +8,7 @@ package de.hoppmann.Database;
 
 import de.hoppmann.config.Config;
 import java.io.File;
+import java.sql.Connection;
 
 /**
  *
@@ -48,10 +49,23 @@ public class UserDB extends Database {
     
     
 	
-    /////////////////////////////
-    //////// constructor ////////
-    /////////////////////////////
-
+    ///////////////////////////////////
+    //////// singleton pattern ////////
+    ///////////////////////////////////
+    
+//    private static final class InstanceHolder {
+//	static final UserDB INSTANCE = new UserDB();
+//    }
+//    
+//    private UserDB() {
+//    }
+//    
+//    public static UserDB getInstance() {
+//	return InstanceHolder.INSTANCE;
+//    }
+    
+    
+    
     
 	
 	
@@ -61,9 +75,15 @@ public class UserDB extends Database {
     /////////////////////////
     
     
+    
+    
+     
+   
     ////////////////////////////////////
     //////// general operations ////////
     ////////////////////////////////////
+    
+    
     
     
     
@@ -80,6 +100,8 @@ public class UserDB extends Database {
 	//////// check if tables are available else create
 
 	checkGeneTable();
+	checkVariantTable();
+	checkReceiverTable();
 	
         
 	
@@ -93,7 +115,7 @@ public class UserDB extends Database {
     // check if table is available if not create a new corresponign table
     
     // receiver table
-    protected void checkReceiverTable () {
+    private void checkReceiverTable () {
 	
 	// check if table is avalable
 	
@@ -104,7 +126,7 @@ public class UserDB extends Database {
 		    + IdKey + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 		    + titleKey + " Varchar(60), "
 		    + fullNameKey + " Varchar(60) not null, " 
-		    + addressKey + "Varchar(60), "
+		    + addressKey + " Varchar(60), "
 		    + zipCodeKey + " Varchar(60), "
 		    + cityKey + " Varchar(60), "
 		    + countryKey + " Varchar(60) )";
@@ -116,7 +138,7 @@ public class UserDB extends Database {
     
 
     // gene Table
-    protected void checkGeneTable () {
+    private void checkGeneTable () {
 	
 	// check gene table
 	if (! hasTable(geneTable)){
@@ -146,8 +168,7 @@ public class UserDB extends Database {
 		    + " (" + varCol + " VARCHAR(60) not NULL, "
 		    + geneCol + " VARCHAR(60), "
 		    + varInfoCol + " TEXT, "
-		    + "PRIMARY KEY ( " + varCol + " ))";
-	    
+		    + "PRIMARY KEY (" + varCol + "))";
 	    // execute command
 	    execute(createTableCmd);
 	    
@@ -221,7 +242,11 @@ public class UserDB extends Database {
     //////// getter / setter ////////
     /////////////////////////////////
 
+    public Connection getConn() {
+	return conn;
+    }
 
+    
 
 
 

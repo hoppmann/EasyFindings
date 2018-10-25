@@ -8,6 +8,7 @@ package de.hoppmann.Database;
 
 import de.hoppmann.config.Config;
 import java.io.File;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -28,20 +29,8 @@ public class GeneDB extends UserDB {
     //////// variables ////////
     ///////////////////////////
     private Config config = Config.getInstance();
-    
-//    private final String geneTable = "genes";
-//
-//    private final String geneCol = "gene";
-//    private final String geneInfoCol = "geneInfo";
-//    private final String varTable = "variants";
-//    private final String varCol = "var";
-//    private final String varInfoCol = "varInfo";
-    
-    
-//    // connect to db
-//    private String url;
-//    private final String user = "";
-//    private final String password = "";
+
+
     
     // info fields
     private Label dbInfo = new Label();
@@ -61,6 +50,14 @@ public class GeneDB extends UserDB {
     public GeneDB () {
     }
 	
+    
+    public GeneDB (Label dbInfo, Label infoLable, Connection conn) {
+	
+	this.dbInfo = dbInfo;
+	this.infoLable = infoLable;
+	this.conn = conn;
+	
+    }
 	
     /////////////////////////
     //////// methods ////////
@@ -284,7 +281,7 @@ public class GeneDB extends UserDB {
 	
 	// retrieve results
 	try {
-	    while (rs.next()){
+	    while (rs.next()) {
 		varList.add(rs.getString(varCol));
 	    }
 	} catch (SQLException ex) {

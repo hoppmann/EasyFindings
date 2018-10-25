@@ -24,7 +24,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -63,11 +66,11 @@ public class ReportViewerController implements Initializable {
     
     // entry mask tab
     @FXML Tab entryMaskTab;
-    @FXML TextField titleField;
-    @FXML TextField addressField;
-    @FXML TextField cityField;
-    @FXML TextField zipCodeField;
-    @FXML TextField countryField;
+    @FXML private TextField titleField;
+    @FXML private TextField addressField;
+    @FXML private TextField cityField;
+    @FXML private TextField zipCodeField;
+    @FXML private TextField countryField;
     @FXML TextField coFiled;
     @FXML TextField patientfield;
     @FXML TextField materialField;
@@ -535,7 +538,7 @@ public class ReportViewerController implements Initializable {
 
 	    // update DB
 	    receiverDB.update();
-	    infoLable.setText(receiverName.getValue() + " updated.");
+	    infoLable.setText(receiverName.getValue() + " saved.");
 	} else {
 	    receiverDB.insert();
 	    infoLable.setText(receiverName.getValue() + " added to DB.");
@@ -569,6 +572,50 @@ public class ReportViewerController implements Initializable {
 	infoLable.setText(receiverName.getValue() + " deleted from DB.");
     }
     
+    
+    
+    
+    
+    
+    
+    
+    //////////////////////////////////////
+    //// Button to jump to database window
+    @FXML
+    private void databaseButtonAction (ActionEvent event) {
+	
+	
+	try {
+	    // open database window
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CheckDB.fxml"));
+	    
+
+	    // create new window
+	    Parent root = fxmlLoader.load();
+	    Stage stage = new Stage();
+	    stage.setTitle("Check databse");
+	    stage.setScene(new Scene(root));
+	    
+	    
+	    // run init 
+	    CheckDBController controller = fxmlLoader.getController();
+	    controller.init(findings);
+
+	    // show new view
+	    stage.show();
+
+	    
+	    
+	    
+	} catch (IOException ex) {
+	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	}
+
+	
+	
+	
+	
+    }
     
     
     

@@ -5,7 +5,6 @@
  */
 package de.hoppmann.gui.view;
 
-import de.hoppmann.createReport.TestDoc;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.StoreFindings;

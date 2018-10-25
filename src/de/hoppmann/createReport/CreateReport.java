@@ -106,6 +106,18 @@ public class CreateReport {
     }
     
     
+    
+    
+    //// replace value and hand back template
+    private void replace(String placeholder, String value) {
+        report = report.replace(placeholder, value);
+    }
+    
+    
+    
+    
+    
+    
     //// put together all inforamtion to creat receiver address
     private String prepareReceiverAddress() {
 	
@@ -124,6 +136,17 @@ public class CreateReport {
 
 	
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     //// add causal genes to document
@@ -177,10 +200,14 @@ public class CreateReport {
     
     
 
-//// replace value and hand back template
-    private void replace(String placeholder, String value) {
-        report = report.replace(placeholder, value);
-    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     //////////////////

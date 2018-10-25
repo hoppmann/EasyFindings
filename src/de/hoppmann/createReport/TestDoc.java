@@ -76,8 +76,6 @@ public class TestDoc {
 	    
 	    
 	    
-	    
-	    
 ////	File file = new FileChooser().showOpenDialog(null);
 ////	System.out.println(file.getAbsoluteFile());
 ////

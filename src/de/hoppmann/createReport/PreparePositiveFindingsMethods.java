@@ -50,6 +50,12 @@ public class PreparePositiveFindingsMethods {
     private GeneDB geneDb;
 
 
+    
+    
+    
+    
+    
+    
     /////////////////////////////
     //////// constructor ////////
     /////////////////////////////
@@ -89,6 +95,11 @@ public class PreparePositiveFindingsMethods {
 
 		// prepare html table
 		prepareHtmlTable();
+		
+		
+		// add predefined variant text
+		addVarInfoText();
+		
 	    }
 
 	}
@@ -100,6 +111,11 @@ public class PreparePositiveFindingsMethods {
     
 
 	
+    
+    
+    
+    
+    
 	
     /////////////////////////
     //////// methods ////////
@@ -273,9 +289,8 @@ public class PreparePositiveFindingsMethods {
 	    
 	for (int i = 0 ; i < varNameList.size(); i++){
 	    
-//	    // check if variant has info if not do not add it
+	    // check if variant has info if not do not add it
 	    if (varInfo.get(varNameList.get(i)) != null) {
-//	    
 		// new line
 		tableElements.add("\t\t<tr>");
 		tableElements.add("\t\t\t<td><small>" + geneName + "</small></td>");
@@ -290,7 +305,6 @@ public class PreparePositiveFindingsMethods {
 		// end line
 		tableElements.add("\t\t</tr>");
 	    }
-//	    }
 	    
 	}
 
@@ -302,6 +316,19 @@ public class PreparePositiveFindingsMethods {
 	tableElements.add("<p> <strong>" + geneName + "</strong> <br>" + geneInfo + "</p>");
 
 	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    //// prepare gene / variant text
+    private void addVarInfoText() {
+	
+	
 	// add variant lists if text is available for variant.
 	for (String curVar : varInfo.keySet()) {
 	    if (varInfo.get(curVar) != null) {
@@ -309,14 +336,14 @@ public class PreparePositiveFindingsMethods {
 	    }
 	}
 
+	
+	
+	
 	// add some spacing 
 	tableElements.add("<p>&nbsp;</p>");
 	tableElements.add("<p>&nbsp;</p>");
 	
     }
-    
-    
-    
     
     
     

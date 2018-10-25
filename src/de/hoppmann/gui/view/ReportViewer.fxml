@@ -63,6 +63,7 @@
                         <Button layoutX="414.0" layoutY="370.0" mnemonicParsing="false" onAction="#removeReceiverButtonAction" prefHeight="25.0" prefWidth="110.0" text="Remove" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />
                         <Label fx:id="infoLable" layoutX="329.0" layoutY="415.0" prefHeight="25.0" prefWidth="270.0" text="Label" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="10.0" />
                         <Button layoutX="238.0" layoutY="496.0" mnemonicParsing="false" onAction="#newReceiverButtonAction" prefHeight="25.0" prefWidth="110.0" text="New" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+                        <Button layoutX="379.0" layoutY="496.0" mnemonicParsing="false" onAction="#databaseButtonAction" prefHeight="25.0" prefWidth="110.0" text="Database" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="370.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

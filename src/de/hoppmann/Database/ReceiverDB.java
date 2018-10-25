@@ -7,6 +7,7 @@
 package de.hoppmann.Database;
 
 import java.io.File;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -41,15 +42,19 @@ public class ReceiverDB extends UserDB {
     //////// constructor ////////
     /////////////////////////////
     
-    public ReceiverDB () {
+    public ReceiverDB() {
 	
-	// get current path of program
-//	String curDir = System.getProperty("user.dir");
-//    	dbFile = new File(curDir + File.separator + "DBs" + File.separator + dbName);
 	connectDB(new File(config.getDbPath()));
 	
 	
     }
+    
+    
+    public ReceiverDB (Connection conn) {
+	this.conn = conn;
+    }
+    
+    
     
     /////////////////////////
     //////// methods ////////
