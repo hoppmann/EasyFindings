@@ -6,8 +6,6 @@
 
 package de.hoppmann.Database;
 
-import java.io.File;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -41,19 +39,7 @@ public class ReceiverDB extends UserDB {
     /////////////////////////////
     //////// constructor ////////
     /////////////////////////////
-    
-    public ReceiverDB() {
-	
-	connectDB(new File(config.getDbPath()));
-	
-	
-    }
-    
-    
-    public ReceiverDB (Connection conn) {
-	this.conn = conn;
-    }
-    
+
     
     
     /////////////////////////
@@ -71,9 +57,9 @@ public class ReceiverDB extends UserDB {
 	try {
 	    // prepare query
 	    String query = "select " + fullNameKey + " from " + receiverTable;
-	    
-	    ResultSet rs = execute(query);
-	    
+	    ResultSet rs = execute(query, conn);
+
+
 	    // retrieve names
 	    while (rs.next()){
 		names.add(rs.getString(fullNameKey));
@@ -106,7 +92,10 @@ public class ReceiverDB extends UserDB {
 	
 	
 	// execute query and gather results
-	ResultSet rs = execute(query);
+	ResultSet rs = execute(query, conn);
+	
+	
+	
 	
 	try {
 	    if (rs.next()){
@@ -148,7 +137,7 @@ public class ReceiverDB extends UserDB {
 		zipCode + "', '" + city + "', '" +  country + "')";
 	
 	
-	execute(updateCmd);
+	execute(updateCmd, conn);
 	
 	
     }
@@ -162,8 +151,13 @@ public class ReceiverDB extends UserDB {
     public void insert () {
 	
 	// prepare query
-	String insertCmd = "INSERT INTO " + receiverTable + " VALUES ( '" + title + "', '" + fullName + "', '" + address + "', '" +
-		zipCode + "', '" + city + "', '" +  country + "')";
+	String insertCmd = "INSERT INTO " + receiverTable 
+		+ " (" + titleKey + ", " + fullNameKey + ", " + addressKey + ", " + zipCodeKey
+		 + ", " + cityKey + ", " + countryKey + ") " 
+		+ " VALUES ( '" + title + "', '" + fullName + "', '" + address + "', '" 
+		+ zipCode + "', '" + city + "', '" +  country + "')";
+	
+	execute(insertCmd, conn);
     }
     
     
@@ -179,7 +173,7 @@ public class ReceiverDB extends UserDB {
 	String removeCmd = "DELETE FROM " + receiverTable + " WHERE " + IdKey + 
 		" == '" + id + "'";
 	
-	execute(removeCmd);
+	execute(removeCmd, conn);
 	
     }    
     

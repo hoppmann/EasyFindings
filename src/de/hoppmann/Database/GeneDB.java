@@ -42,22 +42,6 @@ public class GeneDB extends UserDB {
     //////// constructor ////////
     /////////////////////////////
     
-    public GeneDB (Label dbInfo, Label infoLable) {
-	    this.dbInfo = dbInfo;
-	    this.infoLable = infoLable;
-    }
-	
-    public GeneDB () {
-    }
-	
-    
-    public GeneDB (Label dbInfo, Label infoLable, Connection conn) {
-	
-	this.dbInfo = dbInfo;
-	this.infoLable = infoLable;
-	this.conn = conn;
-	
-    }
 	
     /////////////////////////
     //////// methods ////////
@@ -79,17 +63,17 @@ public class GeneDB extends UserDB {
 	
 	String removeCmd;
 	// remove from gene table
-	if (hasTable(geneTable)) {
+	if (hasTable(geneTable, conn)) {
 	    removeCmd = "DELETE FROM " + geneTable
 		    + " where gene = '" + geneName + "'";
-	    execute(removeCmd);
+	    execute(removeCmd, conn);
 	}
 	
 	// remove from variant table
-	if (hasTable(varTable)){
+	if (hasTable(varTable, conn)){
 	    removeCmd = "DELETE FROM " + varTable
 			+ " where gene = '" + geneName +"'";
-	    execute(removeCmd);
+	    execute(removeCmd, conn);
 	}
 	
     }
@@ -113,7 +97,7 @@ public class GeneDB extends UserDB {
     public void saveGeneInfo(String geneName, String geneInfo) {
 
 	// check connection
-	if ( conn == null || ! isConnected()) {
+	if ( conn == null || ! isConnected(conn)) {
 	    infoLable.setText("ERROR: Database not connected. Open DB first.");
 	    return;
 	}
@@ -128,7 +112,7 @@ public class GeneDB extends UserDB {
 	// prepare command 
 	String addEntryCmd = "REPLACE INTO " + geneTable + " VALUES " 
 		+ "( '" + geneName + "' , '" + geneInfo + "')";
-	execute(addEntryCmd);
+	execute(addEntryCmd, conn);
 		
 	
 	
@@ -150,7 +134,7 @@ public class GeneDB extends UserDB {
     public List getGeneList() {
 	
 	// check for existance of connection
-	if (isConnected() == false){
+	if (isConnected(conn) == false){
 	    return null;
 	}
 	
@@ -162,7 +146,7 @@ public class GeneDB extends UserDB {
 	
 	
 	// execute query
-	ResultSet rs = execute(query);
+	ResultSet rs = execute(query, conn);
 	
 	
 	// retrieve results
@@ -197,7 +181,7 @@ public class GeneDB extends UserDB {
 	String geneInfo = null;
 	
 	// check connection
-	if ( conn == null || ! isConnected()) {
+	if ( conn == null || ! isConnected(conn)) {
 	    infoLable.setText("ERROR: Database not connected. Open DB first.");
 	    return null;
 	}
@@ -209,7 +193,7 @@ public class GeneDB extends UserDB {
 		+ " where gene == '" + geneName + "'";
 
 	// execute query
-	ResultSet rs = execute(queryGeneInfoCmd);
+	ResultSet rs = execute(queryGeneInfoCmd,conn);
 
 	
 	
@@ -246,14 +230,14 @@ public class GeneDB extends UserDB {
     //// renove variant from databse
     public void removeVar(String geneName, String varName) {
 	String delQuery;
-	if (hasTable(varTable)) {
+	if (hasTable(varTable, conn)) {
 	    // prepare deletion query
 	    delQuery = "DELETE from " + varTable + " WHERE "
 		    + geneCol + " = '" + geneName + "' AND " + varCol
 		    + "= '" + varName + "'";
 
 	    // execute query
-	    execute(delQuery);
+	    execute(delQuery, conn);
 	    
 	    infoLable.setText("Variant " + varName + " deleted.");
 	}
@@ -277,7 +261,7 @@ public class GeneDB extends UserDB {
 	
 	
 	// execute query
-	ResultSet rs = execute(query);
+	ResultSet rs = execute(query, conn);
 	
 	// retrieve results
 	try {
@@ -308,7 +292,7 @@ public class GeneDB extends UserDB {
 	
 	
 	// check connection
-	if ( conn == null || ! isConnected()) {
+	if ( conn == null || ! isConnected(conn)) {
 	    infoLable.setText("ERROR: Database not connected. Open DB first.");
 	    return;
 	}
@@ -322,7 +306,7 @@ public class GeneDB extends UserDB {
 		+ "( " + "'" + varName + "'" 
 		+ ", '" + geneName + "'" 
 		+ ", '" + varInfo + "'" +  " )";
-	execute(addEntryCmd);
+	execute(addEntryCmd, conn);
 		
 	
 	
@@ -349,7 +333,7 @@ public class GeneDB extends UserDB {
 		+ varCol + " = '" + varName + "'";
 	
 	
-	ResultSet rs = execute(query);
+	ResultSet rs = execute(query,conn);
 	
 	try {
 	    if (rs.next()) {
@@ -365,480 +349,6 @@ public class GeneDB extends UserDB {
     }
     
     
-    
-   //// check if DB is connected and print info
-//   public void checkConnection () {
-//       if (isConnected()) {
-//	   infoLable.setText("Connected to " + new File(config.getDbPath()).getAbsolutePath() + " established!");
-//	   dbInfo.setText(new File(config.getDbPath()).getName());
-//       }
-//   }
-    
-   
-    // connect to DB and add info to lable
-   @Override
-   public void connectDB (File dbName) {
-       
-       super.connectDB(dbName);
-       
-	infoLable.setText("Connected to " + new File(config.getDbPath()).getAbsolutePath() + " established!");
-	dbInfo.setText(new File(config.getDbPath()).getName());
-
-       
-   }
-    
-    
-    
-    
-    
-    
-//    ////////////////////////////////////
-//    //////// general operations ////////
-//    ////////////////////////////////////
-//    
-//    ///////////////////////////
-//    //////// connect to gene DB
-//    
-//    public void connectGenenDB(File dbFile) {
-//	
-//	// connect to DB
-//	conn = connect(dbFile);
-//	
-//
-//	////////////////////////
-//	//////// check if tables are available else create
-//
-//	// check gene table
-//	if (! hasTable(geneTable)){
-//	    
-//	    // prepare command
-//	    String createTabelCmd = "create table " + geneTable
-//		    + " (" + geneCol + " VARCHAR(60) not NULL, "
-//		    + geneInfoCol + " TEXT, "
-//		    + "PRIMARY KEY ( " + geneCol + " ))";
-//	    
-//	    // execute command
-//	    execute(createTabelCmd);
-//	}
-//	
-//        
-//	// check variant table
-//	if (! hasTable(varTable)) {
-//	    
-//	    // prepare command
-//	    String createTableCmd = "CREATE TABLE " + varTable
-//		    + " (" + varCol + " VARCHAR(60) not NULL, "
-//		    + geneCol + " VARCHAR(60), "
-//		    + varInfoCol + " TEXT, "
-//		    + "PRIMARY KEY ( " + varCol + " ))";
-//	    
-//	    // execute command
-//	    execute(createTableCmd);
-//	    
-//	}
-//	
-//	
-//	// print out if DB is connected and name of connected DB
-//	infoLable.setText("Connected to " + dbFile.getAbsolutePath() + " established!");
-//	dbInfo.setText(dbFile.getName());
-//	
-//	
-//	
-//    }
-//    
-//    
-//    
-//    
-//    ////////////////////////////
-//    //////// create new gene DB
-//    public File createNewGeneDB () {
-//	
-//	// check if db has entry in config and load opener correspoingly
-//	String dbPath = null;
-//	
-//	if (config.getDbPath() != null && new File(config.getDbPath()).exists()) {
-//	    dbPath = new File(config.getDbPath()).getParent();
-//	}
-//	
-//	File geneDB = createNewDB(dbPath);
-//
-//	if (geneDB != null) {
-//	    // save path in config
-//	    config.setDbPath(geneDB.getAbsolutePath());
-//	}
-//	
-//	return geneDB;
-//	
-//    }
-//    
-//    
-//    
-//    /////////////////////
-//    //////// open gene DB
-//    public File openGeneDB () {
-//
-//	// check if db has entry in config and load opener correspoingly
-//	String dbPath = null;
-//	if (config.getDbPath() != null && new File(config.getDbPath()).exists()){
-//	   dbPath = new File(config.getDbPath()).getParent();
-//	} 
-//
-//
-//	// open DB file
-//	File dbFile = openDB(dbPath);
-//	
-//	
-//	
-//	// save path in config
-//	if (dbFile != null){
-//	    config.setDbPath(dbFile.getAbsolutePath());
-//	} else {
-//	    return null;
-//	}
-//	
-//	return dbFile;
-//	
-//    }
-//    
-//    
-//    
-//    
-//    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    
-//    
-//    ///////////
-//    //// execute DB command
-//    private ResultSet execute(String cmd) {
-//        
-//        
-//	// check  if DB is connected
-//	if (isConnected() == false){
-//	    return null;
-//	}
-//        
-//	ResultSet rs = null;
-//	try {
-//	    
-//	    Statement stmt = conn.createStatement();
-//	    stmt.execute(cmd);
-//	    rs = stmt.getResultSet();
-//	    
-//	} catch (SQLException ex) {
-//	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-//	}
-//	
-//	return rs;
-//	
-//    }
-//    
-//    
-//    
-//    /////////////
-//    //// check DB connection
-//    public boolean isConnected() {
-//	
-//	boolean isConnected = true;
-//	
-//	// ceck DB connection
-//	try {
-//	    if (conn == null || conn.isClosed()) {
-//		isConnected = false;
-//	    }
-//	} catch (SQLException ex) {
-//	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-//	}
-//
-//	return isConnected;
-//	
-//    }
-//    
-//    
-//    
-//    
-//    
-//    //////////////////
-//    //// check if table exists
-//    
-//    public boolean hasTable (String tableName) {
-//	
-//	boolean exists = false;
-//	
-//	// check if connected DB has table of interest
-//	try {
-//	    DatabaseMetaData meta = conn.getMetaData();
-//	    ResultSet tables = meta.getTables(null, null, tableName, null);
-//	
-//	    if (tables.next()){
-//		exists = true;
-//	    }
-//	    
-//	    
-//	    
-//	} catch (SQLException ex) {
-//	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-//	}
-//	
-//	
-//	return exists;
-//	
-//    }
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    //////////////////////////////
-//    //// chekc if DB has any entry for a given table
-//    
-//    public boolean tableHasEntry (String tableName) {
-//        
-//        boolean hasEntry = false;
-//        
-//        // prepare query
-//        String query = "select * from " + tableName;
-//        
-//        // get results
-//        ResultSet rs = execute(query);
-//        
-//        // check if there are any results. if so set boolean to true
-//        try {
-//            if (rs.isBeforeFirst()) {
-//                hasEntry = true;
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//        return hasEntry;
-//        
-//    }
-//    
-//    
-//    
-//    
-//    
-//    ////////////////
-//    //// create new DB
-//    
-//    public File createNewDB() {
-//	
-//	//////// get DB name
-//	
-//	// read DB name from config
-//	FileChooser chooser = new FileChooser();
-//        chooser.setTitle("Open DB file");
-//	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
-//
-//
-//	// check if db has entry in config and load opener correspoingly
-//	if (new File(config.getDbPath()).exists()) {
-//	    chooser.setInitialDirectory(new File(config.getDbPath()));
-//	} else {
-//	    chooser.setInitialDirectory(null);
-//	}
-//
-//	// choos file to open if aborded, chosen chose new file
-//	File dbFile = chooser.showSaveDialog(new Stage());
-//	
-//	
-//	if (dbFile != null){
-//
-//	    // check for correct ending
-//	    String extension = dbFile.getName().substring(dbFile.getName().lastIndexOf(".") + 1);
-//	    if (!extension.equals("db")) {
-//		String fileName = dbFile.getAbsolutePath() + ".db";
-//		dbFile = new File(fileName);
-//	    }
-//	    
-//	    // save path in config
-//	    config.setDbPath(dbFile.getAbsolutePath());
-//
-//	    // catch cancel
-//	} else {
-//	    return null;
-//	}
-//	
-//	
-//	return dbFile;
-//	
-//    }
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    //////////////////////////
-//    //// choose Database and remember in config.
-//    
-//    public File openDB() {
-//	
-//	
-//	//////// get DB name
-//	
-//	// read DB name from config
-//	FileChooser chooser = new FileChooser();
-//        chooser.setTitle("Open gene database");
-//	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
-//	
-//	
-//
-//	// check if db has entry in config and load opener correspoingly
-//	
-//	if (config.getDbPath() != null && new File(config.getDbPath()).exists()){
-//	    chooser.setInitialDirectory(new File(config.getDbPath()));
-//	} else {
-//	    chooser.setInitialDirectory(null);
-//	}
-//	
-//	
-//	// choos file to open if aborded, chosen chose new file
-//	File dbFile = chooser.showOpenDialog(new Stage());
-//
-//
-//
-//
-//	// save path in config
-//	if (dbFile != null){
-//	    config.setDbPath(dbFile.getAbsolutePath());
-//	} else {
-//	    
-//	    return null;
-//	    
-//	}
-//	
-//	
-//	
-//	return dbFile;
-//	
-//    }
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    /////////////////
-//    //////// connect to DB
-//    public void connect(File dbFile) {
-//	
-//	
-//	// define DB url
-//	if (dbFile == null) {
-//	    return;
-//	}
-//	url = "jdbc:sqlite:" + dbFile.getAbsoluteFile();
-//	
-//	try {
-//	    
-//	    // if there allread is an connection close it
-//	    if (conn != null){
-//		conn.close();
-//            }
-//            // load SQL  driver
-//            Class.forName(driver);
-//
-//            // connect to database
-//            conn = DriverManager.getConnection(url, user, password);
-//
-//            
-//        } catch (Exception ex) {
-//            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-//	} 
-//	
-//	
-//	////////////////////////
-//	//////// check if tables are available else create
-//
-//	// check gene table
-//	if (! hasTable(geneTable)){
-//	    
-//	    // prepare command
-//	    String createTabelCmd = "create table " + geneTable
-//		    + " (" + geneCol + " VARCHAR(60) not NULL, "
-//		    + geneInfoCol + " TEXT, "
-//		    + "PRIMARY KEY ( " + geneCol + " ))";
-//	    
-//	    // execute command
-//	    execute(createTabelCmd);
-//	}
-//	
-//        
-//	// check variant table
-//	if (! hasTable(varTable)) {
-//	    
-//	    // prepare command
-//	    String createTableCmd = "CREATE TABLE " + varTable
-//		    + " (" + varCol + " VARCHAR(60) not NULL, "
-//		    + geneCol + " VARCHAR(60), "
-//		    + varInfoCol + " TEXT, "
-//		    + "PRIMARY KEY ( " + varCol + " ))";
-//	    
-//	    // execute command
-//	    execute(createTableCmd);
-//	    
-//	}
-//	
-//	
-//	
-//	// give out if DB is connected and name of connected DB
-//	infoLable.setText("Connected to " + dbFile.getAbsolutePath() + " established!");
-//	dbInfo.setText(dbFile.getName());
-//	
-//	
-//    }
-//
-//    
-//    
-//    
-//    /////////////////////////
-//    //////// close connection
-//    public void closeDB(){
-//        
-//	if (conn != null) {
-//
-//	    try {
-//		conn.close();
-//	    } catch (SQLException ex) {
-//		Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-//	    }
-//	}
-//    }
-//    
-//    
     
     
     /////////////////////////////////

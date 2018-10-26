@@ -9,6 +9,7 @@ import de.hoppmann.config.Config;
 import de.hoppmann.createReport.CreateReport;
 import de.hoppmann.createReport.PreparePanelTable;
 import de.hoppmann.Database.ReceiverDB;
+import de.hoppmann.Database.UserDB;
 import de.hoppmann.createReport.ReportDataModel;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import java.io.BufferedWriter;
@@ -106,6 +107,7 @@ public class ReportViewerController implements Initializable {
     private CreateReport createReport; 
     private String panelGenes;
     private PreparePanelTable panelTable = new PreparePanelTable();
+    private UserDB userDB = new UserDB();
     private ReceiverDB receiverDB = new ReceiverDB();
     
     
@@ -119,6 +121,9 @@ public class ReportViewerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+	
+	
+	userDB.connectDB(Config.getInstance().getDbPath(), false);
 	
 	//////////////////////
 	//// add listener ////
@@ -312,19 +317,19 @@ public class ReportViewerController implements Initializable {
 	seqMethodChoice.getItems().setAll(reportData.getSeqMethod().keySet());
 	seqMethodChoice.getSelectionModel().select(reportData.getSeqMethodKey());
 	
-
 	diagMethodChoice.getItems().setAll(reportData.getDiagMethod().keySet());
 	diagMethodChoice.getSelectionModel().select(reportData.getDiagMethodKey());
-	
-	
-	/* 
-	init receiver name combo box
-	add auto compleation
-	Add action listener
-	if name is written check if address is available 
+
+	/*
+	    init receiver name combo box
+	    add auto compleation
+	    Add action listener
+	    if name is written check if address is available
 	    if so auto fill other fields
-	*/
-		
+	 */
+	
+	
+	
 	
 	receiverName.getItems().setAll(receiverDB.getNameList());
 	receiverName.setEditable(true);
@@ -346,7 +351,6 @@ public class ReportViewerController implements Initializable {
     //////////////////////
     ///// fill receiver data from database
     private void fillReceiverData(String receiverName) {
-	
 	boolean success = receiverDB.queryAddress(receiverName);
 	if (success){
 	    titleField.setText(receiverDB.getTitle());
@@ -418,7 +422,6 @@ public class ReportViewerController implements Initializable {
     
     // fill text fields
     private void retrieveEntryMaskTextFields() {
-	
 	fillReceiverInfo();
 
 	coFiled.setText(reportData.getReceiverCoLine());
@@ -678,7 +681,7 @@ public class ReportViewerController implements Initializable {
     public void closeButtonAction(ActionEvent event) {
 	
 	// close connection to receiverDB
-	receiverDB.closeDB();
+	receiverDB.closeDB(UserDB.conn);
 	
 	Stage stage = (Stage) htmlEditor.getScene().getWindow();
 	stage.close();

@@ -11,6 +11,7 @@ import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.Database.GeneDB;
+import de.hoppmann.Database.UserDB;
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -48,6 +49,7 @@ public class PreparePositiveFindingsMethods {
     
     
     private GeneDB geneDb;
+    
 
 
     
@@ -65,12 +67,17 @@ public class PreparePositiveFindingsMethods {
 
 	// check if existing DB is saved in config if so connect to it
 	geneDb = new GeneDB();
-	if (config.getDbPath() != null && new File(config.getDbPath()).exists()) {
-	    geneDb.connectDB(new File(config.getDbPath()));
-	} else {
-	    File dbPath = geneDb.openGeneDB();
-	    geneDb.connectDB(dbPath);
+	if (UserDB.conn == null){
+	    geneDb.connectDB(config.getDbPath(), false);
 	}
+	
+//	
+//	if (config.getDbPath() != null && new File(config.getDbPath()).exists()) {
+//	    geneDb.connectDB(config.getDbPath());
+//	} else {
+//	    File dbPath = geneDb.openDB();
+//	    geneDb.connectDB(dbPath.getAbsolutePath());
+//	}
 
 	
 	/* 

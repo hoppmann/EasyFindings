@@ -10,7 +10,7 @@ import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import de.hoppmann.gui.modelsAndData.TableData;
-import de.hoppmann.Database.Database;
+import de.hoppmann.Database.UserDB;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  *
  * @author hoppmann
  */
-public class PrepareNegativeFindings extends Database {
+public class PrepareNegativeFindings extends UserDB {
 
 
 
@@ -102,7 +102,7 @@ public class PrepareNegativeFindings extends Database {
 	// join element to one string
 	htmlTable = String.join("\n", tableElements);
 
-	closeDB();
+	closeDB(conn);
 	    
     }
 
@@ -236,7 +236,7 @@ public class PrepareNegativeFindings extends Database {
 	    String query = "SELECT " + arCol + ", " + adCol + ", " + xlrCol + ", " + xldCol
 		    + " from hg19 where " + geneNameCol + " == '" + geneName + "'";
 	    
-	    ResultSet rs = execute(query);
+	    ResultSet rs = execute(query, conn);
 	    Set<String> moiSet = new TreeSet();
 	    if (rs.next()) {
 		if (rs.getBoolean(arCol)) {

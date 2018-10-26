@@ -14,11 +14,15 @@ import de.hoppmann.Database.ReceiverDB;
 import de.hoppmann.Database.UserDB;
 import java.io.File;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -61,7 +65,7 @@ public class CheckDBController implements Initializable {
     
     
     //// variants tab
-     private GeneDB geneDB;
+     private GeneDB geneDB = new GeneDB();
     
     // findings
     @FXML private TableView<TableData> findingsTable;
@@ -84,7 +88,7 @@ public class CheckDBController implements Initializable {
     
    
     //// address tab
-    private ReceiverDB receiverDB;
+    private ReceiverDB receiverDB = new ReceiverDB();
     @FXML private TextField titleField;
     @FXML private ComboBox<String> nameField;
     @FXML private TextField addressField;
@@ -121,7 +125,7 @@ public class CheckDBController implements Initializable {
     @FXML
     private void closeButtonAction (ActionEvent event) {
 	
-	geneDB.closeDB();
+	userDB.closeDB(UserDB.conn);
 	
 	Stage stage = (Stage) closeButton.getScene().getWindow();
 	stage.close();
@@ -137,18 +141,32 @@ public class CheckDBController implements Initializable {
     //// open DB
     @FXML
     private void openDbButtonAction (ActionEvent event) {
-        
-    // check if there is already an open connection if so close it
-        
-	File dbFile = geneDB.openGeneDB();
-	
-	if (dbFile != null) {
-	    geneDB.connectDB(dbFile);
+
+	// check if there is already an open connection if so close it
+	if (UserDB.conn != null) {
+	    userDB.closeDB(UserDB.conn);
 	}
 	
-	// refresh gene combobox choice
-	addGeneList(null);
 	
+	File dbFile = userDB.openDB();
+		
+	
+	if (dbFile != null){
+	    userDB.connectDB(dbFile.getAbsolutePath(), false);
+	}
+
+	
+	// refresh gene combobox choice
+	if (userDB.isConnected(UserDB.conn)){
+	    
+	    addGeneList(null);
+	    
+	    
+	    nameField.getItems().setAll(receiverDB.getNameList());
+	    resetAddressFields();
+	    TextFields.bindAutoCompletion(nameField.getEditor(), receiverDB.getNameList());
+
+	}
     }
     
     
@@ -160,16 +178,21 @@ public class CheckDBController implements Initializable {
     @FXML
     private void newDbButtonAction (ActionEvent event) {
         // check if there is already an open connection if so close it
-        if (geneDB.isConnected()) {
-            geneDB.closeDB();
+        if (userDB.isConnected(UserDB.conn)) {
+            userDB.closeDB(UserDB.conn);
         }
 
-	File dbFile = geneDB.createNewGeneDB();
+	File dbFile = userDB.newDB();
+	
 	if (dbFile != null) {
-	    geneDB.connectDB(dbFile);
+	    userDB.connectDB(dbFile.getAbsolutePath(), true);
 	}
 	
-	addGeneList(null);
+	if (userDB.isConnected(UserDB.conn)){
+	    addGeneList(null);
+    	    nameField.getItems().setAll(receiverDB.getNameList());
+
+	}
 	
     }
     
@@ -306,7 +329,6 @@ public class CheckDBController implements Initializable {
      
     // add gene names to gene box
     private void addGeneList(String curGene) {
-	
 	
 	// get list and sort it
 	List geneList = geneDB.getGeneList();
@@ -702,12 +724,10 @@ public class CheckDBController implements Initializable {
     @FXML
     private void newReceiverButtonAction () {
 	
-	resetAddressFields();
-	
+	setReceiverInfo();
 	receiverDB.insert();
 
-	// reset fields
-	fillReceiverInfo();
+	refreshNameList();
 	
 	infoLabel.setText("Created a new entry.");
 
@@ -731,23 +751,28 @@ public class CheckDBController implements Initializable {
     
     
     
-    
-    //// store receiver data
-    @FXML
-    private void storeReceiverButtonAction() {
-
-	// set variables
+    //// transfer from fields to dbObject
+    private void setReceiverInfo(){
 	receiverDB.setTitle(titleField.getText());
 	receiverDB.setFullName(nameField.getValue());
 	receiverDB.setPostalAddress(addressField.getText());
 	receiverDB.setCity(cityField.getText());
 	receiverDB.setZipCode(zipCodeField.getText());
 	receiverDB.setCountry(countryField.getText());
+    }
+    
+    
+    
+    
+    //// store receiver data
+    @FXML
+    private void storeReceiverButtonAction() {
 
+	// set variables
+	setReceiverInfo();
 	
 	// check if entry is new (no ID so far)
 	if (receiverDB.getId() != null) {
-
 	    // update DB
 	    receiverDB.update();
 	    infoLabel.setText(nameField.getValue() + " saved.");
@@ -757,11 +782,12 @@ public class CheckDBController implements Initializable {
 	}
 
 	
-	// update choosable list
-	nameField.getItems().setAll(receiverDB.getNameList());
+	// update fields and lists
+	fillReceiverFields(nameField.getValue());
+	
+	refreshNameList();
 
     }
-    
     
     
     
@@ -778,15 +804,35 @@ public class CheckDBController implements Initializable {
 	// update choices and fields
 	resetAddressFields();
 	fillReceiverInfo();
-	nameField.getItems().setAll(receiverDB.getNameList());
+	refreshNameList();
 	
-	infoLabel.setText(nameField.getValue() + " deleted from DB.");
+	infoLabel.setText("Address deleted from DB.");
+    }
+    
+    
+
+
+
+
+    //// add name choise from DB to combobox
+    private void refreshNameList() {
+		
+	// get list and sort it
+	List nameList = receiverDB.getNameList();
+	nameField.getItems().clear();
+	nameField.getItems().addAll(nameList);
+
+	TextFields.bindAutoCompletion(nameField.getEditor(), nameField.getItems());
+
+
     }
     
     
     
+    
+    
     ///// fill receiver data from database
-    private void fillReceiverData(String receiverName) {
+    private void fillReceiverFields(String receiverName) {
 	
 	boolean success = receiverDB.queryAddress(receiverName);
 	if (success){
@@ -799,8 +845,6 @@ public class CheckDBController implements Initializable {
 	}
 	
     }
-
-
 
 
    
@@ -845,9 +889,9 @@ public class CheckDBController implements Initializable {
 
 
 	    // check if databse is connected if not open DB
-	    if (!geneDB.isConnected()){
-		File dbFile = geneDB.openGeneDB();
-		geneDB.connectDB(dbFile);
+	    if (!geneDB.isConnected(UserDB.conn)){
+		
+		geneDB.connectDB(null, false);
 	    }
 	    
 	    //// create findings table	
@@ -909,25 +953,26 @@ public class CheckDBController implements Initializable {
 	
 	//////// prepare DB connection if possible
 	
-//	geneDB = new GeneDB(dbLabel, infoLabel);
+	userDB = new UserDB(infoLabel, dbLabel);
 	
-	userDB = new UserDB();
-
-
-	// check if DB saved in cofig exists
-	// if so connect to it
-        // then check if tables exist
-        // if so fill 
-	
-	
-	
-	if (config.getDbPath() != null){
 	    
-	    if (new File(config.getDbPath()).exists() && !new File(config.getDbPath()).isDirectory()){
-		File dbFile = new File(config.getDbPath());
-		userDB.connectDB(dbFile);
-	    }
+	try {
+	    System.out.println(UserDB.conn.isValid(0));
+	} catch (SQLException ex) {
+	    Logger.getLogger(CheckDBController.class.getName()).log(Level.SEVERE, null, ex);
 	}
+	
+	
+	// check if DB saved in cofig exists
+	    // if so connect to it
+	    // then check if tables exist
+	    // if so fill 
+	
+	if (config.getDbPath() != null) {
+	    userDB.connectDB(config.getDbPath(), false);
+	}
+	
+	
 	
 	
 	
@@ -936,11 +981,11 @@ public class CheckDBController implements Initializable {
 	using the connection of the superclass
 	*/
 	
-	if (userDB.isConnected()) {
+	
+	if (userDB.isConnected(UserDB.conn)) {
 	    
-	    geneDB = new GeneDB(dbLabel, infoLabel, userDB.getConn());
-	    receiverDB = new ReceiverDB(userDB.getConn());
-	    
+	    geneDB = new GeneDB();
+	    receiverDB = new ReceiverDB();
 	}
 	
 	
@@ -954,37 +999,31 @@ public class CheckDBController implements Initializable {
 	geneInfoTabGeneNameBox.setEditable(true);
 
 	
-	// if a DB is connected fill gene name choices
-	if (geneDB.isConnected()) {
-
-            // if DB has tables load lists
-            if (geneDB.hasTable(geneDB.getGeneTable())){
-                if (geneDB.tableHasEntry(geneDB.getGeneTable())){
-                    addGeneList(null);
-                }
-            }
-	}
-	
-	
-	/* 
-	init receiver name combo box
-	add auto compleation
-	Add action listener
-	if name is written check if address is available 
-	    if so auto fill other fields
-	*/
-		
-	
-	nameField.getItems().setAll(receiverDB.getNameList());
+	//// prepare receiver name combo box
 	nameField.setEditable(true);
-	TextFields.bindAutoCompletion(nameField.getEditor(), receiverDB.getNameList());
 	nameField.valueProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		fillReceiverData(newValue);
+		fillReceiverFields(newValue);
 	    }
 	});
 	
+
+	
+	
+	// if a DB is connected fill boxes
+	if (userDB.isConnected(UserDB.conn)) {
+
+            // if DB has tables load lists
+            if (geneDB.hasTable(geneDB.getGeneTable(), UserDB.conn)){
+                if (geneDB.tableHasEntry(geneDB.getGeneTable(), UserDB.conn)){
+                    addGeneList(null);
+                }
+            }
+	    
+	    // fill nameBox 
+	    refreshNameList();
+	}
 	
 	
 	

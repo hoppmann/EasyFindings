@@ -28,8 +28,6 @@ public class Database {
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
-//    private Config config = Config.getInstance();
-    protected Connection conn = null;
     private final String driver = "org.sqlite.JDBC";
     protected String dbPath;
     
@@ -58,15 +56,16 @@ public class Database {
 
     ///////////
     //// execute DB command
-    protected ResultSet execute(String cmd) {
+    protected ResultSet execute(String cmd, Connection conn) {
 	// check  if DB is connected
-	if (isConnected() == false){
+	if (isConnected(conn) == false){
 	    return null;
 	}
+	
+
         
 	ResultSet rs = null;
 	try {
-	    
 	    Statement stmt = conn.createStatement();
 	    stmt.execute(cmd);
 	    rs = stmt.getResultSet();
@@ -88,8 +87,7 @@ public class Database {
     
      /////////////
     //// check DB connection
-    public boolean isConnected() {
-	
+    public boolean isConnected(Connection conn) {
 	boolean isConnected = true;
 	
 	// ceck DB connection
@@ -100,7 +98,6 @@ public class Database {
 	} catch (SQLException ex) {
 	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
 	}
-
 	return isConnected;
 	
     }
@@ -112,7 +109,7 @@ public class Database {
     //////////////////
     //// check if table exists
     
-    public boolean hasTable (String tableName) {
+    public boolean hasTable (String tableName, Connection conn) {
 	
 	boolean exists = false;
 	
@@ -143,7 +140,7 @@ public class Database {
     //////////////////////////////
     //// chekc if DB has any entry for a given table
     
-    public boolean tableHasEntry (String tableName) {
+    public boolean tableHasEntry (String tableName, Connection conn) {
         
         boolean hasEntry = false;
         
@@ -151,7 +148,7 @@ public class Database {
         String query = "select * from " + tableName;
         
         // get results
-        ResultSet rs = execute(query);
+        ResultSet rs = execute(query, conn);
         
         // check if there are any results. if so set boolean to true
         try {
@@ -173,13 +170,13 @@ public class Database {
      ////////////////
     //// create new DB
     
-    protected File createNewDB(String dbPath) {
+    protected File createNew(String dbPath) {
 	
 	//////// get DB name
 	
 	// read DB name from config
 	FileChooser chooser = new FileChooser();
-        chooser.setTitle("Open DB file");
+        chooser.setTitle("New DB file");
 	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
 
 
@@ -222,7 +219,7 @@ public class Database {
     //////////////////////////
     //// choose Database and remember in config.
     
-    protected File openDB(String dbPath) {
+    protected File chooseFile(String dbPath) {
 	
 	
 	
@@ -230,7 +227,7 @@ public class Database {
 	
 	// read DB name from config
 	FileChooser chooser = new FileChooser();
-        chooser.setTitle("Open gene database");
+        chooser.setTitle("Open database");
 	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
 	
 	if (dbPath != null && new File(dbPath).exists()) {
@@ -242,7 +239,6 @@ public class Database {
 
 	// choos file to open if aborded, chosen chose new file
 	File dbFile = chooser.showOpenDialog(new Stage());
-
 
 	return dbFile;
 	
@@ -258,6 +254,7 @@ public class Database {
     //////// connect to DB
     protected Connection connect(File dbFile) {
 	
+	Connection conn = null;
 	
 	// define DB url
 	if (dbFile == null) {
@@ -271,6 +268,7 @@ public class Database {
 	    if (conn != null){
 		conn.close();
             }
+	    
             // load SQL  driver
             Class.forName(driver);
 
@@ -293,7 +291,7 @@ public class Database {
     
     /////////////////////////
     //////// close connection
-    public void closeDB(){
+    public void closeDB(Connection conn){
         
 	if (conn != null) {
 

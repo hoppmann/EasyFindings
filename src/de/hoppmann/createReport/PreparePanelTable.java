@@ -6,7 +6,7 @@
 
 package de.hoppmann.createReport;
 
-import de.hoppmann.Database.Database;
+import de.hoppmann.Database.UserDB;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  *
  * @author hoppmann
  */
-public class PreparePanelTable extends Database {
+public class PreparePanelTable extends UserDB {
 
 
     ///////////////////////////
@@ -193,7 +193,7 @@ public class PreparePanelTable extends Database {
 		
 		// query current gene and retrieve variables
 		
-		ResultSet rs = execute(query);
+		ResultSet rs = execute(query, conn);
 		while (rs.next()) {
 
 		    geneName = rs.getString(geneNameCol).toUpperCase();

@@ -9,6 +9,8 @@ package de.hoppmann.Database;
 import de.hoppmann.config.Config;
 import java.io.File;
 import java.sql.Connection;
+import javafx.scene.control.Label;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -21,7 +23,9 @@ public class UserDB extends Database {
     //////// variables ////////
     ///////////////////////////
     protected Config config = Config.getInstance();
-    
+    public static Connection conn;
+    private Label infoLabel = new Label();
+    private Label dbLabel = new Label();
 
     // gene table
     protected final String geneTable = "genes";
@@ -49,20 +53,27 @@ public class UserDB extends Database {
     
     
 	
-    ///////////////////////////////////
-    //////// singleton pattern ////////
-    ///////////////////////////////////
-    
-//    private static final class InstanceHolder {
-//	static final UserDB INSTANCE = new UserDB();
-//    }
-//    
-//    private UserDB() {
-//    }
-//    
-//    public static UserDB getInstance() {
-//	return InstanceHolder.INSTANCE;
-//    }
+    //////////////////////////////
+    //////// constructor /////////
+    //////////////////////////////
+
+    public UserDB() {
+	
+//	
+//	if (!super.isConnected(conn)) {
+//	    connectDB(config.getDbPath(), false);
+//	}
+	
+    }
+
+    public UserDB(Label infoLabel, Label dbLabel) {
+	this.infoLabel = infoLabel;
+	this.dbLabel = dbLabel;
+	
+	if (!super.isConnected(conn)) {
+	    connectDB(config.getDbPath(), false);
+	}
+    }
     
     
     
@@ -84,27 +95,56 @@ public class UserDB extends Database {
     ////////////////////////////////////
     
     
+    /////////////////////////
+    //////// check connection
+
+    public boolean isConnected() {
+	
+	
+	boolean connected = super.isConnected(conn);
+	return connected;
+    }
     
     
     
     ///////////////////////////
     //////// connect to gene DB
     
-    public void connectDB(File dbFile) {
+    public void connectDB(String dbPath, boolean newDb) {
+	
+	File dbFile = null;
+	
+	
+	
+	if (dbPath == null || (!new File(dbPath).exists() && ! newDb)) {
+	    dbFile = chooseFile(null);
+	} else {
+	    dbFile = new File(dbPath);
+	}
+	
+	
 	
 	// connect to DB
-	conn = connect(dbFile);
-	
+	if (dbFile != null) {
+	    
+	    config.setDbPath(dbFile.getAbsolutePath());
+	    
+	    
+	    conn = connect(dbFile);
 
-	////////////////////////
-	//////// check if tables are available else create
+	    ////////////////////////
+	    //////// check if tables are available else create
 
-	checkGeneTable();
-	checkVariantTable();
-	checkReceiverTable();
-	
+	    checkGeneTable();
+	    checkVariantTable();
+	    checkReceiverTable();
+	}
         
-	
+	if (isConnected(conn) && dbFile != null){
+	    infoLabel.setText("Connection to " + new File(config.getDbPath()).getAbsolutePath() + " established!");
+	    dbLabel.setText(new File(config.getDbPath()).getName());
+
+	}
     }
     
     
@@ -119,7 +159,7 @@ public class UserDB extends Database {
 	
 	// check if table is avalable
 	
-	if (! hasTable(receiverTable)) {
+	if (! hasTable(receiverTable, conn)) {
 	    
 	    // prepare command
 	    String createTableCmd = "CREATE TABLE " + receiverTable + "( "
@@ -130,7 +170,7 @@ public class UserDB extends Database {
 		    + zipCodeKey + " Varchar(60), "
 		    + cityKey + " Varchar(60), "
 		    + countryKey + " Varchar(60) )";
-	    execute(createTableCmd);
+	    execute(createTableCmd, conn);
 	}
     }
     
@@ -141,7 +181,7 @@ public class UserDB extends Database {
     private void checkGeneTable () {
 	
 	// check gene table
-	if (! hasTable(geneTable)){
+	if (! hasTable(geneTable, conn)){
 	    
 	    // prepare command
 	    String createTabelCmd = "create table " + geneTable
@@ -150,7 +190,7 @@ public class UserDB extends Database {
 		    + "PRIMARY KEY ( " + geneCol + " ))";
 	    
 	    // execute command
-	    execute(createTabelCmd);
+	    execute(createTabelCmd, conn);
 	}
 	
     }
@@ -161,7 +201,7 @@ public class UserDB extends Database {
     // variant table
     private void checkVariantTable () {
 		// check variant table
-	if (! hasTable(varTable)) {
+	if (! hasTable(varTable, conn)) {
 	    
 	    // prepare command
 	    String createTableCmd = "CREATE TABLE " + varTable
@@ -170,7 +210,7 @@ public class UserDB extends Database {
 		    + varInfoCol + " TEXT, "
 		    + "PRIMARY KEY (" + varCol + "))";
 	    // execute command
-	    execute(createTableCmd);
+	    execute(createTableCmd,conn);
 	    
 	}
 
@@ -181,7 +221,7 @@ public class UserDB extends Database {
     
     ////////////////////////////
     //////// create new gene DB
-    public File createNewGeneDB () {
+    public File newDB () {
 	
 	// check if db has entry in config and load opener correspoingly
 	String dbPath = null;
@@ -190,22 +230,26 @@ public class UserDB extends Database {
 	    dbPath = new File(config.getDbPath()).getParent();
 	}
 	
-	File geneDB = createNewDB(dbPath);
+	File dbFile = createNew(dbPath);
 
-	if (geneDB != null) {
+	if (dbFile != null) {
 	    // save path in config
-	    config.setDbPath(geneDB.getAbsolutePath());
+	    config.setDbPath(dbFile.getAbsolutePath());
 	}
+
 	
-	return geneDB;
-	
+	return dbFile;
     }
+    
+    
+    
+    
     
     
     
     /////////////////////
     //////// open gene DB
-    public File openGeneDB () {
+    public File openDB () {
 
 	// check if db has entry in config and load opener correspoingly
 	String dbPath = null;
@@ -215,13 +259,21 @@ public class UserDB extends Database {
 
 
 	// open DB file
-	File dbFile = openDB(dbPath);
+	File dbFile = chooseFile(dbPath);
 	
 	
+	/* 
+	check if DB has .db as suffix
+	then save path in config
+	*/
 	
-	// save path in config
 	if (dbFile != null){
+	    if (!FilenameUtils.getExtension(dbFile.getAbsolutePath()).equals(".db")){
+		dbPath = dbFile.getAbsolutePath();
+		dbPath += ".db";
+	    }
 	    config.setDbPath(dbFile.getAbsolutePath());
+	    
 	} else {
 	    return null;
 	}
@@ -241,13 +293,8 @@ public class UserDB extends Database {
     /////////////////////////////////
     //////// getter / setter ////////
     /////////////////////////////////
-
-    public Connection getConn() {
-	return conn;
-    }
-
     
-
+    
 
 
 

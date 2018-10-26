@@ -5,6 +5,7 @@
  */
 package de.hoppmann.gui.view;
 
+import de.hoppmann.Database.UserDB;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
@@ -115,7 +116,7 @@ public class MainGuiController implements Initializable {
     // method to test parts directly
     @FXML
     private void TestButtonAction (ActionEvent event) {
-	
+	System.out.println(UserDB.conn);
 //	TestDoc test = new TestDoc();
 	
     }
