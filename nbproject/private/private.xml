@@ -12,13 +12,9 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/createReport/ReceiverDB.java</file>
             <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/gui/view/CheckDBController.java</file>
             <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/gui/view/ReportViewerController.java</file>
-            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/createReport/PrepareNegativeFindings.java</file>
-            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/createReport/PreparePanelTable.java</file>
-            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/createReport/GeneInfoDB.java</file>
-            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/createReport/CreateReport.java</file>
+            <file>file:/media/hoppmann/Data/workspace/EasyFindings/src/de/hoppmann/Database/UserDB.java</file>
         </group>
     </open-files>
 </project-private>

@@ -102,7 +102,7 @@ public class PrepareNegativeFindings extends UserDB {
 	// join element to one string
 	htmlTable = String.join("\n", tableElements);
 
-	closeDB(conn);
+//	closeDB(conn);
 	    
     }
 
