@@ -10,7 +10,7 @@ import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
 import de.hoppmann.gui.modelsAndData.TableData;
-import de.hoppmann.Database.UserDB;
+import de.hoppmann.Database.OldImplementation.UserDB;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;

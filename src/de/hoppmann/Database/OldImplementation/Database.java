@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package de.hoppmann.Database;
+package de.hoppmann.Database.OldImplementation;
 
 import java.io.File;
 import java.sql.Connection;
