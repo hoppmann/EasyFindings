@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hoppmann.database.userDB.testView;
+package de.hoppmann.gui.view.userDbView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author hoppmann
  */
-public class Tab1Controller implements Initializable {
+public class FindingsTabController implements Initializable {
 
     /**
      * Initializes the controller class.
