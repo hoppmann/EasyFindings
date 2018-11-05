@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package de.hoppmann.Database.UserDB.snipletDB;
+package de.hoppmann.database.userDB.snipletDB;
 
 /**
  *
  * @author hoppmann
  */
-public class varianInfoRepository {
+public class GeneInfoRepository {
 
 
     ///////////////////////////

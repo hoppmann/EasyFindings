@@ -21,22 +21,24 @@ public class EasyFindings extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        
-//	new CreateReport();
-//	new Test(stage, root);
 
-
+	  Parent root = FXMLLoader.load(getClass().getResource("database/userDB/testView/MainTestGui.fxml"));
+	  Scene scene = new Scene(root);
+	  stage.setScene(scene);
+	  stage.show();
 
 
 	
-	stage.setTitle("EasyFindings");
-        Parent root = FXMLLoader.load(getClass().getResource("gui/view/MainGui.fxml"));
-        
-        Scene scene = new Scene(root);
-
-	stage.setScene(scene);
-        stage.show();
+//	stage.setTitle("EasyFindings");
+//        Parent root = FXMLLoader.load(getClass().getResource("gui/view/MainGui.fxml"));
+//        
+//        Scene scene = new Scene(root);
+//
+//	stage.setScene(scene);
+//        stage.show();
 	
+
+    
 	
 	
 	

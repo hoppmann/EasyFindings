@@ -5,7 +5,7 @@
  */
 package de.hoppmann.gui.view;
 
-import de.hoppmann.Database.OldImplementation.UserDB;
+import de.hoppmann.database.OldImplementation.UserDB;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
