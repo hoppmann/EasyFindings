@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hoppmann.gui.view;
+package de.hoppmann.gui.view.selectColumnView;
 
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.StoreFindings;

@@ -5,6 +5,7 @@
  */
 package de.hoppmann.gui.view;
 
+import de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController;
 import de.hoppmann.database.OldImplementation.UserDB;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;

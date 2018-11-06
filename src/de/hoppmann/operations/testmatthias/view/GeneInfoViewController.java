@@ -21,6 +21,9 @@ public class GeneInfoViewController {
 
     // -.......
     
+    
+    
+    
     private void saveGeneButtonPressed() {
 	// ... hole das GeneInfo-Objekt aus dem UI heraus
 	GeneInfo gi = fetchGeneInfoFromUi();
@@ -28,12 +31,14 @@ public class GeneInfoViewController {
 	repository.saveGeneInfo(gi);
     }
     
-    public void setGeneInfoRepository(GeneInfoRepository repository) {
-	this.repository = repository;
-    }
-
-    private GeneInfoRepository repository;
-
+    
+    
+    
+    
+    
+    
+    
+    
     private GeneInfo fetchGeneInfoFromUi() {
 	GeneInfo gi = new GeneInfo();
 //	gi.setGeneName(comboGeneName.getValue());
@@ -41,4 +46,18 @@ public class GeneInfoViewController {
 	return gi;
     }
 
+    
+    
+    
+    // set repository to use
+    public void setGeneInfoRepository(GeneInfoRepository repository) {
+	this.repository = repository;
+    }
+
+    
+    
+    private GeneInfoRepository repository;
+
+    
+    
 }

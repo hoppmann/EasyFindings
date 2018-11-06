@@ -6,6 +6,7 @@
 
 package de.hoppmann.database.userDB;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,7 +19,9 @@ import java.util.logging.Logger;
  */
 public class ConnectionBuilder {
 
-
+    
+    
+    
     
     
     /**
@@ -30,7 +33,7 @@ public class ConnectionBuilder {
      * 
      * create connection to database
      */
-   public void openConnection (String url, String user, String password, String driver) {
+   public static void openConnection (String url, String user, String password, String driver) {
        Connection conn = null;
        
 	try {
@@ -61,7 +64,7 @@ public class ConnectionBuilder {
    /**
     * close connection to current database
     */
-   public void closeConnection() {
+   public static void closeConnection() {
        try {
 	   Connection conn = DBConnectionHolder.getInstance().getConnection();
 	   conn.close();
@@ -77,8 +80,7 @@ public class ConnectionBuilder {
    /**
     * check if connection to DB is set up
     */
-   public boolean hasConnection() {
-       boolean hasConnection = false;
+   public static boolean hasConnection() {
        if (DBConnectionHolder.getInstance().getConnection() != null) {
 	   return true;
        } else {
@@ -87,5 +89,20 @@ public class ConnectionBuilder {
        
    }
 
+   
+   
+   
+   
+   public static File chooseDB () {
+       
+       
+       
+       return null;
+       
+   }
+   
+   
+   
+   
    
 }

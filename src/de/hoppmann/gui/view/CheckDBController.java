@@ -124,8 +124,6 @@ public class CheckDBController implements Initializable {
     @FXML
     private void closeButtonAction (ActionEvent event) {
 	
-	userDB.closeDB(UserDB.conn);
-	
 	Stage stage = (Stage) closeButton.getScene().getWindow();
 	stage.close();
 	

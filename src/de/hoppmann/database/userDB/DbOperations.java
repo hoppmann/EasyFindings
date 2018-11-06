@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package de.hoppmann.database.OldImplementation;
+package de.hoppmann.database.userDB;
 
 import java.io.File;
 import java.sql.Connection;
@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  *
  * @author hoppmann
  */
-public class Database {
+public class DbOperations {
 
 
     ///////////////////////////
@@ -53,12 +53,15 @@ public class Database {
     
 
 
-
-    ///////////
-    //// execute DB command
+    /**
+     * Check connection and execute DB query command 
+     * @param cmd
+     * @param conn
+     * @return 
+     */
     protected ResultSet execute(String cmd, Connection conn) {
 	// check  if DB is connected
-	if (isConnected(conn) == false){
+	if (ConnectionBuilder.hasConnection() == false){
 	    return null;
 	}
 	
@@ -71,7 +74,7 @@ public class Database {
 	    rs = stmt.getResultSet();
 	    
 	} catch (SQLException ex) {
-	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+	    Logger.getLogger(DbOperations.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	
 	return rs;
@@ -85,30 +88,13 @@ public class Database {
     
     
     
-     /////////////
-    //// check DB connection
-    public boolean isConnected(Connection conn) {
-	boolean isConnected = true;
-	
-	// ceck DB connection
-	try {
-	    if (conn == null || conn.isClosed()) {
-		isConnected = false;
-	    }
-	} catch (SQLException ex) {
-	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
-	}
-	return isConnected;
-	
-    }
     
-    
-	
-    
-    
-    //////////////////
-    //// check if table exists
-    
+    /**
+     * Check if table is available in DB
+     * @param tableName
+     * @param conn
+     * @return 
+     */
     public boolean hasTable (String tableName, Connection conn) {
 	
 	boolean exists = false;
@@ -125,7 +111,7 @@ public class Database {
 	    
 	    
 	} catch (SQLException ex) {
-	    Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+	    Logger.getLogger(DbOperations.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	
 	
@@ -137,9 +123,16 @@ public class Database {
     
     
     
-    //////////////////////////////
-    //// chekc if DB has any entry for a given table
     
+    
+    
+    
+    /**
+     * Check if table has any entry
+     * @param tableName
+     * @param conn
+     * @return 
+     */
     public boolean tableHasEntry (String tableName, Connection conn) {
         
         boolean hasEntry = false;
@@ -156,12 +149,15 @@ public class Database {
                 hasEntry = true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DbOperations.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return hasEntry;
         
     }
+    
+    
+    
     
     
     
@@ -211,6 +207,11 @@ public class Database {
 	return dbFile;
 	
     }
+    
+    
+    
+    
+    
     
     
     
@@ -277,7 +278,7 @@ public class Database {
 
             
         } catch (Exception ex) {
-            Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DbOperations.class.getName()).log(Level.SEVERE, null, ex);
 	} 
 	
 	
@@ -285,6 +286,9 @@ public class Database {
 	return conn;
     }
 
+    
+    
+    
     
     
     
@@ -298,7 +302,7 @@ public class Database {
 	    try {
 		conn.close();
 	    } catch (SQLException ex) {
-		Logger.getLogger(GeneDB.class.getName()).log(Level.SEVERE, null, ex);
+		Logger.getLogger(DbOperations.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 	}
     }
