@@ -6,10 +6,11 @@
 package de.hoppmann.gui.view;
 
 import de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController;
-import de.hoppmann.database.OldImplementation.UserDB;
+import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.gui.view.userDbView.MainViewUserDbController;
 import de.hoppmann.operations.CreateTable;
 import java.io.IOException;
 import java.net.URL;
@@ -72,8 +73,40 @@ public class MainGuiController implements Initializable {
     /////////////////////////
 
     
-    // Button to jump to database window
     
+      
+    // method to test parts directly
+    @FXML
+    private void TestButtonAction (ActionEvent event) {
+
+	try {
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("userDbView/MainViewUserDb.fxml"));
+
+
+	    Parent root = fxmlLoader.load();
+	    Stage stage = new Stage();
+	    stage.setTitle("Check database");
+	    stage.setScene(new Scene(root));
+	    stage.initModality(Modality.APPLICATION_MODAL);
+
+
+    	    MainViewUserDbController controller = fxmlLoader.getController();
+	    controller.init(new ConnectSQLite());
+
+	    stage.show();
+
+	    
+	} catch (IOException ex) {
+	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	
+    }
+    
+    
+    
+    
+    // Button to jump to database window
+
     @FXML
     private void databaseButtonAction (ActionEvent event) {
 	
@@ -86,7 +119,7 @@ public class MainGuiController implements Initializable {
 	    // create new window
 	    Parent root = fxmlLoader.load();
 	    Stage stage = new Stage();
-	    stage.setTitle("Check databse");
+	    stage.setTitle("Check database");
 	    stage.setScene(new Scene(root));
 	    
 	    
@@ -113,16 +146,7 @@ public class MainGuiController implements Initializable {
     
     
     
-    
-    // method to test parts directly
-    @FXML
-    private void TestButtonAction (ActionEvent event) {
-	System.out.println(UserDB.conn);
-//	TestDoc test = new TestDoc();
-	
-    }
-    
-    
+  
     
     
     

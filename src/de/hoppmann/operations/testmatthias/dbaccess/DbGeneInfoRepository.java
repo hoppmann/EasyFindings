@@ -15,7 +15,7 @@ import java.util.List;
  * @author hoppmann
  */
 public class DbGeneInfoRepository 
-implements GeneInfoRepository {
+implements IGeneInfoRepository {
 
     @Override
     public List<GeneInfo> loadAllGeneInfos() {

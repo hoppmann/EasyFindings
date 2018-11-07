@@ -14,7 +14,7 @@ import java.util.List;
  * @author hoppmann
  */
 public class FileSystemGeneInfoRepository 
-implements GeneInfoRepository {
+implements IGeneInfoRepository {
 
     @Override
     public List<GeneInfo> loadAllGeneInfos() {

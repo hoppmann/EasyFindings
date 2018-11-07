@@ -123,7 +123,7 @@ public class ReportViewerController implements Initializable {
 
 	
 	
-	userDB.connectDB(Config.getInstance().getDbPath(), false);
+	userDB.connectDB(Config.getInstance().getDbFullPath(), false);
 	
 	//////////////////////
 	//// add listener ////

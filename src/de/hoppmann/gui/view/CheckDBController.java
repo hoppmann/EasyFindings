@@ -965,8 +965,8 @@ public class CheckDBController implements Initializable {
 	    // then check if tables exist
 	    // if so fill 
 	
-	if (config.getDbPath() != null) {
-	    userDB.connectDB(config.getDbPath(), false);
+	if (config.getDbFullPath() != null) {
+	    userDB.connectDB(config.getDbFullPath(), false);
 	}
 	
 	

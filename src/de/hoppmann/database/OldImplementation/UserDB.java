@@ -61,7 +61,7 @@ public class UserDB extends Database {
 	
 //	
 //	if (!super.isConnected(conn)) {
-//	    connectDB(config.getDbPath(), false);
+//	    connectDB(config.getDbFullPath(), false);
 //	}
 	
     }
@@ -71,7 +71,7 @@ public class UserDB extends Database {
 	this.dbLabel = dbLabel;
 	
 	if (!super.isConnected(conn)) {
-	    connectDB(config.getDbPath(), false);
+	    connectDB(config.getDbFullPath(), false);
 	}
     }
     
@@ -127,7 +127,7 @@ public class UserDB extends Database {
 	// connect to DB
 	if (dbFile != null) {
 	    
-	    config.setDbPath(dbFile.getAbsolutePath());
+	    config.setDbFullPath(dbFile.getAbsolutePath());
 	    
 	    
 	    conn = connect(dbFile);
@@ -141,8 +141,8 @@ public class UserDB extends Database {
 	}
         
 	if (isConnected(conn) && dbFile != null){
-	    infoLabel.setText("Connection to " + new File(config.getDbPath()).getAbsolutePath() + " established!");
-	    dbLabel.setText(new File(config.getDbPath()).getName());
+	    infoLabel.setText("Connection to " + new File(config.getDbFullPath()).getAbsolutePath() + " established!");
+	    dbLabel.setText(new File(config.getDbFullPath()).getName());
 
 	}
     }
@@ -226,15 +226,15 @@ public class UserDB extends Database {
 	// check if db has entry in config and load opener correspoingly
 	String dbPath = null;
 	
-	if (config.getDbPath() != null && new File(config.getDbPath()).exists()) {
-	    dbPath = new File(config.getDbPath()).getParent();
+	if (config.getDbFullPath() != null && new File(config.getDbFullPath()).exists()) {
+	    dbPath = new File(config.getDbFullPath()).getParent();
 	}
 	
 	File dbFile = createNew(dbPath);
 
 	if (dbFile != null) {
 	    // save path in config
-	    config.setDbPath(dbFile.getAbsolutePath());
+	    config.setDbFullPath(dbFile.getAbsolutePath());
 	}
 
 	
@@ -253,8 +253,8 @@ public class UserDB extends Database {
 
 	// check if db has entry in config and load opener correspoingly
 	String dbPath = null;
-	if (config.getDbPath() != null && new File(config.getDbPath()).exists()){
-	   dbPath = new File(config.getDbPath()).getParent();
+	if (config.getDbFullPath() != null && new File(config.getDbFullPath()).exists()){
+	   dbPath = new File(config.getDbFullPath()).getParent();
 	} 
 
 
@@ -272,7 +272,7 @@ public class UserDB extends Database {
 		dbPath = dbFile.getAbsolutePath();
 		dbPath += ".db";
 	    }
-	    config.setDbPath(dbFile.getAbsolutePath());
+	    config.setDbFullPath(dbFile.getAbsolutePath());
 	    
 	} else {
 	    return null;

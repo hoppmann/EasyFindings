@@ -21,9 +21,7 @@ public class ConnectSQLite implements IConnectDB {
 
 
     @Override
-    public boolean connectDB(String dbPath, String user, String password) {
-        
-        
+    public boolean connect(String dbPath, String user, String password) {
         
         url = "jdbc:sqlite:" + dbPath;
 
@@ -35,7 +33,6 @@ public class ConnectSQLite implements IConnectDB {
         } else {
             return false;
         }
-        
     }
 
 

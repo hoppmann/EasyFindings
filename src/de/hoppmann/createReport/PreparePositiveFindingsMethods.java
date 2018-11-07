@@ -68,12 +68,12 @@ public class PreparePositiveFindingsMethods {
 	// check if existing DB is saved in config if so connect to it
 	geneDb = new GeneDB();
 	if (UserDB.conn == null){
-	    geneDb.connectDB(config.getDbPath(), false);
+	    geneDb.connectDB(config.getDbFullPath(), false);
 	}
 	
 //	
-//	if (config.getDbPath() != null && new File(config.getDbPath()).exists()) {
-//	    geneDb.connectDB(config.getDbPath());
+//	if (config.getDbFullPath() != null && new File(config.getDbFullPath()).exists()) {
+//	    geneDb.connectDB(config.getDbFullPath());
 //	} else {
 //	    File dbPath = geneDb.openDB();
 //	    geneDb.connectDB(dbPath.getAbsolutePath());

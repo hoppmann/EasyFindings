@@ -12,7 +12,7 @@ package de.hoppmann.database.userDB;
 public interface IConnectDB {
     
     
-    public boolean connectDB(String dbPath, String user, String password);
+    public boolean connect(String dbPath, String user, String password);
     
     
     

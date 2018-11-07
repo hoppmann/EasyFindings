@@ -6,6 +6,7 @@
 
 package de.hoppmann.config;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -222,6 +223,13 @@ public class Config {
 	
     }
     
+    
+    
+    
+    
+    
+    
+    
 	
 	
     /////////////////////////////////
@@ -318,15 +326,26 @@ public class Config {
 	saveConfig(predScorColKey, predScoreCol);
     }
 
-    public String getDbPath() {
+    public String getDbFullPath() {
 	return dbPath;
     }
 
-    public void setDbPath(String dbPath) {
+    public void setDbFullPath(String dbPath) {
 	this.dbPath = dbPath;
 	saveConfig(dbPathKey, dbPath);
     }
 
+    public String getDbPath() {
+	if(dbPath != null){
+	    return new File(dbPath).getParent();
+	} else {
+	    return null;
+	}
+    }
+    
+    
+    
+    
     public String getHtmlTemplate() {
         return htmlTemplate;
     }

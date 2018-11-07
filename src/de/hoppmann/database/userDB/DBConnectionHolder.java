@@ -26,12 +26,9 @@ public class DBConnectionHolder {
     
     
     
-    private Connection connection;
+    private Connection connection = null;
     
     public Connection getConnection() {
-	if (connection == null){
-	    throw new IllegalArgumentException("Class  not properly initialized!");
-	}
 	return connection;
     }
 
@@ -40,14 +37,6 @@ public class DBConnectionHolder {
 	this.connection = connection;
     }
 
-    
-    
-    
-    
-    public void initConnection (Connection c) {
-	connection = c;
-    }
-    
     
 
 }

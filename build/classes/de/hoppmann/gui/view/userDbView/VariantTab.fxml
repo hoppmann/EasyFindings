@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.userDbView.VariantTabController">
+   <children>
+      <TabPane layoutX="35.0" layoutY="35.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Findings">
+               <content>
+                  <fx:include source="FindingsTab.fxml" />
+               </content>
+          </Tab>
+          <Tab text="Gene Info">
+               <content>
+                  <fx:include source="GeneInfoTab.fxml" />
+               </content>
+          </Tab>
+            <Tab text="Variant Info">
+               <content>
+                  <fx:include source="VariantInfoTab.fxml" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

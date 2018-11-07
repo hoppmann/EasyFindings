@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author hoppmann
  */
-public interface GeneInfoRepository {
+public interface IGeneInfoRepository {
     
     public List<GeneInfo> loadAllGeneInfos();
     public void saveGeneInfo(GeneInfo geneInfo);

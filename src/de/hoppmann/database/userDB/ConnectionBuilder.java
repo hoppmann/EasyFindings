@@ -53,7 +53,7 @@ public class ConnectionBuilder {
 
 
        // store conncetion
-	DBConnectionHolder.getInstance().initConnection(conn);
+	DBConnectionHolder.getInstance().setConnection(conn);
        
        
    }
@@ -68,7 +68,7 @@ public class ConnectionBuilder {
        try {
 	   Connection conn = DBConnectionHolder.getInstance().getConnection();
 	   conn.close();
-	   DBConnectionHolder.getInstance().initConnection(null);
+	   DBConnectionHolder.getInstance().setConnection(null);
        } catch (SQLException ex) {
 	   Logger.getLogger(ConnectionBuilder.class.getName()).log(Level.SEVERE, null, ex);
        }

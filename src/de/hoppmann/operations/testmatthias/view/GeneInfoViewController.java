@@ -6,8 +6,8 @@
 
 package de.hoppmann.operations.testmatthias.view;
 
-import de.hoppmann.operations.testmatthias.dbaccess.GeneInfoRepository;
 import de.hoppmann.operations.testmatthias.model.GeneInfo;
+import de.hoppmann.operations.testmatthias.dbaccess.IGeneInfoRepository;
 
 /**
  *
@@ -50,13 +50,13 @@ public class GeneInfoViewController {
     
     
     // set repository to use
-    public void setGeneInfoRepository(GeneInfoRepository repository) {
+    public void setGeneInfoRepository(IGeneInfoRepository repository) {
 	this.repository = repository;
     }
 
     
     
-    private GeneInfoRepository repository;
+    private IGeneInfoRepository repository;
 
     
     
