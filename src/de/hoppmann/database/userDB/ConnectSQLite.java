@@ -12,13 +12,30 @@ package de.hoppmann.database.userDB;
  */
 public class ConnectSQLite implements IConnectDB {
 
+    private final String driver = "org.sqlite.JDBC";
+    
+    // connect to db
+    private String url;
 
 
 
 
     @Override
-    public void openDB() {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean connectDB(String dbPath, String user, String password) {
+        
+        
+        
+        url = "jdbc:sqlite:" + dbPath;
+
+        
+        ConnectionBuilder.openConnection(url, user, password, driver);
+
+        if (ConnectionBuilder.hasConnection()){
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
 
