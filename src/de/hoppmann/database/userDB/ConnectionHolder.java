@@ -12,13 +12,13 @@ import java.sql.Connection;
  *
  * @author hoppmann
  */
-public class DBConnectionHolder {
+public class ConnectionHolder {
 
 
 
-    private static DBConnectionHolder instance = new DBConnectionHolder();
+    private static ConnectionHolder instance = new ConnectionHolder();
     
-    public static DBConnectionHolder getInstance() {
+    public static ConnectionHolder getInstance() {
 	return instance;
     }
     

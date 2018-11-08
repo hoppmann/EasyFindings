@@ -6,17 +6,13 @@
 
 package de.hoppmann.database.userDB;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 /**
  *
@@ -25,41 +21,13 @@ import javafx.stage.Stage;
 public class DbOperations {
 
 
-    ///////////////////////////
-    //////// variables ////////
-    ///////////////////////////
-    private final String driver = "org.sqlite.JDBC";
-    protected String dbPath;
-    
-    // connect to db
-    private String url;
-    private final String user = "";
-    private final String password = "";
-    
-	
-	
-	
-    /////////////////////////////
-    //////// constructor ////////
-    /////////////////////////////
-
-    
-    
-    
-    
-    /////////////////////////
-    //////// methods ////////
-    /////////////////////////
-    
-
-
     /**
      * Check connection and execute DB query command 
      * @param cmd
      * @param conn
      * @return 
      */
-    protected ResultSet execute(String cmd, Connection conn) {
+    public static ResultSet execute(String cmd, Connection conn) {
 	// check  if DB is connected
 	if (ConnectionBuilder.hasConnection() == false){
 	    return null;
@@ -95,7 +63,7 @@ public class DbOperations {
      * @param conn
      * @return 
      */
-    public boolean hasTable (String tableName, Connection conn) {
+    public static boolean hasTable (String tableName, Connection conn) {
 	
 	boolean exists = false;
 	
@@ -133,7 +101,7 @@ public class DbOperations {
      * @param conn
      * @return 
      */
-    public boolean tableHasEntry (String tableName, Connection conn) {
+    public static boolean tableHasEntry (String tableName, Connection conn) {
         
         boolean hasEntry = false;
         
@@ -163,149 +131,7 @@ public class DbOperations {
     
     
     
-     ////////////////
-    //// create new DB
     
-    protected File createNew(String dbPath) {
-	
-	//////// get DB name
-	
-	// read DB name from config
-	FileChooser chooser = new FileChooser();
-        chooser.setTitle("New DB file");
-	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
-
-
-	// check if a db path if given, if so check for existance and load opener correspondingly
-	if (dbPath != null && new File(dbPath).exists()) {
-	    chooser.setInitialDirectory(new File(dbPath));
-	} else {
-	    chooser.setInitialDirectory(null);
-	}
-	
-
-	// choos file to open if aborded, chosen chose new file
-	File dbFile = chooser.showSaveDialog(new Stage());
-	
-	
-	if (dbFile != null){
-
-	    // check for correct ending
-	    String extension = dbFile.getName().substring(dbFile.getName().lastIndexOf(".") + 1);
-	    if (!extension.equals("db")) {
-		String fileName = dbFile.getAbsolutePath() + ".db";
-		dbFile = new File(fileName);
-	    }
-	    
-
-	    // catch cancel
-	} else {
-	    return null;
-	}
-	
-	
-	return dbFile;
-	
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //////////////////////////
-    //// choose Database and remember in config.
-    
-    protected File chooseFile(String dbPath) {
-	
-	
-	
-	//////// get DB name
-	
-	// read DB name from config
-	FileChooser chooser = new FileChooser();
-        chooser.setTitle("Open database");
-	chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database files (*.db)", "*.db"));
-	
-	if (dbPath != null && new File(dbPath).exists()) {
-	    chooser.setInitialDirectory(new File(dbPath));
-	} else {
-	    chooser.setInitialDirectory(null);
-	}
-
-
-	// choos file to open if aborded, chosen chose new file
-	File dbFile = chooser.showOpenDialog(new Stage());
-
-	return dbFile;
-	
-    }
-    
-    
-    
-    
-    
-    
-    
-    /////////////////
-    //////// connect to DB
-    protected Connection connect(File dbFile) {
-	
-	Connection conn = null;
-	
-	// define DB url
-	if (dbFile == null) {
-	    return conn;
-	}
-	url = "jdbc:sqlite:" + dbFile.getAbsoluteFile();
-	
-	try {
-	    
-	    // if there allread is an connection close it
-	    if (conn != null){
-		conn.close();
-            }
-	    
-            // load SQL  driver
-            Class.forName(driver);
-
-            // connect to database
-            conn = DriverManager.getConnection(url, user, password);
-
-            
-        } catch (Exception ex) {
-            Logger.getLogger(DbOperations.class.getName()).log(Level.SEVERE, null, ex);
-	} 
-	
-	
-	// return opend connection
-	return conn;
-    }
-
-    
-    
-    
-    
-    
-    
-    
-    /////////////////////////
-    //////// close connection
-    public void closeDB(Connection conn){
-        
-	if (conn != null) {
-
-	    try {
-		conn.close();
-	    } catch (SQLException ex) {
-		Logger.getLogger(DbOperations.class.getName()).log(Level.SEVERE, null, ex);
-	    }
-	}
-    }
     
     
     

@@ -6,7 +6,6 @@
 
 package de.hoppmann.database.userDB;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -53,7 +52,7 @@ public class ConnectionBuilder {
 
 
        // store conncetion
-	DBConnectionHolder.getInstance().setConnection(conn);
+	ConnectionHolder.getInstance().setConnection(conn);
        
        
    }
@@ -66,9 +65,9 @@ public class ConnectionBuilder {
     */
    public static void closeConnection() {
        try {
-	   Connection conn = DBConnectionHolder.getInstance().getConnection();
+	   Connection conn = ConnectionHolder.getInstance().getConnection();
 	   conn.close();
-	   DBConnectionHolder.getInstance().setConnection(null);
+	   ConnectionHolder.getInstance().setConnection(null);
        } catch (SQLException ex) {
 	   Logger.getLogger(ConnectionBuilder.class.getName()).log(Level.SEVERE, null, ex);
        }
@@ -81,7 +80,7 @@ public class ConnectionBuilder {
     * check if connection to DB is set up
     */
    public static boolean hasConnection() {
-       if (DBConnectionHolder.getInstance().getConnection() != null) {
+       if (ConnectionHolder.getInstance().getConnection() != null) {
 	   return true;
        } else {
 	   return false;
@@ -89,20 +88,5 @@ public class ConnectionBuilder {
        
    }
 
-   
-   
-   
-   
-   public static File chooseDB () {
-       
-       
-       
-       return null;
-       
-   }
-   
-   
-   
-   
    
 }

@@ -7,7 +7,6 @@ package de.hoppmann.gui.view.userDbView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -17,15 +16,15 @@ import javafx.fxml.Initializable;
  */
 public class VariantTabController implements Initializable {
 
-    @FXML private MainViewUserDbController mainController;
+//    @FXML private MainViewUserDbController mainController;
+//    @FXML private AnchorPane variantTab;
     
     
     
     
-    
-    public void injectMainController(MainViewUserDbController mainController) {
-	this. mainController = mainController;
-    }
+//    public void injectMainController(MainViewUserDbController mainController) {
+//	this. mainController = mainController;
+//    }
     
     
     

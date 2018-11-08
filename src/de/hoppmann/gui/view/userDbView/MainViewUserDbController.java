@@ -15,10 +15,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import de.hoppmann.database.userDB.IConnectDB;
+import de.hoppmann.database.userDB.interfaces.IConnectDB;
+import de.hoppmann.database.userDB.receiverDB.DbAddressRepository;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import org.apache.commons.io.FilenameUtils;
 
 /**
@@ -34,9 +38,10 @@ public class MainViewUserDbController implements Initializable {
     @FXML private Label dbConnectionLabel;
     @FXML private Label infoLabel;
     @FXML private Button closeButoon;
-    @FXML private Tab addressTab;
-    @FXML private Tab variantTab;
-    @FXML private VariantTabController variantTabController;
+    @FXML private TabPane tabPane;
+    @FXML private Tab addressTabView;
+    @FXML private Tab variantTabView;
+//    @FXML private VariantTabController variantTabController;
     @FXML private AddressTabController addressTabController;
     
     
@@ -172,20 +177,48 @@ public class MainViewUserDbController implements Initializable {
 
     
     
+    
+    
+    
+    
+    
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 	
-
+	// inject controller
 //	variantTabController.injectMainController(this);
-
+	addressTabController.injectMainController(this);
 
 	
 	
 	
 	// tab change listener
+	addressTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
+	    @Override
+	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+		if (newValue){
+		    addressTabController.init(new DbAddressRepository());
+		}
+	    }
+	});
+	
     }
+
+    
+    
+    
+    public Label getInfoLabel() {
+	return infoLabel;
+    }
+
+    
+    
+    
     
 }
+
+

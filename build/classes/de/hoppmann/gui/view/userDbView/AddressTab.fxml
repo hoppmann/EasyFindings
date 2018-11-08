@@ -6,21 +6,20 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="de.hoppmann.gui.view.userDbView.AddressTabController">
+<AnchorPane id="AnchorPane" fx:id="addressTab" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.userDbView.AddressTabController">
    <children>
-      <Label contentDisplay="RIGHT" layoutX="8.0" layoutY="43.0" prefHeight="25.0" prefWidth="90.0" text="Title    " AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <Label contentDisplay="RIGHT" layoutX="14.0" layoutY="90.0" prefHeight="25.0" prefWidth="90.0" text="Name" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="45.0" />
-      <Label contentDisplay="RIGHT" layoutX="28.0" layoutY="137.0" prefHeight="25.0" prefWidth="90.0" text="Address" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
-      <Label contentDisplay="RIGHT" layoutX="42.0" layoutY="192.0" prefHeight="25.0" prefWidth="90.0" text="City" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="115.0" />
-      <Label contentDisplay="RIGHT" layoutX="50.0" layoutY="225.0" prefHeight="25.0" prefWidth="90.0" text="Zip Code" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="145.0" />
-      <Label contentDisplay="RIGHT" layoutX="22.0" layoutY="253.0" prefHeight="25.0" prefWidth="90.0" text="Country" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="180.0" />
-      <TextField layoutX="70.0" layoutY="43.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="10.0" />
-      <ComboBox layoutX="70.0" layoutY="86.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="45.0" />
-      <TextField layoutX="144.0" layoutY="140.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="80.0" />
-      <TextField layoutX="169.0" layoutY="189.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="115.0" />
-      <TextField layoutX="212.0" layoutY="221.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="145.0" />
-      <TextField layoutX="219.0" layoutY="262.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="180.0" />
+      <Label contentDisplay="RIGHT" layoutX="8.0" layoutY="43.0" prefHeight="25.0" prefWidth="90.0" text="Title    " AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0" />
+      <Label contentDisplay="RIGHT" layoutX="14.0" layoutY="90.0" prefHeight="25.0" prefWidth="90.0" text="Name" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="55.0" />
+      <Label contentDisplay="RIGHT" layoutX="28.0" layoutY="137.0" prefHeight="25.0" prefWidth="90.0" text="Address" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="90.0" />
+      <Label contentDisplay="RIGHT" layoutX="42.0" layoutY="192.0" prefHeight="25.0" prefWidth="90.0" text="City" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="125.0" />
+      <Label contentDisplay="RIGHT" layoutX="50.0" layoutY="225.0" prefHeight="25.0" prefWidth="90.0" text="Zip Code" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="160.0" />
+      <Label contentDisplay="RIGHT" layoutX="22.0" layoutY="253.0" prefHeight="25.0" prefWidth="90.0" text="Country" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="195.0" />
+      <TextField fx:id="titleField" layoutX="70.0" layoutY="43.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="20.0" />
+      <ComboBox fx:id="nameBox" layoutX="70.0" layoutY="86.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="55.0" />
+      <TextField fx:id="addressField" layoutX="144.0" layoutY="140.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="90.0" />
+      <TextField fx:id="cityField" layoutX="169.0" layoutY="189.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="125.0" />
+      <TextField fx:id="zipCodeField" layoutX="212.0" layoutY="221.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="160.0" />
+      <TextField fx:id="countryField" layoutX="219.0" layoutY="262.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="195.0" />
       <Button layoutX="14.0" layoutY="351.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="New" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
       <Button layoutX="92.0" layoutY="351.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Store" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0" />
       <Button layoutX="185.0" layoutY="364.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Remove" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />

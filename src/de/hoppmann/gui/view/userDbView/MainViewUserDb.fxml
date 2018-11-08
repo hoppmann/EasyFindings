@@ -10,15 +10,15 @@
    <children>
       <Label layoutX="32.0" layoutY="21.0" prefHeight="25.0" prefWidth="125.0" text="Connected to DB:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
       <Label fx:id="dbConnectionLabel" layoutX="155.0" layoutY="20.0" prefHeight="25.0" prefWidth="180.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0" />
-      <TabPane layoutY="53.0" prefHeight="379.0" prefWidth="764.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <TabPane fx:id="tabPane" layoutY="53.0" prefHeight="379.0" prefWidth="764.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <tabs>
           <Tab text="Variant">
                <content>
                   <fx:include source="VariantTab.fxml" />
                </content></Tab>
-          <Tab text="Address">
+          <Tab fx:id="addressTabView" text="Address">
                <content>
-                  <fx:include source="AddressTab.fxml" />
+                  <fx:include fx:id="addressTab" source="AddressTab.fxml" />
                </content></Tab>
         </tabs>
       </TabPane>

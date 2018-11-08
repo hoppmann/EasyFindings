@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hoppmann.database.userDB;
+package de.hoppmann.database.userDB.interfaces;
 
 /**
  *
@@ -13,10 +13,6 @@ public interface IConnectDB {
     
     
     public boolean connect(String dbPath, String user, String password);
-    
-    
-    
-    
     
     
 }
