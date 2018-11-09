@@ -8,7 +8,7 @@ package de.hoppmann.createReport;
 
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.Catagory;
-import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.database.OldImplementation.UserDB;
 import java.io.File;
@@ -35,7 +35,7 @@ public class PrepareNegativeFindings extends UserDB {
 
     private final Config config = Config.getInstance();
     
-    private StoreFindings findings;
+    private FindingsRepository findings;
     private String geneName = null;
     private String moi = null;
     private List<String> cDna = null;
@@ -63,7 +63,7 @@ public class PrepareNegativeFindings extends UserDB {
     //////// constructor ////////
     /////////////////////////////
 	
-    public PrepareNegativeFindings(StoreFindings findings) {
+    public PrepareNegativeFindings(FindingsRepository findings) {
 	
 	this.findings = findings;
 	

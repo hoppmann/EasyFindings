@@ -7,7 +7,7 @@ package de.hoppmann.createReport;
 
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.Catagory;
-import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class CreateReport {
     private String report;
     private String reportTemplate;
     private ReportDataModel reportData;
-    private StoreFindings findings;
+    private FindingsRepository findings;
     private final Config config = Config.getInstance();
     
     
@@ -40,7 +40,7 @@ public class CreateReport {
     //////// costructor ////////
     ////////////////////////////
 
-    public CreateReport(StoreFindings findings, ReportDataModel dataModel) {
+    public CreateReport(FindingsRepository findings, ReportDataModel dataModel) {
         this.findings = findings;
 	this.reportData = dataModel;
         

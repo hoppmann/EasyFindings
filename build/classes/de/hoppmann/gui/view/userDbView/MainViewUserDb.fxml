@@ -14,7 +14,7 @@
         <tabs>
           <Tab text="Variant">
                <content>
-                  <fx:include source="VariantTab.fxml" />
+                  <fx:include fx:id="variantTab" source="VariantTab.fxml" />
                </content></Tab>
           <Tab fx:id="addressTabView" text="Address">
                <content>

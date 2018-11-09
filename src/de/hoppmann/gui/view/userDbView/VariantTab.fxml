@@ -8,19 +8,19 @@
    <children>
       <TabPane layoutX="35.0" layoutY="35.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="Findings">
+          <Tab fx:id="findingsInfoTabView" text="Findings Info">
                <content>
-                  <fx:include source="FindingsTab.fxml" />
+                  <fx:include fx:id="findingsTab" source="FindingsTab.fxml" />
                </content>
           </Tab>
-          <Tab text="Gene Info">
+          <Tab fx:id="geneInfoTabView" text="Gene Info">
                <content>
-                  <fx:include source="GeneInfoTab.fxml" />
+                  <fx:include fx:id="geneInfoTab" source="GeneInfoTab.fxml" />
                </content>
           </Tab>
-            <Tab text="Variant Info">
+            <Tab fx:id="variantInfoTabView" text="Variant Info">
                <content>
-                  <fx:include source="VariantInfoTab.fxml" />
+                  <fx:include fx:id="variantInfoTab" source="VariantInfoTab.fxml" />
                </content>
             </Tab>
         </tabs>

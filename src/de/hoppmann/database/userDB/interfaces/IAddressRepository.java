@@ -16,8 +16,10 @@ public interface IAddressRepository {
     
     public List<String> getNameList();
     public AddressInfo retrieveAddressInfo(String name);
-    public void setAddressInfoFromUI();
     public boolean isValidRepo();
     public boolean makeRepoValid();
+    public void newAddress(AddressInfo aInfo);
+    public void saveAddress(AddressInfo aInfo);
+    public void removeAddress(AddressInfo aInfo);
     
 }

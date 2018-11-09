@@ -20,8 +20,8 @@
       <TextField fx:id="cityField" layoutX="169.0" layoutY="189.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="125.0" />
       <TextField fx:id="zipCodeField" layoutX="212.0" layoutY="221.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="160.0" />
       <TextField fx:id="countryField" layoutX="219.0" layoutY="262.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="195.0" />
-      <Button layoutX="14.0" layoutY="351.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="New" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-      <Button layoutX="92.0" layoutY="351.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Store" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0" />
-      <Button layoutX="185.0" layoutY="364.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Remove" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />
+      <Button layoutX="14.0" layoutY="351.0" mnemonicParsing="false" onAction="#newButtonAction" prefHeight="25.0" prefWidth="110.0" text="New" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <Button layoutX="92.0" layoutY="351.0" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="25.0" prefWidth="110.0" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0" />
+      <Button layoutX="185.0" layoutY="364.0" mnemonicParsing="false" onAction="#removeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Remove" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />
    </children>
 </AnchorPane>

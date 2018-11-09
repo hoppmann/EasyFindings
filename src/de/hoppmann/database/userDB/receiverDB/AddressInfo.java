@@ -28,13 +28,6 @@ public class AddressInfo {
 	    
     
     public AddressInfo(String title, String name, String address, String city, String zipCode, String country, int id) {
-	setAddressInfo(title, name, address, city, zipCode, country, id);
-    }
-    
-    
-    
-    
-    public void setAddressInfo(String title, String name, String address, String city, String zipCode, String country, int id){
 	this.title = title;
 	this.name = name;
 	this.address = address;
@@ -43,7 +36,6 @@ public class AddressInfo {
 	this.country = country;
 	this.id = id;
     }
-    
     
     
     

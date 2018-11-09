@@ -8,7 +8,7 @@ package de.hoppmann.createReport;
 
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.Catagory;
-import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.database.OldImplementation.GeneDB;
 import de.hoppmann.database.OldImplementation.UserDB;
@@ -27,7 +27,7 @@ public class PreparePositiveFindingsMethods {
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
-    private StoreFindings findings;
+    private FindingsRepository findings;
     private final Config config = Config.getInstance();
 
 
@@ -62,7 +62,7 @@ public class PreparePositiveFindingsMethods {
     //////// constructor ////////
     /////////////////////////////
     
-    public PreparePositiveFindingsMethods(StoreFindings findings) {
+    public PreparePositiveFindingsMethods(FindingsRepository findings) {
 	this.findings = findings;
 
 	// check if existing DB is saved in config if so connect to it

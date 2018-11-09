@@ -9,7 +9,7 @@ import de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController;
 import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
-import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.view.userDbView.MainViewUserDbController;
 import de.hoppmann.operations.CreateTable;
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class MainGuiController implements Initializable {
     
     //// general variables
     LoadInputFile loadFile;
-    StoreFindings findings = null;
+    FindingsRepository findings = null;
     
     
     
@@ -91,7 +91,7 @@ public class MainGuiController implements Initializable {
 
 
     	    MainViewUserDbController controller = fxmlLoader.getController();
-	    controller.init(new ConnectSQLite());
+	    controller.init(new ConnectSQLite(), findings);
 
 	    stage.show();
 
@@ -344,7 +344,7 @@ public class MainGuiController implements Initializable {
 	if (loadFile != null) {
 	    // check if there is existing data else create new object
 	    if (findings == null) {
-		findings = new StoreFindings(loadFile.getHeader());
+		findings = new FindingsRepository(loadFile.getHeader());
 	    }
 
 	    // save findigs for later use

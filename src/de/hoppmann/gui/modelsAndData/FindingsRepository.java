@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author hoppmann
  */
-public class StoreFindings {
+public class FindingsRepository {
 
 
     ///////////////////////////
@@ -38,7 +38,7 @@ public class StoreFindings {
     //////// constructor ////////
     /////////////////////////////
 
-    public StoreFindings(List<String> header) {
+    public FindingsRepository(List<String> header) {
 
 	// add coumun number to header
 	int coulumnInt = 0;

@@ -18,7 +18,8 @@ import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.hoppmann.database.userDB.interfaces.IConnectDB;
-import de.hoppmann.database.userDB.receiverDB.DbAddressRepository;
+import de.hoppmann.database.userDB.receiverDB.AddressDbRepository;
+import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tab;
@@ -35,13 +36,14 @@ public class MainViewUserDbController implements Initializable {
     
     private Config config = Config.getInstance();
     private IConnectDB connectDB;
+    private FindingsRepository findings;
     @FXML private Label dbConnectionLabel;
     @FXML private Label infoLabel;
     @FXML private Button closeButoon;
     @FXML private TabPane tabPane;
     @FXML private Tab addressTabView;
     @FXML private Tab variantTabView;
-//    @FXML private VariantTabController variantTabController;
+    @FXML private VariantTabController variantTabController;
     @FXML private AddressTabController addressTabController;
     
     
@@ -157,21 +159,35 @@ public class MainViewUserDbController implements Initializable {
 	if (succsess) {
 	    infoLabel.setText("DB created.");
 	    dbConnectionLabel.setText(dbFile.getAbsolutePath());
+	} else {
+	    infoLabel.setText("Unable to connect to DB.");
 	}
 
     }
     
     
     
-    public void init(IConnectDB connectDB){
+    
+    
+    
+    
+    
+    public void init(IConnectDB connectDB, FindingsRepository findings){
         this.connectDB = connectDB;
-	
+	this.findings = findings;
 	
 	// connect to DB if available
-	
 	if (config.getDbFullPath() != null && new File(config.getDbFullPath()).exists()){
 	    connect(new File(config.getDbFullPath()), "", "");
 	}
+	
+	
+	
+	
+	// initialize lower views
+	variantTabController.init(findings);
+	
+	
 
     }
 
@@ -190,7 +206,7 @@ public class MainViewUserDbController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 	
 	// inject controller
-//	variantTabController.injectMainController(this);
+	variantTabController.injectMainController(this);
 	addressTabController.injectMainController(this);
 
 	
@@ -201,7 +217,7 @@ public class MainViewUserDbController implements Initializable {
 	    @Override
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 		if (newValue){
-		    addressTabController.init(new DbAddressRepository());
+		    addressTabController.init(new AddressDbRepository());
 		}
 	    }
 	});
@@ -214,7 +230,7 @@ public class MainViewUserDbController implements Initializable {
     public Label getInfoLabel() {
 	return infoLabel;
     }
-
+    
     
     
     

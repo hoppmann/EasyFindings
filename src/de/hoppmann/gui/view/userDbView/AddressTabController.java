@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -46,16 +47,78 @@ public class AddressTabController implements Initializable {
     
     
     
+    @FXML
+    private void newButtonAction(ActionEvent e) {
+	
+	aInfo = new AddressInfo("", "", "", "", "", "", -1);
+	updateAddressInfoFromUI();
+	
+	addressRepo.newAddress(aInfo);
+	
+	updateNameBox();
+	
+	mainViewUserDbController.getInfoLabel().setText(aInfo.getName() + " added to database.");
+	
+    }
     
     
     
     
     
     
-    private void fillAddressFields(String name){
-	aInfo = addressRepo.retrieveAddressInfo(name);
+    
+    
+    @FXML
+    private void saveButtonAction(ActionEvent e) {
+	
+	if (aInfo != null){
+	    updateAddressInfoFromUI();
+	    addressRepo.saveAddress(aInfo);
+	    updateNameBox();
+	    mainViewUserDbController.getInfoLabel().setText(aInfo.getName() + " updated in database.");
+	}
+    }
+    
+    
+    
+    
+    
+    private void updateAddressInfoFromUI() {
+	aInfo.setTitle(titleField.getText());
+	aInfo.setName(nameBox.getValue());
+	aInfo.setAddress(addressField.getText());
+	aInfo.setCity(cityField.getText());
+	aInfo.setZipCode(zipCodeField.getText());
+	aInfo.setCity(cityField.getText());
+    }
+    
+    
+    
+    
+    
+    
+    @FXML
+    private void removeButtonAction(ActionEvent e) {
+	
+	if (aInfo != null){
+	    addressRepo.removeAddress(aInfo);
+	    String removedName = aInfo.getName();
+	    aInfo = new AddressInfo("", "", "", "", "", "", -1);
+	    fillAddressFields();
+	    updateNameBox();
+	    mainViewUserDbController.getInfoLabel().setText(removedName + " removed from database");
+	}
+    }
+    
+    
+    
+    
+    
+    
+    private void fillAddressFields(){
 	if (aInfo != null){
 	    titleField.setText(aInfo.getTitle());
+	    nameBox.getSelectionModel().select(aInfo.getName());
 	    addressField.setText(aInfo.getAddress());
 	    cityField.setText(aInfo.getCity());
 	    zipCodeField.setText(aInfo.getZipCode());
@@ -70,11 +133,15 @@ public class AddressTabController implements Initializable {
     
     
     
-    private void fillNameBox(){
+    private void updateNameBox(){
 	List<String> nameList = addressRepo.getNameList();
 	nameBox.getItems().clear();
 	nameBox.getItems().addAll(nameList);
 	TextFields.bindAutoCompletion(nameBox.getEditor(), nameList);
+		
+	if (aInfo != null) {
+	    nameBox.getSelectionModel().select(aInfo.getName());
+	}
     }
     
     
@@ -83,19 +150,9 @@ public class AddressTabController implements Initializable {
     
     
     
-    // reset address fields
-    private void resetAddressInfo () {
-	
-	// set all values null
-	aInfo.setTitle("");
-	aInfo.setName("");
-	aInfo.setAddress("");
-	aInfo.setCity("");
-	aInfo.setZipCode("");
-	aInfo.setCountry("");
-
-	
-    }
+    
+    
+    
 
     
     public void injectMainController(MainViewUserDbController mainViewUserDbController) {
@@ -113,7 +170,7 @@ public class AddressTabController implements Initializable {
 	this.addressRepo = addressRepo;
 	
 	if (addressRepo.isValidRepo()) {
-	    fillNameBox();
+	    updateNameBox();
 	}
     }
     
@@ -133,7 +190,10 @@ public class AddressTabController implements Initializable {
 	nameBox.valueProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		fillAddressFields(newValue);
+		if (addressRepo.retrieveAddressInfo(newValue) != null){
+		    aInfo = addressRepo.retrieveAddressInfo(newValue);
+		    fillAddressFields();
+		}
 	    }
 	});
 	

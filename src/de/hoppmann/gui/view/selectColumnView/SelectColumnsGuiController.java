@@ -6,7 +6,7 @@
 package de.hoppmann.gui.view.selectColumnView;
 
 import de.hoppmann.config.Config;
-import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -34,7 +34,7 @@ public class SelectColumnsGuiController implements Initializable {
     // non FXML
     private Config config;
     private ObservableList<String> header;
-    private StoreFindings findings;
+    private FindingsRepository findings;
 
     @FXML
     private ComboBox<String> geneCol = new ComboBox<>();
@@ -181,7 +181,7 @@ public class SelectColumnsGuiController implements Initializable {
     //////// Constructor ////////
     /////////////////////////////
 
-    public SelectColumnsGuiController(StoreFindings findings) {
+    public SelectColumnsGuiController(FindingsRepository findings) {
 	this.findings = findings;
 	this.header = FXCollections.observableArrayList(findings.getHeaderList());
     }

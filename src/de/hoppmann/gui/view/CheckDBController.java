@@ -6,7 +6,7 @@
 package de.hoppmann.gui.view;
 
 import de.hoppmann.config.Config;
-import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.CreateTable;
 import de.hoppmann.database.OldImplementation.GeneDB;
@@ -100,7 +100,7 @@ public class CheckDBController implements Initializable {
    
     //// general variables
     private UserDB userDB;
-    private StoreFindings findings;
+    private FindingsRepository findings;
     private Config config = Config.getInstance();
 
     
@@ -456,6 +456,18 @@ public class CheckDBController implements Initializable {
     }
 
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
      //// selection of a variant in the variant box
@@ -874,7 +886,7 @@ public class CheckDBController implements Initializable {
     
     
     //// initialize DB
-    public void init(StoreFindings findings) {
+    public void init(FindingsRepository findings) {
 	
 	// retrieve variants
 	this.findings = findings;

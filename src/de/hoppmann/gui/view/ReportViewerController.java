@@ -11,7 +11,7 @@ import de.hoppmann.createReport.PreparePanelTable;
 import de.hoppmann.database.OldImplementation.ReceiverDB;
 import de.hoppmann.database.OldImplementation.UserDB;
 import de.hoppmann.createReport.ReportDataModel;
-import de.hoppmann.gui.modelsAndData.StoreFindings;
+import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -102,7 +102,7 @@ public class ReportViewerController implements Initializable {
     
     //// other variables    
     private String report = "";
-    private StoreFindings findings;
+    private FindingsRepository findings;
     private ReportDataModel reportData = new ReportDataModel();
     private CreateReport createReport; 
     private String panelGenes;
@@ -380,7 +380,7 @@ public class ReportViewerController implements Initializable {
     
     //////////////////////
     //// init editor and get initial report document
-    public void init (StoreFindings findings) {
+    public void init (FindingsRepository findings) {
 	
 	// retrieve variables and instanciate variables
 	this.findings = findings;
