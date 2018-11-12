@@ -421,18 +421,6 @@ public class LoadInputFile {
     
     
     
-    
-//    //// create table
-//    public void createTable() {
-//	
-//        
-//        CreateTable table = new CreateTable(tableView);
-//	table.prepareTable(header);
-//	table.fillTable(rowData);
-//    }
-    
-    
-    
 
     
     
