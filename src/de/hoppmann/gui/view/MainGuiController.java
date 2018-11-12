@@ -5,6 +5,7 @@
  */
 package de.hoppmann.gui.view;
 
+import de.hoppmann.config.Config;
 import de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController;
 import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.gui.modelsAndData.TableData;
@@ -12,6 +13,7 @@ import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.view.userDbView.MainViewUserDbController;
 import de.hoppmann.operations.CreateTable;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
@@ -30,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -65,6 +68,8 @@ public class MainGuiController implements Initializable {
     @FXML private Label infoFiled;
     @FXML private TabPane tabPane;
     
+    
+    private Config config = Config.getInstance();
     
     
     
@@ -111,33 +116,52 @@ public class MainGuiController implements Initializable {
     private void databaseButtonAction (ActionEvent event) {
 	
 	
-	try {
-	    // open database window
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CheckDB.fxml"));
-	    
+//	try {
+//	    // open database window
+//	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CheckDB.fxml"));
+//	    
+//
+//	    // create new window
+//	    Parent root = fxmlLoader.load();
+//	    Stage stage = new Stage();
+//	    stage.setTitle("Check database");
+//	    stage.setScene(new Scene(root));
+//	    
+//	    
+//	    // run init 
+//	    CheckDBController controller = fxmlLoader.getController();
+//	    controller.init(findings);
+//
+//	    // show new view
+//	    stage.show();
+//
+//	    
+//	    
+//	    
+//	} catch (IOException ex) {
+//	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+//	}
 
-	    // create new window
+	try {
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("userDbView/MainViewUserDb.fxml"));
+
+
 	    Parent root = fxmlLoader.load();
 	    Stage stage = new Stage();
 	    stage.setTitle("Check database");
 	    stage.setScene(new Scene(root));
-	    
-	    
-	    // run init 
-	    CheckDBController controller = fxmlLoader.getController();
-	    controller.init(findings);
+	    stage.initModality(Modality.APPLICATION_MODAL);
 
-	    // show new view
+
+    	    MainViewUserDbController controller = fxmlLoader.getController();
+	    controller.init(new ConnectSQLite(), findings);
+
 	    stage.show();
 
-	    
-	    
 	    
 	} catch (IOException ex) {
 	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
 	}
-
-	
 	
 	
 	
@@ -165,7 +189,7 @@ public class MainGuiController implements Initializable {
 	
 	
 	try {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SelectColumnsGui.fxml"));
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("selectColumnView/SelectColumnsGui.fxml"));
 	    
 	    //// create controller for passing variables
 	    SelectColumnsGuiController controller = new SelectColumnsGuiController(findings);
@@ -221,16 +245,79 @@ public class MainGuiController implements Initializable {
     @FXML
     private void handleOpenButtonAction (ActionEvent event) {
 
-        // load input file after open button was pushed
-        loadFile = new LoadInputFile(inputTable, infoFiled);
-	boolean loadedCorrectly = loadFile.load();
         
-	// check if file is loaded correctly ti avoid error 
-	if (!loadedCorrectly){
-	    loadFile = null;
+
+
+	// create chooser to choose file
+	FileChooser chooser = new FileChooser();
+	chooser.setTitle("Open input file");
+
+	// if config path exists take config path else new path
+	if (new File(config.getInputPath()).exists()) {
+	    chooser.setInitialDirectory(new File(config.getInputPath()));
+	} else {
+	    chooser.setInitialDirectory(null);
 	}
+
+	// check if file is chosen of it was canceld
+	File file = chooser.showOpenDialog(new Stage());
+
+	// check if file was chosen then store last used path
+	if (file != null && file.exists()) {
+	    config.setInputPath(file.getParent());
+	}
+
+
+	
+	
+	loadFile = new LoadInputFile();
+	
+        if (file != null) {
+	    loadFile.openFile(file);
+	    String warning = loadFile.catagorize();
+	    
+	    if (warning != ""){
+		infoFiled.setText(warning);
+		return;
+	    }
+	    
+	    
+	    createTable();
+	    
+	    infoFiled.setText("Opended: " + file.getName());
+        }
+	
+	
+
+	
 	
     }
+    
+    
+    
+    
+    
+    
+    private void createTable(){
+	    CreateTable table = new CreateTable(inputTable);
+	    table.prepareTable(loadFile.getHeader());
+	    table.fillTable(loadFile.getRowData());
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -250,6 +337,16 @@ public class MainGuiController implements Initializable {
     }
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // refresh button
     @FXML
     private void handleRefreshButtonAction (ActionEvent event) {
@@ -266,6 +363,23 @@ public class MainGuiController implements Initializable {
         // refresh table
         refreshFindingsTable();
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -303,6 +417,21 @@ public class MainGuiController implements Initializable {
 
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /////////////////////////
     //////// non FXML methods
     
@@ -331,6 +460,14 @@ public class MainGuiController implements Initializable {
         }
 
     }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -379,6 +516,10 @@ public class MainGuiController implements Initializable {
         findingsTable.setEditable(true);
         
         
+	infoFiled.setText("INFO:");
+	
+	
+	
         //// add listener to tabs
         // changing to findings tab reload findings table
         findingsTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -391,6 +532,9 @@ public class MainGuiController implements Initializable {
             }
         });
         
+	
+	
+	
         // changing from data Tab save findings
         dataTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -402,6 +546,9 @@ public class MainGuiController implements Initializable {
         });
         
         
+	
+	
+	
         // changing to the data tab refresh view
         dataTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -411,7 +558,7 @@ public class MainGuiController implements Initializable {
                     // check if a file already is opened to avoid errors
                     if (loadFile != null) {
                         // reload table
-                        loadFile.createTable();
+                        createTable();
                     }
                 }
             }

@@ -21,10 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 
 /**
@@ -39,95 +35,23 @@ public class LoadInputFile {
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
-    private TableView<TableData> tableView = new TableView<>();
+//    private TableView<TableData> tableView = new TableView<>();
     private final List<String> header = new ArrayList<>();
     private List<TableData> rowData;
-    private Label infoField;
     private Config config = Config.getInstance();
     
     
     
     
-    /////////////////////////////
-    //////// constructor ////////
-    /////////////////////////////
-    
-    public LoadInputFile(TableView inputTable, Label infoFiled) {
-        
-        // retrieve variables
-        this.tableView = inputTable;
-        this.infoField = infoFiled;
-	 
-	
-	
-       
-        
-    }
-	
-	
     /////////////////////////
     //////// methods ////////
     /////////////////////////
 
-    // load file
-    public boolean load () {
-	
-	boolean isLoaded = false;
-	// reset infoField
-	infoField.setText("INFO:");
-	
-	// choose input file
-        File file = chooseFile();
-        
-        // check if file chosen. If so continue loading and prepareing table
-        if (file != null) {
-            openFile(file);
-	    catagorize();
-	    createTable();
-	    isLoaded = true;
-        }
-	
-	return isLoaded;
-	
-    }
-    
-    
-    
-    //// choose file to open
-    private File chooseFile() {
-
-	// create chooser to choose file
-	FileChooser chooser = new FileChooser();
-	chooser.setTitle("Open input file");
-
-	// if config path exists take config path else new path
-	if (new File(config.getInputPath()).exists()) {
-	    chooser.setInitialDirectory(new File(config.getInputPath()));
-	} else {
-	    chooser.setInitialDirectory(null);
-	}
-
-	// check if file is chosen of it was canceld
-	File file = chooser.showOpenDialog(new Stage());
-
-	// check if file was chosen then store last used path
-	if (file != null && file.exists()) {
-	    config.setInputPath(file.getParent());
-	}
-
-	return file;
-    }
-    
-    
-    
-    
-    
-    
     
     
     
     //// read in file
-    private void openFile(File file) {
+    public void openFile(File file) {
 
         // prepare variables
         String line;
@@ -164,7 +88,7 @@ public class LoadInputFile {
     
     
     //// detect catagory
-    private void catagorize() {
+    public String catagorize() {
 	
 	//// definde variables
 	
@@ -186,10 +110,8 @@ public class LoadInputFile {
 	    List<String> missing = new LinkedList<>(catagories.keySet());
 	    missing.removeAll(header);
 	    String warningText = "Catagories not chosen automatically. " + missing + " not available";
-	    infoField.setText(warningText);
-	    
 	    // skip rest of method
-	    return;
+	    return warningText;
 	    
 	    
 	    //// get indeces of the header entries for later value extraction
@@ -211,15 +133,12 @@ public class LoadInputFile {
 		} else if (isUnclear(row, catagories)){
 		    row.setCatagory(Catagory.getUnclearCode());
 		}
-		
-
-
-
-		
-		
-		
 		} // end for loop
 	    } // end else clause
+	
+	return "";
+		
+	
 	
     }
     
@@ -503,14 +422,14 @@ public class LoadInputFile {
     
     
     
-    //// create table
-    public void createTable() {
-	
-        
-        CreateTable table = new CreateTable(tableView);
-	table.prepareTable(header);
-	table.fillTable(rowData);
-    }
+//    //// create table
+//    public void createTable() {
+//	
+//        
+//        CreateTable table = new CreateTable(tableView);
+//	table.prepareTable(header);
+//	table.fillTable(rowData);
+//    }
     
     
     
