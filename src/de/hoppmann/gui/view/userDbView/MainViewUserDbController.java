@@ -5,6 +5,7 @@
  */
 package de.hoppmann.gui.view.userDbView;
 
+import com.google.common.util.concurrent.Futures;
 import de.hoppmann.config.Config;
 import de.hoppmann.database.userDB.ConnectionBuilder;
 import java.io.File;
@@ -82,9 +83,11 @@ public class MainViewUserDbController implements Initializable {
         if (dbFile != null) {
 	    
 	    config.setDbFullPath(dbFile.getAbsolutePath());
-	    connect(dbFile, "", "");
+	    boolean success = connect(dbFile, "", "");
         
-            variantTabController.init(findings);
+            if (success){
+		variantTabController.init(findings);
+	    }
         }
         
         
@@ -156,16 +159,17 @@ public class MainViewUserDbController implements Initializable {
     
     
     // connect to DB
-    private void connect(File dbFile, String user, String password){
+    private boolean connect(File dbFile, String user, String password){
 	    
-	boolean succsess = connectDB.connect(dbFile.getAbsolutePath(), user, password);
-	if (succsess) {
+	boolean success = connectDB.connect(dbFile.getAbsolutePath(), user, password);
+	if (success) {
 	    infoLabel.setText("DB created.");
 	    dbConnectionLabel.setText(dbFile.getAbsolutePath());
 	} else {
 	    infoLabel.setText("Unable to connect to DB.");
 	}
 
+	return success;
     }
     
     
@@ -179,16 +183,17 @@ public class MainViewUserDbController implements Initializable {
         this.connectDB = connectDB;
 	this.findings = findings;
 	
+	boolean success = false;
 	// connect to DB if available
 	if (config.getDbFullPath() != null && new File(config.getDbFullPath()).exists()){
-	    connect(new File(config.getDbFullPath()), "", "");
+	    success = connect(new File(config.getDbFullPath()), "", "");
 	}
 	
 	
-	
-	
-	// initialize lower views
-	variantTabController.init(findings);
+	if (success){
+	    // initialize lower views
+	    variantTabController.init(findings);
+	}
 	
 	
 

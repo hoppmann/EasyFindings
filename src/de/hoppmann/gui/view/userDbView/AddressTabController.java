@@ -9,13 +9,17 @@ import de.hoppmann.database.userDB.interfaces.IAddressRepository;
 import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import org.controlsfx.control.textfield.TextFields;
@@ -30,6 +34,7 @@ public class AddressTabController implements Initializable {
     
     private IAddressRepository addressRepo;
     private AddressInfo aInfo;
+    private Label infoLabel;
     @FXML private MainViewUserDbController mainViewUserDbController;
     @FXML private TextField titleField;
     @FXML private TextField addressField;
@@ -57,7 +62,7 @@ public class AddressTabController implements Initializable {
 	
 	updateNameBox();
 	
-	mainViewUserDbController.getInfoLabel().setText(aInfo.getName() + " added to database.");
+	infoLabel.setText(aInfo.getName() + " added to database.");
 	
     }
     
@@ -75,7 +80,7 @@ public class AddressTabController implements Initializable {
 	    updateAddressInfoFromUI();
 	    addressRepo.saveAddress(aInfo);
 	    updateNameBox();
-	    mainViewUserDbController.getInfoLabel().setText(aInfo.getName() + " updated in database.");
+	    infoLabel.setText(aInfo.getName() + " updated in database.");
 	}
     }
     
@@ -99,17 +104,29 @@ public class AddressTabController implements Initializable {
     
     @FXML
     private void removeButtonAction(ActionEvent e) {
-	
-	if (aInfo != null){
+
+	if (aInfo == null) {
+	    return;
+	}
+
+	// double check if deletion is desired
+	Alert deletionDialog = new Alert(Alert.AlertType.CONFIRMATION);
+	deletionDialog.setTitle("Remove " + aInfo.getName() + " from database?");
+	deletionDialog.setHeaderText(null);
+	deletionDialog.setContentText("This deletion can't be undone.");
+	deletionDialog.initOwner(infoLabel.getScene().getWindow());
+	Optional<ButtonType> result = deletionDialog.showAndWait();
+
+	if (result.get() == ButtonType.OK) {
+
 	    addressRepo.removeAddress(aInfo);
 	    String removedName = aInfo.getName();
 	    aInfo = new AddressInfo("", "", "", "", "", "", -1);
 	    fillAddressFields();
 	    updateNameBox();
-	    mainViewUserDbController.getInfoLabel().setText(removedName + " removed from database");
+	    infoLabel.setText(removedName + " removed from database");
 	}
     }
-    
     
     
     
@@ -169,9 +186,12 @@ public class AddressTabController implements Initializable {
     public void init(IAddressRepository addressRepo) {
 	this.addressRepo = addressRepo;
 	
-	if (addressRepo.isValidRepo()) {
-	    updateNameBox();
+	this.infoLabel = mainViewUserDbController.getInfoLabel();
+	
+	if (!addressRepo.isValidRepo()) {
+	    addressRepo.makeRepoValid();
 	}
+	updateNameBox();
     }
     
     

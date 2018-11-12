@@ -113,13 +113,14 @@ public class GeneInfoTabController implements Initializable {
 
 	if (result.get() == ButtonType.OK){
 	    geneInfoRepository.removeGene(varInfo);
+	    // update gene list
+	    updateGeneNameBox(varInfo);
+
+	    infoLabel.setText(varInfo.getGeneName() + " removed");
 	}
 	
 	
-	// update gene list
-	updateGeneNameBox(varInfo);
 	
-	infoLabel.setText(varInfo.getGeneName() + " removed");
 	
     }
     
@@ -215,6 +216,7 @@ public class GeneInfoTabController implements Initializable {
     
     /**
      * init view with chosen geneName for selection
+     * check dbTable for validity else achieve validity
      * @param varInfo 
      */
     
@@ -222,6 +224,10 @@ public class GeneInfoTabController implements Initializable {
 
 	this.varInfo = varInfo;
 	infoLabel = variantTabController.getMainViewUserDbController().getInfoLabel();
+	
+	if (!geneInfoRepository.isRepoValid()){
+	    geneInfoRepository.makeRepoValid();
+	}	
 	updateGeneNameBox(varInfo);
 	
 	
