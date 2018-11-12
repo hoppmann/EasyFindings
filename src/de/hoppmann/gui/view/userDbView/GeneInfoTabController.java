@@ -140,7 +140,7 @@ public class GeneInfoTabController implements Initializable {
 	    varInfo = geneInfoRepository.getGeneInfo(varInfo);
 	    geneInfoTextArea.setText(varInfo.getGeneInfo());
             
-            variantInfoTabController.init(varInfo.getGeneName());
+            variantInfoTabController.init(varInfo);
             
 	}
     } 
@@ -167,6 +167,8 @@ public class GeneInfoTabController implements Initializable {
 	
 	geneNameBox.getItems().clear();
 	geneNameBox.getItems().addAll(geneList);
+	
+	
 	if (!geneName.equals("") && geneList.contains(geneName)){
 	    geneNameBox.getSelectionModel().select(geneName);
 	} else {

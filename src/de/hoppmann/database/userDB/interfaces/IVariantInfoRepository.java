@@ -5,6 +5,7 @@
  */
 package de.hoppmann.database.userDB.interfaces;
 
+import de.hoppmann.database.userDB.snipletDB.VariantInfo;
 import java.util.List;
 
 /**
@@ -16,10 +17,10 @@ public interface IVariantInfoRepository {
     
     public boolean isRepoValid();
     public boolean makeRepoValid();
-    public List<String> getVariantList(String geneName);
-    public String getVariantInfo(String geneName, String varName);
-    public void saveVariant(String geneName, String varName, String varInfo);
-    public void removeVariant(String geneName, String varName);
+    public List<String> getVariantList(VariantInfo varInfo);
+    public VariantInfo getVariantInfo(VariantInfo varInfo);
+    public void saveVariant(VariantInfo varInfo);
+    public void removeVariant(VariantInfo varInfo);
     
     
     

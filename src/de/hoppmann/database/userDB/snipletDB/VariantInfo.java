@@ -13,10 +13,10 @@ package de.hoppmann.database.userDB.snipletDB;
 public class VariantInfo {
 
     private String geneName;
-    private String geneInfo;
+    private String geneInfo = "";
 
-    private String varName;
-    private String varInfo;
+    private String varName = "";
+    private String varInfo = "";
 
     public VariantInfo(String geneName) {
 	setGeneName(geneName);
@@ -31,8 +31,7 @@ public class VariantInfo {
     }
 
     public void setGeneName(String geneName) {
-	geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
-	this.geneName = geneName;
+	this.geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
     }
 
     public String getGeneInfo() {
@@ -49,7 +48,7 @@ public class VariantInfo {
     }
 
     public void setVarName(String varName) {
-	this.varName = varName;
+	this.varName = varName.replaceAll("\\s+", "");;
     }
 
     public String getVarInfo() {
@@ -57,8 +56,7 @@ public class VariantInfo {
     }
 
     public void setVarInfo(String varInfo) {
-	varInfo = varInfo.replaceAll("'", "´");
-	this.varInfo = varInfo;
+	this.varInfo = varInfo.replaceAll("'", "´");
     }
     
     

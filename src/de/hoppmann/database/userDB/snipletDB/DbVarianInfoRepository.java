@@ -72,15 +72,14 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
     
     
     @Override
-    public List<String> getVariantList(String geneName) {
+    public List<String> getVariantList(VariantInfo varInfo) {
 	
 	List<String> varList = new LinkedList<>();
 	
 	
-	
 	// prepare query to get all genes
 	String query = "SELECT " + VAR_COL + " FROM " + VAR_TABLE + " WHERE " 
-		+ GENE_COL + " = '" + geneName + "'";
+		+ GENE_COL + " = '" + varInfo.getGeneName() + "'";
 	
 	
 	ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
@@ -115,23 +114,22 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
     
     
     @Override
-    public String getVariantInfo(String geneName, String varName) {
+    public VariantInfo getVariantInfo(VariantInfo varInfo) {
 	
 
 	
 	// prepare query string
 	String query = "SELECT " + VAR_INFO_COL + " FROM "
-		+ VAR_TABLE + " WHERE " + GENE_COL + " = '" + geneName + "' AND "
-		+ VAR_COL + " = '" + varName + "'";
+		+ VAR_TABLE + " WHERE " + GENE_COL + " = '" + varInfo.getGeneName() + "' AND "
+		+ VAR_COL + " = '" + varInfo.getVarName() + "'";
 	
 	
 	ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
 	
 	
-	String varInfo = null;
 	try {
 	    if (rs.next()) {
-		varInfo = rs.getString(VAR_INFO_COL);
+		varInfo.setVarInfo(rs.getString(VAR_INFO_COL));
 	    }
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbVarianInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,18 +148,14 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
     
     
     @Override
-    public void saveVariant(String geneName, String varName, String varInfo) {
-	
-	
-	// replace ' by ` to avoid SQL errors
-	varInfo = varInfo.replaceAll("'", "`");
+    public void saveVariant(VariantInfo varInfo) {
 	
 	
 	// prepare command
 	String addEntryCmd = "REPLACE INTO " + VAR_TABLE + " VALUES " 
-		+ "( " + "'" + varName + "'" 
-		+ ", '" + geneName + "'" 
-		+ ", '" + varInfo + "'" +  " )";
+		+ "( " + "'" + varInfo.getVarName() + "'" 
+		+ ", '" + varInfo.getGeneName() + "'" 
+		+ ", '" + varInfo.getVarInfo() + "'" +  " )";
 	DbOperations.execute(addEntryCmd, ConnectionHolder.getInstance().getConnection());
     }
 
@@ -174,12 +168,12 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
     
     
     @Override
-    public void removeVariant(String geneName, String varName) {
+    public void removeVariant(VariantInfo varInfo) {
 
 	    // prepare deletion query
 	String delQuery = "DELETE from " + VAR_TABLE + " WHERE "
-		+ GENE_COL + " = '" + geneName + "' AND " + VAR_COL
-		+ "= '" + varName + "'";
+		+ GENE_COL + " = '" + varInfo.getGeneName() + "' AND " + VAR_COL
+		+ "= '" + varInfo.getVarName() + "'";
 
 	
 	DbOperations.execute(delQuery, ConnectionHolder.getInstance().getConnection());

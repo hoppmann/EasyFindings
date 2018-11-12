@@ -6,6 +6,7 @@
 package de.hoppmann.gui.view.userDbView;
 
 import de.hoppmann.database.userDB.interfaces.IVariantInfoRepository;
+import de.hoppmann.database.userDB.snipletDB.VariantInfo;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,7 @@ import org.controlsfx.control.textfield.TextFields;
 public class VariantInfoTabController implements Initializable {
 
     private IVariantInfoRepository varInfoRepo;
-    private String geneName;
+    private VariantInfo varInfo;
     @FXML private Label infoLabel;
     @FXML private VariantTabController variantTabController;
     @FXML private AnchorPane variantInfoTab;
@@ -46,32 +47,20 @@ public class VariantInfoTabController implements Initializable {
     @FXML
     private void saveVariant() {
 	
-	String varName = varNameBox.getValue();
+	setVarInfoFromGui();
+
+	varInfoRepo.saveVariant(varInfo);
+
+	updateVarNameBox();
 	
-
-	varName = varNameBox.getValue();
-	if (varName == null || varName.equals("")) {
-	    infoLabel.setText("ERROR: No variant name given.");
-	    return;
-	}
-
-
-	// remove all whitespace element from variant
-	varName = varName.replaceAll("\\s+", "");
-
+	infoLabel.setText("Updated: " + varInfo.getVarName());
 	
-	// get variant info
-	String varInfo;
-	if (varInfoArea.getText() == null) {
-	    varInfo = "";
-	} else {
-	    varInfo = varInfoArea.getText();
-	}
-
-	varInfoRepo.saveVariant(geneName, varName, varInfo);
-
-	updateVarNameBox(varName);
     }
+    
+    
+    
+    
+    
     
     
     
@@ -79,18 +68,13 @@ public class VariantInfoTabController implements Initializable {
     private void removeVariant() {
 	
 	
-	// retrieve var name 
-	String varName = varNameBox.getValue();
-	if (varName == null){
-	    infoLabel.setText("ERROR: No variant chosen");
-	}
-	varName = varName.replaceAll("\\s+", "");
+	setVarInfoFromGui();
 
 	
 	
 	// double check if  variant should be deleated
 	Alert delDiag = new Alert(Alert.AlertType.CONFIRMATION);
-	delDiag.setTitle("Remove " + varName + " from database?");
+	delDiag.setTitle("Remove " + varInfo.getVarName() + " from database?");
 	delDiag.setHeaderText(null);
 	delDiag.setContentText("This deletion can't be undone.");
 	delDiag.initOwner(infoLabel.getScene().getWindow());
@@ -98,14 +82,14 @@ public class VariantInfoTabController implements Initializable {
 
 	// remove var if desired
 	if (result.get() == ButtonType.OK) {
-	    varInfoRepo.removeVariant(geneName, varName);
+	    varInfoRepo.removeVariant(varInfo);
 	}
 
 	// update variant name list
-	updateVarNameBox(varName);
+	updateVarNameBox();
 
 	// print out that variant was removed
-	infoLabel.setText(varName + " removed");
+	infoLabel.setText("Removed: " + varInfo.getVarName());
 	
     }
     
@@ -114,10 +98,12 @@ public class VariantInfoTabController implements Initializable {
     @FXML
     private void varNameBoxAction (ActionEvent event) {
 	
-	String varName = varNameBox.getValue();
+	setVarInfoFromGui();
 	
-	if (varName != null) {
-	    varInfoArea.setText(varInfoRepo.getVariantInfo(geneName, varName));
+	
+	if (varInfo.getVarName() != null) {
+	    varInfo = varInfoRepo.getVariantInfo(varInfo);
+	    varInfoArea.setText(varInfo.getVarInfo());
 	}
 	
 	
@@ -126,23 +112,40 @@ public class VariantInfoTabController implements Initializable {
     
     
     
-    
-    
-    
-    
-    private void updateVarNameBox(String varName) {
+    private void setVarInfoFromGui() {
 	
-	List<String> varList = varInfoRepo.getVariantList(geneName);
+	if (varNameBox.getValue() == null || varNameBox.getValue().equals("")){
+	    return;
+	} else {
+	    varInfo.setVarName(varNameBox.getValue());
+	}
+	
+	
+	if (varInfoArea.getText() == null){
+	    varInfo.setVarInfo("");
+	} else {
+	    varInfo.setVarInfo(varInfoArea.getText());
+	}
+    }
+    
+    
+    
+    
+    
+    
+    
+    private void updateVarNameBox() {
+	
+	List<String> varList = varInfoRepo.getVariantList(varInfo);
 	
 	varNameBox.getItems().clear();
 	varNameBox.getItems().addAll(varList);
 
-	if (!varName.equals("") && varList.contains(varName)) {
-	    varNameBox.getSelectionModel().select(varName);
+	if (!varInfo.getVarName().equals("") && varList.contains(varInfo.getVarName())) {
+	    varNameBox.getSelectionModel().select(varInfo.getVarName());
 	} else {
 	    varNameBox.getSelectionModel().selectFirst();
 	}
-	
 	varNameBox.setEditable(true);
 	
 	TextFields.bindAutoCompletion(varNameBox.getEditor(), varList);
@@ -150,36 +153,29 @@ public class VariantInfoTabController implements Initializable {
     }
 
     
+   
     
     
     
     
-    public void injectVarTabController (VariantTabController variantTabController) {
+    
+    
+    
+    
+    public void inject (VariantTabController variantTabController,IVariantInfoRepository varInfoRepo) {
 	this.variantTabController = variantTabController;
-    }
-
-    public void setInfoLabel(Label infoLabel) {
-	this.infoLabel = infoLabel;
-    }
-
-    public void setVarInfoRepo(IVariantInfoRepository varInfoRepo) {
 	this.varInfoRepo = varInfoRepo;
     }
+
+    
+    
     
     
 
-    public void init(String geneName) {
-	init(geneName, "");
-    }
-    
-    public void init (String geneName, String varName) {
-
-	if (geneName != null){
-	    geneName = geneName.replaceAll("[^a-zA-Z0-9]", "");
-	}
-	this.geneName = geneName;
-	
-	updateVarNameBox(varName);
+    public void init (VariantInfo varInfo) {
+	this.varInfo = varInfo;
+	this.infoLabel = variantTabController.getMainViewUserDbController().getInfoLabel();
+	updateVarNameBox();
     }
     
     

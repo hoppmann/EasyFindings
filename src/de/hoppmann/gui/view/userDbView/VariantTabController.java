@@ -26,7 +26,7 @@ import javafx.scene.layout.AnchorPane;
 public class VariantTabController implements Initializable {
 
     private FindingsRepository findings;
-    private VariantInfo varInfo;
+    private VariantInfo varInfo = new VariantInfo("");
     @FXML private MainViewUserDbController mainViewUserDbController;
     @FXML private AnchorPane variantTab;
     @FXML private FindingsTabController findingsTabController;
@@ -52,12 +52,10 @@ public class VariantTabController implements Initializable {
 	
 	findingsTabController.init(findings);
 	
-	
 	geneInfoTabController.init(varInfo);
-	
-	
-	variantInfoTabController.init(geneInfoTabController.getVarInfo().getGeneName());
-	
+
+	variantInfoTabController.init(varInfo);
+
 	
     }
     
@@ -87,9 +85,9 @@ public class VariantTabController implements Initializable {
 
 	findingsTabController.injectVariantTabController(this);
         geneInfoTabController.inject(this, findingsTabController, variantInfoTabController, new DbGeneInfoRepository());
-	variantInfoTabController.injectVarTabController(this);
-//	geneInfoTabController.setGeneInfoRepository(new DbGeneInfoRepository());
-	variantInfoTabController.setVarInfoRepo(new DbVarianInfoRepository());
+	variantInfoTabController.inject(this, new DbVarianInfoRepository());
+	
+	
 	
 	
 	
@@ -110,6 +108,7 @@ public class VariantTabController implements Initializable {
 	
 	
 	
+	
 	// switching to the tab
 	geneInfoTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
 	    @Override
@@ -117,11 +116,14 @@ public class VariantTabController implements Initializable {
 		if (newValue) {
 		    geneInfoTabController.init(varInfo);
                     varInfo = geneInfoTabController.getVarInfo();
-                    variantInfoTabController.init(varInfo.getGeneName());
+                    variantInfoTabController.init(varInfo);
 
 		}
 	    }
 	});
+	
+	
+	
 	
 	
 	
@@ -137,19 +139,6 @@ public class VariantTabController implements Initializable {
 	
 	
 	
-	
-	
-	
-	
-	
-//	variantInfoTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
-//	    @Override
-//	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-//		if (newValue){
-//		    variantInfoTabController.init(varInfo.getGeneName());
-//		}
-//	    }
-//	});
 	
 	
 	
