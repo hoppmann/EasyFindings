@@ -36,6 +36,7 @@ public class GeneInfoTabController implements Initializable {
     
     @FXML private FindingsTabController findingsTabController;
     @FXML private VariantTabController variantTabController;
+    @FXML private VariantInfoTabController variantInfoTabController;
     @FXML private AnchorPane geneInfoTab;
     @FXML public ComboBox<String> geneNameBox;
     @FXML private TextArea geneInfoTextArea;
@@ -138,14 +139,10 @@ public class GeneInfoTabController implements Initializable {
 	if (varInfo != null && varInfo.getGeneName() != null){
 	    varInfo = geneInfoRepository.getGeneInfo(varInfo);
 	    geneInfoTextArea.setText(varInfo.getGeneInfo());
+            
+            variantInfoTabController.init(varInfo.getGeneName());
+            
 	}
-	
-	
-	
-	
-	
-	
-	
     } 
     
     
@@ -202,17 +199,12 @@ public class GeneInfoTabController implements Initializable {
     
     
     
-    
-    public void injectVarTabController(VariantTabController variantTabController){
-	this.variantTabController = variantTabController;
-    }
-    
-    public void injectFindingsTabController (FindingsTabController findingsTabController){
-	this.findingsTabController = findingsTabController;
-    }
-
-    public void setGeneInfoRepository(IGeneInfoRepository geneInfoRepository) {
-	this.geneInfoRepository = geneInfoRepository;
+    public void inject (VariantTabController variantTabController, FindingsTabController findingsTabController, 
+            VariantInfoTabController variantInfoTabController, IGeneInfoRepository geneInfoRepository){
+        this.variantTabController = variantTabController;
+        this.findingsTabController = findingsTabController;
+        this.variantInfoTabController = variantInfoTabController;
+        this.geneInfoRepository = geneInfoRepository;
     }
     
  

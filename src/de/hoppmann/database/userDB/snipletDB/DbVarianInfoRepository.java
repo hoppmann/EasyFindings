@@ -88,9 +88,11 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 
 	
 	try {
-	    while (rs.next()) {
-		varList.add(rs.getString(VAR_COL));
-	    }
+            if (rs != null){
+                while (rs.next()) {
+                    varList.add(rs.getString(VAR_COL));
+                }
+            }
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbVarianInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
 	}

@@ -51,12 +51,12 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 
 	ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
 	
-
 	try {
-	    while (rs.next()){
-		geneList.add(rs.getString(GENE_NAME_COL));
-	    }
-	    
+            if (rs != null){
+                while (rs.next()){
+                    geneList.add(rs.getString(GENE_NAME_COL));
+                }
+            }
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbGeneInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
 	}

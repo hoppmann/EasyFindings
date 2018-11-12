@@ -86,9 +86,9 @@ public class VariantTabController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
 	findingsTabController.injectVariantTabController(this);
-	geneInfoTabController.injectVarTabController(this);
+        geneInfoTabController.inject(this, findingsTabController, variantInfoTabController, new DbGeneInfoRepository());
 	variantInfoTabController.injectVarTabController(this);
-	geneInfoTabController.setGeneInfoRepository(new DbGeneInfoRepository());
+//	geneInfoTabController.setGeneInfoRepository(new DbGeneInfoRepository());
 	variantInfoTabController.setVarInfoRepo(new DbVarianInfoRepository());
 	
 	
@@ -116,6 +116,9 @@ public class VariantTabController implements Initializable {
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 		if (newValue) {
 		    geneInfoTabController.init(varInfo);
+                    varInfo = geneInfoTabController.getVarInfo();
+                    variantInfoTabController.init(varInfo.getGeneName());
+
 		}
 	    }
 	});
@@ -139,14 +142,14 @@ public class VariantTabController implements Initializable {
 	
 	
 	
-	variantInfoTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
-	    @Override
-	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-		if (newValue){
-		    variantInfoTabController.init(varInfo.getGeneName());
-		}
-	    }
-	});
+//	variantInfoTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
+//	    @Override
+//	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//		if (newValue){
+//		    variantInfoTabController.init(varInfo.getGeneName());
+//		}
+//	    }
+//	});
 	
 	
 	

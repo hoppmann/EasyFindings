@@ -83,7 +83,10 @@ public class MainViewUserDbController implements Initializable {
 	    
 	    config.setDbFullPath(dbFile.getAbsolutePath());
 	    connect(dbFile, "", "");
+        
+            variantTabController.init(findings);
         }
+        
         
 	
 	
