@@ -92,6 +92,8 @@ public class VariantTabController implements Initializable {
 	variantInfoTabController.setVarInfoRepo(new DbVarianInfoRepository());
 	
 	
+	
+	
 	findingsInfoTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
 	    @Override
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -108,25 +110,40 @@ public class VariantTabController implements Initializable {
 	
 	
 	
+	// switching to the tab
 	geneInfoTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
 	    @Override
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-
 		if (newValue) {
 		    geneInfoTabController.init(varInfo);
 		}
-		
 	    }
 	});
+	
+	
+	
+	// switching from the tab get varInfo object
+	geneInfoTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
+	    @Override
+	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+		if (! newValue){
+		    varInfo = geneInfoTabController.getVarInfo();
+		}
+	    }
+	});
+	
+	
+	
+	
+	
 	
 	
 	
 	variantInfoTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
 	    @Override
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-		
 		if (newValue){
-		    variantInfoTabController.init(geneInfoTabController.getVarInfo().getGeneName());
+		    variantInfoTabController.init(varInfo.getGeneName());
 		}
 	    }
 	});

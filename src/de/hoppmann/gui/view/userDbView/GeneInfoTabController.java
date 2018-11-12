@@ -37,7 +37,7 @@ public class GeneInfoTabController implements Initializable {
     @FXML private FindingsTabController findingsTabController;
     @FXML private VariantTabController variantTabController;
     @FXML private AnchorPane geneInfoTab;
-    @FXML private ComboBox<String> geneNameBox;
+    @FXML public ComboBox<String> geneNameBox;
     @FXML private TextArea geneInfoTextArea;
     
     
@@ -46,32 +46,12 @@ public class GeneInfoTabController implements Initializable {
     
     
     
-    
-    private VariantInfo setGeneInfoFromUI(VariantInfo varInfo){
+    private void setGeneInfoFromUI(){
+	
+	
 	
 	if (geneNameBox.getValue() == null || geneNameBox.getValue().equals("")){
-		    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    System.out.println("WE GET HERE BUT WE SHOULDNT");
-		    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    infoLabel.setText("ERROR: gene choice illegal");
-	    return varInfo;
+	    return;
 	} else {
 	    varInfo = new VariantInfo(geneNameBox.getValue());
 	}
@@ -85,8 +65,6 @@ public class GeneInfoTabController implements Initializable {
 	
 
 	
-	return varInfo;
-	
     }
     
     
@@ -98,7 +76,7 @@ public class GeneInfoTabController implements Initializable {
     @FXML
     private void saveButtonAction(ActionEvent e){
 	
-	varInfo= setGeneInfoFromUI(varInfo);
+	setGeneInfoFromUI();
 
 	// save gene info
 	geneInfoRepository.saveGene(varInfo);
@@ -120,7 +98,7 @@ public class GeneInfoTabController implements Initializable {
     @FXML
     private void removeButtonAction(ActionEvent e){
 
-	varInfo = setGeneInfoFromUI(varInfo);
+	setGeneInfoFromUI();
 
 	
 	
@@ -155,12 +133,18 @@ public class GeneInfoTabController implements Initializable {
     @FXML
     private void geneBoxAction() {
 	
+	setGeneInfoFromUI();
 	
-	varInfo = setGeneInfoFromUI(varInfo);
 	if (varInfo != null && varInfo.getGeneName() != null){
 	    varInfo = geneInfoRepository.getGeneInfo(varInfo);
 	    geneInfoTextArea.setText(varInfo.getGeneInfo());
 	}
+	
+	
+	
+	
+	
+	
 	
     } 
     
@@ -186,7 +170,6 @@ public class GeneInfoTabController implements Initializable {
 	
 	geneNameBox.getItems().clear();
 	geneNameBox.getItems().addAll(geneList);
-	
 	if (!geneName.equals("") && geneList.contains(geneName)){
 	    geneNameBox.getSelectionModel().select(geneName);
 	} else {
@@ -238,7 +221,7 @@ public class GeneInfoTabController implements Initializable {
     
     /**
      * init view with chosen geneName for selection
-     * @param geneName 
+     * @param varInfo 
      */
     
     public void init(VariantInfo varInfo) {

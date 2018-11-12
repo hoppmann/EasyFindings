@@ -80,8 +80,6 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
     public VariantInfo getGeneInfo(VariantInfo varInfo) {
 	
 	
-	String geneInfo = null;
-	
 	String queryGeneInfoCmd = "select "+ GENE_INFO_COL + " from " + GENE_TABLE
 		+ " where gene == '" + varInfo.getGeneName() + "'";
 
@@ -90,7 +88,7 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 	
 	try {
 	    if (rs.next()){
-		geneInfo = rs.getString(GENE_INFO_COL);
+		varInfo.setGeneInfo(rs.getString(GENE_INFO_COL));
 	    }
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbGeneInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
