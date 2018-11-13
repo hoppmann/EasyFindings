@@ -28,7 +28,9 @@ public class EasyFindings extends Application {
 	
 	
 	stage.setTitle("EasyFindings");
-        Parent root = FXMLLoader.load(getClass().getResource("gui/view/MainGui.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("gui/view/MainGui.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("gui/view/mainView/MainView.fxml"));
+        
         
         Scene scene = new Scene(root);
 

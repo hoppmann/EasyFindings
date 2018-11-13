@@ -76,6 +76,7 @@ public class CreateTable {
 	//  define cell value factory
 	causalCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<TableData, Boolean>, ObservableValue<Boolean>>() {
 	    
+            
 	    @Override
 	    public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<TableData, Boolean> param) {
 		TableData tableData = param.getValue();
@@ -91,12 +92,15 @@ public class CreateTable {
 		    }
 		});
 		
-		
-		
 		return booleanProp;
 	    }
 	});
 	
+        
+        
+        
+        
+        
 	// define cell factory
 	causalCol.setCellFactory(new Callback<TableColumn<TableData, Boolean>, TableCell<TableData, Boolean>>() {
 	    @Override
@@ -106,6 +110,9 @@ public class CreateTable {
 		return cell;
 	    }
 	});
+        
+        
+        
 	causalCol.setEditable(true);
 	
 	// add column to table
@@ -145,10 +152,14 @@ public class CreateTable {
 	});
 	
 
+        
+        
 	// define cell factory
 	ObservableList<Catagory> catagoryList = FXCollections.observableArrayList(Catagory.values());
 	catagoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(catagoryList));
 	
+        
+        
 	
 	//  handle event of choosing a catagory
 	catagoryCol.setOnEditCommit((event) -> {

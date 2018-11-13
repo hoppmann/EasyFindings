@@ -9,6 +9,7 @@ package de.hoppmann.operations;
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.messanges.CommonErrors;
 import de.hoppmann.gui.modelsAndData.Catagory;
+import de.hoppmann.gui.modelsAndData.InputRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,9 +36,8 @@ public class LoadInputFile {
     ///////////////////////////
     //////// variables ////////
     ///////////////////////////
-//    private TableView<TableData> tableView = new TableView<>();
-    private final List<String> header = new ArrayList<>();
-    private List<TableData> rowData;
+//    private final List<String> header = new ArrayList<>();
+//    private List<TableData> rowData;
     private Config config = Config.getInstance();
     
     
@@ -51,19 +51,18 @@ public class LoadInputFile {
     
     
     //// read in file
-    public void openFile(File file) {
+    public void openFile(File file, InputRepository inputRepository) {
 
         // prepare variables
         String line;
-        rowData = new ArrayList<>();
-        try {
 
+        try {
             // read in file
             BufferedReader br = new BufferedReader(new FileReader(file));
             while ((line = br.readLine()) != null) {
 		
 		// read in line split and save in row data object
-		rowData.add(new TableData(new LinkedList<>(Arrays.asList(line.split("\t")))));
+		inputRepository.getRowData().add(new TableData(new LinkedList<>(Arrays.asList(line.split("\t")))));
             }
             br.close();
         } catch (IOException iOException) {
@@ -71,9 +70,7 @@ public class LoadInputFile {
         }
 	
 	// save header line seperately
-	header.addAll(rowData.remove(0).getInputLine());
-	
-
+	inputRepository.getHeader().addAll(inputRepository.getRowData().remove(0).getInputLine());
     }
 
     
@@ -88,8 +85,9 @@ public class LoadInputFile {
     
     
     //// detect catagory
-    public String catagorize() {
-	
+    public String catagorize(InputRepository inputRepository) {
+        List<String> header = inputRepository.getHeader();
+        List<TableData> rowData = inputRepository.getRowData();
 	//// definde variables
 	
 	/**
@@ -429,13 +427,13 @@ public class LoadInputFile {
     //////// getter / setter ////////
     /////////////////////////////////
 
-    public List<TableData> getRowData() {
-	return rowData;
-    }
-
-    public List<String> getHeader() {
-	return header;
-    }
+//    public List<TableData> getRowData() {
+//	return rowData;
+//    }
+//
+//    public List<String> getHeader() {
+//	return header;
+//    }
 
     
 

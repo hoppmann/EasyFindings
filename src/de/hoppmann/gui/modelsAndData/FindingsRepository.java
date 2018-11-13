@@ -61,15 +61,15 @@ public class FindingsRepository {
     
     
     // save data for later use
-    public void storeFindings(LoadInputFile load){
+    public void storeFindings(InputRepository inputRepository){
 	
 	// check if load has data (there was a file chosen)
-	if (load == null) {
+	if (inputRepository == null) {
 	    new CommonWarnings().openFileFirst();
 	} else {
 
 	    // store data
-	    for (TableData rowData : load.getRowData()) {
+	    for (TableData rowData : inputRepository.getRowData()) {
 
 		// store non header line
 		if (rowData.isCausal()) {

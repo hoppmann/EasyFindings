@@ -5,7 +5,6 @@
  */
 package de.hoppmann.gui.view.userDbView;
 
-import com.google.common.util.concurrent.Futures;
 import de.hoppmann.config.Config;
 import de.hoppmann.database.userDB.ConnectionBuilder;
 import java.io.File;

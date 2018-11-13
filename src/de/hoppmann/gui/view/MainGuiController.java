@@ -246,21 +246,21 @@ public class MainGuiController implements Initializable {
 	
 	loadFile = new LoadInputFile();
 	
-        if (file != null) {
-	    loadFile.openFile(file);
-	    String warning = loadFile.catagorize();
-	    
-	    if (warning != ""){
-		infoFiled.setText(warning);
-		return;
-	    }
-	    
-	    
-	    createTable();
-	    
-	    infoFiled.setText("Opended: " + file.getName());
-        }
-	
+//        if (file != null) {
+//	    loadFile.openFile(file);
+//	    String warning = loadFile.catagorize();
+//	    
+//	    if (warning != ""){
+//		infoFiled.setText(warning);
+//		return;
+//	    }
+//	    
+//	    
+//	    createTable();
+//	    
+//	    infoFiled.setText("Opended: " + file.getName());
+//        }
+//	
 	
 
 	
@@ -273,9 +273,9 @@ public class MainGuiController implements Initializable {
     
     
     private void createTable(){
-	    CreateTable table = new CreateTable(inputTable);
-	    table.prepareTable(loadFile.getHeader());
-	    table.fillTable(loadFile.getRowData());
+//	    CreateTable table = new CreateTable(inputTable);
+//	    table.prepareTable(loadFile.getHeader());
+//	    table.fillTable(loadFile.getRowData());
 
     }
     
@@ -450,26 +450,32 @@ public class MainGuiController implements Initializable {
     private void saveFindings () {
 	
 	
-	
-	// check that a file was loaded first to avoid errors
-	if (loadFile != null) {
-	    // check if there is existing data else create new object
-	    if (findings == null) {
-		findings = new FindingsRepository(loadFile.getHeader());
-	    }
-
-	    // save findigs for later use
-	    findings.storeFindings(loadFile);
-	   
-            // make info 
-            infoFiled.setText("Findings saved");
-	}
-	
+//	
+//	// check that a file was loaded first to avoid errors
+//	if (loadFile != null) {
+//	    // check if there is existing data else create new object
+//	    if (findings == null) {
+//		findings = new FindingsRepository(loadFile.getHeader());
+//	    }
+//
+//	    // save findigs for later use
+//	    findings.storeFindings(loadFile);
+//	   
+//            // make info 
+//            infoFiled.setText("Findings saved");
+//	}
+//	
 	
 	
     }
 
     
+    
+    
+    
+    
+    
+
     
     
     

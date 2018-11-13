@@ -5,6 +5,7 @@
  */
 package de.hoppmann.gui.view.userDbView;
 
+import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.interfaces.IAddressRepository;
 import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import java.net.URL;
@@ -187,11 +188,12 @@ public class AddressTabController implements Initializable {
 	this.addressRepo = addressRepo;
 	
 	this.infoLabel = mainViewUserDbController.getInfoLabel();
-	
-	if (!addressRepo.isValidRepo()) {
-	    addressRepo.makeRepoValid();
-	}
-	updateNameBox();
+            if (ConnectionBuilder.hasConnection()){
+            if (!addressRepo.isValidRepo()) {
+                addressRepo.makeRepoValid();
+            }
+            updateNameBox();
+        }
     }
     
     

@@ -5,6 +5,7 @@
  */
 package de.hoppmann.gui.view.userDbView;
 
+import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.interfaces.IGeneInfoRepository;
 import de.hoppmann.database.userDB.snipletDB.VariantInfo;
 import java.net.URL;
@@ -225,9 +226,11 @@ public class GeneInfoTabController implements Initializable {
 	this.varInfo = varInfo;
 	infoLabel = variantTabController.getMainViewUserDbController().getInfoLabel();
 	
-	if (!geneInfoRepository.isRepoValid()){
-	    geneInfoRepository.makeRepoValid();
-	}	
+        if (ConnectionBuilder.hasConnection()){
+            if (!geneInfoRepository.isRepoValid()){
+                geneInfoRepository.makeRepoValid();
+            }
+        }
 	updateGeneNameBox(varInfo);
 	
 	

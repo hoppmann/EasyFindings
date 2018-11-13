@@ -5,6 +5,8 @@
  */
 package de.hoppmann.gui.view.userDbView;
 
+import de.hoppmann.database.userDB.ConnectionBuilder;
+import de.hoppmann.database.userDB.ConnectionHolder;
 import de.hoppmann.database.userDB.interfaces.IVariantInfoRepository;
 import de.hoppmann.database.userDB.snipletDB.VariantInfo;
 import java.net.URL;
@@ -181,12 +183,12 @@ public class VariantInfoTabController implements Initializable {
 	this.varInfo = varInfo;
 	this.infoLabel = variantTabController.getMainViewUserDbController().getInfoLabel();
 	
-	if (!varInfoRepo.isRepoValid()){
-	    varInfoRepo.makeRepoValid();
-	}	
-	
-	
-	updateVarNameBox();
+        if (ConnectionBuilder.hasConnection()){
+	    if (!varInfoRepo.isRepoValid()) {
+                varInfoRepo.makeRepoValid();
+            }
+            updateVarNameBox();
+        }
     }
     
     
