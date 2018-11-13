@@ -7,7 +7,6 @@
 package de.hoppmann.gui.modelsAndData;
 
 import de.hoppmann.gui.messanges.CommonWarnings;
-import de.hoppmann.operations.LoadInputFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;

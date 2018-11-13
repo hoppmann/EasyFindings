@@ -6,6 +6,7 @@
 package de.hoppmann.gui.view.mainView;
 
 import de.hoppmann.config.Config;
+import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.InputRepository;
 import de.hoppmann.operations.CreateTable;
 import de.hoppmann.operations.LoadInputFile;
@@ -34,7 +35,11 @@ public class DataTabViewController implements Initializable {
     private Label infoLabel;
     private Config config = Config.getInstance();
     private LoadInputFile loadInput;
-    private InputRepository inputRepo;
+    private InputRepository input;
+    private FindingsRepository findings = null;
+    
+    
+    
     
     
     
@@ -43,7 +48,7 @@ public class DataTabViewController implements Initializable {
     @FXML
     private void openButtonAction(ActionEvent event) {
         
-        inputRepo = new InputRepository();
+        input = new InputRepository();
         
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Open input file.");
@@ -60,8 +65,8 @@ public class DataTabViewController implements Initializable {
         if (inputFile != null && inputFile.exists()){
             config.setInputPath(inputFile.getParent());
             loadInput = new LoadInputFile();
-            loadInput.openFile(inputFile,inputRepo);
-            String warning = loadInput.catagorize(inputRepo);
+            loadInput.openFile(inputFile,input);
+            String warning = loadInput.catagorize(input);
             
             if(warning != "") {
                 infoLabel.setText(warning);
@@ -78,11 +83,23 @@ public class DataTabViewController implements Initializable {
     }
     
     
-        private void createTable(){
-        CreateTable table = new CreateTable(inputTable);
-        table.prepareTable(inputRepo.getHeader());
-        table.fillTable(inputRepo.getRowData());
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    protected void createTable() {
+        if (input != null){
+            CreateTable table = new CreateTable(inputTable);
+            table.prepareTable();
+            table.fillHeader(input.getHeader());
+            table.fillTable(input.getRowData());
+        }
     }
 
     
@@ -99,10 +116,10 @@ public class DataTabViewController implements Initializable {
         
         // reset objects
 //	findings = null;
-        loadInput = null;
-	inputTable.getColumns().clear();
-	inputTable.getItems().clear();
-	infoLabel.setText("Entries cleared.");
+//        loadInput = null;
+//	inputTable.getColumns().clear();
+//	inputTable.getItems().clear();
+//	infoLabel.setText("Entries cleared.");
 
         
         
@@ -119,10 +136,41 @@ public class DataTabViewController implements Initializable {
     
     
     
+    
+    
+    protected void storeFindings() {
+        
+        
+        if (input != null) {
+            
+            if (findings == null){
+                findings = new FindingsRepository(input.getHeader());
+            }
+            
+            findings.storeFindings(input);
+            infoLabel.setText("Findings saved.");
+        }
+        
+                
+    }
+    
+    
+    
+    
+    
+    
     public void inject (MainViewController mainViewController, Label infoLabel) {
         this.mainViewController = mainViewController;
         this.infoLabel = infoLabel;
     }
+
+    public FindingsRepository getFindings() {
+        return findings;
+    }
+    
+    
+    
+    
     
     
     
@@ -135,5 +183,8 @@ public class DataTabViewController implements Initializable {
 //        inputTable = new TableView();
 
     }    
+    
+    
+    
     
 }

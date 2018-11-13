@@ -7,6 +7,8 @@ package de.hoppmann.gui.view.mainView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -49,6 +51,50 @@ public class MainViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         findingsTabViewController.inject(this, infoLable);
         dataTabViewController.inject(this, infoLable);
+        
+        
+        
+        
+        findingsTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    findingsTabViewController.init(dataTabViewController.getFindings());
+                }
+            }
+        });
+
+
+
+        
+        
+
+
+        dataTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    dataTabViewController.storeFindings();
+                }
+            }
+        });
+        
+
+
+        
+        
+
+        dataTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue){
+                    dataTabViewController.createTable();
+                }
+            }
+        });
+                
+        
+        
         
         
     }    

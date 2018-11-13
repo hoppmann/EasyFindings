@@ -199,7 +199,8 @@ public class FindingsTabController implements Initializable {
 	    
 	    // create findings table
 	    CreateTable createTable = new CreateTable(findingsTable);
-	    createTable.prepareTable(findings.getHeaderList());
+	    createTable.prepareTable();
+            createTable.fillHeader(findings.getHeaderList());
 	    createTable.fillTable(findings.getStoredData());
 		    
 	    updateGeneNameBox();

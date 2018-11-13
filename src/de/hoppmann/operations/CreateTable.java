@@ -36,8 +36,8 @@ public class CreateTable {
     //////// variables ////////
     ///////////////////////////
     private final TableView<TableData> tableView;
-    private TableColumn<TableData, Boolean> causalCol;
-    private TableColumn<TableData, Catagory> catagoryCol;
+//    private TableColumn<TableData, Boolean> causalCol;
+//    private TableColumn<TableData, Catagory> catagoryCol;
 	
 	
 	
@@ -61,18 +61,110 @@ public class CreateTable {
     
        //// prepare table
 
-    public void prepareTable(List<String> header) {
+    public void prepareTable() {
         
 	// clear old header
 	tableView.getColumns().clear();
 	
 	
 	
-	//////////////////////////////////
-	//////// add checkbox to tableView
-	causalCol = new TableColumn<>("causal?");
+	TableColumn<TableData, Boolean> causalCol = prepareCausalCol();
+       	causalCol.setEditable(true);
+
+	tableView.getColumns().add(causalCol);		
+
 	
 	
+	// add column to table
+	tableView.getColumns().add(prepareCatagoryCol());
+        
+        tableView.setEditable(true);
+	
+	
+	
+	
+    }
+	
+	
+    
+    
+    
+    
+    
+    
+    
+    /////////////////////////////////////////
+    //////// prepare catagory dorpdown choice
+
+    private TableColumn<TableData, Catagory> prepareCatagoryCol() {
+        
+        
+        
+        TableColumn<TableData, Catagory> catagoryCol = new TableColumn<>("catagory");
+	
+
+
+	// define cell value factory
+	catagoryCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<TableData, Catagory>, ObservableValue<Catagory>>() {
+	    @Override
+	    public ObservableValue<Catagory> call(TableColumn.CellDataFeatures<TableData, Catagory> param) {
+		
+		TableData tableData = param.getValue();
+		
+		// select catagory
+		String catagoryString = tableData.getCatagory();
+		Catagory catagory = Catagory.getCatagoryByCode(catagoryString);
+		return new SimpleObjectProperty<>(catagory);
+	    }
+	});
+	
+
+        
+        
+	// define cell factory
+	ObservableList<Catagory> catagoryList = FXCollections.observableArrayList(Catagory.values());
+	catagoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(catagoryList));
+	
+        
+        
+	
+	//  handle event of choosing a catagory
+	catagoryCol.setOnEditCommit((event) -> {
+	    TablePosition<TableData, Catagory> pos = event.getTablePosition();
+	    Catagory newCatagory = event.getNewValue();
+	    
+	    int row = pos.getRow();
+	    TableData tableData = event.getTableView().getItems().get(row);
+	    tableData.setCatagory(newCatagory.getCatagoryCode());
+		    
+	});
+        
+        return catagoryCol;
+                
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //////////////////////////////////
+    //////// add checkbox to tableView
+
+    private TableColumn<TableData, Boolean> prepareCausalCol() {
+        
+
+        TableColumn<TableData, Boolean>	causalCol = new TableColumn<>("causal?");
+	
+	
+        
+        
 	//  define cell value factory
 	causalCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<TableData, Boolean>, ObservableValue<Boolean>>() {
 	    
@@ -114,74 +206,25 @@ public class CreateTable {
         
         
 	causalCol.setEditable(true);
-	
-	// add column to table
-	tableView.getColumns().add(causalCol);
-		
-
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-
-	/////////////////////////////////////
-	//////// add catagory dorpdown choice
-	catagoryCol = new TableColumn<>("catagory");
-	
-
-
-	// define cell value factory
-	catagoryCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<TableData, Catagory>, ObservableValue<Catagory>>() {
-	    @Override
-	    public ObservableValue<Catagory> call(TableColumn.CellDataFeatures<TableData, Catagory> param) {
-		
-		TableData tableData = param.getValue();
-		
-		// select catagory
-		String catagoryString = tableData.getCatagory();
-		Catagory catagory = Catagory.getCatagoryByCode(catagoryString);
-		return new SimpleObjectProperty<>(catagory);
-	    }
-	});
-	
-
         
         
-	// define cell factory
-	ObservableList<Catagory> catagoryList = FXCollections.observableArrayList(Catagory.values());
-	catagoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(catagoryList));
-	
+        return causalCol;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public void fillHeader(List<String> header) {
         
         
-	
-	//  handle event of choosing a catagory
-	catagoryCol.setOnEditCommit((event) -> {
-	    TablePosition<TableData, Catagory> pos = event.getTablePosition();
-	    Catagory newCatagory = event.getNewValue();
-	    
-	    int row = pos.getRow();
-	    TableData tableData = event.getTableView().getItems().get(row);
-	    tableData.setCatagory(newCatagory.getCatagoryCode());
-		    
-	});
-	
-	
-	
-	// add column to table
-	tableView.getColumns().add(catagoryCol);
-	
-	
-	
-	
-
-	///////////////////////////////////
+        ///////////////////////////////////
         //////// add header from input file
         for (int i = 0; i < header.size(); i++) {
             
@@ -195,10 +238,14 @@ public class CreateTable {
 	    // add column to table
             tableView.getColumns().add(column);
         }
+
         
     }
-	
-	
+    
+    
+    
+    
+    
     
     
     
@@ -217,16 +264,6 @@ public class CreateTable {
     
 	
 	
-    /////////////////////////////////
-    //////// getter / setter ////////
-    /////////////////////////////////
-
-
-
-
-
-
-
 
 
 
