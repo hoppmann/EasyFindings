@@ -31,7 +31,7 @@ public class CreateReport {
     ///////////////////////////
     private String report;
     private String reportTemplate;
-    private ReportDataModel reportData;
+    private ReportRepository reportData;
     private FindingsRepository findings;
     private final Config config = Config.getInstance();
     
@@ -40,7 +40,7 @@ public class CreateReport {
     //////// costructor ////////
     ////////////////////////////
 
-    public CreateReport(FindingsRepository findings, ReportDataModel dataModel) {
+    public CreateReport(FindingsRepository findings, ReportRepository dataModel) {
         this.findings = findings;
 	this.reportData = dataModel;
         

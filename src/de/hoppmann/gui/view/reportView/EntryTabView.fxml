@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="entryTabView" prefHeight="434.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.reportView.EntryTabViewController">
+   <children>
+      <Label layoutX="10.0" layoutY="20.0" prefHeight="25.0" prefWidth="90.0" text="C/O" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0" />
+      <TextField fx:id="coField" layoutX="110.0" layoutY="20.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="20.0" />
+      <Label layoutX="10.0" layoutY="60.0" prefHeight="25.0" prefWidth="90.0" text="Patient" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0" />
+      <TextField fx:id="patientField" layoutX="110.0" layoutY="60.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="60.0" />
+      <Label layoutX="10.0" layoutY="100.0" prefHeight="25.0" prefWidth="90.0" text="Material" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0" />
+      <TextField fx:id="materialField" layoutX="110.0" layoutY="100.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0" />
+      <Label layoutX="10.0" layoutY="140.0" prefHeight="25.0" prefWidth="90.0" text="Indications" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="140.0" />
+      <TextField fx:id="indicationField" layoutX="110.0" layoutY="140.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="140.0" />
+      <Label layoutX="10.0" layoutY="220.0" prefHeight="25.0" prefWidth="90.0" text="Arrival date" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="220.0" />
+      <TextField fx:id="arrivalDateField" layoutX="110.0" layoutY="220.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="220.0" />
+      <Label layoutX="10.0" layoutY="180.0" prefHeight="25.0" prefWidth="90.0" text="Assessment" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="180.0" />
+      <TextField fx:id="assessmentField" layoutX="110.0" layoutY="180.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="180.0" />
+      <Label layoutX="14.0" layoutY="254.0" prefHeight="25.0" prefWidth="90.0" text="Sender" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="260.0" />
+      <ComboBox fx:id="senderBox" layoutX="94.0" layoutY="254.0" onAction="#senderBoxAction" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="260.0" />
+      <Label layoutX="14.0" layoutY="294.0" prefHeight="25.0" prefWidth="90.0" text="Diag Method" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="300.0" />
+      <ComboBox fx:id="diagMethodBox" layoutX="94.0" layoutY="294.0" onAction="#diagMethodBoxAction" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="300.0" />
+      <Label layoutX="14.0" layoutY="334.0" prefHeight="25.0" prefWidth="90.0" text="Seq Method" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="340.0" />
+      <ComboBox fx:id="seqMethodBox" layoutX="94.0" layoutY="334.0" onAction="#seqMethodBoxAction" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="340.0" />
+      <Label layoutX="330.0" layoutY="20.0" prefHeight="25.0" prefWidth="90.0" text="Gene Panel" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="20.0" />
+      <TextArea fx:id="genePanelArea" layoutX="330.0" layoutY="63.0" prefHeight="306.0" prefWidth="280.0" AnchorPane.leftAnchor="330.0" />
+      <Button layoutX="389.0" layoutY="506.0" mnemonicParsing="false" onAction="#applyButtonAction" prefHeight="25.0" prefWidth="110.0" text="Apply" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <ComboBox fx:id="genePanelBox" layoutX="408.0" layoutY="20.0" prefWidth="200.0" AnchorPane.leftAnchor="410.0" />
+   </children>
+</AnchorPane>

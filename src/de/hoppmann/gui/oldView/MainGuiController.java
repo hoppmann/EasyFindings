@@ -5,7 +5,6 @@
  */
 package de.hoppmann.gui.oldView;
 
-import de.hoppmann.gui.view.reportView.ReportViewerController;
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController;
 import de.hoppmann.database.userDB.ConnectSQLite;
@@ -13,7 +12,6 @@ import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.operations.LoadInputFile;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.view.userDbView.MainViewUserDbController;
-import de.hoppmann.operations.CreateTable;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;

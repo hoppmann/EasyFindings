@@ -8,14 +8,21 @@ package de.hoppmann.gui.view.mainView;
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.InputRepository;
+import de.hoppmann.gui.view.reportView.ReportMainViewController;
 import de.hoppmann.operations.CreateTable;
 import de.hoppmann.operations.LoadInputFile;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
@@ -39,6 +46,14 @@ public class DataTabViewController implements Initializable {
     private FindingsRepository findings = null;
     
     
+    
+    
+    
+    @FXML
+    private void testButtonAction (ActionEvent event) {
+        System.out.println("NOTHING TO TEST");
+        infoLabel.setText("NOTHING TO TEST");
+    }
     
     
     
@@ -113,26 +128,15 @@ public class DataTabViewController implements Initializable {
     
     @FXML
     private void clearButtonAction(ActionEvent event){
-        
-        // reset objects
-//	findings = null;
-//        loadInput = null;
-//	inputTable.getColumns().clear();
-//	inputTable.getItems().clear();
-//	infoLabel.setText("Entries cleared.");
-
-        
-        
+        findings = null;
+        input = null;
+        inputTable.getColumns().clear();
+        inputTable.getItems().clear();
+        infoLabel.setText("Entries cleared.");
     }
     
     
     
-    
-    
-    @FXML
-    private void testButtonAction (ActionEvent event) {
-        
-    }
     
     
     

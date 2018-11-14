@@ -9,7 +9,7 @@ import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.gui.oldView.MainGuiController;
-import de.hoppmann.gui.view.reportView.ReportViewerController;
+import de.hoppmann.gui.view.reportView.ReportMainViewController;
 import de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController;
 import de.hoppmann.gui.view.userDbView.MainViewUserDbController;
 import de.hoppmann.operations.CreateTable;
@@ -105,31 +105,53 @@ public class FindingsTabViewController implements Initializable {
     private void reportButtonAction(ActionEvent event){
         
         
-        try {
-	    // do nothing if findings == null
-	    if (findings == null) {
-		return;
-	    }
+        
+                try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/de/hoppmann/gui/view/reportView/ReportMainView.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Report View");
+            stage.setScene(new Scene(root));
 
-	    // prepare new page
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/de/hoppmann/gui/view/reportView/ReportViewer.fxml"));
+            ReportMainViewController controller = fxmlLoader.getController();
+            boolean loaded = controller.init(findings);
 
-	    // create new window
-	    Parent root = fxmlLoader.load();
-	    Stage stage = new Stage();
-	    stage.setTitle("Report");
-	    stage.setScene(new Scene(root));
+            if (!loaded){
+                infoLabel.setText("ERROR: Can't create report. Load findings first.");
+                return;
+            }
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(DataTabViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-	    // get controller of new window and pass findings list
-	    ReportViewerController controller = fxmlLoader.getController();
-	    controller.init(findings);
-
-	    // show window
-	    stage.show();
-
-	} catch (IOException ex) {
-	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
-	}
+        
+        
+//        try {
+//	    // do nothing if findings == null
+//	    if (findings == null) {
+//		return;
+//	    }
+//
+//	    // prepare new page
+//	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/de/hoppmann/gui/view/reportView/ReportViewer.fxml"));
+//
+//	    // create new window
+//	    Parent root = fxmlLoader.load();
+//	    Stage stage = new Stage();
+//	    stage.setTitle("Report");
+//	    stage.setScene(new Scene(root));
+//
+//	    // get controller of new window and pass findings list
+//	    ReportViewerController controller = fxmlLoader.getController();
+//	    controller.init(findings);
+//
+//	    // show window
+//	    stage.show();
+//
+//	} catch (IOException ex) {
+//	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+//	}
 
     }
     
