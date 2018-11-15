@@ -8,7 +8,6 @@ package de.hoppmann.gui.view.mainView;
 import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
-import de.hoppmann.gui.oldView.MainGuiController;
 import de.hoppmann.gui.view.reportView.ReportMainViewController;
 import de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController;
 import de.hoppmann.gui.view.userDbView.MainViewUserDbController;
@@ -89,7 +88,7 @@ public class FindingsTabViewController implements Initializable {
 	    stage.show();
 	    
 	} catch (IOException ex) {
-	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	    Logger.getLogger(FindingsTabViewController.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
     
@@ -183,7 +182,7 @@ public class FindingsTabViewController implements Initializable {
 
 	    
 	} catch (IOException ex) {
-	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+	    Logger.getLogger(FindingsTabViewController.class.getName()).log(Level.SEVERE, null, ex);
 	}
         
     }

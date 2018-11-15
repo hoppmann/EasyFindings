@@ -10,7 +10,6 @@ import de.hoppmann.createReport.CreateReport;
 import de.hoppmann.createReport.PreparePanelTable;
 import de.hoppmann.createReport.ReportRepository;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
-import de.hoppmann.gui.oldView.MainGuiController;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -85,12 +84,12 @@ public class ReportTabViewController implements Initializable {
 		writer.write(reportRepo.getReport());
 		writer.close();
 	    } catch (IOException ex) {
-		Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+		Logger.getLogger(ReportTabViewController.class.getName()).log(Level.SEVERE, null, ex);
 	    } finally {
 		try {
 		    writer.close();
 		} catch (IOException ex) {
-		    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
+		    Logger.getLogger(ReportTabViewController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	    }
 	}

@@ -71,20 +71,6 @@ public class ReportMainViewController implements Initializable {
             return false;
         }
         reportTabViewController.init(findings, reportRepo);
-        reportRepo.addGeneToPanel("COL1A1");
-        reportRepo.addGeneToPanel("SHROOM3");
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         return true;
     }
@@ -185,7 +171,6 @@ public class ReportMainViewController implements Initializable {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue){
                     entryTabViewController.init(reportRepo);
-                    System.out.println("TO BE IMPLEMENTED");
                 }
             }
         });
