@@ -29,7 +29,7 @@ public class DbOperations {
      */
     public static ResultSet execute(String cmd, Connection conn) {
 	// check  if DB is connected
-	if (ConnectionBuilder.hasConnection() == false){
+	if (conn == null){
 	    return null;
 	}
 	

@@ -7,10 +7,14 @@
 package de.hoppmann.createReport;
 
 import de.hoppmann.config.Config;
+import de.hoppmann.database.geneInfoDB.ConnectGeneInfoDb;
+import de.hoppmann.database.geneInfoDB.ConnectGeneInfoSQLite;
+import de.hoppmann.database.geneInfoDB.GeneInfoDbConnectionBuilder;
+import de.hoppmann.database.geneInfoDB.GeneInfoDbConnectionHolder;
+import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
-import de.hoppmann.database.OldImplementation.UserDB;
 import de.hoppmann.database.userDB.DbOperations;
 import java.io.File;
 import java.sql.ResultSet;
@@ -26,7 +30,7 @@ import java.util.logging.Logger;
  *
  * @author hoppmann
  */
-public class PrepareNegativeFindings extends UserDB {
+public class PrepareNegativeFindings{
 
 
 
@@ -69,6 +73,7 @@ public class PrepareNegativeFindings extends UserDB {
 	this.findings = findings;
 	
 	
+        
 	connectGeneInfoDB();
 	
 	
@@ -211,24 +216,14 @@ public class PrepareNegativeFindings extends UserDB {
     
     private void connectGeneInfoDB () {
 
-	// get current path of program
-	String curDir = System.getProperty("user.dir");
-	File geneInfoDB = new File(curDir + File.separator + "DBs" + File.separator + dbName);
+        
+        boolean success = new ConnectGeneInfoDb(new ConnectGeneInfoSQLite()).connectGeneInfoDbSqLite();
 
-	// connect to geneInfo.db
-        
-        
-        
-        
-        
-        
-        
-        
-        // TO BE ADOPTED
-        
-        
-	conn = connect(geneInfoDB);
 
+
+//        System.out.println(success);
+//        System.out.println(GeneInfoDbConnectionHolder.getInstance().getConnection());
+        
     }
     
     
@@ -248,22 +243,26 @@ public class PrepareNegativeFindings extends UserDB {
 	    String query = "SELECT " + arCol + ", " + adCol + ", " + xlrCol + ", " + xldCol
 		    + " from hg19 where " + geneNameCol + " == '" + geneName + "'";
 	    
-	    ResultSet rs = DbOperations.execute(query, conn);
+            
+            
+	    ResultSet rs = DbOperations.execute(query, GeneInfoDbConnectionHolder.getInstance().getConnection());
 	    Set<String> moiSet = new TreeSet();
-	    if (rs.next()) {
-		if (rs.getBoolean(arCol)) {
-		    moiSet.add("AR");
-		}
-		if (rs.getBoolean(adCol)) {
-		    moiSet.add("AD");
-		}
-		if (rs.getBoolean(xlrCol)) {
-		    moiSet.add("XLR");
-		}
-		if (rs.getBoolean(xldCol)) {
-		    moiSet.add("XLD");
-		}
-	    }
+//            if (rs != null){
+                if (rs.next()) {
+                    if (rs.getBoolean(arCol)) {
+                        moiSet.add("AR");
+                    }
+                    if (rs.getBoolean(adCol)) {
+                        moiSet.add("AD");
+                    }
+                    if (rs.getBoolean(xlrCol)) {
+                        moiSet.add("XLR");
+                    }
+                    if (rs.getBoolean(xldCol)) {
+                        moiSet.add("XLD");
+                    }
+                }
+//            }
 	    
 	    moi = String.join(", ", moiSet);
 
