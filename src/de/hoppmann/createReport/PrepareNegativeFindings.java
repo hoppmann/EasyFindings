@@ -219,11 +219,6 @@ public class PrepareNegativeFindings{
         
         boolean success = new ConnectGeneInfoDb(new ConnectGeneInfoSQLite()).connectGeneInfoDbSqLite();
 
-
-
-//        System.out.println(success);
-//        System.out.println(GeneInfoDbConnectionHolder.getInstance().getConnection());
-        
     }
     
     
@@ -247,22 +242,20 @@ public class PrepareNegativeFindings{
             
 	    ResultSet rs = DbOperations.execute(query, GeneInfoDbConnectionHolder.getInstance().getConnection());
 	    Set<String> moiSet = new TreeSet();
-//            if (rs != null){
-                if (rs.next()) {
-                    if (rs.getBoolean(arCol)) {
-                        moiSet.add("AR");
-                    }
-                    if (rs.getBoolean(adCol)) {
-                        moiSet.add("AD");
-                    }
-                    if (rs.getBoolean(xlrCol)) {
-                        moiSet.add("XLR");
-                    }
-                    if (rs.getBoolean(xldCol)) {
-                        moiSet.add("XLD");
-                    }
+            if (rs.next()) {
+                if (rs.getBoolean(arCol)) {
+                    moiSet.add("AR");
                 }
-//            }
+                if (rs.getBoolean(adCol)) {
+                    moiSet.add("AD");
+                }
+                if (rs.getBoolean(xlrCol)) {
+                    moiSet.add("XLR");
+                }
+                if (rs.getBoolean(xldCol)) {
+                    moiSet.add("XLD");
+                }
+            }
 	    
 	    moi = String.join(", ", moiSet);
 

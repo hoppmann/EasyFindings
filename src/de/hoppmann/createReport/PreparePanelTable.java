@@ -6,7 +6,10 @@
 
 package de.hoppmann.createReport;
 
-import de.hoppmann.database.OldImplementation.UserDB;
+//import de.hoppmann.database.OldImplementation.UserDB;
+import de.hoppmann.database.geneInfoDB.ConnectGeneInfoDb;
+import de.hoppmann.database.geneInfoDB.ConnectGeneInfoSQLite;
+import de.hoppmann.database.geneInfoDB.GeneInfoDbConnectionHolder;
 import de.hoppmann.database.userDB.DbOperations;
 import java.io.File;
 import java.sql.ResultSet;
@@ -25,7 +28,7 @@ import java.util.logging.Logger;
  *
  * @author hoppmann
  */
-public class PreparePanelTable extends UserDB {
+public class PreparePanelTable {
 
 
     ///////////////////////////
@@ -77,8 +80,7 @@ public class PreparePanelTable extends UserDB {
         //TO BE ADDED
         
         
-	// connect to geneInfo.db
-	conn = connect(geneInfoDB);
+        boolean success = new ConnectGeneInfoDb(new ConnectGeneInfoSQLite()).connectGeneInfoDbSqLite();
 	
     }
 	
@@ -171,7 +173,7 @@ public class PreparePanelTable extends UserDB {
 		
 		// query current gene and retrieve variables
 		
-		ResultSet rs = DbOperations.execute(query, conn);
+		ResultSet rs = DbOperations.execute(query, GeneInfoDbConnectionHolder.getInstance().getConnection());
 		while (rs.next()) {
 
 		    geneName = rs.getString(geneNameCol).toUpperCase();
