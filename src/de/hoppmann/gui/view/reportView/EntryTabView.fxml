@@ -11,15 +11,15 @@
       <Label layoutX="10.0" layoutY="20.0" prefHeight="25.0" prefWidth="90.0" text="C/O" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0" />
       <TextField fx:id="coField" layoutX="110.0" layoutY="20.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="20.0" />
       <Label layoutX="10.0" layoutY="60.0" prefHeight="25.0" prefWidth="90.0" text="Patient" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0" />
-      <TextField fx:id="patientField" layoutX="110.0" layoutY="60.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="60.0" />
+      <TextField fx:id="patientInfoField" layoutX="110.0" layoutY="60.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="60.0" />
       <Label layoutX="10.0" layoutY="100.0" prefHeight="25.0" prefWidth="90.0" text="Material" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0" />
       <TextField fx:id="materialField" layoutX="110.0" layoutY="100.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0" />
       <Label layoutX="10.0" layoutY="140.0" prefHeight="25.0" prefWidth="90.0" text="Indications" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="140.0" />
       <TextField fx:id="indicationField" layoutX="110.0" layoutY="140.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="140.0" />
-      <Label layoutX="10.0" layoutY="220.0" prefHeight="25.0" prefWidth="90.0" text="Arrival date" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="220.0" />
-      <TextField fx:id="arrivalDateField" layoutX="110.0" layoutY="220.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="220.0" />
       <Label layoutX="10.0" layoutY="180.0" prefHeight="25.0" prefWidth="90.0" text="Assessment" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="180.0" />
       <TextField fx:id="assessmentField" layoutX="110.0" layoutY="180.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="180.0" />
+      <Label layoutX="10.0" layoutY="220.0" prefHeight="25.0" prefWidth="90.0" text="Material arrival" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="220.0" />
+      <TextField fx:id="arrivalDateField" layoutX="110.0" layoutY="220.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="220.0" />
       <Label layoutX="14.0" layoutY="254.0" prefHeight="25.0" prefWidth="90.0" text="Sender" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="260.0" />
       <ComboBox fx:id="senderBox" layoutX="94.0" layoutY="254.0" onAction="#senderBoxAction" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="260.0" />
       <Label layoutX="14.0" layoutY="294.0" prefHeight="25.0" prefWidth="90.0" text="Diag Method" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="300.0" />

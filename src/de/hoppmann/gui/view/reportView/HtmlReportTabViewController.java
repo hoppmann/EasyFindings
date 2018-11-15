@@ -20,9 +20,9 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author hoppmann
  */
-public class HtmlReportViewController implements Initializable {
+public class HtmlReportTabViewController implements Initializable {
 
-    @FXML private AnchorPane htmlReportView;
+    @FXML private AnchorPane htmlReportTabView;
     @FXML private TextArea htmlReportArea;
     private ReportRepository reportRepo;
     
@@ -34,7 +34,6 @@ public class HtmlReportViewController implements Initializable {
     
     public void init(ReportRepository reportRepo) {
         this.reportRepo = reportRepo;
-        System.out.println("got here");
                 
         htmlReportArea.setText(reportRepo.getReport());
     }

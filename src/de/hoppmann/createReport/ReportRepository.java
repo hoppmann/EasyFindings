@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
@@ -39,7 +41,7 @@ public class ReportRepository implements IAddressInfo {
     private final String findingsPH = "${findings}";
     private final String assessmentPH = "${conclusion}";
     private final String genePanelTablePH = "${genePanelTable}";
-    private final String materialRecievalDatePH = "${materialReceival}";
+    private final String materialArrivalDatePH = "${materialReceival}";
     
     
     
@@ -67,7 +69,7 @@ public class ReportRepository implements IAddressInfo {
     private String findingsGeneTable = "NA";
     private String assessment = "NA";
     private String genePanelTable = "NA";
-    private String materialRecielvalDate = "NA";
+    private String materialArrivalDate = "NA";
 
 
     
@@ -83,6 +85,8 @@ public class ReportRepository implements IAddressInfo {
     
 
     // gene panel information
+//    private List genePanelList = new LinkedList();
+    private Set panel = new TreeSet();
     
     
 
@@ -91,6 +95,7 @@ public class ReportRepository implements IAddressInfo {
 
     // misc
     private String report;
+    private String billingReport;
 
 
 
@@ -368,12 +373,12 @@ public class ReportRepository implements IAddressInfo {
 	this.genePanelTable = genePanelTable;
     }
 
-    public String getMaterialRecielvalDate() {
-	return materialRecielvalDate;
+    public String getMaterialArrivalDate() {
+	return materialArrivalDate;
     }
 
-    public void setMaterialRecielvalDate(String materialRecielvalDate) {
-	this.materialRecielvalDate = materialRecielvalDate;
+    public void setMaterialArrivalDate(String materialArrivalDate) {
+	this.materialArrivalDate = materialArrivalDate;
     }
     
     
@@ -461,6 +466,21 @@ public class ReportRepository implements IAddressInfo {
     
     
     
+    ////////////////////
+    //////// Panel Genes
+
+    public Set getPanel() {
+        return panel;
+    }
+
+    public void setPanel(Set panel) {
+        this.panel = panel;
+    }
+
+    public void addGeneToPanel (String newGene){
+        panel.add(newGene);
+    }
+    
     
     
     
@@ -476,6 +496,15 @@ public class ReportRepository implements IAddressInfo {
         this.report = report;
     }
 
+    public String getBillingReport() {
+        return billingReport;
+    }
+
+    public void setBillingReport(String billingReport) {
+        this.billingReport = billingReport;
+    }
+
+    
     
     
     
@@ -537,7 +566,7 @@ public class ReportRepository implements IAddressInfo {
     }
 
     public String getMaterialRecievalDatePH() {
-	return materialRecievalDatePH;
+	return materialArrivalDatePH;
     }
 
     public String getReceiverAddressPH() {

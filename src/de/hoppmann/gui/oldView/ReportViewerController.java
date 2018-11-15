@@ -12,8 +12,6 @@ import de.hoppmann.database.OldImplementation.ReceiverDB;
 import de.hoppmann.database.OldImplementation.UserDB;
 import de.hoppmann.createReport.ReportRepository;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
-import de.hoppmann.gui.oldView.CheckDBController;
-import de.hoppmann.gui.oldView.MainGuiController;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -266,7 +264,7 @@ public class ReportViewerController implements Initializable {
 	dateOfMaterialArrival.textProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		reportData.setMaterialRecielvalDate(newValue);
+		reportData.setMaterialArrivalDate(newValue);
 	    }
 	});
 	
@@ -431,7 +429,7 @@ public class ReportViewerController implements Initializable {
 	materialField.setText(reportData.getMaterial());
 	indicationField.setText(reportData.getIndication());
 	assessmentField.setText(reportData.getAssessment());
-	dateOfMaterialArrival.setText(reportData.getMaterialRecielvalDate());
+	dateOfMaterialArrival.setText(reportData.getMaterialArrivalDate());
 	
     }
     
@@ -639,9 +637,9 @@ public class ReportViewerController implements Initializable {
     private void refreshButtonAction (ActionEvent event) {
 	
 	// create panel table
-	panelTable.createReportTable(panelGenes);
-	String genePanelTable = panelTable.getPanelTable();
-	reportData.setGenePanelTable(genePanelTable);
+//	panelTable.createReportTable(panelGenes);
+//	String genePanelTable = panelTable.getPanelTable();
+//	reportData.setGenePanelTable(genePanelTable);
 
 	// replace values
 	createReport.replaceValues();
@@ -651,9 +649,9 @@ public class ReportViewerController implements Initializable {
 	htmlEditor.setHtmlText(report);
 	
 	// add billing table to billing tab
-	panelTable.createBillingTable(panelGenes);
-	String billingTable = panelTable.getBillingTable();
-	billingEditor.setHtmlText(billingTable);
+//	panelTable.createBillingTable(panelGenes);
+//	String billingTable = panelTable.getBillingTable();
+//	billingEditor.setHtmlText(billingTable);
 	
 	// switch to html tab
 	tabPane.getSelectionModel().select(reportTab);

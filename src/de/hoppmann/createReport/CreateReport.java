@@ -85,7 +85,7 @@ public class CreateReport {
         replace(reportData.getDiagMethodPH(), reportData.getDiagMethod().get(reportData.getDiagMethodKey()));
         replace(reportData.getPatientPH(), reportData.getPatientInfo());
         replace(reportData.getMaterialPH(), reportData.getMaterial());
-	replace(reportData.getMaterialRecievalDatePH(), reportData.getMaterialRecielvalDate());
+	replace(reportData.getMaterialRecievalDatePH(), reportData.getMaterialArrivalDate());
         replace(reportData.getIndicationPH(), reportData.getIndication());
                 
         // add method box

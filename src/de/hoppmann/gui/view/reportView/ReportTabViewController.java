@@ -7,6 +7,7 @@ package de.hoppmann.gui.view.reportView;
 
 import de.hoppmann.config.Config;
 import de.hoppmann.createReport.CreateReport;
+import de.hoppmann.createReport.PreparePanelTable;
 import de.hoppmann.createReport.ReportRepository;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.oldView.MainGuiController;
@@ -157,6 +158,10 @@ public class ReportTabViewController implements Initializable {
 	createReport.prepareFindingGenesTable();
 	
         
+        
+        preparePanelTable();
+        
+        
         if (templateOk) {
             createReport.replaceValues();
             reportRepo.setReport(createReport.getReport());
@@ -165,6 +170,13 @@ public class ReportTabViewController implements Initializable {
     }
     
     
+    
+    
+    private void preparePanelTable() {
+
+        PreparePanelTable panelTable = new PreparePanelTable();
+	reportRepo.setGenePanelTable(panelTable.createReportTable(reportRepo.getPanel()));
+    }
     
     
     

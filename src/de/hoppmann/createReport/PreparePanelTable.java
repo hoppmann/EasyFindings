@@ -31,7 +31,7 @@ public class PreparePanelTable extends UserDB {
     //////// variables ////////
     ///////////////////////////
     
-    private String panelTable;
+    private String reportPanelTable;
     private String billingTable;
     
     
@@ -89,26 +89,28 @@ public class PreparePanelTable extends UserDB {
     //////// guide methods
     
     // create table for reprort (no multiplier)
-    public void createReportTable(String inputText) {
+    public String createReportTable(Set panel) {
 	
-	Set<String> geneList = createPanelList(inputText);
-	gatherGeneInfos(geneList);
+	gatherGeneInfos(panel);
 	
-	// if panel genes are given, prepare table, else deleat table if exists
-	panelTable = "";
-	if(geneList.size() > 0){
-	    panelTable = prepareTable(geneList, false);
+	// if panel genes are given, prepare table, else delet table if exists
+	reportPanelTable = "";
+	if(panel.size() > 0){
+	    reportPanelTable = prepareTable(panel, false);
 	}
 		
+        return reportPanelTable;
     }
+    
+    
     
     
     
     // create table for billing (include multiplier)
-    public void createBillingTable(String inputText) {
-	Set<String> geneList = createPanelList(inputText);
-	gatherGeneInfos(geneList);
-	billingTable = prepareTable(geneList, true);
+    public String createBillingTable(Set panel) {
+	gatherGeneInfos(panel);
+	billingTable = prepareTable(panel, true);
+        return billingTable;
     }
     
     
@@ -116,35 +118,6 @@ public class PreparePanelTable extends UserDB {
     
 
 
-    
-    
-    
-    /////////////////////////////////
-    // create gene set from textfiled
-    private Set createPanelList(String inputText) {
-	
-	// check if input not null if so split text into set (avoid duplications
-	Set<String> geneList = new TreeSet<>();
-	if (inputText != null) {
-	    
-	    
-	    // remove white spaces
-	    List<String> tmpList = Arrays.asList(inputText.split("\n"));
-	    for (String curGene : tmpList) {
-	
-		// skip empty lines or lines containing only white spaces
-		if (curGene.replaceAll("\\s", "").equals("")){
-		    continue;
-		}
-		geneList.add(curGene.replaceAll("\\s", ""));
-	    }
-	}
-	return geneList;
-	
-    }
-	
-    
-    
     
     
     
@@ -357,13 +330,13 @@ public class PreparePanelTable extends UserDB {
     //////// getter / setter ////////
     /////////////////////////////////
 
-    public String getPanelTable() {
-	return panelTable;
-    }
-
-    public String getBillingTable() {
-	return billingTable;
-    }
+//    public String getPanelTable() {
+//	return reportPanelTable;
+//    }
+//
+//    public String getBillingTable() {
+//	return billingTable;
+//    }
 
     
     

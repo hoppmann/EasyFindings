@@ -6,16 +6,13 @@
 package de.hoppmann.gui.view.reportView;
 
 import de.hoppmann.createReport.ReportRepository;
-import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.receiverDB.AddressDbRepository;
-import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.view.userDbView.AddressTabController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -32,7 +29,7 @@ public class ReportMainViewController implements Initializable {
     
     @FXML private BillingReportTabViewController billingReportTabViewController;
     @FXML private EntryTabViewController entryTabViewController;
-    @FXML private HtmlReportViewController htmlReportViewController;
+    @FXML private HtmlReportTabViewController htmlReportTabViewController;
     @FXML private ReportTabViewController reportTabViewController;
     @FXML private AddressTabController addressTabController;
     @FXML private Label infoLabel;
@@ -74,7 +71,8 @@ public class ReportMainViewController implements Initializable {
             return false;
         }
         reportTabViewController.init(findings, reportRepo);
-        
+        reportRepo.addGeneToPanel("COL1A1");
+        reportRepo.addGeneToPanel("SHROOM3");
         
         
         
@@ -121,14 +119,12 @@ public class ReportMainViewController implements Initializable {
         
         
         
-        
         // add tab change listener
         htmlReportTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue){
-                    System.out.println("TO BE IMPLEMENTED");
-                            
+                    htmlReportTabViewController.init(reportRepo);
                 }
             }
         });
@@ -143,9 +139,7 @@ public class ReportMainViewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue){
-//                    billingReportTabViewController.init(reportRepo);
-                    System.out.println("TO BE IMPLEMENTED");
-                            
+                    billingReportTabViewController.init(reportRepo);
                 }
             }
         });
@@ -190,10 +184,15 @@ public class ReportMainViewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue){
+                    entryTabViewController.init(reportRepo);
                     System.out.println("TO BE IMPLEMENTED");
                 }
             }
         });
+        
+        
+        
+        
 
 
     }    

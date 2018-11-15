@@ -5,6 +5,7 @@
  */
 package de.hoppmann.gui.view.reportView;
 
+import de.hoppmann.createReport.PreparePanelTable;
 import de.hoppmann.createReport.ReportRepository;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.HTMLEditor;
+
+
 
 /**
  * FXML Controller class
@@ -29,12 +32,23 @@ public class BillingReportTabViewController implements Initializable {
     
   
     
+    
+    
+    
     public void init(ReportRepository reportRepo) {
-        
-        
-        
+        PreparePanelTable panelTable = new PreparePanelTable();
+        reportRepo.setBillingReport(panelTable.createBillingTable(reportRepo.getPanel()));
+        billingEditor.setHtmlText(reportRepo.getBillingReport());
         
     }
+    
+    
+    
+    
+    
+    
+    
+
     
     
     
@@ -47,6 +61,8 @@ public class BillingReportTabViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
 
     }    
     
