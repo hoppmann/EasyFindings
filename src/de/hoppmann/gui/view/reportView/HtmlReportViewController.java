@@ -34,6 +34,8 @@ public class HtmlReportViewController implements Initializable {
     
     public void init(ReportRepository reportRepo) {
         this.reportRepo = reportRepo;
+        System.out.println("got here");
+                
         htmlReportArea.setText(reportRepo.getReport());
     }
     

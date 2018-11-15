@@ -217,14 +217,12 @@ public class MainViewUserDbController implements Initializable {
 	addressTabController.injectMainController(this);
 
 	
-	
-	
 	// tab change listener
 	addressTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
 	    @Override
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 		if (newValue){
-		    addressTabController.init(new AddressDbRepository());
+		    addressTabController.init(new AddressDbRepository(), infoLabel);
 		}
 	    }
 	});

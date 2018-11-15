@@ -10,7 +10,8 @@ package de.hoppmann.database.userDB.receiverDB;
  *
  * @author hoppmann
  */
-public class AddressInfo {
+public class AddressInfo 
+implements IAddressInfo{
 
 
     private int id;
@@ -49,58 +50,72 @@ public class AddressInfo {
     ///////////////////////////////
     
     
+    @Override
     public int getiD() {
 	return id;
     }
-
+    
+    @Override
     public void setiD(int iD) {
 	this.id = iD;
     }
-
+    
+    @Override
     public String getTitle() {
 	return title;
     }
 
+    @Override
     public void setTitle(String title) {
 	this.title = title;
     }
 
+    @Override
     public String getName() {
 	return name;
     }
 
+    @Override
     public void setName(String name) {
 	this.name = name;
     }
 
+    @Override
     public String getAddress() {
 	return address;
     }
 
+    @Override
     public void setAddress(String address) {
 	this.address = address;
     }
 
+    @Override
     public String getCity() {
 	return city;
     }
 
+    @Override
     public void setCity(String city) {
 	this.city = city;
     }
 
+    @Override
     public String getZipCode() {
 	return zipCode;
     }
 
+    @Override
     public void setZipCode(String zipCode) {
 	this.zipCode = zipCode;
     }
 
+    @Override
     public String getCountry() {
 	return country;
     }
 
+    @Override
     public void setCountry(String country) {
 	this.country = country;
     }

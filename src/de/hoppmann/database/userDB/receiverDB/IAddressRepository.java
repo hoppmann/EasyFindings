@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hoppmann.database.userDB.interfaces;
+package de.hoppmann.database.userDB.receiverDB;
 
-import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import java.util.List;
 
 /**
@@ -15,11 +14,11 @@ import java.util.List;
 public interface IAddressRepository {
     
     public List<String> getNameList();
-    public AddressInfo retrieveAddressInfo(String name);
+    public boolean retrieveAddressInfo(IAddressInfo aInfo);
     public boolean isValidRepo();
     public boolean makeRepoValid();
-    public void newAddress(AddressInfo aInfo);
-    public void saveAddress(AddressInfo aInfo);
-    public void removeAddress(AddressInfo aInfo);
+    public void newAddress(IAddressInfo aInfo);
+    public void saveAddress(IAddressInfo aInfo);
+    public void removeAddress(IAddressInfo aInfo);
     
 }

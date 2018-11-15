@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -36,7 +37,7 @@ public class ReportMainViewController implements Initializable {
     @FXML private Tab reportTab;
     @FXML private Tab htmlReportTab;
     @FXML private Tab billingReportTab;
-//    @FXML private Tab addressTab;
+    @FXML private Tab addressesTab;
     @FXML private Tab entryMaskTab;
     
     
@@ -48,7 +49,12 @@ public class ReportMainViewController implements Initializable {
     
     
     
-    
+    @FXML
+    private void closeButtonAction () {
+        Stage stage = (Stage) infoLabel.getScene().getWindow();
+        stage.close();
+
+    }
     
     
     
@@ -65,6 +71,18 @@ public class ReportMainViewController implements Initializable {
             return false;
         }
         reportTabViewController.init(findings, reportRepo);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         return true;
@@ -86,17 +104,22 @@ public class ReportMainViewController implements Initializable {
 
 
 
-        // add tab change listener
         
+        
+        
+        // add tab change listener
         htmlReportTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue){
-                    htmlReportViewController.init(reportRepo);
+                    System.out.println("TO BE IMPLEMENTED");
+                            
                 }
             }
         });
 
+        
+        
         
         
         
@@ -105,22 +128,27 @@ public class ReportMainViewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue){
-                    billingReportTabViewController.init(reportRepo);
+//                    billingReportTabViewController.init(reportRepo);
+                    System.out.println("TO BE IMPLEMENTED");
+                            
                 }
             }
         });
 
 
         
-//        addressTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-//                if (newValue){
-//                    addressTabController.init(new AddressDbRepository());
-//                }
-//            }
-//        });
+        addressesTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue){
+                    addressTabController.init(new AddressDbRepository(), infoLabel);
+                }
+            }
+        });
 
+        
+        
+        
         
         
         entryMaskTab.selectedProperty().addListener(new ChangeListener<Boolean>() {

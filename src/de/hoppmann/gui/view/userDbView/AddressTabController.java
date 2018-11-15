@@ -6,8 +6,9 @@
 package de.hoppmann.gui.view.userDbView;
 
 import de.hoppmann.database.userDB.ConnectionBuilder;
-import de.hoppmann.database.userDB.interfaces.IAddressRepository;
+import de.hoppmann.database.userDB.receiverDB.IAddressRepository;
 import de.hoppmann.database.userDB.receiverDB.AddressInfo;
+import de.hoppmann.database.userDB.receiverDB.IAddressInfo;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -34,8 +35,9 @@ public class AddressTabController implements Initializable {
 
     
     private IAddressRepository addressRepo;
-    private AddressInfo aInfo;
-    private Label infoLabel;
+//    private AddressInfo adrInfo;
+    private IAddressInfo aInfo;
+    private Label infoLabel = new Label();
     @FXML private MainViewUserDbController mainViewUserDbController;
     @FXML private TextField titleField;
     @FXML private TextField addressField;
@@ -50,13 +52,19 @@ public class AddressTabController implements Initializable {
     
     
     
+    private void newInfoStoreage() {
+        aInfo = new AddressInfo("", "", "", "", "", "", -1);
+    }
+    
+    
     
     
     
     @FXML
     private void newButtonAction(ActionEvent e) {
-	
-	aInfo = new AddressInfo("", "", "", "", "", "", -1);
+
+        newInfoStoreage();
+        
 	updateAddressInfoFromUI();
 	
 	addressRepo.newAddress(aInfo);
@@ -122,8 +130,8 @@ public class AddressTabController implements Initializable {
 
 	    addressRepo.removeAddress(aInfo);
 	    String removedName = aInfo.getName();
-	    aInfo = new AddressInfo("", "", "", "", "", "", -1);
-	    fillAddressFields();
+            newInfoStoreage();
+            fillAddressFields();
 	    updateNameBox();
 	    infoLabel.setText(removedName + " removed from database");
 	}
@@ -156,7 +164,6 @@ public class AddressTabController implements Initializable {
 	nameBox.getItems().clear();
 	nameBox.getItems().addAll(nameList);
 	TextFields.bindAutoCompletion(nameBox.getEditor(), nameList);
-		
 	if (aInfo != null) {
 	    nameBox.getSelectionModel().select(aInfo.getName());
 	}
@@ -184,15 +191,17 @@ public class AddressTabController implements Initializable {
     
     
     
-    public void init(IAddressRepository addressRepo) {
+    public void init(IAddressRepository addressRepo, Label infoLable) {
 	this.addressRepo = addressRepo;
-	
-	this.infoLabel = mainViewUserDbController.getInfoLabel();
-            if (ConnectionBuilder.hasConnection()){
+	this.infoLabel = infoLable;
+        
+        
+        if (ConnectionBuilder.hasConnection()){
             if (!addressRepo.isValidRepo()) {
                 addressRepo.makeRepoValid();
             }
-            updateNameBox();
+            
+        updateNameBox();
         }
     }
     
@@ -212,10 +221,14 @@ public class AddressTabController implements Initializable {
 	nameBox.valueProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		if (addressRepo.retrieveAddressInfo(newValue) != null){
-		    aInfo = addressRepo.retrieveAddressInfo(newValue);
-		    fillAddressFields();
-		}
+		
+                AddressInfo newInfo = new AddressInfo("", newValue, "", "", "", "", -1);
+                boolean success = addressRepo.retrieveAddressInfo(newInfo);
+                if (success) {
+                    aInfo = newInfo;
+                    fillAddressFields();
+                }
+                        
 	    }
 	});
 	

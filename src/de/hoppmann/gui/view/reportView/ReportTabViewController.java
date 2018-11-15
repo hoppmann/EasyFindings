@@ -143,18 +143,6 @@ public class ReportTabViewController implements Initializable {
     
     
     
-    @FXML
-    private void closeButtonAction(ActionEvent event){
-        Stage stage = (Stage) reportTabView.getScene().getWindow();
-        stage.close();
-    }
-    
-    
-    
-    
-    
-    
-    
     
     
     private void createReport() {

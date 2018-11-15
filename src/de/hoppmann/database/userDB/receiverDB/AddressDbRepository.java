@@ -9,7 +9,6 @@ package de.hoppmann.database.userDB.receiverDB;
 import de.hoppmann.database.userDB.DbOperations;
 import de.hoppmann.database.userDB.ConnectionHolder;
 import de.hoppmann.database.userDB.UserDbNamings;
-import de.hoppmann.database.userDB.interfaces.IAddressRepository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -56,7 +55,6 @@ public class AddressDbRepository implements IAddressRepository {
 	    String query = "select " + NAME_KEY + " from " + RECEIVER_TABLE;
 	    
 	    ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
-	    
 	    while (rs.next()){
 		nameList.add(rs.getString(NAME_KEY));
 	    }
@@ -65,6 +63,7 @@ public class AddressDbRepository implements IAddressRepository {
 	    Logger.getLogger(AddressDbRepository.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	Collections.sort(nameList, String.CASE_INSENSITIVE_ORDER);
+                
 	return nameList;
     }
 
@@ -80,36 +79,31 @@ public class AddressDbRepository implements IAddressRepository {
     
     
     @Override
-    public AddressInfo retrieveAddressInfo(String name) {
+    public boolean retrieveAddressInfo(IAddressInfo aInfo) {
 
-	AddressInfo aInfo = null;
-    
 	try {
-	    
-	    
-	    String query = "select * from " + RECEIVER_TABLE + " where " + NAME_KEY + " == '" + name + "'";
-	    
-	    ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
-	    
-	    
-	    if (rs.next()){
-		int id = Integer.parseInt(rs.getString(ID_KEY));
-		String title = rs.getString(TITLE_KEY);
-		String address = rs.getString(ADDRESS_KEY);
-		String zipCode = rs.getString(ZIP_CODE_KEY);
-		String city = rs.getString(CITY_KEY);
-		String country = rs.getString(COUNTRY_KEY);
-		
-		aInfo = new AddressInfo(title, name, address, city, zipCode, country, id);
+	    if (aInfo.getName() != null){
+                String query = "select * from " + RECEIVER_TABLE + " where " + NAME_KEY + " == '" + aInfo.getName() + "'";
 
-	    } 
+                ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
+                if (rs.next()){
+                    aInfo.setiD(Integer.parseInt(rs.getString(ID_KEY)));
+                    aInfo.setTitle(rs.getString(TITLE_KEY));
+                    aInfo.setAddress(rs.getString(ADDRESS_KEY));
+                    aInfo.setZipCode(rs.getString(ZIP_CODE_KEY));
+                    aInfo.setCity(rs.getString(CITY_KEY));
+                    aInfo.setCountry(rs.getString(COUNTRY_KEY));
+                }
+	    } else {
+                return false;
+            }
 	    
 	} catch (SQLException ex) {
 	    Logger.getLogger(AddressDbRepository.class.getName()).log(Level.SEVERE, null, ex);
 	}
 
 	
-	return aInfo;
+	return true;
 	
     }
 
@@ -219,7 +213,7 @@ public class AddressDbRepository implements IAddressRepository {
     
     
     @Override
-    public void newAddress(AddressInfo aInfo) {
+    public void newAddress(IAddressInfo aInfo) {
 	
 	// prepare query
 	String insertCmd = "INSERT INTO " + RECEIVER_TABLE 
@@ -244,8 +238,9 @@ public class AddressDbRepository implements IAddressRepository {
     
     
     @Override
-    public void saveAddress(AddressInfo aInfo) {
+    public void saveAddress(IAddressInfo aInfo) {
 	
+        
 	// perpare update command
 	String updateCmd = "REPLACE INTO " + RECEIVER_TABLE + " VALUES ( '" + aInfo.getiD() +
 		"', '" + aInfo.getTitle() + "', '" + aInfo.getName() + "', '" + aInfo.getAddress() + "', '" +
@@ -267,7 +262,7 @@ public class AddressDbRepository implements IAddressRepository {
     
     
     @Override
-    public void removeAddress(AddressInfo aInfo) {
+    public void removeAddress(IAddressInfo aInfo) {
 	
 	// prepare cmd
 	String removeCmd = "DELETE FROM " + RECEIVER_TABLE + " WHERE " + ID_KEY + 
