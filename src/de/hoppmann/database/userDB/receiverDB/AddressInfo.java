@@ -41,6 +41,18 @@ implements IAddressInfo{
     
     
     
+    @Override
+    public void clearStorage() {
+        title = "";
+        name = "";
+        address = "";
+        city = "";
+        zipCode = "";
+        country = "";
+        id = -1;
+    }
+    
+    
     
     
     
@@ -119,6 +131,7 @@ implements IAddressInfo{
     public void setReceiverCountry(String country) {
 	this.country = country;
     }
+
     
     
     

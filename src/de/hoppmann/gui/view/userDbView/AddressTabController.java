@@ -35,7 +35,6 @@ public class AddressTabController implements Initializable {
 
     
     private IAddressRepository addressRepo;
-//    private AddressInfo adrInfo;
     private IAddressInfo aInfo;
     private Label infoLabel = new Label();
     @FXML private MainViewUserDbController mainViewUserDbController;
@@ -52,18 +51,13 @@ public class AddressTabController implements Initializable {
     
     
     
-    private void newInfoStoreage() {
-        aInfo = new AddressInfo("", "", "", "", "", "", -1);
-    }
-    
-    
     
     
     
     @FXML
     private void newButtonAction(ActionEvent e) {
 
-        newInfoStoreage();
+        aInfo.clearStorage();
         
 	updateAddressInfoFromUI();
 	
@@ -84,12 +78,11 @@ public class AddressTabController implements Initializable {
     
     @FXML
     private void saveButtonAction(ActionEvent e) {
-	
 	if (aInfo != null){
 	    updateAddressInfoFromUI();
 	    addressRepo.saveAddress(aInfo);
 	    updateNameBox();
-	    infoLabel.setText(aInfo.getReceiverName() + " updated in database.");
+            infoLabel.setText(aInfo.getReceiverName() + " updated in database.");
 	}
     }
     
@@ -130,7 +123,7 @@ public class AddressTabController implements Initializable {
 
 	    addressRepo.removeAddress(aInfo);
 	    String removedName = aInfo.getReceiverName();
-            newInfoStoreage();
+            aInfo.clearStorage();
             fillAddressFields();
 	    updateNameBox();
 	    infoLabel.setText(removedName + " removed from database");
@@ -191,9 +184,10 @@ public class AddressTabController implements Initializable {
     
     
     
-    public void init(IAddressRepository addressRepo, Label infoLable) {
+    public void init(IAddressRepository addressRepo, Label infoLable, AddressInfo aInfo) {
 	this.addressRepo = addressRepo;
 	this.infoLabel = infoLable;
+        this.aInfo = aInfo;
         
         
         if (ConnectionBuilder.hasConnection()){
@@ -222,13 +216,13 @@ public class AddressTabController implements Initializable {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		
-                AddressInfo newInfo = new AddressInfo("", newValue, "", "", "", "", -1);
-                boolean success = addressRepo.retrieveAddressInfo(newInfo);
-                if (success) {
-                    aInfo = newInfo;
-                    fillAddressFields();
+                if (newValue != null){
+                    aInfo.setReceiverName(newValue);
+                    boolean success = addressRepo.retrieveAddressInfo(aInfo);
+                    if (success) {
+                        fillAddressFields();
+                    }
                 }
-                        
 	    }
 	});
 	

@@ -11,6 +11,8 @@ package de.hoppmann.database.userDB.receiverDB;
  */
 public interface IAddressInfo {
     
+    public void clearStorage();
+    
     public int getReceiverId();
 
     public void setReceiverId(int Id);

@@ -19,6 +19,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.hoppmann.database.userDB.interfaces.IConnectDB;
 import de.hoppmann.database.userDB.receiverDB.AddressDbRepository;
+import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -222,7 +223,7 @@ public class MainViewUserDbController implements Initializable {
 	    @Override
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 		if (newValue){
-		    addressTabController.init(new AddressDbRepository(), infoLabel);
+		    addressTabController.init(new AddressDbRepository(), infoLabel, new AddressInfo("", "", "", "", "", "", -1));
 		}
 	    }
 	});

@@ -82,7 +82,7 @@ public class AddressDbRepository implements IAddressRepository {
     public boolean retrieveAddressInfo(IAddressInfo aInfo) {
 
 	try {
-	    if (aInfo.getReceiverName() != null){
+	    if (aInfo.getReceiverName() != null && ! aInfo.getReceiverName().equals("")){
                 String query = "select * from " + RECEIVER_TABLE + " where " + NAME_KEY + " == '" + aInfo.getReceiverName() + "'";
 
                 ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());

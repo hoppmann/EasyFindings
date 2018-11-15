@@ -7,6 +7,7 @@ package de.hoppmann.gui.view.reportView;
 
 import de.hoppmann.createReport.ReportRepository;
 import de.hoppmann.database.userDB.receiverDB.AddressDbRepository;
+import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.view.userDbView.AddressTabController;
 import java.net.URL;
@@ -141,7 +142,7 @@ public class ReportMainViewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue){
-                    addressTabController.init(new AddressDbRepository(), infoLabel);
+                    addressTabController.init(new AddressDbRepository(), infoLabel, new AddressInfo("", "", "", "", "", "", -1));
                 }
             }
         });
