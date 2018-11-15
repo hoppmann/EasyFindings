@@ -5,9 +5,10 @@
  */
 package de.hoppmann.gui.view.userDbView;
 
+import de.hoppmann.database.userDB.ConnectSQLite;
+import de.hoppmann.database.userDB.ConnectUserDB;
 import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.receiverDB.IAddressRepository;
-import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import de.hoppmann.database.userDB.receiverDB.IAddressInfo;
 import java.net.URL;
 import java.util.List;
@@ -38,13 +39,13 @@ public class AddressTabController implements Initializable {
     private IAddressInfo aInfo;
     private Label infoLabel = new Label();
     @FXML private MainViewUserDbController mainViewUserDbController;
+    @FXML private AnchorPane addressTab;
     @FXML private TextField titleField;
     @FXML private TextField addressField;
     @FXML private TextField cityField;
     @FXML private TextField zipCodeField;
     @FXML private TextField countryField;
     @FXML private ComboBox<String> nameBox = new ComboBox<>();
-    @FXML private AnchorPane addressTab;
     
     
     
@@ -90,13 +91,13 @@ public class AddressTabController implements Initializable {
     
     
     
-    private void updateAddressInfoFromUI() {
+    public void updateAddressInfoFromUI() {
 	aInfo.setReceiverTitle(titleField.getText());
 	aInfo.setReceiverName(nameBox.getValue());
 	aInfo.setReceiverAddress(addressField.getText());
 	aInfo.setReceiverCity(cityField.getText());
 	aInfo.setReceiverZipCode(zipCodeField.getText());
-	aInfo.setReceiverCity(cityField.getText());
+	aInfo.setReceiverCountry(countryField.getText());
     }
     
     
@@ -184,20 +185,33 @@ public class AddressTabController implements Initializable {
     
     
     
-    public void init(IAddressRepository addressRepo, Label infoLable, AddressInfo aInfo) {
+    public boolean init(IAddressRepository addressRepo, Label infoLable, IAddressInfo aInfo) {
 	this.addressRepo = addressRepo;
 	this.infoLabel = infoLable;
         this.aInfo = aInfo;
         
-        
+        boolean isConnected = false;
+                
         if (ConnectionBuilder.hasConnection()){
+            isConnected = true;
+        } else {
+            isConnected = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
+        }
+        
+
+        
+        if (isConnected){
             if (!addressRepo.isValidRepo()) {
                 addressRepo.makeRepoValid();
             }
             
-        updateNameBox();
-        }
+            updateNameBox();
+        } 
+        
+        return isConnected;
     }
+    
+    
     
     
     
@@ -219,6 +233,7 @@ public class AddressTabController implements Initializable {
                 if (newValue != null){
                     aInfo.setReceiverName(newValue);
                     boolean success = addressRepo.retrieveAddressInfo(aInfo);
+                    
                     if (success) {
                         fillAddressFields();
                     }

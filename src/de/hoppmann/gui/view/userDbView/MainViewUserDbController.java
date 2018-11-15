@@ -6,7 +6,10 @@
 package de.hoppmann.gui.view.userDbView;
 
 import de.hoppmann.config.Config;
+import de.hoppmann.database.userDB.ConnectSQLite;
+import de.hoppmann.database.userDB.ConnectUserDB;
 import de.hoppmann.database.userDB.ConnectionBuilder;
+import de.hoppmann.database.userDB.ConnectionHolder;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +24,9 @@ import de.hoppmann.database.userDB.interfaces.IConnectDB;
 import de.hoppmann.database.userDB.receiverDB.AddressDbRepository;
 import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tab;
@@ -144,6 +150,10 @@ public class MainViewUserDbController implements Initializable {
     
 
 
+    
+    
+    
+    
     // close window
     @FXML
     private void closeWindow () {
@@ -158,14 +168,28 @@ public class MainViewUserDbController implements Initializable {
     
     
     
+    
+    
+    
+    
     // connect to DB
     private boolean connect(File dbFile, String user, String password){
-	    
-	boolean success = connectDB.connect(dbFile.getAbsolutePath(), user, password);
+
+        boolean success = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB(dbFile.getAbsolutePath(), user, password);
+        
 	if (success) {
-	    infoLabel.setText("DB created.");
-	    dbConnectionLabel.setText(dbFile.getAbsolutePath());
-	} else {
+            String dbName = "";
+            try {
+                String url = ConnectionHolder.getInstance().getConnection().getMetaData().getURL();
+                dbName = new File(url).getName();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainViewUserDbController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            infoLabel.setText("Connection to " + dbName + " established.");
+            dbConnectionLabel.setText(dbName);
+
+        } else {
 	    infoLabel.setText("Unable to connect to DB.");
 	}
 
@@ -179,24 +203,33 @@ public class MainViewUserDbController implements Initializable {
     
     
     
+    
+    
+    
+    
     public void init(IConnectDB connectDB, FindingsRepository findings){
         this.connectDB = connectDB;
 	this.findings = findings;
 	
-	boolean success = false;
-	// connect to DB if available
-	if (config.getDbFullPath() != null && new File(config.getDbFullPath()).exists()){
-	    success = connect(new File(config.getDbFullPath()), "", "");
-	}
-	
+        
+	boolean success = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
+        
 	
 	if (success){
-	    // initialize lower views
+            String dbName = "";
+            try {
+                String url = ConnectionHolder.getInstance().getConnection().getMetaData().getURL();
+                dbName = new File(url).getName();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainViewUserDbController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            infoLabel.setText("Connection to " + dbName + " established.");
+            dbConnectionLabel.setText(dbName);
+            
+            // initialize lower views
 	    variantTabController.init(findings);
 	}
-	
-	
-
     }
 
     

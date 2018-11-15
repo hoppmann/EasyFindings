@@ -46,12 +46,13 @@ public class ReportRepository implements IAddressInfo {
     
     //// replacement values
     // Receiver address
-    private String title = "";
+    private int receiverID;
+    private String receiverTitle = "";
     private String receiverName = "Name";
     private String receiverAddress = "Straße";
     private String receiverCity = "Stadt";
-    private String zipCode = "";
-    private String country = "";
+    private String receiverZipCode = "";
+    private String receiverCountry = "";
     
     
     
@@ -195,6 +196,24 @@ public class ReportRepository implements IAddressInfo {
     }
     
 
+    
+    
+    
+        @Override
+    public void clearStorage() {
+        
+        receiverTitle = "";
+        receiverName = "";
+        receiverAddress = "";
+        receiverCity = "";
+        receiverZipCode = "";
+        receiverCountry = "";
+        receiverID = -1;
+    }
+
+    
+    
+    
 
     ///////////////////////////////
     //////// getter/setter ////////
@@ -369,32 +388,32 @@ public class ReportRepository implements IAddressInfo {
     
     @Override
     public String getReceiverTitle() {
-	return title;
+	return receiverTitle;
     }
 
     @Override
     public void setReceiverTitle(String title) {
-	this.title = title;
+	this.receiverTitle = title;
     }
 
     @Override
     public String getReceiverZipCode() {
-	return zipCode;
+	return receiverZipCode;
     }
 
     @Override
     public void setReceiverZipCode(String zipCode) {
-	this.zipCode = zipCode;
+	this.receiverZipCode = zipCode;
     }
 
     @Override
     public String getReceiverCountry() {
-	return country;
+	return receiverCountry;
     }
 
     @Override
     public void setReceiverCountry(String country) {
-	this.country = country;
+	this.receiverCountry = country;
     }
 
     @Override
@@ -430,14 +449,15 @@ public class ReportRepository implements IAddressInfo {
     
         @Override
     public int getReceiverId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return receiverID;
     }
 
     @Override
-    public void setReceiverId(int Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setReceiverId(int receiverID) {
+        this.receiverID = receiverID;
     }
 
+    
     
     
     
@@ -531,6 +551,7 @@ public class ReportRepository implements IAddressInfo {
     public String getSeqMethodPH() {
         return seqMethodPH;
     }
+
 
     
     

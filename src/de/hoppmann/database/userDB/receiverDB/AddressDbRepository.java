@@ -221,6 +221,7 @@ public class AddressDbRepository implements IAddressRepository {
 		 + ", " + CITY_KEY + ", " + COUNTRY_KEY + ") " 
 		+ " VALUES ( '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverAddress() + "', '" 
 		+ aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
+        
 	DbOperations.execute(insertCmd, ConnectionHolder.getInstance().getConnection());
 	
     }

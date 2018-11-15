@@ -6,6 +6,7 @@
 package de.hoppmann.gui.view.reportView;
 
 import de.hoppmann.createReport.ReportRepository;
+import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.receiverDB.AddressDbRepository;
 import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
@@ -14,6 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -105,6 +107,18 @@ public class ReportMainViewController implements Initializable {
 
 
 
+        reportTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    reportTabViewController.loadReport();
+                }
+            }
+        });
+        
+        
+        
+        
         
         
         
@@ -138,15 +152,35 @@ public class ReportMainViewController implements Initializable {
 
 
         
+        
+        
+        
+        
+        
         addressesTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue){
-                    addressTabController.init(new AddressDbRepository(), infoLabel, new AddressInfo("", "", "", "", "", "", -1));
+                    boolean isConnected = addressTabController.init(new AddressDbRepository(), infoLabel, reportRepo);
+                    if (!isConnected) {
+                        infoLabel.setText("WARNING: No DB connected!");
+                    }
                 }
             }
         });
 
+        
+        addressesTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue){
+                    addressTabController.updateAddressInfoFromUI();
+                }
+            }
+        });
+        
+        
+        
         
         
         

@@ -5,6 +5,7 @@
  */
 package de.hoppmann.gui.view.mainView;
 
+import de.hoppmann.database.userDB.ConnectionBuilder;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -37,6 +38,11 @@ public class MainViewController implements Initializable {
     
     @FXML
     private void closeButtonAction (ActionEvent event) {
+        
+        if (ConnectionBuilder.hasConnection()) {
+            ConnectionBuilder.closeConnection();
+        }
+        
         Stage stage = (Stage) infoLable.getScene().getWindow();
         stage.close();
     }

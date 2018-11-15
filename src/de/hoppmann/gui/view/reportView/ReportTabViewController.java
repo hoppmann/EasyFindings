@@ -93,9 +93,6 @@ public class ReportTabViewController implements Initializable {
 		}
 	    }
 	}
-
-
-
     }
     
     
@@ -103,10 +100,11 @@ public class ReportTabViewController implements Initializable {
     
     
     @FXML
-    private void refreshButtonAction(ActionEvent event){
+    protected void refreshButtonAction(ActionEvent event){
         createReport();
-        reportEditor.setHtmlText(reportRepo.getReport());
+        loadReport();
     }
+    
     
     
     
@@ -141,7 +139,9 @@ public class ReportTabViewController implements Initializable {
     
     
     
-    
+    protected void loadReport() {
+        reportEditor.setHtmlText(reportRepo.getReport());
+    }
     
     
     
@@ -175,7 +175,7 @@ public class ReportTabViewController implements Initializable {
         this.findings = findings;
         this.reportRepo = reportRepo;
         createReport();
-        reportEditor.setHtmlText(reportRepo.getReport());
+        loadReport();
     }
     
     

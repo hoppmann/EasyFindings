@@ -8,21 +8,14 @@ package de.hoppmann.gui.view.mainView;
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.InputRepository;
-import de.hoppmann.gui.view.reportView.ReportMainViewController;
 import de.hoppmann.operations.CreateTable;
 import de.hoppmann.operations.LoadInputFile;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
@@ -76,7 +69,6 @@ public class DataTabViewController implements Initializable {
 
         File inputFile = chooser.showOpenDialog(new Stage());
 
-        
         if (inputFile != null && inputFile.exists()){
             config.setInputPath(inputFile.getParent());
             loadInput = new LoadInputFile();
