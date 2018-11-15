@@ -82,17 +82,17 @@ public class AddressDbRepository implements IAddressRepository {
     public boolean retrieveAddressInfo(IAddressInfo aInfo) {
 
 	try {
-	    if (aInfo.getName() != null){
-                String query = "select * from " + RECEIVER_TABLE + " where " + NAME_KEY + " == '" + aInfo.getName() + "'";
+	    if (aInfo.getReceiverName() != null){
+                String query = "select * from " + RECEIVER_TABLE + " where " + NAME_KEY + " == '" + aInfo.getReceiverName() + "'";
 
                 ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
                 if (rs.next()){
-                    aInfo.setiD(Integer.parseInt(rs.getString(ID_KEY)));
-                    aInfo.setTitle(rs.getString(TITLE_KEY));
-                    aInfo.setAddress(rs.getString(ADDRESS_KEY));
-                    aInfo.setZipCode(rs.getString(ZIP_CODE_KEY));
-                    aInfo.setCity(rs.getString(CITY_KEY));
-                    aInfo.setCountry(rs.getString(COUNTRY_KEY));
+                    aInfo.setReceiverId(Integer.parseInt(rs.getString(ID_KEY)));
+                    aInfo.setReceiverTitle(rs.getString(TITLE_KEY));
+                    aInfo.setReceiverAddress(rs.getString(ADDRESS_KEY));
+                    aInfo.setReceiverZipCode(rs.getString(ZIP_CODE_KEY));
+                    aInfo.setReceiverCity(rs.getString(CITY_KEY));
+                    aInfo.setReceiverCountry(rs.getString(COUNTRY_KEY));
                 }
 	    } else {
                 return false;
@@ -219,8 +219,8 @@ public class AddressDbRepository implements IAddressRepository {
 	String insertCmd = "INSERT INTO " + RECEIVER_TABLE 
 		+ " (" + TITLE_KEY + ", " + NAME_KEY + ", " + ADDRESS_KEY + ", " + ZIP_CODE_KEY
 		 + ", " + CITY_KEY + ", " + COUNTRY_KEY + ") " 
-		+ " VALUES ( '" + aInfo.getTitle() + "', '" + aInfo.getName() + "', '" + aInfo.getAddress() + "', '" 
-		+ aInfo.getZipCode() + "', '" + aInfo.getCity() + "', '" +  aInfo.getCountry() + "')";
+		+ " VALUES ( '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverAddress() + "', '" 
+		+ aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
 	DbOperations.execute(insertCmd, ConnectionHolder.getInstance().getConnection());
 	
     }
@@ -242,9 +242,9 @@ public class AddressDbRepository implements IAddressRepository {
 	
         
 	// perpare update command
-	String updateCmd = "REPLACE INTO " + RECEIVER_TABLE + " VALUES ( '" + aInfo.getiD() +
-		"', '" + aInfo.getTitle() + "', '" + aInfo.getName() + "', '" + aInfo.getAddress() + "', '" +
-		aInfo.getZipCode() + "', '" + aInfo.getCity() + "', '" +  aInfo.getCountry() + "')";
+	String updateCmd = "REPLACE INTO " + RECEIVER_TABLE + " VALUES ( '" + aInfo.getReceiverId() +
+		"', '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverAddress() + "', '" +
+		aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
 
 	DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());
     }
@@ -266,7 +266,7 @@ public class AddressDbRepository implements IAddressRepository {
 	
 	// prepare cmd
 	String removeCmd = "DELETE FROM " + RECEIVER_TABLE + " WHERE " + ID_KEY + 
-		" == '" + aInfo.getiD() + "'";
+		" == '" + aInfo.getReceiverId() + "'";
 
 	ResultSet rs = DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
 	

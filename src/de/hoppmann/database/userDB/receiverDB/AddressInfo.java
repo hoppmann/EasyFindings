@@ -51,72 +51,72 @@ implements IAddressInfo{
     
     
     @Override
-    public int getiD() {
+    public int getReceiverId() {
 	return id;
     }
     
     @Override
-    public void setiD(int iD) {
+    public void setReceiverId(int iD) {
 	this.id = iD;
     }
     
     @Override
-    public String getTitle() {
+    public String getReceiverTitle() {
 	return title;
     }
 
     @Override
-    public void setTitle(String title) {
+    public void setReceiverTitle(String title) {
 	this.title = title;
     }
 
     @Override
-    public String getName() {
+    public String getReceiverName() {
 	return name;
     }
 
     @Override
-    public void setName(String name) {
+    public void setReceiverName(String name) {
 	this.name = name;
     }
 
     @Override
-    public String getAddress() {
+    public String getReceiverAddress() {
 	return address;
     }
 
     @Override
-    public void setAddress(String address) {
+    public void setReceiverAddress(String address) {
 	this.address = address;
     }
 
     @Override
-    public String getCity() {
+    public String getReceiverCity() {
 	return city;
     }
 
     @Override
-    public void setCity(String city) {
+    public void setReceiverCity(String city) {
 	this.city = city;
     }
 
     @Override
-    public String getZipCode() {
+    public String getReceiverZipCode() {
 	return zipCode;
     }
 
     @Override
-    public void setZipCode(String zipCode) {
+    public void setReceiverZipCode(String zipCode) {
 	this.zipCode = zipCode;
     }
 
     @Override
-    public String getCountry() {
+    public String getReceiverCountry() {
 	return country;
     }
 
     @Override
-    public void setCountry(String country) {
+    public void setReceiverCountry(String country) {
 	this.country = country;
     }
     

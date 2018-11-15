@@ -71,7 +71,7 @@ public class AddressTabController implements Initializable {
 	
 	updateNameBox();
 	
-	infoLabel.setText(aInfo.getName() + " added to database.");
+	infoLabel.setText(aInfo.getReceiverName() + " added to database.");
 	
     }
     
@@ -89,7 +89,7 @@ public class AddressTabController implements Initializable {
 	    updateAddressInfoFromUI();
 	    addressRepo.saveAddress(aInfo);
 	    updateNameBox();
-	    infoLabel.setText(aInfo.getName() + " updated in database.");
+	    infoLabel.setText(aInfo.getReceiverName() + " updated in database.");
 	}
     }
     
@@ -98,12 +98,12 @@ public class AddressTabController implements Initializable {
     
     
     private void updateAddressInfoFromUI() {
-	aInfo.setTitle(titleField.getText());
-	aInfo.setName(nameBox.getValue());
-	aInfo.setAddress(addressField.getText());
-	aInfo.setCity(cityField.getText());
-	aInfo.setZipCode(zipCodeField.getText());
-	aInfo.setCity(cityField.getText());
+	aInfo.setReceiverTitle(titleField.getText());
+	aInfo.setReceiverName(nameBox.getValue());
+	aInfo.setReceiverAddress(addressField.getText());
+	aInfo.setReceiverCity(cityField.getText());
+	aInfo.setReceiverZipCode(zipCodeField.getText());
+	aInfo.setReceiverCity(cityField.getText());
     }
     
     
@@ -120,7 +120,7 @@ public class AddressTabController implements Initializable {
 
 	// double check if deletion is desired
 	Alert deletionDialog = new Alert(Alert.AlertType.CONFIRMATION);
-	deletionDialog.setTitle("Remove " + aInfo.getName() + " from database?");
+	deletionDialog.setTitle("Remove " + aInfo.getReceiverName() + " from database?");
 	deletionDialog.setHeaderText(null);
 	deletionDialog.setContentText("This deletion can't be undone.");
 	deletionDialog.initOwner(infoLabel.getScene().getWindow());
@@ -129,7 +129,7 @@ public class AddressTabController implements Initializable {
 	if (result.get() == ButtonType.OK) {
 
 	    addressRepo.removeAddress(aInfo);
-	    String removedName = aInfo.getName();
+	    String removedName = aInfo.getReceiverName();
             newInfoStoreage();
             fillAddressFields();
 	    updateNameBox();
@@ -143,12 +143,12 @@ public class AddressTabController implements Initializable {
     
     private void fillAddressFields(){
 	if (aInfo != null){
-	    titleField.setText(aInfo.getTitle());
-	    nameBox.getSelectionModel().select(aInfo.getName());
-	    addressField.setText(aInfo.getAddress());
-	    cityField.setText(aInfo.getCity());
-	    zipCodeField.setText(aInfo.getZipCode());
-	    countryField.setText(aInfo.getCountry());
+	    titleField.setText(aInfo.getReceiverTitle());
+	    nameBox.getSelectionModel().select(aInfo.getReceiverName());
+	    addressField.setText(aInfo.getReceiverAddress());
+	    cityField.setText(aInfo.getReceiverCity());
+	    zipCodeField.setText(aInfo.getReceiverZipCode());
+	    countryField.setText(aInfo.getReceiverCountry());
 	} 
     }
     
@@ -165,7 +165,7 @@ public class AddressTabController implements Initializable {
 	nameBox.getItems().addAll(nameList);
 	TextFields.bindAutoCompletion(nameBox.getEditor(), nameList);
 	if (aInfo != null) {
-	    nameBox.getSelectionModel().select(aInfo.getName());
+	    nameBox.getSelectionModel().select(aInfo.getReceiverName());
 	}
     }
     

@@ -141,7 +141,7 @@ public class ReportViewerController implements Initializable {
 	titleField.textProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		reportData.setTitle(newValue);
+		reportData.setReceiverTitle(newValue);
 	    }
 	});
 	
@@ -149,7 +149,7 @@ public class ReportViewerController implements Initializable {
 	addressField.textProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		reportData.setReceiverStreet(newValue);
+		reportData.setReceiverAddress(newValue);
 	    }
 	});
 	
@@ -167,7 +167,7 @@ public class ReportViewerController implements Initializable {
 	zipCodeField.textProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		reportData.setZipCode(newValue);
+		reportData.setReceiverZipCode(newValue);
 	    }
 	});
 	
@@ -176,7 +176,7 @@ public class ReportViewerController implements Initializable {
 	countryField.textProperty().addListener(new ChangeListener<String>() {
 	    @Override
 	    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		reportData.setCountry(newValue);
+		reportData.setReceiverCountry(newValue);
 	    }
 	});
 	

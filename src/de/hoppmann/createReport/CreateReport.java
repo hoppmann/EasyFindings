@@ -122,14 +122,14 @@ public class CreateReport {
     private String prepareReceiverAddress() {
 	
 	List<String> addressParts = new LinkedList<>();
-	if (reportData.getTitle().equals("")) {
+	if (reportData.getReceiverTitle().equals("")) {
 	    addressParts.add(reportData.getReceiverName());
 	} else {
-	    addressParts.add(reportData.getTitle() + " " + reportData.getReceiverName());
+	    addressParts.add(reportData.getReceiverTitle() + " " + reportData.getReceiverName());
 	}
-	addressParts.add(reportData.getReceiverStreet());
-	addressParts.add("<strong>" + reportData.getZipCode() + " " + reportData.getReceiverCity() + "</strong>");
-	addressParts.add(reportData.getCountry());
+	addressParts.add(reportData.getReceiverAddress());
+	addressParts.add("<strong>" + reportData.getReceiverZipCode() + " " + reportData.getReceiverCity() + "</strong>");
+	addressParts.add(reportData.getReceiverCountry());
 
 	// return address as string
 	return  String.join("<br>\n", addressParts);

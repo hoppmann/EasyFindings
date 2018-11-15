@@ -11,33 +11,33 @@ package de.hoppmann.database.userDB.receiverDB;
  */
 public interface IAddressInfo {
     
-    public int getiD();
+    public int getReceiverId();
 
-    public void setiD(int iD);
+    public void setReceiverId(int Id);
 
-    public String getTitle();
+    public String getReceiverTitle();
 
-    public void setTitle(String title);
+    public void setReceiverTitle(String title);
 
-    public String getName();
+    public String getReceiverName();
 
-    public void setName(String name);
+    public void setReceiverName(String name);
 
-    public String getAddress();
+    public String getReceiverAddress();
 
-    public void setAddress(String address);
+    public void setReceiverAddress(String address);
 
-    public String getCity();
+    public String getReceiverCity();
     
-    public void setCity(String city);
+    public void setReceiverCity(String city);
 
-    public String getZipCode();
+    public String getReceiverZipCode();
 
-    public void setZipCode(String zipCode);
+    public void setReceiverZipCode(String zipCode);
 
-    public String getCountry();
+    public String getReceiverCountry();
 
-    public void setCountry(String country);
+    public void setReceiverCountry(String country);
 
     
 }

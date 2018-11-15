@@ -6,6 +6,7 @@
 
 package de.hoppmann.createReport;
 
+import de.hoppmann.database.userDB.receiverDB.IAddressInfo;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import java.util.Map;
  *
  * @author hoppmann
  */
-public class ReportRepository {
+public class ReportRepository implements IAddressInfo {
 
 
     ///////////////////////////
@@ -44,12 +45,19 @@ public class ReportRepository {
     
     
     //// replacement values
+    // Receiver address
     private String title = "";
     private String receiverName = "Name";
-    private String receiverStreet = "Straße";
+    private String receiverAddress = "Straße";
     private String receiverCity = "Stadt";
     private String zipCode = "";
     private String country = "";
+    
+    
+    
+    
+    
+    // Other Entries
     private String receiverCoLine = "";
     private String uklLogo = "NA";
     private String patientInfo = "Patient";
@@ -199,19 +207,8 @@ public class ReportRepository {
         return sender;
     }
 
-    public Map<String, String> getReceiverHeader() {
-	return receiverHeader;
-    }
-
-    public Map<String, String> getSeqMethod() {
-	return seqMethod;
-    }
-
-    public Map<String, String> getDiagMethod() {
-	return diagMethod;
-    }
-
-    public String getSenderKey() {
+    
+        public String getSenderKey() {
 	return senderKey;
     }
 
@@ -219,6 +216,17 @@ public class ReportRepository {
 	this.senderKey = senderKey;
     }
 
+    
+    public Map<String, String> getReceiverHeader() {
+	return receiverHeader;
+    }
+
+    
+    
+    
+    
+    
+    
     public String getSeqMethodKey() {
 	return seqMethodKey;
     }
@@ -227,6 +235,16 @@ public class ReportRepository {
 	this.seqMethodKey = seqMethodKey;
     }
 
+    
+    public Map<String, String> getSeqMethod() {
+	return seqMethod;
+    }
+
+    
+    
+    
+    
+    
     public String getDiagMethodKey() {
 	return diagMethodKey;
     }
@@ -235,9 +253,12 @@ public class ReportRepository {
 	this.diagMethodKey = diagMethokey;
     }
 
-    public String getReceiverAddressPH() {
-	return receiverAddressPH;
+    public Map<String, String> getDiagMethod() {
+	return diagMethod;
     }
+
+
+
 
     
     
@@ -248,6 +269,8 @@ public class ReportRepository {
     
     
     
+    
+
     
     
     
@@ -257,37 +280,7 @@ public class ReportRepository {
     //// general getter and setter
     
     
-    public String getReceiverName() {
-        return receiverName;
-    }
 
-    public String getSeqMethodPH() {
-        return seqMethodPH;
-    }
-
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
-    }
-
-    public String getReceiverCity() {
-        return receiverCity;
-    }
-
-    public void setReceiverCity(String receiverCity) {
-        this.receiverCity = receiverCity;
-    }
-
-    public String getSenderPH() {
-        return senderPH;
-    }
-
-    public String getReceiverStreet() {
-        return receiverStreet;
-    }
-
-    public void setReceiverStreet(String receiverStreet) {
-        this.receiverStreet = receiverStreet;
-    }
 
     public String getUklLogo() {
         return uklLogo;
@@ -356,30 +349,6 @@ public class ReportRepository {
 	this.genePanelTable = genePanelTable;
     }
 
-    public String getTitle() {
-	return title;
-    }
-
-    public void setTitle(String title) {
-	this.title = title;
-    }
-
-    public String getZipCode() {
-	return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-	this.zipCode = zipCode;
-    }
-
-    public String getCountry() {
-	return country;
-    }
-
-    public void setCountry(String country) {
-	this.country = country;
-    }
-
     public String getMaterialRecielvalDate() {
 	return materialRecielvalDate;
     }
@@ -387,7 +356,98 @@ public class ReportRepository {
     public void setMaterialRecielvalDate(String materialRecielvalDate) {
 	this.materialRecielvalDate = materialRecielvalDate;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    /////////////////////
+    //////// Address Part
+    
+    @Override
+    public String getReceiverTitle() {
+	return title;
+    }
 
+    @Override
+    public void setReceiverTitle(String title) {
+	this.title = title;
+    }
+
+    @Override
+    public String getReceiverZipCode() {
+	return zipCode;
+    }
+
+    @Override
+    public void setReceiverZipCode(String zipCode) {
+	this.zipCode = zipCode;
+    }
+
+    @Override
+    public String getReceiverCountry() {
+	return country;
+    }
+
+    @Override
+    public void setReceiverCountry(String country) {
+	this.country = country;
+    }
+
+    @Override
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    @Override
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    @Override
+    public String getReceiverCity() {
+        return receiverCity;
+    }
+
+    @Override
+    public void setReceiverCity(String receiverCity) {
+        this.receiverCity = receiverCity;
+    }
+
+    
+    @Override
+    public String getReceiverAddress() {
+        return receiverAddress;
+    }
+
+    @Override
+    public void setReceiverAddress(String receiverAddress) {
+        this.receiverAddress = receiverAddress;
+    }
+    
+        @Override
+    public int getReceiverId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setReceiverId(int Id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
+    
+    
+    
+    
+    ///////////////
+    //////// Report
+    
+    
     public String getReport() {
         return report;
     }
@@ -459,6 +519,22 @@ public class ReportRepository {
     public String getMaterialRecievalDatePH() {
 	return materialRecievalDatePH;
     }
+
+    public String getReceiverAddressPH() {
+	return receiverAddressPH;
+    }
+ 
+    public String getSenderPH() {
+        return senderPH;
+    }
+
+    public String getSeqMethodPH() {
+        return seqMethodPH;
+    }
+
+    
+    
+    
     
     
     
