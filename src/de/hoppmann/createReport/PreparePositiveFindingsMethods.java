@@ -10,9 +10,12 @@ import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
-import de.hoppmann.database.OldImplementation.GeneDB;
-import de.hoppmann.database.OldImplementation.UserDB;
-import java.io.File;
+import de.hoppmann.database.userDB.ConnectSQLite;
+import de.hoppmann.database.userDB.ConnectUserDB;
+import de.hoppmann.database.userDB.ConnectionBuilder;
+import de.hoppmann.database.userDB.interfaces.IGeneInfoRepository;
+import de.hoppmann.database.userDB.interfaces.IVariantInfoRepository;
+import de.hoppmann.database.userDB.snipletDB.VariantInfo;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,14 +44,15 @@ public class PreparePositiveFindingsMethods {
     private List<String> maf = null;
     
     // infos from the gene DB
-    private String geneInfo = null;
-    private Map<String, String> varInfo;
+    private String geneSniplet = null;
+    private Map<String, String> varSniplet;
     private List<String> tableElements = new LinkedList<>();
     private String htmlGeneTable = null;
     
+    private IGeneInfoRepository geneSnipletRepo;
+    private IVariantInfoRepository varSnipletRepo;
     
     
-    private GeneDB geneDb;
     
 
 
@@ -62,22 +66,16 @@ public class PreparePositiveFindingsMethods {
     //////// constructor ////////
     /////////////////////////////
     
-    public PreparePositiveFindingsMethods(FindingsRepository findings) {
+    public PreparePositiveFindingsMethods(FindingsRepository findings, IGeneInfoRepository geneSnipletRepo, IVariantInfoRepository varSnipletRepo) {
 	this.findings = findings;
+        this.geneSnipletRepo = geneSnipletRepo;
+        this.varSnipletRepo = varSnipletRepo;
 
 	// check if existing DB is saved in config if so connect to it
-	geneDb = new GeneDB();
-	if (UserDB.conn == null){
-	    geneDb.connectDB(config.getDbFullPath(), false);
-	}
+        if (!ConnectionBuilder.hasConnection()) {
+            new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
+        }
 	
-//	
-//	if (config.getDbFullPath() != null && new File(config.getDbFullPath()).exists()) {
-//	    geneDb.connectDB(config.getDbFullPath());
-//	} else {
-//	    File dbPath = geneDb.openDB();
-//	    geneDb.connectDB(dbPath.getAbsolutePath());
-//	}
 
 	
 	/* 
@@ -238,19 +236,21 @@ public class PreparePositiveFindingsMethods {
     //// get all informations from the databse for current gene and it's variants
     private void retrieveVariantDbEntry(){
 	
-	// check if gene is known in DB
-	geneInfo = geneDb.getGeneInfo(geneName);
-	
-	varInfo = new LinkedHashMap<>();
-	// get infos for all variants listed and save them in hash
-	for (String varName : varNameList){
-	    varInfo.put(varName, geneDb.getVarInfo(geneName, varName));
-	}
-	
-	
+        VariantInfo varInfo = new VariantInfo(geneName);
+        varInfo = geneSnipletRepo.getGeneInfo(varInfo);
+        geneSniplet = varInfo.getGeneInfo();
+        
+        varSniplet = new LinkedHashMap<>();
+        for (String varName : varNameList){
+            
+            varInfo = varSnipletRepo.getVariantInfo(varInfo);
+            varSniplet.put(varName, varInfo.getVarInfo());
+            
+        }
     }
 	
 	
+
     
     
     
@@ -297,7 +297,7 @@ public class PreparePositiveFindingsMethods {
 	for (int i = 0 ; i < varNameList.size(); i++){
 	    
 	    // check if variant has info if not do not add it
-	    if (varInfo.get(varNameList.get(i)) != null) {
+	    if (varSniplet.get(varNameList.get(i)) != null) {
 		// new line
 		tableElements.add("\t\t<tr>");
 		tableElements.add("\t\t\t<td><small>" + geneName + "</small></td>");
@@ -320,7 +320,7 @@ public class PreparePositiveFindingsMethods {
 	tableElements.add("</table>");
 
 	//// add gene description
-	tableElements.add("<p> <strong>" + geneName + "</strong> <br>" + geneInfo + "</p>");
+	tableElements.add("<p> <strong>" + geneName + "</strong> <br>" + geneSniplet + "</p>");
 
 	
     }
@@ -337,9 +337,9 @@ public class PreparePositiveFindingsMethods {
 	
 	
 	// add variant lists if text is available for variant.
-	for (String curVar : varInfo.keySet()) {
-	    if (varInfo.get(curVar) != null) {
-		tableElements.add("<p> <strong>" + curVar + "</strong> <br> " + varInfo.get(curVar) + "</p>");
+	for (String curVar : varSniplet.keySet()) {
+	    if (varSniplet.get(curVar) != null) {
+		tableElements.add("<p> <strong>" + curVar + "</strong> <br> " + varSniplet.get(curVar) + "</p>");
 	    }
 	}
 

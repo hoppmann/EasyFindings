@@ -7,6 +7,7 @@
 package de.hoppmann.createReport;
 
 import de.hoppmann.database.OldImplementation.UserDB;
+import de.hoppmann.database.userDB.DbOperations;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,6 +73,10 @@ public class PreparePanelTable extends UserDB {
 	String curDir = System.getProperty("user.dir");
 	geneInfoDB = new File(curDir + File.separator + "DBs" + File.separator + dbName);
 
+        
+        //TO BE ADDED
+        
+        
 	// connect to geneInfo.db
 	conn = connect(geneInfoDB);
 	
@@ -166,7 +171,7 @@ public class PreparePanelTable extends UserDB {
 		
 		// query current gene and retrieve variables
 		
-		ResultSet rs = execute(query, conn);
+		ResultSet rs = DbOperations.execute(query, conn);
 		while (rs.next()) {
 
 		    geneName = rs.getString(geneNameCol).toUpperCase();

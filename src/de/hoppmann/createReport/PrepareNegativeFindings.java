@@ -11,6 +11,7 @@ import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.database.OldImplementation.UserDB;
+import de.hoppmann.database.userDB.DbOperations;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -215,6 +216,17 @@ public class PrepareNegativeFindings extends UserDB {
 	File geneInfoDB = new File(curDir + File.separator + "DBs" + File.separator + dbName);
 
 	// connect to geneInfo.db
+        
+        
+        
+        
+        
+        
+        
+        
+        // TO BE ADOPTED
+        
+        
 	conn = connect(geneInfoDB);
 
     }
@@ -236,7 +248,7 @@ public class PrepareNegativeFindings extends UserDB {
 	    String query = "SELECT " + arCol + ", " + adCol + ", " + xlrCol + ", " + xldCol
 		    + " from hg19 where " + geneNameCol + " == '" + geneName + "'";
 	    
-	    ResultSet rs = execute(query, conn);
+	    ResultSet rs = DbOperations.execute(query, conn);
 	    Set<String> moiSet = new TreeSet();
 	    if (rs.next()) {
 		if (rs.getBoolean(arCol)) {

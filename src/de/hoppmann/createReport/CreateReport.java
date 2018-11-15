@@ -6,6 +6,8 @@
 package de.hoppmann.createReport;
 
 import de.hoppmann.config.Config;
+import de.hoppmann.database.userDB.snipletDB.DbGeneInfoRepository;
+import de.hoppmann.database.userDB.snipletDB.DbVarianInfoRepository;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
@@ -172,7 +174,7 @@ public class CreateReport {
 
 	// 
 	if (positiveFinings == true) {
-	    PreparePositiveFindingsMethods positivFindings = new PreparePositiveFindingsMethods(findings);
+	    PreparePositiveFindingsMethods positivFindings = new PreparePositiveFindingsMethods(findings, new DbGeneInfoRepository(), new DbVarianInfoRepository());
 	    htmlGeneTable = positivFindings.getHtmlGeneTable();
 
 	} else {
