@@ -298,7 +298,15 @@ public class PreparePositiveFindingsMethods {
 	    
 	    // check if variant has info if not do not add it
 	    if (varSniplet.get(varNameList.get(i)) != null) {
-		// new line
+		
+                // check if variables has entries, else add ""
+                if (varNameList.size()-1 < i) {varNameList.add("NA");}
+                if (pNomen.size()-1 < i){pNomen.add("NA");}
+                if (maf.size()-1 < i) {maf.add("NA");}
+                if (rsID.size()-1 < i) {rsID.add("NA");}
+                
+
+                // new line
 		tableElements.add("\t\t<tr>");
 		tableElements.add("\t\t\t<td><small>" + geneName + "</small></td>");
 		tableElements.add("\t\t\t<td><small>" + varNameList.get(i) + "</small></td>");

@@ -13,6 +13,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/hoppmann/Documents/GitHub/EasyFindings/src/de/hoppmann/createReport/PreparePanelTable.java</file>
+            <file>file:/C:/Users/hoppmann/Documents/GitHub/EasyFindings/src/de/hoppmann/database/userDB/ConnectionBuilder.java</file>
+            <file>file:/C:/Users/hoppmann/Documents/GitHub/EasyFindings/src/de/hoppmann/database/userDB/ConnectionHolder.java</file>
             <file>file:/C:/Users/hoppmann/Documents/GitHub/EasyFindings/src/de/hoppmann/createReport/PrepareNegativeFindings.java</file>
         </group>
     </open-files>
