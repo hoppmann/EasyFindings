@@ -425,18 +425,4 @@ public class LoadInputFile {
     
     
 
-    /////////////////////////////////
-    //////// getter / setter ////////
-    /////////////////////////////////
-
-//    public List<TableData> getRowData() {
-//	return rowData;
-//    }
-//
-//    public List<String> getHeader() {
-//	return header;
-//    }
-
-    
-
 }
