@@ -6,19 +6,23 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="764.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.userDbView.MainViewUserDbController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="764.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.userDbView.MainViewUserDbController">
    <children>
       <Label layoutX="32.0" layoutY="21.0" prefHeight="25.0" prefWidth="125.0" text="Connected to DB:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
       <Label fx:id="dbConnectionLabel" layoutX="155.0" layoutY="20.0" prefHeight="25.0" prefWidth="180.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0" />
       <TabPane fx:id="tabPane" layoutY="53.0" prefHeight="379.0" prefWidth="764.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <tabs>
-          <Tab text="Variant">
+          <Tab fx:id="variantTabView" text="Variant">
                <content>
                   <fx:include fx:id="variantTab" source="VariantTab.fxml" />
                </content></Tab>
           <Tab fx:id="addressTabView" text="Address">
                <content>
                   <fx:include fx:id="addressTab" source="AddressTab.fxml" />
+               </content></Tab>
+            <Tab fx:id="panelTabView" text="Panel">
+               <content>
+                  <fx:include fx:id="panelTab" source="PanelTab.fxml" />
                </content></Tab>
         </tabs>
       </TabPane>

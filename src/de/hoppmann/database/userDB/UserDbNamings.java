@@ -19,6 +19,8 @@ public class UserDbNamings {
     public static final String GENE_INFO_COL = "geneInfo";
 
     
+    
+    
     // var info table
     public static final String VAR_TABLE = "variants";
     public static final String VAR_COL = "var";
@@ -38,6 +40,14 @@ public class UserDbNamings {
     public static final String CITY_KEY = "City";
     public static final String COUNTRY_KEY = "Countries";
 
+    
+    
+    
+    // pael table
+    public static final String PANEL_TABLE = "panel";
+    public static final String PANEL_NAME_KEY = "panelName";
+    public static final String PANEL_GENES_KEY = "panelGenes";
+    public static final String PANEL_ID_KEY = "ID";
 
 
 }

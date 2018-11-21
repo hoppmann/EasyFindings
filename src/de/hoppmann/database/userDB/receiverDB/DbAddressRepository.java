@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author hoppmann
  */
-public class AddressDbRepository implements IAddressRepository {
+public class DbAddressRepository implements IAddressRepository {
 
     
     private static final String RECEIVER_TABLE = UserDbNamings.RECEIVER_TABLE;
@@ -60,7 +60,7 @@ public class AddressDbRepository implements IAddressRepository {
 	    }
 	    
 	} catch (SQLException ex) {
-	    Logger.getLogger(AddressDbRepository.class.getName()).log(Level.SEVERE, null, ex);
+	    Logger.getLogger(DbAddressRepository.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	Collections.sort(nameList, String.CASE_INSENSITIVE_ORDER);
                 
@@ -99,7 +99,7 @@ public class AddressDbRepository implements IAddressRepository {
             }
 	    
 	} catch (SQLException ex) {
-	    Logger.getLogger(AddressDbRepository.class.getName()).log(Level.SEVERE, null, ex);
+	    Logger.getLogger(DbAddressRepository.class.getName()).log(Level.SEVERE, null, ex);
 	}
 
 	
@@ -121,8 +121,7 @@ public class AddressDbRepository implements IAddressRepository {
     @Override
     public boolean isValidRepo() {
 	
-	boolean isValid = hasReceiverTable();
-	return isValid;
+	return hasReceiverTable();
     }
     
     

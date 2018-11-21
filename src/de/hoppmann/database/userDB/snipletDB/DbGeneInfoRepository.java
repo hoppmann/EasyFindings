@@ -81,7 +81,7 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 	
 	
 	String queryGeneInfoCmd = "select "+ GENE_INFO_COL + " from " + GENE_TABLE
-		+ " where gene == '" + varInfo.getGeneName() + "'";
+		+ " where " + GENE_NAME_COL + " == '" + varInfo.getGeneName() + "'";
 
 	
 	ResultSet rs = DbOperations.execute(queryGeneInfoCmd, ConnectionHolder.getInstance().getConnection());

@@ -10,6 +10,7 @@ import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.database.userDB.ConnectUserDB;
 import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.ConnectionHolder;
+import de.hoppmann.database.userDB.PanelDB.DbPanelRepository;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,7 +22,7 @@ import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.hoppmann.database.userDB.interfaces.IConnectDB;
-import de.hoppmann.database.userDB.receiverDB.AddressDbRepository;
+import de.hoppmann.database.userDB.receiverDB.DbAddressRepository;
 import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import java.sql.SQLException;
@@ -50,8 +51,10 @@ public class MainViewUserDbController implements Initializable {
     @FXML private TabPane tabPane;
     @FXML private Tab addressTabView;
     @FXML private Tab variantTabView;
+    @FXML private Tab panelTabView;
     @FXML private VariantTabController variantTabController;
     @FXML private AddressTabController addressTabController;
+    @FXML private PanelTabController panelTabController;
     
     
     
@@ -256,12 +259,24 @@ public class MainViewUserDbController implements Initializable {
 	    @Override
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 		if (newValue){
-		    addressTabController.init(new AddressDbRepository(), infoLabel, new AddressInfo("", "", "", "", "", "", -1));
+		    addressTabController.init(new DbAddressRepository(), infoLabel, new AddressInfo("", "", "", "", "", "", -1));
 		}
 	    }
 	});
 	
+        
+        panelTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                panelTabController.init(new DbPanelRepository(), infoLabel);
+            }
+        });
+        
+        
     }
+    
+    
+    
 
     
     

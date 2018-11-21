@@ -6,7 +6,7 @@
 package de.hoppmann.gui.view.reportView;
 
 import de.hoppmann.createReport.ReportRepository;
-import de.hoppmann.database.userDB.receiverDB.AddressDbRepository;
+import de.hoppmann.database.userDB.receiverDB.DbAddressRepository;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.view.userDbView.AddressTabController;
 import java.net.URL;
@@ -141,7 +141,7 @@ public class ReportMainViewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue){
-                    boolean isConnected = addressTabController.init(new AddressDbRepository(), infoLabel, reportRepo);
+                    boolean isConnected = addressTabController.init(new DbAddressRepository(), infoLabel, reportRepo);
                     if (!isConnected) {
                         infoLabel.setText("WARNING: No DB connected!");
                     }
