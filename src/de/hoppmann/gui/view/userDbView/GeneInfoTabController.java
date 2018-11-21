@@ -39,7 +39,7 @@ public class GeneInfoTabController implements Initializable {
     @FXML private VariantTabController variantTabController;
     @FXML private VariantInfoTabController variantInfoTabController;
     @FXML private AnchorPane geneInfoTab;
-    @FXML public ComboBox<String> geneNameBox;
+    @FXML private ComboBox<String> geneNameBox;
     @FXML private TextArea geneInfoTextArea;
     
     
