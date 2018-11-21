@@ -2,32 +2,42 @@
 
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" fx:id="entryTabView" prefHeight="389.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.reportView.EntryTabViewController">
    <children>
-      <Label layoutX="10.0" layoutY="20.0" prefHeight="25.0" prefWidth="90.0" text="C/O" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0" />
-      <TextField fx:id="coField" layoutX="110.0" layoutY="20.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="20.0" />
-      <Label layoutX="10.0" layoutY="60.0" prefHeight="25.0" prefWidth="90.0" text="Patient" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0" />
-      <TextField fx:id="patientInfoField" layoutX="110.0" layoutY="60.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="60.0" />
-      <Label layoutX="10.0" layoutY="100.0" prefHeight="25.0" prefWidth="90.0" text="Material" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0" />
-      <TextField fx:id="materialField" layoutX="110.0" layoutY="100.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0" />
-      <Label layoutX="10.0" layoutY="140.0" prefHeight="25.0" prefWidth="90.0" text="Indications" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="140.0" />
-      <TextField fx:id="indicationField" layoutX="110.0" layoutY="140.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="140.0" />
-      <Label layoutX="10.0" layoutY="180.0" prefHeight="25.0" prefWidth="90.0" text="Assessment" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="180.0" />
-      <TextField fx:id="assessmentField" layoutX="110.0" layoutY="180.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="180.0" />
-      <Label layoutX="10.0" layoutY="220.0" prefHeight="25.0" prefWidth="90.0" text="Material arrival" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="220.0" />
-      <TextField fx:id="arrivalDateField" layoutX="110.0" layoutY="220.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="220.0" />
-      <Label layoutX="14.0" layoutY="254.0" prefHeight="25.0" prefWidth="90.0" text="Sender" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="260.0" />
-      <ComboBox fx:id="senderBox" layoutX="94.0" layoutY="254.0" onAction="#senderBoxAction" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="260.0" />
-      <Label layoutX="14.0" layoutY="294.0" prefHeight="25.0" prefWidth="90.0" text="Diag Method" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="300.0" />
-      <ComboBox fx:id="diagMethodBox" layoutX="94.0" layoutY="294.0" onAction="#diagMethodBoxAction" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="300.0" />
-      <Label layoutX="14.0" layoutY="334.0" prefHeight="25.0" prefWidth="90.0" text="Seq Method" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="340.0" />
-      <ComboBox fx:id="seqMethodBox" layoutX="94.0" layoutY="334.0" onAction="#seqMethodBoxAction" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="340.0" />
-      <Label layoutX="330.0" layoutY="20.0" prefHeight="25.0" prefWidth="90.0" text="Gene Panel" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="20.0" />
-      <TextArea fx:id="genePanelArea" layoutX="330.0" layoutY="63.0" prefHeight="306.0" prefWidth="280.0" AnchorPane.leftAnchor="330.0" />
-      <ComboBox fx:id="genePanelBox" layoutX="408.0" layoutY="20.0" prefWidth="200.0" AnchorPane.leftAnchor="410.0" />
+      <SplitPane dividerPositions="0.5095541401273885" prefHeight="389.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="90.0" text="C/O" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0" />
+                  <TextField fx:id="coField" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="20.0" />
+                  <Label prefHeight="25.0" prefWidth="90.0" text="Patient" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0" />
+                  <TextField fx:id="patientInfoField" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="60.0" />
+                  <Label prefHeight="25.0" prefWidth="90.0" text="Material" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0" />
+                  <TextField fx:id="materialField" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0" />
+                  <Label prefHeight="25.0" prefWidth="90.0" text="Indications" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="140.0" />
+                  <TextField fx:id="indicationField" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="140.0" />
+                  <Label prefHeight="25.0" prefWidth="90.0" text="Assessment" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="180.0" />
+                  <TextField fx:id="assessmentField" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="180.0" />
+                  <Label prefHeight="25.0" prefWidth="90.0" text="Material arrival" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="220.0" />
+                  <TextField fx:id="arrivalDateField" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="220.0" />
+                  <Label prefHeight="25.0" prefWidth="90.0" text="Sender" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="260.0" />
+                  <ComboBox fx:id="senderBox" onAction="#senderBoxAction" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="260.0" />
+                  <Label prefHeight="25.0" prefWidth="90.0" text="Diag Method" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="300.0" />
+                  <ComboBox fx:id="diagMethodBox" onAction="#diagMethodBoxAction" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="300.0" />
+                  <Label prefHeight="25.0" prefWidth="90.0" text="Seq Method" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="340.0" />
+                  <ComboBox fx:id="seqMethodBox" onAction="#seqMethodBoxAction" prefWidth="200.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="340.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <fx:include fx:id="panelTab" source="../userDbView/PanelTab.fxml" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </AnchorPane>

@@ -6,6 +6,7 @@
 
 package de.hoppmann.createReport;
 
+import de.hoppmann.database.userDB.PanelDB.IPanelInfo;
 import de.hoppmann.database.userDB.receiverDB.IAddressInfo;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +20,7 @@ import java.util.TreeSet;
  *
  * @author hoppmann
  */
-public class ReportRepository implements IAddressInfo{
+public class ReportRepository implements IAddressInfo, IPanelInfo{
 
 
     ///////////////////////////
@@ -391,6 +392,68 @@ public class ReportRepository implements IAddressInfo{
     
     
     
+    ////////////////////////
+    //////// Gene panelGeneList part
+    
+    
+        ////////////////////
+    //////// Panel Genes
+
+    public Set getPanel() {
+        return panelGeneList;
+    }
+
+    public void setPanel(Set panel) {
+        this.panelGeneList = panel;
+    }
+
+    public void addGeneToPanel (String newGene){
+        panelGeneList.add(newGene);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @Override
+    public String getPanelName() {
+        return panelName;
+    }
+
+    @Override
+    public void setPanelName(String panelName) {
+        this.panelName = panelName;
+    }
+
+    @Override
+    public Set<String> getGeneList() {
+        return panelGeneList;
+    }
+
+    @Override
+    public String getGeneListAsString() {
+        String panelListString = String.join("\n", panelGeneList);
+        return panelListString;
+
+    }
+
+    @Override
+    public void setGeneList(Set<String> panelGeneList) {
+        this.panelGeneList = panelGeneList;
+    }
+
+    @Override
+    public void setGeneList(String geneListString) {
+                Set<String> panelGeneList = new TreeSet<>(Arrays.asList(geneListString.split("\n")));
+        this.panelGeneList = panelGeneList;
+
+    }
+
     
     
     
@@ -481,20 +544,7 @@ public class ReportRepository implements IAddressInfo{
     
     
     
-    ////////////////////
-    //////// Panel Genes
 
-    public Set getPanel() {
-        return panelGeneList;
-    }
-
-    public void setPanel(Set panel) {
-        this.panelGeneList = panel;
-    }
-
-    public void addGeneToPanel (String newGene){
-        panelGeneList.add(newGene);
-    }
     
     
     

@@ -6,7 +6,9 @@
 package de.hoppmann.gui.view.reportView;
 
 import de.hoppmann.createReport.ReportRepository;
+import de.hoppmann.database.userDB.PanelDB.DbPanelRepository;
 import de.hoppmann.database.userDB.interfaces.IPanelRepository;
+import de.hoppmann.gui.view.userDbView.PanelTabController;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -19,11 +21,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
-import org.controlsfx.control.textfield.TextFields;
 
 /**
  * FXML Controller class
@@ -43,12 +45,12 @@ public class EntryTabViewController implements Initializable {
     @FXML private ComboBox<String> diagMethodBox = new ComboBox();
     @FXML private ComboBox<String> seqMethodBox = new ComboBox();
     @FXML private ComboBox<String> genePanelBox = new ComboBox();
-    @FXML private TextArea genePanelArea;
+//    @FXML private TextArea genePanelArea;
     
+    @FXML private PanelTabController panelTabController;
     
     private ReportRepository repository;
     private IPanelRepository panelRepo;
-    
     
     
     
@@ -122,7 +124,9 @@ public class EntryTabViewController implements Initializable {
         this.repository = data;
         
         
-        genePanelArea.setText(String.join("\n", repository.getPanel()));
+        panelTabController.init(new DbPanelRepository(), data, new Label());
+        
+//        genePanelArea.setText(String.join("\n", repository.getPanel()));
         coField.setText(repository.getReceiverCoLine());
         patientInfoField.setText(repository.getPatientInfo());
         materialField.setText(repository.getMaterial());
@@ -228,13 +232,15 @@ public class EntryTabViewController implements Initializable {
         
 
 
+        
+        
 
-        genePanelArea.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                repository.setPanel(createPanelList(newValue));
-            }
-        });
+//        genePanelArea.textProperty().addListener(new ChangeListener<String>() {
+//            @Override
+//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//                repository.setPanel(createPanelList(newValue));
+//            }
+//        });
 
 
 

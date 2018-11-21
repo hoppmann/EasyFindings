@@ -5,12 +5,16 @@
  */
 package de.hoppmann.gui.view.userDbView;
 
+import de.hoppmann.database.userDB.ConnectSQLite;
+import de.hoppmann.database.userDB.ConnectUserDB;
 import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.PanelDB.IPanelInfo;
 import de.hoppmann.database.userDB.interfaces.IPanelRepository;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -133,13 +137,25 @@ public class PanelTabController implements Initializable {
         this.panelInfo = panelInfo;
         
         
-        if (ConnectionBuilder.hasConnection()) {
+        
+        boolean isConnected = false;
+                
+        if (ConnectionBuilder.hasConnection()){
+            isConnected = true;
+        } else {
+            isConnected = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
+        }
+        
+
+        
+        if (isConnected){
             if (!panelRepo.isRepoValid()) {
                 panelRepo.makeRepoValid();
-            }
+            } 
         
             updatePanelBox();
-        }
+        } 
+
         
         
         
@@ -160,7 +176,30 @@ public class PanelTabController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
 
+        
+        panelArea.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                panelInfo.setGeneList(newValue);
+            }
+        });
 
+        
+        
+        
+        
+        
+        
+        
+        panelBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                panelInfo.setPanelName(newValue);
+            }
+        });
+        
+        
+        
 
     }    
     
