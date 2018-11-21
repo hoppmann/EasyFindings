@@ -304,6 +304,7 @@ public class SelectColumnsGuiController implements Initializable {
 	
 	// prepare maf column
 	mafCol.getItems().addAll(header);
+	System.out.println(config.getMafCol());
 	if (checkStringList(header, config.getMafCol())){
 	    mafCol.getSelectionModel().select(config.getMafCol());
 	}

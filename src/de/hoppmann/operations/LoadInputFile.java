@@ -104,10 +104,19 @@ public class LoadInputFile {
 	
 	// if not all header found return missing header as warning
 	if (! header.containsAll(catagories.keySet())){
+	    
 	    List<String> missing = new LinkedList<>(catagories.keySet());
-	    missing.removeAll(header);
-	    String warningText = "Catagories not chosen automatically. " + missing + " not available";
-	    // skip rest of method
+	    String warningText = null;
+	    if (missing.size() == 6){
+		missing.removeAll(header);
+		warningText = "Catagories not chosen automatically. " + missing + " not available";
+	    } else {
+		    warningText = "Catagories not chosen automatically. Missing catagories.";
+	    }
+	    // set to unclear and skip rest
+	    for (TableData row : rowData) {
+		row.setCatagory(Catagory.getUnclearCode());
+	    }
 	    return warningText;
 	    
 	    

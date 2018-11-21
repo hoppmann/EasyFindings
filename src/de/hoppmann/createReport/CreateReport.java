@@ -164,12 +164,10 @@ public class CreateReport {
 	 */
 	boolean positiveFinings = false;
 	for (TableData curFinding : findings.getStoredData()) {
-
 	    if (curFinding.getCatagory().equals(Catagory.getPathoCode())
 		    || curFinding.getCatagory().equals(Catagory.getProbPathoCode())) {
 		positiveFinings = true;
 	    }
-
 	}
 
 	// 

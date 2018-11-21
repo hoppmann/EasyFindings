@@ -75,16 +75,16 @@ public class DataTabViewController implements Initializable {
             loadInput.openFile(inputFile,input);
             String warning = loadInput.catagorize(input);
             
-            if(warning != "") {
-                infoLabel.setText(warning);
-                return;
-            }
+            
             
             
             createTable();
             
-            infoLabel.setText(inputFile.getName() + " read in.");
-            
+	    if(warning != "") {
+                infoLabel.setText(warning);
+            } else {
+		infoLabel.setText(inputFile.getName() + " read in.");
+	    }
         }
         
     }

@@ -105,7 +105,7 @@ public class FindingsTabViewController implements Initializable {
         
         
         
-                try {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/de/hoppmann/gui/view/reportView/ReportMainView.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
@@ -121,36 +121,8 @@ public class FindingsTabViewController implements Initializable {
             }
             stage.show();
         } catch (IOException ex) {
-            Logger.getLogger(DataTabViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FindingsTabViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
-        
-//        try {
-//	    // do nothing if findings == null
-//	    if (findings == null) {
-//		return;
-//	    }
-//
-//	    // prepare new page
-//	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/de/hoppmann/gui/view/reportView/ReportViewer.fxml"));
-//
-//	    // create new window
-//	    Parent root = fxmlLoader.load();
-//	    Stage stage = new Stage();
-//	    stage.setTitle("Report");
-//	    stage.setScene(new Scene(root));
-//
-//	    // get controller of new window and pass findings list
-//	    ReportViewerController controller = fxmlLoader.getController();
-//	    controller.init(findings);
-//
-//	    // show window
-//	    stage.show();
-//
-//	} catch (IOException ex) {
-//	    Logger.getLogger(MainGuiController.class.getName()).log(Level.SEVERE, null, ex);
-//	}
 
     }
     

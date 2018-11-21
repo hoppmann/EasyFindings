@@ -51,42 +51,42 @@ public class Config {
     
     // columns
     private final String geneColKey = "geneCol";
-    private String geneCol;
+    private String geneCol = "col";
     private final String pNomenColKey = "proteinAnnotationCol";
-    private String pNomenCol;
+    private String pNomenCol = "";
     private final String cNomenColKey = "cDnaAnnotationCol";
-    private String cNomenCol;
+    private String cNomenCol = "";
     private final String hgmdColKey = "hgmdCol";
-    private String hgmdCol;
+    private String hgmdCol = "";
     private final String clinvarColKey = "clinvarCol";
-    private String clinvarCol;
+    private String clinvarCol = "";
     private final String splice45ColKey = "splice45";
-    private String splice45Col;
+    private String splice45Col = "";
     private final String splice15ColKey = "splice15";
-    private String splice15Col;
+    private String splice15Col = "";
     private final String totPredColKey = "totalPredictions";
-    private String totPredCol;
-    private final String predScorColKey = "percentDamagingPredictions";
-    private String predScoreCol;
+    private String totPredCol = "";
+    private final String predScoreColKey = "percentDamagingPredictions";
+    private String predScoreCol = "";
     private final String pubMedIdColKey = "pubMedIdCol";
-    private String pubMedIdCol;
+    private String pubMedIdCol = "";
     private final String rsIdColKey = "rsIdCol";
-    private String rsIdCol;
+    private String rsIdCol = "";
     private final String zygocityColKey = "zygocityCol";
-    private String zygocityCol;
+    private String zygocityCol = "";
     private final String impactColKey = "impactCol";
-    private String impactCol; 
+    private String impactCol = ""; 
     private final String mafColKey = "mafCol";
-    private String mafCol;
+    private String mafCol = "";
 
     
     // misc
     private final String inputPathKey = "inputPath";
-    private String inputPath;
+    private String inputPath = "";
     private final String dbPathKey = "dbPath";
-    private String dbPath;
+    private String dbPath = "";
     private final String htmlTemplateKey = "templatePath";
-    private String htmlTemplate;
+    private String htmlTemplate = "";
     
     
     
@@ -113,34 +113,51 @@ public class Config {
 	prop = loadProp();
 	
 	// read in config data
-	geneCol = prop.getProperty(geneColKey);
-	mafCol = prop.getProperty(mafColKey);
-	pNomenCol = prop.getProperty(pNomenColKey);
-	cNomenCol = prop.getProperty(cNomenColKey);
-	inputPath = prop.getProperty(inputPathKey);
-	hgmdCol = prop.getProperty(hgmdColKey);
-	clinvarCol = prop.getProperty(clinvarColKey);
-	splice45Col = prop.getProperty(splice45ColKey);
-	splice15Col = prop.getProperty(splice15ColKey);
-	totPredCol = prop.getProperty(totPredColKey);
-	predScoreCol = prop.getProperty(predScorColKey);
-	pubMedIdCol = prop.getProperty(pubMedIdColKey);
-	rsIdCol = prop.getProperty(rsIdColKey);
-	zygocityCol = prop.getProperty(zygocityColKey);
-	impactCol = prop.getProperty(impactColKey);
-	
-	dbPath = prop.getProperty(dbPathKey);
-	htmlTemplate = prop.getProperty(htmlTemplateKey);
-	
-	
-	
-	    
-	    
-	
-	
+	if (prop.getProperty(geneColKey) != null){geneCol = prop.getProperty(geneColKey);}
+	if (prop.getProperty(mafColKey) != null ) {mafCol = prop.getProperty(mafColKey);}
+	if (prop.getProperty(pNomenColKey) != null ) {pNomenCol = prop.getProperty(pNomenColKey);}
+	if (prop.getProperty(cNomenColKey) != null ) {cNomenCol = prop.getProperty(cNomenColKey);}
+	if (prop.getProperty(inputPathKey) != null ) {inputPath = prop.getProperty(inputPathKey);}
+	if (prop.getProperty(hgmdColKey) != null ) {hgmdCol = prop.getProperty(hgmdColKey);}
+	if (prop.getProperty(clinvarColKey) != null ) {clinvarCol = prop.getProperty(clinvarColKey);}
+	if (prop.getProperty(splice45ColKey) != null ) {splice45Col = prop.getProperty(splice45ColKey);}
+	if (prop.getProperty(splice15ColKey) != null ) {splice15Col = prop.getProperty(splice15ColKey);}
+	if (prop.getProperty(totPredColKey) != null ) {totPredCol = prop.getProperty(totPredColKey);}
+	if (prop.getProperty(predScoreColKey) != null ) {predScoreCol = prop.getProperty(predScoreColKey);}
+	if (prop.getProperty(pubMedIdColKey) != null ) {pubMedIdCol = prop.getProperty(pubMedIdColKey);}
+	if (prop.getProperty(rsIdColKey) != null ) {rsIdCol = prop.getProperty(rsIdColKey);}
+	if (prop.getProperty(zygocityColKey) != null ) {zygocityCol = prop.getProperty(zygocityColKey);}
+	if (prop.getProperty(impactColKey) != null ) {impactCol = prop.getProperty(impactColKey);}
+	if (prop.getProperty(dbPathKey) != null ) {dbPath = prop.getProperty(dbPathKey);}
+	if (prop.getProperty(htmlTemplateKey) != null ) {htmlTemplate = prop.getProperty(htmlTemplateKey);}
     }
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    private void newConfigFile() {
+	
+	try {
+	    File file = new File(configFile);
+	    file.createNewFile();
+	    prop = new Properties();
+	    storeProp(prop);
+	    
+	} catch (IOException ex) {
+	    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+	}
+	
+	
+	
+	
+	
+    }
     
     
     
@@ -157,7 +174,7 @@ public class Config {
 	    streamIn.close();
 	    
 	} catch (IOException ex) {
-	    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+	    newConfigFile();
 	}
 
 	return prop;
@@ -179,11 +196,7 @@ public class Config {
 	    // save new Config
 	    outStream = new FileOutputStream(configFile);
 	    prop.store(outStream, null);
-	    
-	    
-	    
-	    
-	    
+
 	    
 	} catch (FileNotFoundException ex) {
 	    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
@@ -323,7 +336,7 @@ public class Config {
 
     public void setPredScoreCol(String predScoreCol) {
 	this.predScoreCol = predScoreCol;
-	saveConfig(predScorColKey, predScoreCol);
+	saveConfig(predScoreColKey, predScoreCol);
     }
 
     public String getDbFullPath() {
