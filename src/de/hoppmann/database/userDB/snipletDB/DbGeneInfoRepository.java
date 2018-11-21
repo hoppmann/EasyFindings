@@ -49,9 +49,10 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 	
 	String query = "SELECT " + GENE_NAME_COL + " FROM " + GENE_TABLE;
 
-	ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
+	
 	
 	try {
+            ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
             if (rs != null){
                 while (rs.next()){
                     geneList.add(rs.getString(GENE_NAME_COL));
@@ -84,9 +85,10 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 		+ " where " + GENE_NAME_COL + " == '" + varInfo.getGeneName() + "'";
 
 	
-	ResultSet rs = DbOperations.execute(queryGeneInfoCmd, ConnectionHolder.getInstance().getConnection());
 	
 	try {
+            ResultSet rs = DbOperations.execute(queryGeneInfoCmd, ConnectionHolder.getInstance().getConnection());
+
 	    if (rs.next()){
 		varInfo.setGeneInfo(rs.getString(GENE_INFO_COL));
 	    }
@@ -115,8 +117,7 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 	String addEntryCmd = "REPLACE INTO " + GENE_TABLE + " VALUES " 
 		+ "( '" + varInfo.getGeneName() + "' , '" + varInfo.getGeneInfo() + "')";
 	
-	DbOperations.execute(addEntryCmd, ConnectionHolder.getInstance().getConnection());
-	
+            DbOperations.execute(addEntryCmd, ConnectionHolder.getInstance().getConnection());
     }
 
     
@@ -135,7 +136,7 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
         removeCmd = "DELETE FROM " + GENE_TABLE
 	    + " where gene = '" + varInfo.getGeneName() + "'";
 
-	DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
+            DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
 	
     }
     
@@ -169,8 +170,9 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 	String createTableCmd = "create table " + GENE_TABLE
 	    + " (" + GENE_NAME_COL + " VARCHAR(60) not NULL, "
 	    + GENE_INFO_COL + " TEXT, "
-	    + "PRIMARY KEY ( " + GENE_NAME_COL + " ))";    
-	ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
+	    + "PRIMARY KEY ( " + GENE_NAME_COL + " ))";
+        
+            ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
 	
 	if (hasGeneTable()){
 	    success = true;

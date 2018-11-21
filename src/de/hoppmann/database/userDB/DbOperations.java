@@ -109,10 +109,11 @@ public class DbOperations {
         String query = "select * from " + tableName;
         
         // get results
-        ResultSet rs = execute(query, conn);
+        
         
         // check if there are any results. if so set boolean to true
         try {
+            ResultSet rs = execute(query, conn);
             if (rs.isBeforeFirst()) {
                 hasEntry = true;
             }

@@ -7,61 +7,58 @@
 package de.hoppmann.database.userDB.PanelDB;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
  * @author hoppmann
  */
-public class PanelInfo {
+public class PanelInfo implements IPanelInfo{
 
     private String panelName;
-    private List<String> geneList = new LinkedList<>();
-    private int id;
+    private Set<String> geneList = new TreeSet<>();
 
-    public PanelInfo(String panelName, int id) {
+    public PanelInfo(String panelName) {
         this.panelName = panelName;
-        this.id = id;
     }
 
     
     
     
 
+    @Override
     public String getPanelName() {
         return panelName;
     }
 
+    @Override
     public void setPanelName(String panelName) {
         this.panelName = panelName;
     }
 
-    public List<String> getGeneList() {
+    @Override
+    public Set<String> getGeneList() {
         return geneList;
     }
 
+    @Override
     public String getGeneListAsString(){
         String panelListString = String.join("\n", geneList);
         return panelListString;
     }
     
-    public void setGeneList(List<String> geneList) {
+    @Override
+    public void setGeneList(Set<String> geneList) {
         this.geneList = geneList;
     }
     
+    @Override
     public void setGeneList(String geneListString){
-        List<String> geneList = Arrays.asList(geneListString.split("\n"));
+        Set<String> geneList = new TreeSet<>(Arrays.asList(geneListString.split("\n")));
         this.geneList = geneList;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
     
     
     

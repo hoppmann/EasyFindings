@@ -11,6 +11,7 @@ import de.hoppmann.database.userDB.ConnectUserDB;
 import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.ConnectionHolder;
 import de.hoppmann.database.userDB.PanelDB.DbPanelRepository;
+import de.hoppmann.database.userDB.PanelDB.PanelInfo;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -6,6 +6,7 @@
 package de.hoppmann.gui.view.userDbView;
 
 import de.hoppmann.database.userDB.ConnectionBuilder;
+import de.hoppmann.database.userDB.PanelDB.IPanelInfo;
 import de.hoppmann.database.userDB.PanelDB.PanelInfo;
 import de.hoppmann.database.userDB.interfaces.IPanelRepository;
 import java.net.URL;
@@ -33,28 +34,8 @@ public class PanelTabController implements Initializable {
     @FXML private ComboBox<String> panelBox = new ComboBox<>();
     @FXML private TextArea panelArea;
     private IPanelRepository panelRepo;
-    private PanelInfo panelInfo;
+    private IPanelInfo panelInfo;
     private Label InfoLabel;
-    
-    
-    
-    
-    
-    
-    @FXML
-    private void newPanelAction (ActionEvent event) {
-        if (panelBox.getValue() != null){
-            panelInfo = new PanelInfo(panelBox.getValue(), -1);
-            panelInfo.setGeneList(panelArea.getText());
-            panelRepo.newPanel(panelInfo);
-        
-            InfoLabel.setText(panelInfo.getPanelName() + " added to database");
-        }
-        
-        updatePanelBox();
-        
-        
-    }
     
     
     
@@ -83,7 +64,7 @@ public class PanelTabController implements Initializable {
     @FXML
     private void removePanelAction (ActionEvent event){
         if (panelBox.getValue() != null){
-            panelInfo = new PanelInfo(panelBox.getValue(), -1);
+            panelInfo = new PanelInfo(panelBox.getValue());
             panelInfo.setGeneList(panelArea.getText());
             panelRepo.removePanel(panelInfo);
             panelArea.setText("");
@@ -103,21 +84,11 @@ public class PanelTabController implements Initializable {
     private void panelBoxAction (ActionEvent event) {
 
         List<String> panelNames = panelRepo.getPanelNames();
-        
+                
         if (panelBox.getValue() != null && panelNames.contains(panelBox.getValue())){
-            
             panelInfo.setPanelName(panelBox.getValue());
             panelRepo.getPanelGenes(panelInfo);
-            
-//            System.out.println(panelInfo.getId());
-//            System.out.println(panelInfo.getPanelName());
-//            System.out.println(panelInfo.getGeneList());
-//            System.out.println(panelInfo.getGeneListAsString());
-            
             panelArea.setText(panelInfo.getGeneListAsString());
-            
-                    
-           
         }
     }
     
@@ -132,12 +103,9 @@ public class PanelTabController implements Initializable {
         
         panelBox.getItems().clear();
         panelBox.getItems().addAll(panelNames);
-        
         if (panelInfo != null && panelNames.contains(panelInfo.getPanelName())){
             panelBox.getSelectionModel().select(panelInfo.getPanelName());
-        } else {
-            panelBox.getSelectionModel().selectFirst();
-        }
+        } 
         panelBox.setEditable(true);
         TextFields.bindAutoCompletion(panelBox.getEditor(), panelNames);
     }
@@ -151,8 +119,7 @@ public class PanelTabController implements Initializable {
         this.InfoLabel = infoLabel;
         this.panelRepo = panelRepo;
         
-        panelInfo = new PanelInfo("", -1);
-        
+        this.panelInfo = new PanelInfo("");
         
         if (ConnectionBuilder.hasConnection()) {
             if (!panelRepo.isRepoValid()) {

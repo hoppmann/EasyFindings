@@ -10,9 +10,8 @@
    <children>
       <TextArea fx:id="panelArea" layoutX="214.0" layoutY="107.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
       <Label layoutX="23.0" layoutY="20.0" prefHeight="25.0" prefWidth="50.0" text="Panel" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <Button layoutX="14.0" layoutY="355.0" mnemonicParsing="false" onAction="#newPanelAction" prefHeight="25.0" prefWidth="110.0" text="New" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-      <Button layoutX="96.0" layoutY="358.0" mnemonicParsing="false" onAction="#storePanelAction" prefHeight="25.0" prefWidth="110.0" text="Store" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0" />
-      <Button layoutX="244.0" layoutY="361.0" mnemonicParsing="false" onAction="#removePanelAction" prefHeight="25.0" prefWidth="110.0" text="Remove" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" />
+      <Button layoutX="96.0" layoutY="358.0" mnemonicParsing="false" onAction="#storePanelAction" prefHeight="25.0" prefWidth="110.0" text="Store" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <Button layoutX="244.0" layoutY="361.0" mnemonicParsing="false" onAction="#removePanelAction" prefHeight="25.0" prefWidth="110.0" text="Remove" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0" />
       <ComboBox fx:id="panelBox" layoutX="77.0" layoutY="25.0" onAction="#panelBoxAction" prefHeight="25.0" prefWidth="300.0" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>

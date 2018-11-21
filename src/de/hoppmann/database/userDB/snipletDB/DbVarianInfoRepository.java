@@ -51,7 +51,7 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ VAR_INFO_COL + " TEXT, "
 		+ "PRIMARY KEY (" + VAR_COL + "))";
 
-	DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
+            DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
 	
 	return hasVarTable();
     }
@@ -82,11 +82,8 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ GENE_COL + " = '" + varInfo.getGeneName() + "'";
 	
 	
-	ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
-
-
-	
 	try {
+            ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
             if (rs != null){
                 while (rs.next()) {
                     varList.add(rs.getString(VAR_COL));
@@ -124,10 +121,8 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ VAR_COL + " = '" + varInfo.getVarName() + "'";
 	
 	
-	ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
-	
-	
 	try {
+            ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
 	    if (rs.next()) {
 		varInfo.setVarInfo(rs.getString(VAR_INFO_COL));
 	    }
@@ -156,7 +151,8 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ "( " + "'" + varInfo.getVarName() + "'" 
 		+ ", '" + varInfo.getGeneName() + "'" 
 		+ ", '" + varInfo.getVarInfo() + "'" +  " )";
-	DbOperations.execute(addEntryCmd, ConnectionHolder.getInstance().getConnection());
+
+        DbOperations.execute(addEntryCmd, ConnectionHolder.getInstance().getConnection());
     }
 
     
@@ -176,7 +172,7 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ "= '" + varInfo.getVarName() + "'";
 
 	
-	DbOperations.execute(delQuery, ConnectionHolder.getInstance().getConnection());
+            DbOperations.execute(delQuery, ConnectionHolder.getInstance().getConnection());
 
     }
 

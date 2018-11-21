@@ -5,7 +5,7 @@
  */
 package de.hoppmann.database.userDB.interfaces;
 
-import de.hoppmann.database.userDB.PanelDB.PanelInfo;
+import de.hoppmann.database.userDB.PanelDB.IPanelInfo;
 import java.util.List;
 
 /**
@@ -17,10 +17,10 @@ public interface IPanelRepository {
     public boolean isRepoValid();
     public boolean makeRepoValid();
     public List<String> getPanelNames();
-    public void getPanelGenes(PanelInfo panelInfo);
-    public void newPanel(PanelInfo panelInfo);
-    public void savePanel(PanelInfo panelInfo);
-    public void removePanel(PanelInfo panelInfo);
+    public void getPanelGenes(IPanelInfo panelInfo);
+    public void newPanel(IPanelInfo panelInfo);
+    public void savePanel(IPanelInfo panelInfo);
+    public void removePanel(IPanelInfo panelInfo);
 
     
     

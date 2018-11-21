@@ -149,7 +149,7 @@ public class DbAddressRepository implements IAddressRepository {
 		+ CITY_KEY + " Varchar(60), "
 		+ COUNTRY_KEY + " Varchar(60) )";
     
-	ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
+            ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
 	
 	if (hasReceiverTable()){
 	    success = true;
@@ -221,7 +221,7 @@ public class DbAddressRepository implements IAddressRepository {
 		+ " VALUES ( '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverAddress() + "', '" 
 		+ aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
         
-	DbOperations.execute(insertCmd, ConnectionHolder.getInstance().getConnection());
+            DbOperations.execute(insertCmd, ConnectionHolder.getInstance().getConnection());
 	
     }
 
@@ -246,7 +246,7 @@ public class DbAddressRepository implements IAddressRepository {
 		"', '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverAddress() + "', '" +
 		aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
 
-	DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());
+            DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());
     }
 
     
@@ -268,7 +268,7 @@ public class DbAddressRepository implements IAddressRepository {
 	String removeCmd = "DELETE FROM " + RECEIVER_TABLE + " WHERE " + ID_KEY + 
 		" == '" + aInfo.getReceiverId() + "'";
 
-	ResultSet rs = DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
+            ResultSet rs = DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
 	
     }
     

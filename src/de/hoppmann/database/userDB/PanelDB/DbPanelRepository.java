@@ -52,11 +52,12 @@ public class DbPanelRepository implements IPanelRepository{
         
         
         String createTableCmd = "CREATE TABLE " + PANEL_TABLE + "( "
-       		+ ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-		+ PANEL_NAME_COL + " Varchar(60) NOT NULL UNIQUE, "
-		+ PANEL_GENES_COL + " Varchar(60)";
+		+ PANEL_NAME_COL + " VARCHAR(60) NOT NULL, "
+		+ PANEL_GENES_COL + " VARCHAR(60), "
+                + "PRIMARY KEY (" + PANEL_NAME_COL + ")"
+                + ")";
         
-        ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
+            ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
 	
         
 	return hasPanelTable();
@@ -78,11 +79,8 @@ public class DbPanelRepository implements IPanelRepository{
         
         String query = "SELECT " + PANEL_NAME_COL + " FROM " + PANEL_TABLE;
         
-        ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
-        
-        
-       
         try {
+            ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
             if (rs != null) {
                 while (rs.next()) {
 
@@ -110,21 +108,17 @@ public class DbPanelRepository implements IPanelRepository{
     
 
     @Override
-    public void getPanelGenes(PanelInfo panelInfo) {
+    public void getPanelGenes(IPanelInfo panelInfo) {
         
         
         String queryGeneInfoCmd = "select * from " + PANEL_TABLE
 		+ " where " + PANEL_NAME_COL + " == '" + panelInfo.getPanelName() + "'";
 
-        System.out.println(queryGeneInfoCmd);
-	
-	ResultSet rs = DbOperations.execute(queryGeneInfoCmd, ConnectionHolder.getInstance().getConnection());
 	
 	try {
+            ResultSet rs = DbOperations.execute(queryGeneInfoCmd, ConnectionHolder.getInstance().getConnection());
 	    if (rs.next()){
                 panelInfo.setGeneList(rs.getString(PANEL_GENES_COL));
-                System.out.println(panelInfo.getGeneList());
-                panelInfo.setId(rs.getInt(ID_COL));
 	    }
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbPanelRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -143,7 +137,7 @@ public class DbPanelRepository implements IPanelRepository{
     
 
     @Override
-    public void newPanel(PanelInfo panelInfo) {
+    public void newPanel(IPanelInfo panelInfo) {
 
         
         // prepare query
@@ -151,7 +145,7 @@ public class DbPanelRepository implements IPanelRepository{
 		+ " (" + PANEL_NAME_COL + ", " + PANEL_GENES_COL + ") " 
 		+ " VALUES ( '" + panelInfo.getPanelName() + "', '" + panelInfo.getGeneListAsString() + "')";
         
-	DbOperations.execute(insertCmd, ConnectionHolder.getInstance().getConnection());
+        DbOperations.execute(insertCmd, ConnectionHolder.getInstance().getConnection());
         
     }
     
@@ -165,13 +159,13 @@ public class DbPanelRepository implements IPanelRepository{
     
 
     @Override
-    public void savePanel(PanelInfo panelInfo) {
+    public void savePanel(IPanelInfo panelInfo) {
         
         // perpare update command
-	String updateCmd = "REPLACE INTO " + PANEL_TABLE + " VALUES ( '" + ", " + panelInfo.getId() + ", " + panelInfo.getPanelName() +
+	String updateCmd = "REPLACE INTO " + PANEL_TABLE + " VALUES ( '" + panelInfo.getPanelName() +
 		"', '" + panelInfo.getGeneListAsString() + "')";
 
-	DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());
+            DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());
     
     }
     
@@ -185,13 +179,13 @@ public class DbPanelRepository implements IPanelRepository{
     
 
     @Override
-    public void removePanel(PanelInfo panelInfo) {
+    public void removePanel(IPanelInfo panelInfo) {
         
         // prepare cmd
 	String removeCmd = "DELETE FROM " + PANEL_TABLE + " WHERE " + PANEL_NAME_COL + 
 		" == '" + panelInfo.getPanelName() + "'";
 
-	ResultSet rs = DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
+            ResultSet rs = DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
 	
         
     }
