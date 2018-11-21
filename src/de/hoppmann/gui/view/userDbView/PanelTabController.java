@@ -7,7 +7,6 @@ package de.hoppmann.gui.view.userDbView;
 
 import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.PanelDB.IPanelInfo;
-import de.hoppmann.database.userDB.PanelDB.PanelInfo;
 import de.hoppmann.database.userDB.interfaces.IPanelRepository;
 import java.net.URL;
 import java.util.List;
@@ -63,9 +62,9 @@ public class PanelTabController implements Initializable {
     
     @FXML
     private void removePanelAction (ActionEvent event){
+
         if (panelBox.getValue() != null){
-            panelInfo = new PanelInfo(panelBox.getValue());
-            panelInfo.setGeneList(panelArea.getText());
+            setPanelInfo(panelBox.getValue());
             panelRepo.removePanel(panelInfo);
             panelArea.setText("");
             
@@ -94,6 +93,17 @@ public class PanelTabController implements Initializable {
     
     
     
+    private void setPanelInfo() {
+        setPanelInfo("");
+    }
+    private void setPanelInfo(String panelName){
+        setPanelInfo(panelName, "");
+    }
+    private void setPanelInfo(String panelName, String geneList){
+        panelInfo.setPanelName(panelName);
+        panelInfo.setGeneList(geneList);
+
+    }
     
     
     
@@ -106,7 +116,9 @@ public class PanelTabController implements Initializable {
         if (panelInfo != null && panelNames.contains(panelInfo.getPanelName())){
             panelBox.getSelectionModel().select(panelInfo.getPanelName());
         } 
+        
         panelBox.setEditable(true);
+        
         TextFields.bindAutoCompletion(panelBox.getEditor(), panelNames);
     }
     
@@ -115,11 +127,11 @@ public class PanelTabController implements Initializable {
     
     
     
-    public void init(IPanelRepository panelRepo, Label infoLabel) {
+    public void init(IPanelRepository panelRepo, IPanelInfo panelInfo, Label infoLabel) {
         this.InfoLabel = infoLabel;
         this.panelRepo = panelRepo;
+        this.panelInfo = panelInfo;
         
-        this.panelInfo = new PanelInfo("");
         
         if (ConnectionBuilder.hasConnection()) {
             if (!panelRepo.isRepoValid()) {

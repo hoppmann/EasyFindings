@@ -9,6 +9,7 @@ package de.hoppmann.createReport;
 import de.hoppmann.database.userDB.receiverDB.IAddressInfo;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.TreeSet;
  *
  * @author hoppmann
  */
-public class ReportRepository implements IAddressInfo {
+public class ReportRepository implements IAddressInfo{
 
 
     ///////////////////////////
@@ -84,9 +85,12 @@ public class ReportRepository implements IAddressInfo {
     
     
 
-    // gene panel information
+    // gene panelGeneList information
 //    private List genePanelList = new LinkedList();
-    private Set panel = new TreeSet();
+    private Set panelGeneList = new TreeSet();
+    private String panelName;
+
+
     
     
 
@@ -388,6 +392,17 @@ public class ReportRepository implements IAddressInfo {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /////////////////////
     //////// Address Part
     
@@ -470,15 +485,15 @@ public class ReportRepository implements IAddressInfo {
     //////// Panel Genes
 
     public Set getPanel() {
-        return panel;
+        return panelGeneList;
     }
 
     public void setPanel(Set panel) {
-        this.panel = panel;
+        this.panelGeneList = panel;
     }
 
     public void addGeneToPanel (String newGene){
-        panel.add(newGene);
+        panelGeneList.add(newGene);
     }
     
     
@@ -580,6 +595,7 @@ public class ReportRepository implements IAddressInfo {
     public String getSeqMethodPH() {
         return seqMethodPH;
     }
+
 
 
     

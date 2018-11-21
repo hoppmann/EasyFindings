@@ -40,7 +40,6 @@ public class ReportMainViewController implements Initializable {
     @FXML private Tab addressesTab;
     @FXML private Tab entryMaskTab;
     
-    
     private ReportRepository reportRepo = new ReportRepository();
     
     

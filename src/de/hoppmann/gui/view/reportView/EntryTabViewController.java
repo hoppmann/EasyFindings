@@ -6,6 +6,7 @@
 package de.hoppmann.gui.view.reportView;
 
 import de.hoppmann.createReport.ReportRepository;
+import de.hoppmann.database.userDB.interfaces.IPanelRepository;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +23,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
+import org.controlsfx.control.textfield.TextFields;
 
 /**
  * FXML Controller class
@@ -45,6 +47,7 @@ public class EntryTabViewController implements Initializable {
     
     
     private ReportRepository repository;
+    private IPanelRepository panelRepo;
     
     
     
@@ -86,9 +89,6 @@ public class EntryTabViewController implements Initializable {
     
     
     
-    
-    
-    
     private Set createPanelList(String inputText) {
 	
 	// check if input not null if so split text into set (avoid duplications
@@ -120,6 +120,7 @@ public class EntryTabViewController implements Initializable {
     
     public void init(ReportRepository data) {
         this.repository = data;
+        
         
         genePanelArea.setText(String.join("\n", repository.getPanel()));
         coField.setText(repository.getReceiverCoLine());
@@ -237,6 +238,8 @@ public class EntryTabViewController implements Initializable {
 
 
 
+        
+        
 
     }    
     

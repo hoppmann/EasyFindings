@@ -269,7 +269,7 @@ public class MainViewUserDbController implements Initializable {
         panelTabView.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                panelTabController.init(new DbPanelRepository(), infoLabel);
+                panelTabController.init(new DbPanelRepository(), new PanelInfo(""), infoLabel);
             }
         });
         
