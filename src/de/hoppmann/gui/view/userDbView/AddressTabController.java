@@ -41,6 +41,8 @@ public class AddressTabController implements Initializable {
     @FXML private MainViewUserDbController mainViewUserDbController;
     @FXML private AnchorPane addressTab;
     @FXML private TextField titleField;
+    @FXML private TextField organisationField;
+    @FXML private TextField instituteFiled;
     @FXML private TextField addressField;
     @FXML private TextField cityField;
     @FXML private TextField zipCodeField;
@@ -94,6 +96,8 @@ public class AddressTabController implements Initializable {
     public void updateAddressInfoFromUI() {
 	aInfo.setReceiverTitle(titleField.getText());
 	aInfo.setReceiverName(nameBox.getValue());
+        aInfo.setReceiverOrganisation(organisationField.getText());
+        aInfo.setReceiverInstitute(instituteFiled.getText());
 	aInfo.setReceiverAddress(addressField.getText());
 	aInfo.setReceiverCity(cityField.getText());
 	aInfo.setReceiverZipCode(zipCodeField.getText());
@@ -139,6 +143,8 @@ public class AddressTabController implements Initializable {
 	if (aInfo != null){
 	    titleField.setText(aInfo.getReceiverTitle());
 	    nameBox.getSelectionModel().select(aInfo.getReceiverName());
+            organisationField.setText(aInfo.getReceiverOrganisation());
+            instituteFiled.setText(aInfo.getReceiverInstitute());
 	    addressField.setText(aInfo.getReceiverAddress());
 	    cityField.setText(aInfo.getReceiverCity());
 	    zipCodeField.setText(aInfo.getReceiverZipCode());

@@ -73,30 +73,32 @@ public class FindingsTabViewController implements Initializable {
         
 	
 	try {
+            
+      	    //// create controller for passing variables
+//	    SelectColumnsGuiController controller = new SelectColumnsGuiController(findings);
+	    
+//	    // create new window
+//	    fxmlLoader.setController(controller);
+
+            
 	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/de/hoppmann/gui/view/selectColumnView/SelectColumnsGui.fxml"));
-	    
-	    //// create controller for passing variables
-	    SelectColumnsGuiController controller = new SelectColumnsGuiController(findings);
-	    
-	    // create new window
-	    fxmlLoader.setController(controller);
 	    Parent root = fxmlLoader.load();
 	    Stage stage = new Stage();
-	    stage.setTitle("Slect columns for findings");
+	    stage.setTitle("Select columns");
 	    stage.setScene(new Scene(root));
-	    stage.initModality(Modality.APPLICATION_MODAL);
+//	    stage.initModality(Modality.APPLICATION_MODAL);
+            
+            
+            SelectColumnsGuiController controller = fxmlLoader.getController();
+            controller.init(findings);
+            
+            
 	    stage.show();
 	    
 	} catch (IOException ex) {
 	    Logger.getLogger(FindingsTabViewController.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
-    
-    
-    
-    
-    
-    
     
     
     

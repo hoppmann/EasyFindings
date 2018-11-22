@@ -8,83 +8,83 @@
 
 <!--fx:controller="de.hoppmann.gui.view.SelectColumnsGuiController"-->
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController">
     <children>
-	<Label layoutX="14.0" layoutY="20.0" prefHeight="20.0" prefWidth="85.0" text="Gene" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0">
+	<Label fx:id="geneLabel" layoutX="14.0" layoutY="20.0" prefHeight="20.0" prefWidth="85.0" text="Gene" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font size="14.0" />
          </font></Label>
 	<ComboBox fx:id="geneCol" layoutX="123.0" layoutY="17.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="20.0" />
-	<Label layoutX="14.0" layoutY="60.0" prefHeight="20.0" prefWidth="85.0" text="Impact" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0">
+	<Label fx:id="impactLabel" layoutX="14.0" layoutY="60.0" prefHeight="20.0" prefWidth="85.0" text="Impact" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font size="14.0" />
          </font></Label>
 	<ComboBox fx:id="impactCol" layoutX="123.0" layoutY="57.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="60.0" />
-	<Label layoutX="14.0" layoutY="100.0" prefHeight="20.0" prefWidth="85.0" text="cDNA" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="140.0">
+	<Label fx:id="cNomenLabel" layoutX="14.0" layoutY="100.0" prefHeight="20.0" prefWidth="85.0" text="cDNA" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="140.0">
          <font>
             <Font size="14.0" />
          </font></Label>
 	<ComboBox fx:id="cNomenCol" layoutX="123.0" layoutY="97.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="140.0" />
-	<Label layoutX="14.0" layoutY="140.0" prefHeight="20.0" prefWidth="85.0" text="Protein" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="180.0">
+	<Label fx:id="pNomenLabel" layoutX="14.0" layoutY="140.0" prefHeight="20.0" prefWidth="85.0" text="Protein" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="180.0">
          <font>
             <Font size="14.0" />
          </font></Label>
 	<ComboBox fx:id="pNomenCol" layoutX="123.0" layoutY="137.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="180.0" />
-	<Label layoutX="14.0" layoutY="180.0" prefHeight="20.0" prefWidth="85.0" text="PubMedID" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="220.0">
+	<Label fx:id="pubMedIdlabel" layoutX="14.0" layoutY="180.0" prefHeight="20.0" prefWidth="85.0" text="PubMedID" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="220.0">
          <font>
             <Font size="14.0" />
          </font></Label>
 	<ComboBox fx:id="pubMedIdCol" layoutX="123.0" layoutY="177.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="220.0" />
-	<Label layoutX="14.0" layoutY="220.0" prefHeight="20.0" prefWidth="85.0" text="Pred score" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="300.0">
+	<Label fx:id="predScoreLabel" layoutX="14.0" layoutY="220.0" prefHeight="20.0" prefWidth="85.0" text="Pred score" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="300.0">
          <font>
             <Font size="14.0" />
          </font></Label>
 	<ComboBox fx:id="predScoreCol" layoutX="123.0" layoutY="217.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="300.0" />
 	<Button fx:id="closeButton" layoutX="10.0" layoutY="291.0" mnemonicParsing="false" onAction="#closeButtonEvent" prefHeight="25.0" prefWidth="130.0" text="Close" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="5.0" />
       <Button fx:id="okButton" layoutX="140.0" layoutY="291.0" mnemonicParsing="false" onAction="#okButtonEvent" prefHeight="3.0" prefWidth="130.0" text="Ok" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="145.0" />
-      <Label layoutX="9.0" layoutY="259.0" prefHeight="20.0" prefWidth="85.0" text="tot pred" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="340.0">
+      <Label fx:id="totPredlabel" layoutX="9.0" layoutY="259.0" prefHeight="20.0" prefWidth="85.0" text="tot pred" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="340.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="totPredCol" layoutX="118.0" layoutY="256.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="340.0" />
-      <Label layoutX="19.0" layoutY="298.0" prefHeight="20.0" prefWidth="85.0" text="ClinVar" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="380.0">
+      <Label fx:id="clinVarLabel" layoutX="19.0" layoutY="298.0" prefHeight="20.0" prefWidth="85.0" text="ClinVar" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="380.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="clinVarCol" layoutX="128.0" layoutY="295.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="380.0" />
-      <Label layoutX="19.0" layoutY="339.0" prefHeight="20.0" prefWidth="85.0" text="Splice 45" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="500.0">
+      <Label fx:id="splice45Label" layoutX="19.0" layoutY="339.0" prefHeight="20.0" prefWidth="85.0" text="Splice 45" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="500.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="splice45Col" layoutX="128.0" layoutY="336.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="500.0" />
-      <Label layoutX="29.0" layoutY="379.0" prefHeight="20.0" prefWidth="85.0" text="Splice 15" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="460.0">
+      <Label fx:id="splice15Label" layoutX="29.0" layoutY="379.0" prefHeight="20.0" prefWidth="85.0" text="Splice 15" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="460.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="splice15Col" layoutX="138.0" layoutY="376.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="460.0" />
-      <Label layoutX="29.0" layoutY="401.0" prefHeight="20.0" prefWidth="85.0" text="HGMD" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="420.0">
+      <Label fx:id="hgmdLabel" layoutX="29.0" layoutY="401.0" prefHeight="20.0" prefWidth="85.0" text="HGMD" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="420.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="hgmdCol" layoutX="138.0" layoutY="398.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="420.0" />
-      <Label layoutX="24.0" layoutY="230.0" prefHeight="20.0" prefWidth="85.0" text="RSId" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="260.0">
+      <Label fx:id="rsIdLabel" layoutX="24.0" layoutY="230.0" prefHeight="20.0" prefWidth="85.0" text="RSId" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="260.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="rsIdCol" layoutX="133.0" layoutY="227.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="260.0" />
-      <Label layoutX="381.0" layoutY="507.0" prefHeight="20.0" prefWidth="85.0" text="Zygocity" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0">
+      <Label fx:id="zygocityLabel" layoutX="381.0" layoutY="507.0" prefHeight="20.0" prefWidth="85.0" text="Zygocity" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="zygocityCol" layoutX="490.0" layoutY="504.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="100.0" />
-      <Label layoutX="6.0" layoutY="544.0" prefHeight="20.0" prefWidth="85.0" text="MAF" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="540.0">
+      <Label fx:id="mafLabel" layoutX="6.0" layoutY="544.0" prefHeight="20.0" prefWidth="85.0" text="MAF" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="540.0">
          <font>
             <Font size="14.0" />
          </font>

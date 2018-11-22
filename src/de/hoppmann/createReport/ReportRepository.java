@@ -53,6 +53,8 @@ public class ReportRepository implements IAddressInfo, IPanelInfo{
     private int receiverID;
     private String receiverTitle = "";
     private String receiverName = "Name";
+    private String receiverOrganisation = "";
+    private String receiverInstitute = "";
     private String receiverAddress = "Straße";
     private String receiverCity = "Stadt";
     private String receiverZipCode = "";
@@ -509,6 +511,29 @@ public class ReportRepository implements IAddressInfo, IPanelInfo{
         this.receiverName = receiverName;
     }
 
+    
+     @Override
+    public String getReceiverOrganisation() {
+        return receiverOrganisation;
+    }
+
+    @Override
+    public void setReceiverOrganisation(String organisation) {
+        this.receiverOrganisation = organisation;
+    }
+
+    @Override
+    public String getReceiverInstitute() {
+        return receiverInstitute;
+    }
+
+    @Override
+    public void setReceiverInstitute(String institute) {
+        this.receiverInstitute = institute;
+    }
+    
+    
+    
     @Override
     public String getReceiverCity() {
         return receiverCity;
@@ -645,6 +670,8 @@ public class ReportRepository implements IAddressInfo, IPanelInfo{
     public String getSeqMethodPH() {
         return seqMethodPH;
     }
+
+   
 
 
 

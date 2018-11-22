@@ -17,6 +17,8 @@ implements IAddressInfo{
     private int id;
     private String title;
     private String name;
+    private String organisation;
+    private String institute;
     private String address;
     private String city;
     private String zipCode;
@@ -28,28 +30,42 @@ implements IAddressInfo{
     /////////////////////////////
 	    
     
-    public AddressInfo(String title, String name, String address, String city, String zipCode, String country, int id) {
+    public AddressInfo(int id, String title, String name, String organisation, String institute, String address, String city, String zipCode, String country) {
+	this.id = id;
 	this.title = title;
 	this.name = name;
+	this.organisation = organisation;
+	this.institute = institute;
 	this.address = address;
 	this.city = city;
-	this.zipCode = zipCode;
-	this.country = country;
-	this.id = id;
+        this.zipCode = zipCode;
+        this.country = country;
     }
+
+    public AddressInfo() {
+        clearStorage();
+    }
+
+    
+    
+    
+    
+    
     
     
     
     
     @Override
     public void clearStorage() {
+        id = -1;
         title = "";
         name = "";
+        organisation = "";
+        institute = "";
         address = "";
         city = "";
         zipCode = "";
         country = "";
-        id = -1;
     }
     
     
@@ -130,6 +146,26 @@ implements IAddressInfo{
     @Override
     public void setReceiverCountry(String country) {
 	this.country = country;
+    }
+
+    @Override
+    public String getReceiverOrganisation() {
+        return organisation;
+    }
+
+    @Override
+    public void setReceiverOrganisation(String organisation) {
+        this.organisation = organisation;
+    }
+
+    @Override
+    public String getReceiverInstitute() {
+        return institute;
+    }
+
+    @Override
+    public void setReceiverInstitute(String institute) {
+        this.institute = institute;
     }
 
     

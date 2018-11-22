@@ -260,7 +260,8 @@ public class MainViewUserDbController implements Initializable {
 	    @Override
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 		if (newValue){
-		    addressTabController.init(new DbAddressRepository(), infoLabel, new AddressInfo("", "", "", "", "", "", -1));
+//		    addressTabController.init(new DbAddressRepository(), infoLabel, new AddressInfo(-1, "", "", "", "", "", "", "", ""));
+                    addressTabController.init(new DbAddressRepository(), infoLabel, new AddressInfo());
 		}
 	    }
 	});

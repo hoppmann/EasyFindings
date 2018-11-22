@@ -6,7 +6,6 @@
 
 package de.hoppmann.createReport;
 
-//import de.hoppmann.database.OldImplementation.UserDB;
 import de.hoppmann.database.geneInfoDB.ConnectGeneInfoDb;
 import de.hoppmann.database.geneInfoDB.ConnectGeneInfoSQLite;
 import de.hoppmann.database.geneInfoDB.GeneInfoDbConnectionHolder;
@@ -77,7 +76,6 @@ public class PreparePanelTable {
 	geneInfoDB = new File(curDir + File.separator + "DBs" + File.separator + dbName);
 
         
-        //TO BE ADDED
         
         
         boolean success = new ConnectGeneInfoDb(new ConnectGeneInfoSQLite()).connectGeneInfoDbSqLite();

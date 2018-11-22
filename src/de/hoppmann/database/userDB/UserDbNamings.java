@@ -33,12 +33,14 @@ public class UserDbNamings {
     // address table
     public static final String RECEIVER_TABLE = "receiver";
     public static final String ADDRESS_ID_KEY = "ID";
-    public static final String TITLE_KEY = "Title";
-    public static final String NAME_KEY = "Full_name";
+    public static final String TITLE_KEY = "title";
+    public static final String NAME_KEY = "fullName";
+    public static final String ORGANISATION_KEY = "organisation";
+    public static final String INSTITUTE_KEY = "institute";
     public static final String ADDRESS_KEY = "Postal_address";
-    public static final String ZIP_CODE_KEY = "ZIP_code";
-    public static final String CITY_KEY = "City";
-    public static final String COUNTRY_KEY = "Countries";
+    public static final String ZIP_CODE_KEY = "zipCode";
+    public static final String CITY_KEY = "city";
+    public static final String COUNTRY_KEY = "countries";
 
     
     

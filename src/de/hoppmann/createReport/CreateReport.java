@@ -124,11 +124,35 @@ public class CreateReport {
     private String prepareReceiverAddress() {
 	
 	List<String> addressParts = new LinkedList<>();
-	if (reportData.getReceiverTitle().equals("")) {
-	    addressParts.add(reportData.getReceiverName());
+
+        boolean hasOranisation = false;
+        if (!reportData.getReceiverOrganisation().equals("")) {
+            addressParts.add(reportData.getReceiverOrganisation());
+            hasOranisation = true;
+
+            if (!reportData.getReceiverInstitute().equals("")) {
+                addressParts.add(reportData.getReceiverInstitute());
+            }
+        }
+
+        
+        
+        if (reportData.getReceiverTitle().equals("")) {
+            if (hasOranisation) {
+                addressParts.add("z.Hd. " + reportData.getReceiverName());
+            } else{
+                addressParts.add(reportData.getReceiverName());
+            }
 	} else {
-	    addressParts.add(reportData.getReceiverTitle() + " " + reportData.getReceiverName());
+            if (hasOranisation){
+                addressParts.add("Z.Hd. " + reportData.getReceiverTitle() + " " + reportData.getReceiverName());
+            } else {
+                addressParts.add(reportData.getReceiverTitle() + " " + reportData.getReceiverName());
+            }
 	}
+        
+       
+        
 	addressParts.add(reportData.getReceiverAddress());
 	addressParts.add("<strong>" + reportData.getReceiverZipCode() + " " + reportData.getReceiverCity() + "</strong>");
 	addressParts.add(reportData.getReceiverCountry());
@@ -136,7 +160,6 @@ public class CreateReport {
 	// return address as string
 	return  String.join("<br>\n", addressParts);
 
-	
     }
     
     

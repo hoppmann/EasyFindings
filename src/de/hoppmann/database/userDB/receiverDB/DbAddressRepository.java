@@ -28,6 +28,8 @@ public class DbAddressRepository implements IAddressRepository {
     private static final String ID_KEY = UserDbNamings.ADDRESS_ID_KEY;
     private static final String TITLE_KEY = UserDbNamings.TITLE_KEY;
     private static final String NAME_KEY = UserDbNamings.NAME_KEY;
+    private static final String ORGANISATION_KEY = UserDbNamings.ORGANISATION_KEY;
+    private static final String INSTITUTE_KEY = UserDbNamings.INSTITUTE_KEY;
     private static final String ADDRESS_KEY = UserDbNamings.ADDRESS_KEY;
     private static final String ZIP_CODE_KEY = UserDbNamings.ZIP_CODE_KEY;
     private static final String CITY_KEY = UserDbNamings.CITY_KEY;
@@ -90,6 +92,8 @@ public class DbAddressRepository implements IAddressRepository {
                     aInfo.setReceiverId(Integer.parseInt(rs.getString(ID_KEY)));
                     aInfo.setReceiverTitle(rs.getString(TITLE_KEY));
                     aInfo.setReceiverAddress(rs.getString(ADDRESS_KEY));
+                    aInfo.setReceiverOrganisation(rs.getString(ORGANISATION_KEY));
+                    aInfo.setReceiverInstitute(rs.getString(INSTITUTE_KEY));
                     aInfo.setReceiverZipCode(rs.getString(ZIP_CODE_KEY));
                     aInfo.setReceiverCity(rs.getString(CITY_KEY));
                     aInfo.setReceiverCountry(rs.getString(COUNTRY_KEY));
@@ -126,11 +130,6 @@ public class DbAddressRepository implements IAddressRepository {
     
     
     
-
-
-
- 
-    
     
     
     
@@ -138,23 +137,27 @@ public class DbAddressRepository implements IAddressRepository {
     public boolean makeRepoValid() {
 	
 	boolean success = false;
-	
-	// prepare command
-	String createTableCmd = "CREATE TABLE " + RECEIVER_TABLE + "( "
-		+ ID_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-		+ TITLE_KEY + " Varchar(60), "
-		+ NAME_KEY + " Varchar(60) not null, "
-		+ ADDRESS_KEY + " Varchar(60), "
-		+ ZIP_CODE_KEY + " Varchar(60), "
-		+ CITY_KEY + " Varchar(60), "
-		+ COUNTRY_KEY + " Varchar(60) )";
-    
+        // prepare command
+        String createTableCmd = "CREATE TABLE " + RECEIVER_TABLE + "( "
+                + ID_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + TITLE_KEY + " Varchar(60), "
+                + NAME_KEY + " Varchar(60) not null, "
+                + ORGANISATION_KEY + " VARCHAR(60), "
+                + INSTITUTE_KEY + " VARCHAR(60), "
+                + ADDRESS_KEY + " Varchar(60), "
+                + ZIP_CODE_KEY + " Varchar(60), "
+                + CITY_KEY + " Varchar(60), "
+                + COUNTRY_KEY + " Varchar(60) )";
+
             ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
-	
-	if (hasReceiverTable()){
-	    success = true;
-	}
-	
+
+        if (hasReceiverTable()){
+            success = true;
+        }
+        
+        
+        
+        
 	return success;
     }
     
@@ -216,9 +219,9 @@ public class DbAddressRepository implements IAddressRepository {
 	
 	// prepare query
 	String insertCmd = "INSERT INTO " + RECEIVER_TABLE 
-		+ " (" + TITLE_KEY + ", " + NAME_KEY + ", " + ADDRESS_KEY + ", " + ZIP_CODE_KEY
+		+ " (" + TITLE_KEY + ", " + NAME_KEY + ", " + ORGANISATION_KEY + ", " + INSTITUTE_KEY + ", " + ADDRESS_KEY + ", " + ZIP_CODE_KEY
 		 + ", " + CITY_KEY + ", " + COUNTRY_KEY + ") " 
-		+ " VALUES ( '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverAddress() + "', '" 
+		+ " VALUES ( '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverOrganisation() + "', '" + aInfo.getReceiverInstitute() + "', '" + aInfo.getReceiverAddress() + "', '" 
 		+ aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
         
             DbOperations.execute(insertCmd, ConnectionHolder.getInstance().getConnection());
@@ -243,7 +246,7 @@ public class DbAddressRepository implements IAddressRepository {
         
 	// perpare update command
 	String updateCmd = "REPLACE INTO " + RECEIVER_TABLE + " VALUES ( '" + aInfo.getReceiverId() +
-		"', '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverAddress() + "', '" +
+		"', '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverOrganisation() + "', '" + aInfo.getReceiverInstitute() + "', '" + aInfo.getReceiverAddress() + "', '" +
 		aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
 
             DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());

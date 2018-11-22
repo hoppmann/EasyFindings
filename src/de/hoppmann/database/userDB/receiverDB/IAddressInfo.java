@@ -24,6 +24,14 @@ public interface IAddressInfo {
     public String getReceiverName();
 
     public void setReceiverName(String name);
+    
+    public String getReceiverOrganisation();
+    
+    public void setReceiverOrganisation(String organisation);
+    
+    public String getReceiverInstitute();
+    
+    public void setReceiverInstitute(String institute);
 
     public String getReceiverAddress();
 
