@@ -16,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 
 /**
@@ -36,35 +38,34 @@ public class SelectColumnsGuiController implements Initializable {
     private ObservableList<String> header;
     private FindingsRepository findings;
 
-    @FXML
-    private ComboBox<String> geneCol = new ComboBox<>();
-    @FXML
-    private ComboBox<String> impactCol = new ComboBox<>();
-    @FXML
-    private ComboBox<String> pNomenCol = new ComboBox<>();
-    @FXML
-    private ComboBox<String> cNomenCol = new ComboBox<>();
-    @FXML
-    private ComboBox<String> pubMedIdCol = new ComboBox<>();
-    @FXML
-    private ComboBox<String> predScoreCol = new ComboBox<>();
-    @FXML
-    private ComboBox<String> totPredCol = new ComboBox<>();
-    @FXML
-    private ComboBox<String> hgmdCol = new ComboBox<>();
-    @FXML
-    private ComboBox<String> clinVarCol = new ComboBox<>();
-    @FXML
-    private ComboBox<String> splice45Col = new ComboBox<>();
-    @FXML
-    private ComboBox<String> splice15Col = new ComboBox<>();
-    @FXML
-    private ComboBox<String> rsIdCol = new ComboBox<>();
-    @FXML 
-    private ComboBox<String> mafCol = new ComboBox<>();
-    @FXML
-    private ComboBox<String> zygocityCol = new ComboBox<>();
-    
+    @FXML private ComboBox<String> geneCol = new ComboBox<>();
+    @FXML private Label geneLabel;
+    @FXML private ComboBox<String> impactCol = new ComboBox<>();
+    @FXML private Label impactLabel;
+    @FXML private ComboBox<String> pNomenCol = new ComboBox<>();
+    @FXML private Label pNomenLabel;
+    @FXML private ComboBox<String> cNomenCol = new ComboBox<>();
+    @FXML private Label cNomenLabel;
+    @FXML private ComboBox<String> pubMedIdCol = new ComboBox<>();
+    @FXML private Label pubMedIdlabel;
+    @FXML private ComboBox<String> predScoreCol = new ComboBox<>();
+    @FXML private Label predScoreLabel;
+    @FXML private ComboBox<String> totPredCol = new ComboBox<>();
+    @FXML private Label totPredlabel;
+    @FXML private ComboBox<String> hgmdCol = new ComboBox<>();
+    @FXML private Label hgmdLabel;
+    @FXML private ComboBox<String> clinVarCol = new ComboBox<>();
+    @FXML private Label clinVarLabel;
+    @FXML private ComboBox<String> splice45Col = new ComboBox<>();
+    @FXML private Label splice45Label;
+    @FXML private ComboBox<String> splice15Col = new ComboBox<>();
+    @FXML private Label splice15Label;
+    @FXML private ComboBox<String> rsIdCol = new ComboBox<>();
+    @FXML private Label rsIdLabel;
+    @FXML private ComboBox<String> mafCol = new ComboBox<>();
+    @FXML private Label mafLabel;
+    @FXML private ComboBox<String> zygocityCol = new ComboBox<>();
+    @FXML private Label zygocityLabel;
     
     @FXML
     private Button closeButton;
@@ -209,8 +210,8 @@ public class SelectColumnsGuiController implements Initializable {
 	  check if there is allready a column chosen previously if so use that one 
 	  else use the one from the config file
 	*/
-	
-	
+	geneLabel.setTooltip(new Tooltip(ColViewTooltipTexts.GENE_COL_TP_TEXT));
+	geneCol.setEditable(true);
 	geneCol.getItems().addAll(header);
 	if (findings.getGeneCol() != null && checkStringList(header, findings.getGeneCol()) == true){
 	    geneCol.getSelectionModel().select(findings.getGeneCol());
@@ -219,7 +220,10 @@ public class SelectColumnsGuiController implements Initializable {
 	}
 	
 	
+	
 	// prepare impact column
+	impactLabel.setTooltip(new Tooltip(ColViewTooltipTexts.IMPACT_COL_TP_TEXT));
+	impactCol.setEditable(true);
 	impactCol.getItems().addAll(header);
 	if (findings.getImpactCol() != null && checkStringList(header, findings.getImpactCol()) == true){
 	    geneCol.getSelectionModel().select(findings.getImpactCol());
@@ -227,87 +231,141 @@ public class SelectColumnsGuiController implements Initializable {
 	    impactCol.getSelectionModel().select(config.getImpactCol());
 	}
 	
+	
+	
 	// prepare cDNA nomencalture column
+	cNomenLabel.setTooltip(new Tooltip(ColViewTooltipTexts.CNOMEN_COL_TP_TEXT));
+	cNomenCol.setEditable(true);
 	cNomenCol.getItems().addAll(header);
 	if (findings.getcNomenCol()!= null && checkStringList(header, findings.getcNomenCol()) == true){
 	    geneCol.getSelectionModel().select(findings.getcNomenCol());
 	} else if (checkStringList(header, config.getcNomenCol()) == true){
 	    cNomenCol.getSelectionModel().select(config.getcNomenCol());
 	}
+
+	
+	
 	
 	// prepare protein nomenclature column
+	pNomenLabel.setTooltip(new Tooltip(ColViewTooltipTexts.PNOMEN_COL_TP_TEXT));
+	pNomenCol.setEditable(true);
 	pNomenCol.getItems().addAll(header);
 	if (findings.getpNomenCol()!= null && checkStringList(header, findings.getpNomenCol()) == true){
 	    geneCol.getSelectionModel().select(findings.getpNomenCol());
 	} else if(checkStringList(header, config.getpNomenCol()) == true){
 	    pNomenCol.getSelectionModel().select(config.getpNomenCol());
 	}
+
 	
+		
 	
 	// prepare prediction Score column
+	predScoreLabel.setTooltip(new Tooltip(ColViewTooltipTexts.PREDSCORE_COL_TP_TEXT));
+	predScoreCol.setEditable(true);
 	predScoreCol.getItems().addAll(header);
 	if (checkStringList(header, config.getPredScoreCol())) {
 	    predScoreCol.getSelectionModel().select(config.getPredScoreCol());
 	}
 	
 	
+	
+	
 	// prepare total number of predictions column
+	totPredlabel.setTooltip(new Tooltip(ColViewTooltipTexts.TOTPRED_COL_TP_TEXT));
+	totPredCol.setEditable(true);
 	totPredCol.getItems().addAll(header);
 	if (checkStringList(header, config.getTotPredCol())) {
 	    totPredCol.getSelectionModel().select(config.getTotPredCol());
 	}
+		
 	
 	
 	// prepare ClinVar column
+	clinVarLabel.setTooltip(new Tooltip(ColViewTooltipTexts.CLINVAR_COL_TP_TEXT));
+	clinVarCol.setEditable(true);
 	clinVarCol.getItems().addAll(header);
 	if (checkStringList(header, config.getClinvarCol())) {
 	    clinVarCol.getSelectionModel().select(config.getClinvarCol());
 	}
 	
+	
+	
+	
 	// prepare HGMD column
+	hgmdLabel.setTooltip(new Tooltip(ColViewTooltipTexts.HGMD_COL_TP_TEXT));
+	hgmdCol.setEditable(true);
 	hgmdCol.getItems().addAll(header);
 	if (checkStringList(header, config.getHgmdCol())) {
 	    hgmdCol.getSelectionModel().select(config.getHgmdCol());
 	}
 	
+	
+	
+	
 	// prepare splice 15 reduction prediction column
+	splice15Label.setTooltip(new Tooltip(ColViewTooltipTexts.SPLICE15_COL_TP_TEXT));
+	splice15Col.setEditable(true);
 	splice15Col.getItems().addAll(header);
 	if (checkStringList(header, config.getSplice15Col())) {
 	    splice15Col.getSelectionModel().select(config.getSplice15Col());
 	}
 	
+	
+	
+	
 	// prepare splice 45 reduction prediction column
+	splice45Label.setTooltip(new Tooltip(ColViewTooltipTexts.SPLICE45_COL_TP_TEXT));
+	splice45Col.setEditable(true);
 	splice45Col.getItems().addAll(header);
 	if (checkStringList(header, config.getSplice45Col())) {
 	    splice45Col.getSelectionModel().select(config.getSplice45Col());
 	}
 	
 	
+	
+	
 	// prepare pubMed ID column
+	pubMedIdlabel.setTooltip(new Tooltip(ColViewTooltipTexts.PUBMEDID_COL_TP_TEXT));
+	pubMedIdCol.setEditable(true);
 	pubMedIdCol.getItems().addAll(header);
 	if(checkStringList(header, config.getPubMedIdCol())) {
 	    pubMedIdCol.getSelectionModel().select(config.getPubMedIdCol());
 	}
 	
 	
+	
+	
 	// prepare rsId column
+	rsIdLabel.setTooltip(new Tooltip(ColViewTooltipTexts.RSID_COL_TP_TEXT));
+	rsIdCol.setEditable(true);
 	rsIdCol.getItems().addAll(header);
 	if(checkStringList(header, config.getRsIdCol())) {
 	    rsIdCol.getSelectionModel().select(config.getRsIdCol());
 	}
 	
+	
+	
+	
 	// prepare zygocity column
+	zygocityLabel.setTooltip(new Tooltip(ColViewTooltipTexts.ZYGOCITY_COL_TEXT));
+	zygocityCol.setEditable(true);
 	zygocityCol.getItems().addAll(header);
 	if (checkStringList(header, config.getZygocityCol())){
 	    zygocityCol.getSelectionModel().select(config.getZygocityCol());
 	}
 	
+	
+	
+	
 	// prepare maf column
+	mafLabel.setTooltip(new Tooltip(ColViewTooltipTexts.MAF_COL_TP_TEXT));
+	mafCol.setEditable(true);
 	mafCol.getItems().addAll(header);
-	System.out.println(config.getMafCol());
 	if (checkStringList(header, config.getMafCol())){
 	    mafCol.getSelectionModel().select(config.getMafCol());
 	}
+	
+	
 	
 	
 	

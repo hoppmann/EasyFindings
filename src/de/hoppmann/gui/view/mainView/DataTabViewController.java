@@ -56,7 +56,6 @@ public class DataTabViewController implements Initializable {
     @FXML
     private void openButtonAction(ActionEvent event) {
         
-        input = new InputRepository();
         
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Open input file.");
@@ -70,6 +69,7 @@ public class DataTabViewController implements Initializable {
         File inputFile = chooser.showOpenDialog(new Stage());
 
         if (inputFile != null && inputFile.exists()){
+	    input = new InputRepository();
             config.setInputPath(inputFile.getParent());
             loadInput = new LoadInputFile();
             loadInput.openFile(inputFile,input);
