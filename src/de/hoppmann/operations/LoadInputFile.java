@@ -16,10 +16,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 
@@ -32,20 +35,16 @@ public class LoadInputFile {
     
 
 
-    ///////////////////////////
-    //////// variables ////////
-    ///////////////////////////
-//    private final List<String> header = new ArrayList<>();
-//    private List<TableData> rowData;
     private Config config = Config.getInstance();
     
     
-    
-    
-    /////////////////////////
-    //////// methods ////////
-    /////////////////////////
+    public LoadInputFile() {
+	
+	
+    }
 
+
+    
     
     
     
@@ -79,74 +78,490 @@ public class LoadInputFile {
     
     
     
+    /**
+     * is LOF variant ("stop_gained", "frameshift_variant", "start_lost", "stop_lost")
+     *	    is known for LOF (pLi >= 0.9)
+     *		not extreme end (>50bp from end [cDNA-position - transcript length])
+     *	
+     * is splice variant in +/1 1,2 ("splice_region_variant", "splice_donor_variant", "splice_acceptor_variant")
+     *	    is in cDNA +1/+2/-1/-2
+     * 
+     * @param curLine
+     * @param catIndices
+     * @return 
+     */
+    
+    public boolean checkPVS1(TableData curLine, HashMap<String, Integer> catIndices) {
+	
+	boolean pvs1 = false; 
+	
+	
+//	Set<String> impactCatagories = new TreeSet<>();
+//	impactCatagories.add("stop_gained");
+//	impactCatagories.add("frameshift_variant");
+//	impactCatagories.add("start_lost");
+//	impactCatagories.add("stop_lost");
+
+	
+	
+//	String impactEntry = curLine.getEntry(catIndices.get(config.getImpactCol()));
+//	Set<String> impactSet = new TreeSet<>(Arrays.asList(impactEntry.split(",")));
+//	
+//	// check for null vaiant
+//	if (!Collections.disjoint(impactSet, impactCatagories)){
+//	    
+//	    
+//	    // check if LOF is common mechanism
+//	    int pliScore = Integer.parseInt(curLine.getEntry(catIndices.get(config.getPliScoreCol())));
+//	    if (pliScore >= 0.9 ){
+//		
+//	    }
+//
+//
+//	}
+	
+	
+	
+	
+	return pvs1;
+    }
+    
+    
+    
+    /**
+     * ClinVar -> Pathogenic
+     * HGMD -> DM
+     * @param curLine
+     * @param catIndices
+     * @return 
+     */
+    private boolean checkPS1(TableData curLine, HashMap<String, Integer> catIndices) {
+	boolean ps1 = false;
+	
+	if (catIndices.get(config.getHgmdCol()) >= 0){
+	    String hgmdEntry = curLine.getEntry(catIndices.get(config.getHgmdCol()));
+	    Set<String> hgmdSet = new TreeSet<>(Arrays.asList(hgmdEntry.split(",")));
+	
+	    if (hgmdSet.contains("DM")){
+		ps1 = true;
+	    }
+	}
+	
+	
+	if (catIndices.get(config.getClinvarCol()) >= 0) {
+	    String clinVarEntry = curLine.getEntry(catIndices.get(config.getClinvarCol()));
+	    Set<String> clinVarSet = new TreeSet<>(Arrays.asList(clinVarEntry.split(",")));
+	    
+	    if (clinVarSet.contains("pathogenic")){
+		ps1 = true;
+	    }
+
+	}
+	
+	
+	return ps1;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      /**
+     * MAF Cases >> MAF Controls (inhouse DB needed)
+     * @param curLine
+     * @param catIndices
+     * @return 
+     */  
+    private boolean checkPS4(TableData curLine, HashMap<String, Integer> catIndices) {
+	
+	boolean ps4 = false;
+	
+	
+	
+	
+	
+	return ps4;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * MAF = 0 (nfe, eas, sas, afr)
+     * @param curLine
+     * @param catIndices
+     * @return 
+     */
+    
+    private boolean checkPM2(TableData curLine, HashMap<String, Integer> catIndices){
+	
+	boolean pm2 = true;
+	
+	if (catIndices.get(config.getMafAllCol()) > 0) {
+	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafAllCol())));
+	    if (maf <= 0){
+		pm2 = false;
+	    }
+	}
+	
+	
+	
+	if (catIndices.get(config.getMafNfeCol()) > 0 ){
+	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafNfeCol())));
+	    	    if (maf <= 0){
+		pm2 = false;
+	    }
+
+	}
+	
+	
+	if (catIndices.get(config.getMafAfrCol()) > 0) {
+	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafAfrCol())));
+	    if (maf <= 0){
+		pm2 = false;
+	    }
+	}
+	
+	
+	if (catIndices.get(config.getMafSasCol()) > 0) {
+	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafSasCol())));
+	    if (maf <= 0){
+		pm2 = false;
+	    }
+	}
+	
+	
+	if (catIndices.get(config.getMafEasCol()) > 0) {
+	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafEasCol())));
+	    if (maf <= 0){
+		pm2 = false;
+	    }
+	}
+
+
+	return pm2;
+    }
+    
+    
+    
+    
+    
+
+    
+    /**
+     * inframe variants (alamut_codingEffect > inframe)
+     *	    no repeat rich region (repeatmaster [rmsk] entry but not trf/null)
+     * 
+     * stop loss variants (alamut_codingEffect > stop loss)
+     * @param curLine
+     * @param catIndices
+     * @return 
+     */
+
+    private boolean checkPM4(TableData curLine, HashMap<String, Integer> catIndices){
+	boolean pm4 = false;
+	
+	if (catIndices.get(config.getImpactCol()) >= 0
+		&& catIndices.get(config.getRmskCol()) >= 0){
+
+	    String impactEntry = curLine.getEntry(catIndices.get(config.getImpactCol()));
+	    Set<String> impactSet = new TreeSet<>(Arrays.asList(impactEntry.split(",")));
+	    
+	    Set<String>  inframes = new TreeSet<>();
+	    inframes.add("inframe_deletion");
+	    inframes.add("inframe_insertion");
+	    
+	    
+	    if (!Collections.disjoint(impactSet, inframes)){
+		String rmskEntry = curLine.getEntry(catIndices.get(config.getRmskCol()));
+		Set<String> rmskSet = new TreeSet<>(Arrays.asList(rmskEntry.split(";")));
+		rmskSet.remove("trf");
+		rmskSet.remove("None");
+		if (rmskSet.size() > 0){
+		    pm4 = true;
+		}
+	    }
+	    
+
+
+
+	    
+
+	}
+	
+	
+	
+	
+	
+	
+	return pm4;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * Missense var 
+     *	    low rate of missense var and missense common mechanism (GDI = HIGH)   
+     * @param curLine
+     * @param catIndices
+     * @return 
+     */
+    private boolean checkPP2(TableData curLine, HashMap<String, Integer> catIndices) {
+	return false;
+    }
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * Multiple hints (>= 2 of)
+     *	    is_conserved
+     *	    total prediction > 3 AND percent damagin >= 0.5
+     *	    allSSPred > 2 AND percent splice reduction 45 >= 0.5
+     *	    GDI != High
+     *	    pLI > 0.9
+     * @param curLine
+     * @param catIndices
+     * @return 
+     */
+    
+    private boolean checkPP3(TableData curLine, HashMap<String, Integer> catIndices) {
+	return false;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private String extractColIndeces(List<String> header, HashMap<String, Integer> catIndices) {
+	
+	// Add needed header
+	catIndices.put(config.getGeneCol(), -1);
+	catIndices.put(config.getImpactCol(), -1);
+	catIndices.put(config.getZygocityCol(), -1);
+	catIndices.put(config.getcNomenCol(), -1);
+	catIndices.put(config.getpNomenCol(), -1);
+	catIndices.put(config.getPredScoreCol(), -1);
+	catIndices.put(config.getTotPredCol(), -1);
+	catIndices.put(config.getClinvarCol(), -1);
+	catIndices.put(config.getHgmdCol(), -1);
+	catIndices.put(config.getSplice15Col(), -1);
+	catIndices.put(config.getSplice45Col(), -1);
+	catIndices.put(config.getMafAllCol(), -1);
+	catIndices.put(config.getMafNfeCol(), -1);
+	catIndices.put(config.getMafAfrCol(), -1);
+	catIndices.put(config.getMafSasCol(), -1);
+	catIndices.put(config.getMafEasCol(), -1);
+	catIndices.put(config.getRmskCol(), -1);
+	catIndices.put(config.getConservationCol(), -1);
+	
+	
+	
+	for (String curCat : catIndices.keySet()) {
+	    catIndices.put(curCat, header.indexOf(curCat));
+        }
+	
+	
+	// check if all header are available else make not
+	if (! header.containsAll(catIndices.keySet())){
+	    return "Not all catagories set. Check your column choice.";
+	}
+
+	return "";
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
     
     //// detect catagory
     public String catagorize(InputRepository inputRepository) {
-        List<String> header = inputRepository.getHeader();
-        List<TableData> rowData = inputRepository.getRowData();
-	//// definde variables
-	
-	/**
-	 * check if all header entries needed for automated catagorization are availabe
-	 * get columns from config
-	 * check for their existance
-	*/
-	HashMap<String, Integer> catagories = new LinkedHashMap<>();
-	catagories.put(config.getClinvarCol(), null);
-	catagories.put(config.getHgmdCol(), null);
-	catagories.put(config.getPredScoreCol(), null);
-	catagories.put(config.getSplice15Col(), null);
-	catagories.put(config.getSplice45Col(), null);
-	catagories.put(config.getTotPredCol(), null);
-	
-	// if not all header found return missing header as warning
-	if (! header.containsAll(catagories.keySet())){
-	    
-	    List<String> missing = new LinkedList<>(catagories.keySet());
-	    String warningText = null;
-	    if (missing.size() == 6){
-		missing.removeAll(header);
-		warningText = "Catagories not chosen automatically. " + missing + " not available";
-	    } else {
-		    warningText = "Catagories not chosen automatically. Missing catagories.";
-	    }
-	    // set to unclear and skip rest
-	    for (TableData row : rowData) {
-		row.setCatagory(Catagory.getUnclearCode());
-	    }
-	    return warningText;
-	    
-	    
-	    //// get indeces of the header entries for later value extraction
-	} else {
-	    
-	    for (String curCat : catagories.keySet()) {
-		catagories.put(curCat, header.indexOf(curCat));
-	    }
-	    
+       
+	List<String> header = inputRepository.getHeader();
+	List<TableData> rowData = inputRepository.getRowData();
+	HashMap<String, Integer> catIndices = new LinkedHashMap<>();
 
-	   // for each entry check if criteria for certain catagories are fullfiled
-	    for (TableData row : rowData) {
-		
-		// check if variant is pathogenic
-		if (isPatho(row, catagories)) {
-		    row.setCatagory(Catagory.getPathoCode());
-		} else if (isLikelyPatho(row, catagories)) {
-		    row.setCatagory(Catagory.getProbPathoCode());
-		} else if (isUnclear(row, catagories)){
-		    row.setCatagory(Catagory.getUnclearCode());
-		}
-		} // end for loop
-	    } // end else clause
+	
+	extractColIndeces(header, catIndices);
+
+	
+	boolean pvs1 = false;
+	
+	boolean ps1 = false;
+	boolean ps4 = false;
+	
+	boolean pm2 = false;
+	boolean pm4 = false;
+
+	boolean pp2 = false;
+	boolean pp3 = false;
+	
+	for (TableData curLine : rowData){
+	
+	    pvs1 = checkPVS1(curLine, catIndices);
+
+	    ps1 = checkPS1(curLine, catIndices);
+	    ps4 = checkPS4(curLine, catIndices);
+	    
+	    pm2 = checkPM2(curLine, catIndices);
+	    pm4 = checkPM4(curLine, catIndices);
+	    
+	    pp2 = checkPP2(curLine, catIndices);
+	    pp3 = checkPP3(curLine, catIndices);
+	
+//	    System.out.println(ps1);
+	
+	    curLine.setCatagory(Catagory.getUnclearCode());
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	return "";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	List<String> header = inputRepository.getHeader();
+//        List<TableData> rowData = inputRepository.getRowData();
+//	//// definde variables
+//	
+//	/**
+//	 * check if all header entries needed for automated catagorization are availabe
+//	 * get columns from config
+//	 * check for their existance
+//	*/
+//	HashMap<String, Integer> catagories = new LinkedHashMap<>();
+//	catagories.put(config.getClinvarCol(), null);
+//	catagories.put(config.getHgmdCol(), null);
+//	catagories.put(config.getPredScoreCol(), null);
+//	catagories.put(config.getSplice15Col(), null);
+//	catagories.put(config.getSplice45Col(), null);
+//	catagories.put(config.getTotPredCol(), null);
+//	
+//	// if not all header found return missing header as warning
+//	if (! header.containsAll(catagories.keySet())){
+//	    
+//	    List<String> missing = new LinkedList<>(catagories.keySet());
+//	    String warningText = null;
+//	    if (missing.size() == 6){
+//		missing.removeAll(header);
+//		warningText = "Catagories not chosen automatically. " + missing + " not available";
+//	    } else {
+//		    warningText = "Catagories not chosen automatically. Missing catagories.";
+//	    }
+//	    // set to unclear and skip rest
+//	    for (TableData row : rowData) {
+//		row.setCatagory(Catagory.getUnclearCode());
+//	    }
+//	    return warningText;
+//	    
+//	    
+//	    //// get indeces of the header entries for later value extraction
+//	} else {
+//	    
+//	    for (String curCat : catagories.keySet()) {
+//		catagories.put(curCat, header.indexOf(curCat));
+//	    }
+//	    
+//
+//	   // for each entry check if criteria for certain catagories are fullfiled
+//	    for (TableData row : rowData) {
+//		
+//		// check if variant is pathogenic
+//		if (isPatho(row, catagories)) {
+//		    row.setCatagory(Catagory.getPathoCode());
+//		} else if (isLikelyPatho(row, catagories)) {
+//		    row.setCatagory(Catagory.getProbPathoCode());
+//		} else if (isUnclear(row, catagories)){
+//		    row.setCatagory(Catagory.getUnclearCode());
+//		}
+//		} // end for loop
+//	    } // end else clause
+//	
+//	return "";
 		
 	
 	
     }
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
     /**

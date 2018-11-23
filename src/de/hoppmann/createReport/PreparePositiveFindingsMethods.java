@@ -169,7 +169,7 @@ public class PreparePositiveFindingsMethods {
 	
 
 	//// minor allele frequency
-	maf = retrieveEntries(curFinding, config.getMafCol(), true);
+	maf = retrieveEntries(curFinding, config.getMafAllCol(), true);
 	
 	
 	//quotient of prediciton tools

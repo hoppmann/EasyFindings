@@ -76,9 +76,27 @@ public class Config {
     private String zygocityCol = "";
     private final String impactColKey = "impactCol";
     private String impactCol = ""; 
-    private final String mafColKey = "mafCol";
-    private String mafCol = "";
-
+    
+    
+    
+    private final String mafAllColKey = "mafCol";
+    private String mafAllCol = "";
+    private final String mafNfeColKey = "mafNfeCol";
+    private String mafNfeCol = "";
+    private final String mafAfrColKey = "mafArfCol";
+    private String mafAfrCol = "";
+    private final String mafSasColKey = "mafSasCol";
+    private String mafSasCol = "";
+    private final String mafEasColKey = "mafEasCol";
+    private String mafEasCol = "";
+    
+    private final String rmskColKey = "rmskCol";
+    private String rmskCol = "";
+    private final String conservationColKey = "conservationCol";
+    private String conservationCol = "";
+    
+    
+    
     
     // misc
     private final String inputPathKey = "inputPath";
@@ -114,7 +132,7 @@ public class Config {
 	
 	// read in config data
 	if (prop.getProperty(geneColKey) != null){geneCol = prop.getProperty(geneColKey);}
-	if (prop.getProperty(mafColKey) != null ) {mafCol = prop.getProperty(mafColKey);}
+	if (prop.getProperty(mafAllColKey) != null ) {mafAllCol = prop.getProperty(mafAllColKey);}
 	if (prop.getProperty(pNomenColKey) != null ) {pNomenCol = prop.getProperty(pNomenColKey);}
 	if (prop.getProperty(cNomenColKey) != null ) {cNomenCol = prop.getProperty(cNomenColKey);}
 	if (prop.getProperty(inputPathKey) != null ) {inputPath = prop.getProperty(inputPathKey);}
@@ -130,6 +148,12 @@ public class Config {
 	if (prop.getProperty(impactColKey) != null ) {impactCol = prop.getProperty(impactColKey);}
 	if (prop.getProperty(dbPathKey) != null ) {dbPath = prop.getProperty(dbPathKey);}
 	if (prop.getProperty(htmlTemplateKey) != null ) {htmlTemplate = prop.getProperty(htmlTemplateKey);}
+	if (prop.getProperty(mafNfeColKey) != null ) {mafNfeCol = prop.getProperty(mafNfeColKey);}
+	if (prop.getProperty(mafAfrColKey) != null ) {mafAfrCol = prop.getProperty(mafAfrColKey);}
+	if (prop.getProperty(mafSasColKey) != null ) {mafSasCol = prop.getProperty(mafSasColKey);}
+	if (prop.getProperty(mafEasColKey) != null ) {mafEasCol = prop.getProperty(mafEasColKey);}
+	if (prop.getProperty(rmskColKey) != null ) {rmskCol = prop.getProperty(rmskColKey);}
+	if (prop.getProperty(conservationColKey) != null ) {conservationCol = prop.getProperty(conservationColKey);}
     }
     
     
@@ -387,13 +411,13 @@ public class Config {
 	saveConfig(rsIdColKey, rsIdCol);
     }
 
-    public String getMafCol() {
-	return mafCol;
+    public String getMafAllCol() {
+	return mafAllCol;
     }
 
-    public void setMafCol(String mafCol) {
-	this.mafCol = mafCol;
-	saveConfig(mafColKey, mafCol);
+    public void setMafAllCol(String mafCol) {
+	this.mafAllCol = mafCol;
+	saveConfig(mafAllColKey, mafCol);
     }
 
     public String getZygocityCol() {
@@ -413,6 +437,65 @@ public class Config {
 	this.impactCol = impactCol;
 	saveConfig(impactColKey, impactCol);
     }
+
+
+    public String getMafNfeCol() {
+	return mafNfeCol;
+    }
+
+    public void setMafNfeCol(String mafNfeCol) {
+	this.mafNfeCol = mafNfeCol;
+	saveConfig(mafNfeColKey, mafNfeCol);
+    }
+
+    public String getMafAfrCol() {
+	return mafAfrCol;
+    }
+
+    public void setMafAfrCol(String mafAfrCol) {
+	this.mafAfrCol = mafAfrCol;
+	saveConfig(mafAfrColKey, mafAfrCol);
+    }
+
+    public String getMafSasCol() {
+	return mafSasCol;
+    }
+
+    public void setMafSasCol(String mafSasCol) {
+	this.mafSasCol = mafSasCol;
+	saveConfig(mafSasColKey, mafSasCol);
+    }
+
+    public String getMafEasCol() {
+	return mafEasCol;
+    }
+
+    public void setMafEasCol(String mafEasCol) {
+	this.mafEasCol = mafEasCol;
+	saveConfig(mafEasColKey, mafEasCol);
+    }
+
+    public String getRmskCol() {
+	return rmskCol;
+    }
+
+    public void setRmskCol(String rmskCol) {
+	this.rmskCol = rmskCol;
+	saveConfig(rmskColKey, rmskCol);
+    }
+
+    public String getConservationCol() {
+	return conservationCol;
+    }
+
+    public void setConservationCol(String conservationCol) {
+	this.conservationCol = conservationCol;
+	saveConfig(conservationColKey, conservationCol);
+    }
+    
+    
+    
+
 
     
     

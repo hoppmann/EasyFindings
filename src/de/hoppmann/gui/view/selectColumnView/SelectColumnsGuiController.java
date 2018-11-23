@@ -17,7 +17,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
@@ -40,34 +39,66 @@ public class SelectColumnsGuiController implements Initializable {
     private ObservableList<String> header;
     private FindingsRepository findings;
 
-    @FXML private ComboBox<String> geneCol = new ComboBox<>();
+    @FXML private ComboBox<String> geneColBox = new ComboBox<>();
     @FXML private Label geneLabel;
-    @FXML private ComboBox<String> impactCol = new ComboBox<>();
+    
+    @FXML private ComboBox<String> impactColBox = new ComboBox<>();
     @FXML private Label impactLabel;
-    @FXML private ComboBox<String> pNomenCol = new ComboBox<>();
+    
+    @FXML private ComboBox<String> pNomenColBox = new ComboBox<>();
     @FXML private Label pNomenLabel;
-    @FXML private ComboBox<String> cNomenCol = new ComboBox<>();
+    
+    @FXML private ComboBox<String> cNomenColBox = new ComboBox<>();
     @FXML private Label cNomenLabel;
-    @FXML private ComboBox<String> pubMedIdCol = new ComboBox<>();
+    
+    @FXML private ComboBox<String> pubMedIdColBox = new ComboBox<>();
     @FXML private Label pubMedIdlabel;
-    @FXML private ComboBox<String> predScoreCol = new ComboBox<>();
+    
+    @FXML private ComboBox<String> predScoreColBox = new ComboBox<>();
     @FXML private Label predScoreLabel;
-    @FXML private ComboBox<String> totPredCol = new ComboBox<>();
+    
+    @FXML private ComboBox<String> totPredColBox = new ComboBox<>();
     @FXML private Label totPredlabel;
-    @FXML private ComboBox<String> hgmdCol = new ComboBox<>();
+    
+    @FXML private ComboBox<String> hgmdColBox = new ComboBox<>();
     @FXML private Label hgmdLabel;
-    @FXML private ComboBox<String> clinVarCol = new ComboBox<>();
+    
+    @FXML private ComboBox<String> clinVarColBox = new ComboBox<>();
     @FXML private Label clinVarLabel;
-    @FXML private ComboBox<String> splice45Col = new ComboBox<>();
+    
+    @FXML private ComboBox<String> splice45ColBox = new ComboBox<>();
     @FXML private Label splice45Label;
-    @FXML private ComboBox<String> splice15Col = new ComboBox<>();
+    
+    @FXML private ComboBox<String> splice15ColBox = new ComboBox<>();
     @FXML private Label splice15Label;
-    @FXML private ComboBox<String> rsIdCol = new ComboBox<>();
+    
+    @FXML private ComboBox<String> rsIdColBox = new ComboBox<>();
     @FXML private Label rsIdLabel;
-    @FXML private ComboBox<String> mafCol = new ComboBox<>();
-    @FXML private Label mafLabel;
-    @FXML private ComboBox<String> zygocityCol = new ComboBox<>();
+    
+    @FXML private ComboBox<String> zygocityColBox = new ComboBox<>();
     @FXML private Label zygocityLabel;
+    
+    @FXML private ComboBox<String> mafAllBox = new ComboBox<>();
+    @FXML private Label mafAllLabel;
+    
+    @FXML private ComboBox<String> mafNfeBox = new ComboBox<String>();
+    @FXML private Label mafNfeLabel;
+    
+    @FXML private ComboBox<String> mafAfrBox = new ComboBox<String>();
+    @FXML private Label mafAfrLabel;
+    
+    @FXML private ComboBox<String> mafSasBox = new ComboBox<String>();
+    @FXML private Label mafSasLabel;
+    
+    @FXML private ComboBox<String> mafEasBox = new ComboBox<String>();
+    @FXML private Label mafEasLabel;
+    
+    @FXML private ComboBox<String> rmskBox = new ComboBox<String>();
+    @FXML private Label rmskLabel;
+    
+    @FXML private ComboBox<String> conservationBox = new ComboBox<String>();
+    @FXML private Label conservationLabel;
+    
     
     @FXML
     private Button closeButton;
@@ -131,22 +162,27 @@ public class SelectColumnsGuiController implements Initializable {
     //////// save chosen values as default
     private void saveDefault() {
 	
-	config.setGeneCol(geneCol.getValue());
-	config.setImpactCol(impactCol.getValue());
-	config.setcNomenCol(cNomenCol.getValue());
-	config.setpNomenCol(pNomenCol.getValue());
-	config.setClinvarCol(clinVarCol.getValue());
-	config.setHgmdCol(hgmdCol.getValue());
-	config.setPredScoreCol(predScoreCol.getValue());
-	config.setSplice15Col(splice15Col.getValue());
-	config.setSplice45Col(splice45Col.getValue());
-	config.setTotPredCol(totPredCol.getValue());
-	config.setPubMedIdCol(pubMedIdCol.getValue());
-	config.setRsIdCol(rsIdCol.getValue());
-	config.setImpactCol(impactCol.getValue());
-	config.setMafCol(mafCol.getValue());
-	config.setZygocityCol(zygocityCol.getValue());
-	
+	config.setGeneCol(geneColBox.getValue());
+	config.setImpactCol(impactColBox.getValue());
+	config.setcNomenCol(cNomenColBox.getValue());
+	config.setpNomenCol(pNomenColBox.getValue());
+	config.setClinvarCol(clinVarColBox.getValue());
+	config.setHgmdCol(hgmdColBox.getValue());
+	config.setPredScoreCol(predScoreColBox.getValue());
+	config.setSplice15Col(splice15ColBox.getValue());
+	config.setSplice45Col(splice45ColBox.getValue());
+	config.setTotPredCol(totPredColBox.getValue());
+	config.setPubMedIdCol(pubMedIdColBox.getValue());
+	config.setRsIdCol(rsIdColBox.getValue());
+	config.setImpactCol(impactColBox.getValue());
+	config.setMafAllCol(mafAllBox.getValue());
+	config.setZygocityCol(zygocityColBox.getValue());
+	config.setMafNfeCol(mafNfeBox.getValue());
+	config.setMafAfrCol(mafAfrBox.getValue());
+	config.setMafSasCol(mafSasBox.getValue());
+	config.setMafEasCol(mafEasBox.getValue());
+	config.setRmskCol(rmskBox.getValue());
+	config.setConservationCol(conservationBox.getValue());
 	
     }
     
@@ -178,18 +214,13 @@ public class SelectColumnsGuiController implements Initializable {
 	return check;
     }
     
-    
 
-    /////////////////////////////
-    //////// Constructor ////////
-    /////////////////////////////
 
-//    public SelectColumnsGuiController(FindingsRepository findings) {
-//	this.findings = findings;
-//	this.header = FXCollections.observableArrayList(findings.getHeaderList());
-//    }
-    
-    
+
+
+
+
+
     
     public void init (FindingsRepository findings){
         this.findings = findings;
@@ -205,165 +236,229 @@ public class SelectColumnsGuiController implements Initializable {
 	  else use the one from the config file
 	*/
 	geneLabel.setTooltip(new Tooltip(ColViewTooltipTexts.GENE_COL_TP_TEXT));
-	geneCol.setEditable(true);
-	geneCol.getItems().addAll(header);
+	geneColBox.setEditable(true);
+	geneColBox.getItems().addAll(header);
 	if (findings.getGeneCol() != null && checkStringList(header, findings.getGeneCol()) == true){
-	    geneCol.getSelectionModel().select(findings.getGeneCol());
+	    geneColBox.getSelectionModel().select(findings.getGeneCol());
 	} else if (checkStringList(header, config.getGeneCol()) == true) {
-	    geneCol.getSelectionModel().select(config.getGeneCol());
+	    geneColBox.getSelectionModel().select(config.getGeneCol());
 	}
-        TextFields.bindAutoCompletion(geneCol.getEditor(), header);
+        TextFields.bindAutoCompletion(geneColBox.getEditor(), header);
 	
 	
 	// prepare impact column
 	impactLabel.setTooltip(new Tooltip(ColViewTooltipTexts.IMPACT_COL_TP_TEXT));
-	impactCol.setEditable(true);
-	impactCol.getItems().addAll(header);
+	impactColBox.setEditable(true);
+	impactColBox.getItems().addAll(header);
 	if (findings.getImpactCol() != null && checkStringList(header, findings.getImpactCol()) == true){
-	    geneCol.getSelectionModel().select(findings.getImpactCol());
+	    geneColBox.getSelectionModel().select(findings.getImpactCol());
 	} else if (checkStringList(header, config.getImpactCol()) == true){
-	    impactCol.getSelectionModel().select(config.getImpactCol());
+	    impactColBox.getSelectionModel().select(config.getImpactCol());
 	}
-	TextFields.bindAutoCompletion(impactCol.getEditor(), header);
+	TextFields.bindAutoCompletion(impactColBox.getEditor(), header);
 
 	
 	
 	// prepare cDNA nomencalture column
 	cNomenLabel.setTooltip(new Tooltip(ColViewTooltipTexts.CNOMEN_COL_TP_TEXT));
-	cNomenCol.setEditable(true);
-	cNomenCol.getItems().addAll(header);
+	cNomenColBox.setEditable(true);
+	cNomenColBox.getItems().addAll(header);
 	if (findings.getcNomenCol()!= null && checkStringList(header, findings.getcNomenCol()) == true){
-	    geneCol.getSelectionModel().select(findings.getcNomenCol());
+	    geneColBox.getSelectionModel().select(findings.getcNomenCol());
 	} else if (checkStringList(header, config.getcNomenCol()) == true){
-	    cNomenCol.getSelectionModel().select(config.getcNomenCol());
+	    cNomenColBox.getSelectionModel().select(config.getcNomenCol());
 	}
-        TextFields.bindAutoCompletion(cNomenCol.getEditor(), header);
+        TextFields.bindAutoCompletion(cNomenColBox.getEditor(), header);
 
 	
 	
 	
 	// prepare protein nomenclature column
 	pNomenLabel.setTooltip(new Tooltip(ColViewTooltipTexts.PNOMEN_COL_TP_TEXT));
-	pNomenCol.setEditable(true);
-	pNomenCol.getItems().addAll(header);
+	pNomenColBox.setEditable(true);
+	pNomenColBox.getItems().addAll(header);
 	if (findings.getpNomenCol()!= null && checkStringList(header, findings.getpNomenCol()) == true){
-	    geneCol.getSelectionModel().select(findings.getpNomenCol());
+	    geneColBox.getSelectionModel().select(findings.getpNomenCol());
 	} else if(checkStringList(header, config.getpNomenCol()) == true){
-	    pNomenCol.getSelectionModel().select(config.getpNomenCol());
+	    pNomenColBox.getSelectionModel().select(config.getpNomenCol());
 	}
-        TextFields.bindAutoCompletion(pNomenCol.getEditor(), header);
+        TextFields.bindAutoCompletion(pNomenColBox.getEditor(), header);
 	
 		
 	
 	// prepare prediction Score column
 	predScoreLabel.setTooltip(new Tooltip(ColViewTooltipTexts.PREDSCORE_COL_TP_TEXT));
-	predScoreCol.setEditable(true);
-	predScoreCol.getItems().addAll(header);
+	predScoreColBox.setEditable(true);
+	predScoreColBox.getItems().addAll(header);
 	if (checkStringList(header, config.getPredScoreCol())) {
-	    predScoreCol.getSelectionModel().select(config.getPredScoreCol());
+	    predScoreColBox.getSelectionModel().select(config.getPredScoreCol());
 	}
-	TextFields.bindAutoCompletion(predScoreCol.getEditor(), header);
+	TextFields.bindAutoCompletion(predScoreColBox.getEditor(), header);
 	
 	
 	
 	// prepare total number of predictions column
 	totPredlabel.setTooltip(new Tooltip(ColViewTooltipTexts.TOTPRED_COL_TP_TEXT));
-	totPredCol.setEditable(true);
-	totPredCol.getItems().addAll(header);
+	totPredColBox.setEditable(true);
+	totPredColBox.getItems().addAll(header);
 	if (checkStringList(header, config.getTotPredCol())) {
-	    totPredCol.getSelectionModel().select(config.getTotPredCol());
+	    totPredColBox.getSelectionModel().select(config.getTotPredCol());
 	}
-        TextFields.bindAutoCompletion(totPredCol.getEditor(), header);
+        TextFields.bindAutoCompletion(totPredColBox.getEditor(), header);
 		
 	
 	
 	// prepare ClinVar column
 	clinVarLabel.setTooltip(new Tooltip(ColViewTooltipTexts.CLINVAR_COL_TP_TEXT));
-	clinVarCol.setEditable(true);
-	clinVarCol.getItems().addAll(header);
+	clinVarColBox.setEditable(true);
+	clinVarColBox.getItems().addAll(header);
 	if (checkStringList(header, config.getClinvarCol())) {
-	    clinVarCol.getSelectionModel().select(config.getClinvarCol());
+	    clinVarColBox.getSelectionModel().select(config.getClinvarCol());
 	}
-	TextFields.bindAutoCompletion(clinVarCol.getEditor(), header);
+	TextFields.bindAutoCompletion(clinVarColBox.getEditor(), header);
 	
 	
 	
 	// prepare HGMD column
 	hgmdLabel.setTooltip(new Tooltip(ColViewTooltipTexts.HGMD_COL_TP_TEXT));
-	hgmdCol.setEditable(true);
-	hgmdCol.getItems().addAll(header);
+	hgmdColBox.setEditable(true);
+	hgmdColBox.getItems().addAll(header);
 	if (checkStringList(header, config.getHgmdCol())) {
-	    hgmdCol.getSelectionModel().select(config.getHgmdCol());
+	    hgmdColBox.getSelectionModel().select(config.getHgmdCol());
 	}
-	TextFields.bindAutoCompletion(hgmdCol.getEditor(), header);
+	TextFields.bindAutoCompletion(hgmdColBox.getEditor(), header);
 	
 	
 	
 	// prepare splice 15 reduction prediction column
 	splice15Label.setTooltip(new Tooltip(ColViewTooltipTexts.SPLICE15_COL_TP_TEXT));
-	splice15Col.setEditable(true);
-	splice15Col.getItems().addAll(header);
+	splice15ColBox.setEditable(true);
+	splice15ColBox.getItems().addAll(header);
 	if (checkStringList(header, config.getSplice15Col())) {
-	    splice15Col.getSelectionModel().select(config.getSplice15Col());
+	    splice15ColBox.getSelectionModel().select(config.getSplice15Col());
 	}
-	TextFields.bindAutoCompletion(splice15Col.getEditor(), header);
+	TextFields.bindAutoCompletion(splice15ColBox.getEditor(), header);
 	
 	
 	
 	// prepare splice 45 reduction prediction column
 	splice45Label.setTooltip(new Tooltip(ColViewTooltipTexts.SPLICE45_COL_TP_TEXT));
-	splice45Col.setEditable(true);
-	splice45Col.getItems().addAll(header);
+	splice45ColBox.setEditable(true);
+	splice45ColBox.getItems().addAll(header);
 	if (checkStringList(header, config.getSplice45Col())) {
-	    splice45Col.getSelectionModel().select(config.getSplice45Col());
+	    splice45ColBox.getSelectionModel().select(config.getSplice45Col());
 	}
-	TextFields.bindAutoCompletion(splice45Col.getEditor(), header);
+	TextFields.bindAutoCompletion(splice45ColBox.getEditor(), header);
 	
 	
 	
 	// prepare pubMed ID column
 	pubMedIdlabel.setTooltip(new Tooltip(ColViewTooltipTexts.PUBMEDID_COL_TP_TEXT));
-	pubMedIdCol.setEditable(true);
-	pubMedIdCol.getItems().addAll(header);
+	pubMedIdColBox.setEditable(true);
+	pubMedIdColBox.getItems().addAll(header);
 	if(checkStringList(header, config.getPubMedIdCol())) {
-	    pubMedIdCol.getSelectionModel().select(config.getPubMedIdCol());
+	    pubMedIdColBox.getSelectionModel().select(config.getPubMedIdCol());
 	}
-	TextFields.bindAutoCompletion(pubMedIdCol.getEditor(), header);
+	TextFields.bindAutoCompletion(pubMedIdColBox.getEditor(), header);
 	
 	
 	
 	// prepare rsId column
 	rsIdLabel.setTooltip(new Tooltip(ColViewTooltipTexts.RSID_COL_TP_TEXT));
-	rsIdCol.setEditable(true);
-	rsIdCol.getItems().addAll(header);
+	rsIdColBox.setEditable(true);
+	rsIdColBox.getItems().addAll(header);
 	if(checkStringList(header, config.getRsIdCol())) {
-	    rsIdCol.getSelectionModel().select(config.getRsIdCol());
+	    rsIdColBox.getSelectionModel().select(config.getRsIdCol());
 	}
-	TextFields.bindAutoCompletion(rsIdCol.getEditor(), header);
+	TextFields.bindAutoCompletion(rsIdColBox.getEditor(), header);
 	
 	
 	
 	// prepare zygocity column
-	zygocityLabel.setTooltip(new Tooltip(ColViewTooltipTexts.ZYGOCITY_COL_TEXT));
-	zygocityCol.setEditable(true);
-	zygocityCol.getItems().addAll(header);
+	zygocityLabel.setTooltip(new Tooltip(ColViewTooltipTexts.ZYGOCITY_COL_TP_TEXT));
+	zygocityColBox.setEditable(true);
+	zygocityColBox.getItems().addAll(header);
 	if (checkStringList(header, config.getZygocityCol())){
-	    zygocityCol.getSelectionModel().select(config.getZygocityCol());
+	    zygocityColBox.getSelectionModel().select(config.getZygocityCol());
 	}
-	TextFields.bindAutoCompletion(zygocityCol.getEditor(), header);
+	TextFields.bindAutoCompletion(zygocityColBox.getEditor(), header);
 	
 	
 	
-	// prepare maf column
-	mafLabel.setTooltip(new Tooltip(ColViewTooltipTexts.MAF_COL_TP_TEXT));
-	mafCol.setEditable(true);
-	mafCol.getItems().addAll(header);
-	if (checkStringList(header, config.getMafCol())){
-	    mafCol.getSelectionModel().select(config.getMafCol());
+	
+	// prepare different Maf
+	
+	
+	// ALL
+	mafAllLabel.setTooltip(new Tooltip(ColViewTooltipTexts.MAF_ALL_COL_TP_TEXT));
+	mafAllBox.setEditable(true);
+	mafAllBox.getItems().addAll(header);
+	if (checkStringList(header, config.getMafAllCol())){
+	    mafAllBox.getSelectionModel().select(config.getMafAllCol());
 	}
-	TextFields.bindAutoCompletion(mafCol.getEditor(), header);
+	TextFields.bindAutoCompletion(mafAllBox.getEditor(), header);
 	
         
+	// NFE
+	mafNfeLabel.setTooltip(new Tooltip(ColViewTooltipTexts.MAF_ALL_COL_TP_TEXT));
+	mafNfeBox.setEditable(true);
+	mafNfeBox.getItems().addAll(header);
+	if (checkStringList(header, config.getMafNfeCol())){
+	    mafNfeBox.getSelectionModel().select(config.getMafNfeCol());
+	}
+	TextFields.bindAutoCompletion(mafNfeBox.getEditor(), header);
+
+	
+	//AFR
+	mafAfrLabel.setTooltip(new Tooltip(ColViewTooltipTexts.MAF_AFR_COL_TP_TEXT));
+	mafAfrBox.setEditable(true);
+	mafAfrBox.getItems().addAll(header);
+	if (checkStringList(header, config.getMafAfrCol())){
+	    mafAfrBox.getSelectionModel().select(config.getMafAfrCol());
+	}
+	TextFields.bindAutoCompletion(mafAfrBox.getEditor(), header);
+	
+	
+	//SAS
+	mafSasLabel.setTooltip(new Tooltip(ColViewTooltipTexts.MAF_SAS_COL_TP_TEXT));
+	mafSasBox.setEditable(true);
+	mafSasBox.getItems().addAll(header);
+	if (checkStringList(header, config.getMafSasCol())){
+	    mafSasBox.getSelectionModel().select(config.getMafSasCol());
+	}
+	TextFields.bindAutoCompletion(mafSasBox.getEditor(), header);
+	
+	
+	// EAS
+	mafEasLabel.setTooltip(new Tooltip(ColViewTooltipTexts.MAF_EAS_COL_TP_TEXT));
+	mafEasBox.setEditable(true);
+	mafEasBox.getItems().addAll(header);
+	if (checkStringList(header, config.getMafEasCol())) {
+	    mafEasBox.getSelectionModel().select(config.getMafEasCol());
+	}
+	TextFields.bindAutoCompletion(mafEasBox.getEditor(), header);
+	
+	
+	// repeat masker
+	rmskLabel.setTooltip(new Tooltip(ColViewTooltipTexts.RMSK_COL_TP_TEXT));
+	rmskBox.setEditable(true);
+	rmskBox.getItems().addAll(header);
+	if (checkStringList(header, config.getRmskCol())){
+	    rmskBox.getSelectionModel().select(config.getRmskCol());
+    	}
+	TextFields.bindAutoCompletion(rmskBox.getEditor(), header);
+	
+	
+	// conservation boolean
+	conservationLabel.setTooltip(new Tooltip(ColViewTooltipTexts.CONSERVATION_COL_TP_TEXT));
+	conservationBox.setEditable(true);
+	conservationBox.getItems().addAll(header);
+	if (checkStringList(header, config.getConservationCol())){
+	    conservationBox.getSelectionModel().select(config.getConservationCol());
+	}
+	TextFields.bindAutoCompletion(conservationBox.getEditor(), header);
+	
+	
         
         
     }

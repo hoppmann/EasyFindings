@@ -26,11 +26,14 @@ public class ColViewTooltipTexts {
     public static final String SPLICE45_COL_TP_TEXT = "";
     public static final String SPLICE15_COL_TP_TEXT = "";
     public static final String RSID_COL_TP_TEXT = "";
-    public static final String MAF_COL_TP_TEXT = "";
-    public static final String ZYGOCITY_COL_TEXT = "";
-    
-    
-
+    public static final String ZYGOCITY_COL_TP_TEXT = "";
+    public static final String MAF_ALL_COL_TP_TEXT = "";
+    public static final String MAF_NFE_COL_TP_TEXT = "";
+    public static final String MAF_AFR_COL_TP_TEXT = "";
+    public static final String MAF_SAS_COL_TP_TEXT = "";
+    public static final String MAF_EAS_COL_TP_TEXT = "";
+    public static final String RMSK_COL_TP_TEXT = "";
+    public static final String CONSERVATION_COL_TP_TEXT = "A boolean value if a vatiant is conserved. Possible values (0/1; true/false)";
 
 
 
