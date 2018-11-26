@@ -330,19 +330,6 @@ public class PreparePanelTable {
     
     
     
-	
-    /////////////////////////////////
-    //////// getter / setter ////////
-    /////////////////////////////////
-
-//    public String getPanelTable() {
-//	return reportPanelTable;
-//    }
-//
-//    public String getBillingTable() {
-//	return billingTable;
-//    }
-
     
     
     
