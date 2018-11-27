@@ -9,16 +9,14 @@ package de.hoppmann.createReport;
 import de.hoppmann.config.Config;
 import de.hoppmann.database.geneInfoDB.ConnectGeneInfoDb;
 import de.hoppmann.database.geneInfoDB.ConnectGeneInfoSQLite;
-import de.hoppmann.database.geneInfoDB.GeneInfoDbConnectionBuilder;
 import de.hoppmann.database.geneInfoDB.GeneInfoDbConnectionHolder;
-import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.database.userDB.DbOperations;
-import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -72,7 +70,6 @@ public class PrepareNegativeFindings{
 	
 	this.findings = findings;
 	
-	
         
 	connectGeneInfoDB();
 	
@@ -93,7 +90,7 @@ public class PrepareNegativeFindings{
 	for (TableData curFinding : findings.getStoredData()) {
 
 	    // prepare column entries
-	    prepareColEntries(curFinding);
+	    prepareColEntries(curFinding, findings.getHeader());
 
 
 	    // prepare html table
@@ -123,7 +120,7 @@ public class PrepareNegativeFindings{
     
     //////////////////
     //////// prepare column entries for each column of interest
-    public void prepareColEntries(TableData curFinding) {
+    public void prepareColEntries(TableData curFinding, LinkedHashMap header) {
 	
 	
 	
@@ -133,6 +130,7 @@ public class PrepareNegativeFindings{
 		check if entry was retrieved. Else add NA
 	    
 	 */
+	
 	
 	/*
 	variables to fill
@@ -146,23 +144,33 @@ public class PrepareNegativeFindings{
 	*/
 	
 	// get gene  name of current gene
-	geneName = retrieveEntries(curFinding, config.getGeneCol(), false).get(0);
+	geneName = (String) retrieveEntries(curFinding, config.getGeneCol(), false, header).get(0);
 	
 	// get moi of current gene
 	moi = getMoi(geneName);
 	
 	// get current variant (cDNA)
-	cDna = retrieveEntries(curFinding, config.getcNomenCol(), true);
+	cDna = retrieveEntries(curFinding, config.getcNomenCol(), true, header);
 	
 	
 	// get protein nomenclature
-	pNomen = retrieveEntries(curFinding, config.getpNomenCol(), true);
+	pNomen = retrieveEntries(curFinding, config.getpNomenCol(), true, header);
 	
 	
 	// get zygocity of variant
-	int zygocityInteger = Integer.valueOf(retrieveEntries(curFinding, config.getZygocityCol(), false).get(0));
+	String zygocityString = (String) retrieveEntries(curFinding, config.getZygocityCol(), false, header).get(0);
+	int zygocityInteger = -1;
+	if (!zygocityString.equals("NA")){
+	    zygocityInteger = Integer.valueOf(zygocityString);
+	}
+	
+	
+	
+	
 	
 	switch (zygocityInteger) {
+	    case -1: zygocity = "NA";
+		break;
 	    case 0: zygocity = "HOM_REF";
 		break;
 	    case 1:  zygocity = "HET";
@@ -173,7 +181,7 @@ public class PrepareNegativeFindings{
 	}
 
 	// get rsID
-	rsId = retrieveEntries(curFinding, config.getRsIdCol(), true);
+	rsId = retrieveEntries(curFinding, config.getRsIdCol(), true, header);
 	
 	
 	// get catagory
@@ -182,7 +190,7 @@ public class PrepareNegativeFindings{
 	
 	
 	//// get a list of all variant found in gene
-	cNomenList = retrieveEntries(curFinding, config.getcNomenCol(), true);
+	cNomenList = retrieveEntries(curFinding, config.getcNomenCol(), true, header);
 
 	
 	
@@ -295,9 +303,14 @@ public class PrepareNegativeFindings{
     
     ////////////
     //////// retrieve hash entriy, split it and check if NA needed
-    private List<String> retrieveEntries(TableData curFinding, String colName, boolean split) {
-	
-	List<String> entryList = curFinding.getSplitEntry(findings.getColIndex(colName), ",");
+    private List<String> retrieveEntries(TableData curFinding, String colName, boolean split, LinkedHashMap<String, Integer> header) {
+
+	List<String> entryList = new LinkedList<>();
+	if (header.containsKey(colName)){
+	    entryList = curFinding.getSplitEntry(findings.getColIndex(colName), ",");
+	} else {
+	    entryList.add("NA");
+	}
 	
 	// check each element if empty. If so set NA
 	for (int i = 0 ; i < entryList.size(); i++) {

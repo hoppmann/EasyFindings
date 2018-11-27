@@ -8,11 +8,9 @@ package de.hoppmann.createReport;
 
 import de.hoppmann.database.geneInfoDB.ConnectGeneInfoDb;
 import de.hoppmann.database.geneInfoDB.ConnectGeneInfoSQLite;
-import de.hoppmann.database.geneInfoDB.GeneInfoDbConnectionHolder;
-import de.hoppmann.database.userDB.DbOperations;
+import de.hoppmann.database.geneInfoDB.GeneInfoModel;
+import de.hoppmann.database.geneInfoDB.GeneInfoRepository;
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,8 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -41,7 +37,6 @@ public class PreparePanelTable {
     private Set<String> panelGenes = new TreeSet<>();
     private final String dbName = "geneInfos.db";
     private final String tableHg19 = "hg19";
-    private File geneInfoDB;
 
     private String geneName;
     protected final String geneNameCol =  "geneName";
@@ -64,31 +59,10 @@ public class PreparePanelTable {
     
     
 	
-    /////////////////////////////
-    //////// constructor ////////
-    /////////////////////////////
-
-    public PreparePanelTable() {
-    
-	
-	// get current path of program
-	String curDir = System.getProperty("user.dir");
-	geneInfoDB = new File(curDir + File.separator + "DBs" + File.separator + dbName);
-
-        
-        
-        
-        boolean success = new ConnectGeneInfoDb(new ConnectGeneInfoSQLite()).connectGeneInfoDbSqLite();
-	
-    }
-	
     
     
 	
 	
-    /////////////////////////
-    //////// methods ////////
-    /////////////////////////
 
     ///////////////////////
     //////// guide methods
@@ -129,8 +103,10 @@ public class PreparePanelTable {
     
     
     
+    
+    
     // gather infos for gene list from database
-    private void gatherGeneInfos(Set<String> geneList) {
+    private void gatherGeneInfos(Set<String> geneSet) {
 	
 	
 	///////////////
@@ -141,76 +117,34 @@ public class PreparePanelTable {
 	check if already queried list equals new list
 	if so skip database query
 	*/
-	if (panelGenes.equals(geneList)){
+	if (panelGenes.equals(geneSet)){
 	    return;
 	}
 	
 	
 	
-	// prepare query
-	for (String curGene : geneList) {
+	
+	
+	
+	// get gene infos
+	for (String curGene : geneSet) {
 	   if (panelGenes.contains(curGene)) {
 	       continue;
 	   }
-	    try {
-		
-		curGene = curGene.toUpperCase();
-		// prepare query
-		String query = "select "
-			+ geneNameCol + ", "
-			+ geneMimCol + ", "
-			+ arCol + ", " + adCol + ", " + xlrCol + ", " + xldCol + ", "
-			+ ncbiRefSeqCol + ", "
-			+ codingRegionCol + ", "
-			+ phenoCol + ", "
-			+ phenoMimCol
-			+ " from " + tableHg19
-			+ " where " + geneNameCol + " == '" + curGene + "'";
-		
-		
-		
-		// query current gene and retrieve variables
-		
-		ResultSet rs = DbOperations.execute(query, GeneInfoDbConnectionHolder.getInstance().getConnection());
-		while (rs.next()) {
-
-		    geneName = rs.getString(geneNameCol).toUpperCase();
-		    
-		    GeneInfoModel geneInfoData = new GeneInfoModel();
-		    geneInfos.put(geneName, geneInfoData);
-		    
-		    geneInfoData.setGeneMim(rs.getString(geneMimCol));
-		    geneInfoData.setNcbiRefSeq(rs.getString(ncbiRefSeqCol));
-		    geneInfoData.setCodingRegion(rs.getInt(codingRegionCol));
-		    geneInfoData.setPheno(rs.getString(phenoCol));
-		    geneInfoData.setPhenoMim(rs.getString(phenoMimCol));
-		    
-		    // combine mois and store in string
-		    Set<String> moi = new TreeSet();
-		    if (rs.getBoolean(arCol)){
-			moi.add("AR");
-		    }
-		    if (rs.getBoolean(adCol)) {
-			moi.add("AD");
-		    }
-		    if (rs.getBoolean(xlrCol)){
-			moi.add("XLR");
-		    }
-		    if (rs.getBoolean(xldCol)){
-			moi.add("XLD");
-		    }
-		    geneInfoData.setMoi(String.join(", ", moi));
-		    
-		}
-	    }
-	    //
-	    catch (SQLException ex) {
-		Logger.getLogger(PreparePanelTable.class.getName()).log(Level.SEVERE, null, ex);
-	    }
+	    
+	   
+	    GeneInfoModel geneInfoData = new GeneInfoModel(curGene);
+	   
+	    GeneInfoRepository geneInfoRepo = new GeneInfoRepository();
+	    geneInfoRepo.queryForGene(geneInfoData);
+	    
+	    geneInfos.put(curGene, geneInfoData);
 	}
 	
+	
+	
 	// save new gene list for later comparisment
-	panelGenes = geneList;
+	panelGenes = geneSet;
 	
 	
     }
@@ -271,8 +205,8 @@ public class PreparePanelTable {
 		// if phenotype data is available split in case of multiple entries
 		String pheno = "";
 		String phenoMim = "";
-		if (geneInfos.get(curGene).getPheno() != null){
-		    List<String> split = Arrays.asList(geneInfos.get(curGene).getPheno().split(";"));
+		if (geneInfos.get(curGene).getPhenotypes() != null){
+		    List<String> split = Arrays.asList(geneInfos.get(curGene).getPhenotypes().split(";"));
 		    pheno = String.join("<br>", split);
 		}
 		if (geneInfos.get(curGene).getPhenoMim() != null) {
@@ -334,88 +268,88 @@ public class PreparePanelTable {
     
     
     
-    
-    ////////////////////////////////////////////////
-    //////// internal class for datastorage ////////
-    ////////////////////////////////////////////////
-
-
-
-    protected class GeneInfoModel {
-    
-	///////////////////
-	//// variables ////
-	///////////////////
-	
-	private String geneMim;
-	private String moi;
-	private String ncbiRefSeq;
-	private int codingRegion;
-	private String pheno;
-	private String phenoMim;
-
-    
-	//////////////////////////
-	//// getter // setter ////
-	//////////////////////////
-
-	public String getGeneMim() {
-	    return geneMim;
-	}
-
-	public void setGeneMim(String geneMim) {
-	    this.geneMim = geneMim;
-	}
-
-	public String getMoi() {
-	    return moi;
-	}
-
-	public void setMoi(String moi) {
-	    this.moi = moi;
-	}
-
-	public String getNcbiRefSeq() {
-	    return ncbiRefSeq;
-	}
-
-	public void setNcbiRefSeq(String ncbiRefSeq) {
-	    this.ncbiRefSeq = ncbiRefSeq;
-	}
-
-	public int getCodingRegion() {
-	    return codingRegion;
-	}
-
-	public void setCodingRegion(int codingRegion) {
-	    this.codingRegion = codingRegion;
-	}
-
-	public String getPheno() {
-	    return pheno;
-	}
-
-	public void setPheno(String pheno) {
-	    this.pheno = pheno;
-	}
-
-	public String getPhenoMim() {
-	    return phenoMim;
-	}
-
-	public void setPhenoMim(String phenoMim) {
-	    this.phenoMim = phenoMim;
-	}
-
-	
-	
-
-	
-	
-	
-	
-    
-    }
+//    
+//    ////////////////////////////////////////////////
+//    //////// internal class for datastorage ////////
+//    ////////////////////////////////////////////////
+//
+//
+//
+//    protected class GeneInfoModel {
+//    
+//	///////////////////
+//	//// variables ////
+//	///////////////////
+//	
+//	private String geneMim;
+//	private String moi;
+//	private String ncbiRefSeq;
+//	private int codingRegion;
+//	private String pheno;
+//	private String phenoMim;
+//
+//    
+//	//////////////////////////
+//	//// getter // setter ////
+//	//////////////////////////
+//
+//	public String getGeneMim() {
+//	    return geneMim;
+//	}
+//
+//	public void setGeneMim(String geneMim) {
+//	    this.geneMim = geneMim;
+//	}
+//
+//	public String getMoi() {
+//	    return moi;
+//	}
+//
+//	public void setMoi(String moi) {
+//	    this.moi = moi;
+//	}
+//
+//	public String getNcbiRefSeq() {
+//	    return ncbiRefSeq;
+//	}
+//
+//	public void setNcbiRefSeq(String ncbiRefSeq) {
+//	    this.ncbiRefSeq = ncbiRefSeq;
+//	}
+//
+//	public int getCodingRegion() {
+//	    return codingRegion;
+//	}
+//
+//	public void setCodingRegion(int codingRegion) {
+//	    this.codingRegion = codingRegion;
+//	}
+//
+//	public String getPheno() {
+//	    return pheno;
+//	}
+//
+//	public void setPheno(String pheno) {
+//	    this.pheno = pheno;
+//	}
+//
+//	public String getPhenoMim() {
+//	    return phenoMim;
+//	}
+//
+//	public void setPhenoMim(String phenoMim) {
+//	    this.phenoMim = phenoMim;
+//	}
+//
+//	
+//	
+//
+//	
+//	
+//	
+//	
+//    
+//    }
 
 
 

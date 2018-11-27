@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package de.hoppmann.operations;
+package de.hoppmann.openFile;
 
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.TableData;

@@ -81,23 +81,26 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML private ComboBox<String> mafAllBox = new ComboBox<>();
     @FXML private Label mafAllLabel;
     
-    @FXML private ComboBox<String> mafNfeBox = new ComboBox<String>();
+    @FXML private ComboBox<String> mafNfeBox = new ComboBox<>();
     @FXML private Label mafNfeLabel;
     
-    @FXML private ComboBox<String> mafAfrBox = new ComboBox<String>();
+    @FXML private ComboBox<String> mafAfrBox = new ComboBox<>();
     @FXML private Label mafAfrLabel;
     
-    @FXML private ComboBox<String> mafSasBox = new ComboBox<String>();
+    @FXML private ComboBox<String> mafSasBox = new ComboBox<>();
     @FXML private Label mafSasLabel;
     
-    @FXML private ComboBox<String> mafEasBox = new ComboBox<String>();
+    @FXML private ComboBox<String> mafEasBox = new ComboBox<>();
     @FXML private Label mafEasLabel;
     
-    @FXML private ComboBox<String> rmskBox = new ComboBox<String>();
+    @FXML private ComboBox<String> rmskBox = new ComboBox<>();
     @FXML private Label rmskLabel;
     
-    @FXML private ComboBox<String> conservationBox = new ComboBox<String>();
+    @FXML private ComboBox<String> conservationBox = new ComboBox<>();
     @FXML private Label conservationLabel;
+    
+    @FXML private ComboBox<String> totSsPredBox = new ComboBox<>();
+    @FXML private Label totSsPredLable;
     
     
     @FXML
@@ -183,6 +186,7 @@ public class SelectColumnsGuiController implements Initializable {
 	config.setMafEasCol(mafEasBox.getValue());
 	config.setRmskCol(rmskBox.getValue());
 	config.setConservationCol(conservationBox.getValue());
+	config.setTotSsPredCol(totSsPredBox.getValue());
 	
     }
     
@@ -352,6 +356,18 @@ public class SelectColumnsGuiController implements Initializable {
 	
 	
 	
+	// total spliceside predicitons
+	totSsPredLable.setTooltip(new Tooltip(ColViewTooltipTexts.TOT_SS_PRED_TP_COL));
+	totSsPredBox.setEditable(true);
+	totSsPredBox.getItems().addAll(header);
+	if (checkStringList(header, config.getTotSsPredCol())){
+	    totSsPredBox.getSelectionModel().select(config.getTotSsPredCol());
+	}
+	TextFields.bindAutoCompletion(totSsPredBox.getEditor(), header);
+	
+	
+	
+	
 	// prepare pubMed ID column
 	pubMedIdlabel.setTooltip(new Tooltip(ColViewTooltipTexts.PUBMEDID_COL_TP_TEXT));
 	pubMedIdColBox.setEditable(true);
@@ -457,6 +473,8 @@ public class SelectColumnsGuiController implements Initializable {
 	    conservationBox.getSelectionModel().select(config.getConservationCol());
 	}
 	TextFields.bindAutoCompletion(conservationBox.getEditor(), header);
+	
+	
 	
 	
         

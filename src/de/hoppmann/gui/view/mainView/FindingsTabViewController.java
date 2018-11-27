@@ -11,7 +11,7 @@ import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.gui.view.reportView.ReportMainViewController;
 import de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController;
 import de.hoppmann.gui.view.userDbView.MainViewUserDbController;
-import de.hoppmann.operations.CreateTable;
+import de.hoppmann.openFile.CreateTable;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;

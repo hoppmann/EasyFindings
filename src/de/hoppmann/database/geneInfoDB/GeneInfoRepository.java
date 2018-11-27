@@ -28,15 +28,24 @@ public class GeneInfoRepository {
     
     // column variables
     private final String geneNameCol =  "geneName";
+    private final String ncbiRefSeqCol = "NCBI_RefSeq";
+    private final String transcriptLengthCol = "TranscriptLength";
+    private final String chrCol = "chr";
+    private final String genomicStartCol = "genomic_start";
+    private final String genomicEnd = "genomic_end";
+    private final String cytoLocationCol = "Cyto_Location";
     private final String geneMimCol = "GeneMim";
+    private final String geneAliasCol = "Gene_Alias";
+    private final String geneLongNameCol = "Gene_Long_Name";
+    private final String entrezGeneIdCol = "Entrez_Gene_ID";
+    private final String ensemblGeneIdCol = "Ensembl_Gene_ID";
+    private final String mouseGeneIdCol = "Mouse_Gene_Symbol_ID";
+    private final String phenoCol = "Phenotypes";
+    private final String phenoMimCol = "PhenoMim";
     private final String arCol = "AR";
     private final String adCol = "AD";
     private final String xlrCol = "XLR";
     private final String xldCol = "XLD";
-    private final String ncbiRefSeqCol = "NCBI_RefSeq";
-    private final String transcriptLengthCol = "TranscriptLength";
-    private final String phenoCol = "Phenotypes";
-    private final String phenoMimCol = "PhenoMim";
     private final String knownRecInfoCol = "Known_rec_info";
     private final String gdiCol = "GDI";
     private final String gdiPhredCol = "GDI_phred";
@@ -49,26 +58,19 @@ public class GeneInfoRepository {
 
 
     
+
     
-    IGeneInfoModel geneInfoModel;
-    
-    
-    
-    public GeneInfoRepository(IGeneInfoModel geneInfoModel) {
-	this.geneInfoModel = geneInfoModel;
-	
-	
-	connectGeneInfoDB();
-	
+    public void queryForGene (IGeneInfoModel geneInfoModel){
 	try {
-	    queryGene();
+	    connectGeneInfoDB();
+	    queryGene(geneInfoModel);
 	} catch (SQLException ex) {
 	    Logger.getLogger(GeneInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
+	} finally {
+	    closeGeneInfoDB();
 	}
-	
-	
-    }
 
+    }
 
     
     
@@ -94,7 +96,7 @@ public class GeneInfoRepository {
     
     
     
-    private void queryGene() throws SQLException{
+    private void queryGene(IGeneInfoModel geneInfoModel) throws SQLException{
 	
 	
 	String query = "select * "
@@ -104,94 +106,37 @@ public class GeneInfoRepository {
 	
 	
 	ResultSet rs = DbOperations.execute(query, GeneInfoDbConnectionHolder.getInstance().getConnection());
-	
+
 	while (rs.next()){
-	    
-	    
+	    geneInfoModel.setGeneName(rs.getString(geneNameCol));
 	    geneInfoModel.setNcbiRefSeq(rs.getString(ncbiRefSeqCol));
 	    geneInfoModel.setTranscriptLength(rs.getInt(transcriptLengthCol));
-	    
-//	        private String geneName;
-//    private String ncbiRefSeq;
-//    private String transcriptLength;
-//    private int chr;
-//    private String genomicStart;
-//    private String genomicEnd;
-//    private String cytoLocation;
-//    private String geneMim;
-//    private String geneAlias;
-//    private String geneLongName;
-//    private String entrezGeneId;
-//    private String ensemblGeneId;
-//    private String mouseGeneSymbolId;
-//    private String phenotypes;
-//    private String phenoMim;
-//    private boolean AR;
-//    private boolean AD;
-//    private boolean XLR;
-//    private boolean XLD;
-//    private String moi;
-//    private String knownRecInfo;
-//    private double gdi;
-//    private double gdiPhred;
-//    private String gdiAll;
-//    private String gdiAllMendelian;
-//    private double exacPli;
-//    private double exacPrec;
-//    private double exacPnull;
-
-	    
-	    
-	    
-	    
-	    
+	    geneInfoModel.setChr(rs.getInt(chrCol));
+	    geneInfoModel.setGenomicStart(rs.getInt(genomicStartCol));
+	    geneInfoModel.setGenomicEnd(rs.getInt(genomicEnd));
+	    geneInfoModel.setCytoLocation(rs.getString(cytoLocationCol));
+	    geneInfoModel.setGeneMim(rs.getString(geneMimCol));
+	    geneInfoModel.setGeneAlias(rs.getString(geneAliasCol));
+	    geneInfoModel.setGeneLongName(geneLongNameCol);
+	    geneInfoModel.setEntrezGeneId(rs.getString(entrezGeneIdCol));
+	    geneInfoModel.setEnsemblGeneId(rs.getString(ensemblGeneIdCol));
+	    geneInfoModel.setMouseGeneSymbolId(rs.getString(mouseGeneIdCol));
+	    geneInfoModel.setPhenotypes(rs.getString(phenoCol));
+	    geneInfoModel.setPhenoMim(rs.getString(phenoMimCol));
+	    geneInfoModel.setAR(rs.getBoolean(arCol));
+	    geneInfoModel.setAD(rs.getBoolean(adCol));
+	    geneInfoModel.setXLR(rs.getBoolean(xlrCol));
+	    geneInfoModel.setXLD(rs.getBoolean(xldCol));
+	    geneInfoModel.setKnownRecInfo(rs.getString(knownRecInfoCol));
+	    geneInfoModel.setGdi(rs.getDouble(gdiCol));
+	    geneInfoModel.setGdiPhred(rs.getDouble(gdiPhredCol));
+	    geneInfoModel.setGdiAll(rs.getString(gdiAllCol));
+	    geneInfoModel.setGdiAllMendelian(rs.getString(gdiAllMendelian));
+	    geneInfoModel.setExacPli(rs.getDouble(exacPliCol));
+	    geneInfoModel.setExacPrec(rs.getDouble(exacPrecCol));
+	    geneInfoModel.setExacPnull(rs.getDouble(exacPnullCol));
 	    
 	}
-	
-	
-	
-	
-//	// prepare query
-//	String query = "select "
-//		+ geneNameCol + ", "
-//		+ geneMimCol + ", "
-//		+ arCol + ", " + adCol + ", " + xlrCol + ", " + xldCol + ", "
-//		+ ncbiRefSeqCol + ", "
-//		+ codingRegionCol + ", "
-//		+ phenoCol + ", "
-//		+ phenoMimCol + ", "
-//		+ knownRecInfoCol + ", "
-//		+ gdiCol + ", "
-//		+ gdiPhredCol + ", "
-//		+ gdiAllCol + ", "
-//		+ gdiAllMendelian + ", "
-//		+ exacPliCol + ", "
-//		+ exacPrecCol + ", "
-//		+ exacPnullCol + ", "
-//		+ " from " + tableHg19
-//		+ " where " + geneNameCol + " == '" + curGene + "'";
-
-		
-		
-		// query current gene and retrieve variables
-		
-//		ResultSet rs = DbOperations.execute(query, GeneInfoDbConnectionHolder.getInstance().getConnection());
-//		while (rs.next()) {
-//
-//		    geneName = rs.getString(geneNameCol).toUpperCase();
-//		    
-//		    PreparePanelTable.GeneInfoModel geneInfoData = new PreparePanelTable.GeneInfoModel();
-//		    geneInfos.put(geneName, geneInfoData);
-//		    
-//		    geneInfoData.setGeneMim(rs.getString(geneMimCol));
-//		    geneInfoData.setNcbiRefSeq(rs.getString(ncbiRefSeqCol));
-//		    geneInfoData.setCodingRegion(rs.getInt(codingRegionCol));
-//		    geneInfoData.setPheno(rs.getString(phenoCol));
-//		    geneInfoData.setPhenoMim(rs.getString(phenoMimCol));
-//		}
-	
-	
-	
     }
 
     

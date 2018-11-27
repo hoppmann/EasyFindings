@@ -43,19 +43,19 @@ public interface IGeneInfoModel{
 	
     
 
-    public String getGenomicStart();
+    public int getGenomicStart();
 	
     
 
-    public void setGenomicStart(String genomicStart);
+    public void setGenomicStart(int genomicStart);
 	
     
 
-    public String getGenomicEnd();
+    public int getGenomicEnd();
 	
     
 
-    public void setGenomicEnd(String genomicEnd);
+    public void setGenomicEnd(int genomicEnd);
 	
     
 

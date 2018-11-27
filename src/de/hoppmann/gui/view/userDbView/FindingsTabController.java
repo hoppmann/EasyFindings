@@ -8,7 +8,7 @@ package de.hoppmann.gui.view.userDbView;
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
-import de.hoppmann.operations.CreateTable;
+import de.hoppmann.openFile.CreateTable;
 import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedList;

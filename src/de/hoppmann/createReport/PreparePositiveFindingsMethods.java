@@ -71,13 +71,15 @@ public class PreparePositiveFindingsMethods {
         this.geneSnipletRepo = geneSnipletRepo;
         this.varSnipletRepo = varSnipletRepo;
 
+	
+	
 	// check if existing DB is saved in config if so connect to it
-        if (!ConnectionBuilder.hasConnection()) {
-            new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
-        }
+	if (!ConnectionBuilder.hasConnection()) {
+	    new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
+	}
+	
 	
 
-	
 	/* 
 	for each finding 
 	    retrieve gene and variant info
@@ -93,7 +95,7 @@ public class PreparePositiveFindingsMethods {
 		
 
 		// prepare column entries
-		prepareColEntries(curFinding);
+		prepareColEntries(curFinding, findings.getHeader());
 
 		// get data from DB
 		retrieveVariantDbEntry();
@@ -128,7 +130,7 @@ public class PreparePositiveFindingsMethods {
 
 
     //// for each column of interest get the values
-    private void prepareColEntries(TableData curFinding) {
+    private void prepareColEntries(TableData curFinding, LinkedHashMap<String, Integer> header) {
 	
 	
 	
@@ -142,21 +144,28 @@ public class PreparePositiveFindingsMethods {
 	
 	
 	//// gene name
-	geneName = retrieveEntries(curFinding, config.getGeneCol(), false).get(0);
+	geneName = retrieveEntries(curFinding, config.getGeneCol(), false, header).get(0);
 		
 	
 	//// RsID
-	rsID = retrieveEntries(curFinding, config.getRsIdCol(), true);
+	rsID = retrieveEntries(curFinding, config.getRsIdCol(), true, header);
 
 
 	//// protein nomenclature
-	pNomen = retrieveEntries(curFinding, config.getpNomenCol(), true);
+	pNomen = retrieveEntries(curFinding, config.getpNomenCol(), true, header);
 
 	
-	//// zygocity 
-	int zygocityNumber = Integer.valueOf(retrieveEntries(curFinding, config.getZygocityCol(), false).get(0));
+	//// zygocity
+	String zygocityString = retrieveEntries(curFinding, config.getZygocityCol(), false, header).get(0);
+	int zygocityNumber = -1;
+	if (!zygocityString.equals("NA")){
+	    zygocityNumber = Integer.valueOf(zygocityString);
+	}
+	
 	
 	switch (zygocityNumber) {
+	    case -1: zygocity = "NA";
+	    break;
 	    case 0: zygocity = "HOM_REF";
 		break;
 	    case 1:  zygocity = "HET";
@@ -169,12 +178,12 @@ public class PreparePositiveFindingsMethods {
 	
 
 	//// minor allele frequency
-	maf = retrieveEntries(curFinding, config.getMafAllCol(), true);
+	maf = retrieveEntries(curFinding, config.getMafAllCol(), true, header);
 	
 	
 	//quotient of prediciton tools
-	String totPred = retrieveEntries(curFinding, config.getTotPredCol(), false).get(0);
-	String percentDamaging = retrieveEntries(curFinding, config.getPredScoreCol(), false).get(0);
+	String totPred = retrieveEntries(curFinding, config.getTotPredCol(), false, header).get(0);
+	String percentDamaging = retrieveEntries(curFinding, config.getPredScoreCol(), false, header).get(0);
 	
 	if(!totPred.equals("NA") && !percentDamaging.equals("NA")){
 	    Double damagingDouble = Double.valueOf(percentDamaging) * Double.valueOf(totPred);
@@ -188,9 +197,9 @@ public class PreparePositiveFindingsMethods {
 	
 	
 	//// PubMed ID 
-	List<String> pubMedIdList = retrieveEntries(curFinding, config.getPubMedIdCol(), false);
+	List<String> pubMedIdList = retrieveEntries(curFinding, config.getPubMedIdCol(), false, header);
 	if (pubMedIdList.size() > 0){
-	    pubmedID = retrieveEntries(curFinding, config.getPubMedIdCol(), false).get(0);
+	    pubmedID = retrieveEntries(curFinding, config.getPubMedIdCol(), false,header).get(0);
 	} else {
 	    pubmedID = "NA";
 	}
@@ -199,7 +208,7 @@ public class PreparePositiveFindingsMethods {
 	
 	//// variant
 	// get list of all variant found in gene
-	varNameList = retrieveEntries(curFinding, config.getcNomenCol(), true);
+	varNameList = retrieveEntries(curFinding, config.getcNomenCol(), true, header);
 	
     }
     
@@ -210,10 +219,15 @@ public class PreparePositiveFindingsMethods {
     
     ////////////
     //////// retrieve hash entriy, split it and check if NA needed
-    private List<String> retrieveEntries(TableData curFinding, String colName, boolean split) {
+    private List<String> retrieveEntries(TableData curFinding, String colName, boolean split, LinkedHashMap<String, Integer> header) {
 	
-	List<String> entryList = curFinding.getSplitEntry(findings.getColIndex(colName), ",");
+	List<String> entryList = new LinkedList();
 	
+	if (header.containsKey(colName)){
+	    entryList = curFinding.getSplitEntry(findings.getColIndex(colName), ",");
+	} else {
+	    entryList.add("NA");
+	}
 	// check each element if empty. If so set NA
 	if (entryList.size() > 0) {
 	    for (int i = 0; i < entryList.size(); i++) {

@@ -64,6 +64,8 @@ public class Config {
     private String splice45Col = "";
     private final String splice15ColKey = "splice15";
     private String splice15Col = "";
+    private final String totSsPredColKey = "totSsPred";
+    private String totSsPredCol = "";
     private final String totPredColKey = "totalPredictions";
     private String totPredCol = "";
     private final String predScoreColKey = "percentDamagingPredictions";
@@ -76,6 +78,7 @@ public class Config {
     private String zygocityCol = "";
     private final String impactColKey = "impactCol";
     private String impactCol = ""; 
+    
     
     
     
@@ -140,6 +143,7 @@ public class Config {
 	if (prop.getProperty(clinvarColKey) != null ) {clinvarCol = prop.getProperty(clinvarColKey);}
 	if (prop.getProperty(splice45ColKey) != null ) {splice45Col = prop.getProperty(splice45ColKey);}
 	if (prop.getProperty(splice15ColKey) != null ) {splice15Col = prop.getProperty(splice15ColKey);}
+	if (prop.getProperty(totSsPredColKey) != null) {totSsPredCol = prop.getProperty(totSsPredColKey);}
 	if (prop.getProperty(totPredColKey) != null ) {totPredCol = prop.getProperty(totPredColKey);}
 	if (prop.getProperty(predScoreColKey) != null ) {predScoreCol = prop.getProperty(predScoreColKey);}
 	if (prop.getProperty(pubMedIdColKey) != null ) {pubMedIdCol = prop.getProperty(pubMedIdColKey);}
@@ -345,6 +349,17 @@ public class Config {
 	saveConfig(splice15ColKey, splice15Col);
     }
 
+    public String getTotSsPredCol() {
+	return totSsPredCol;
+    }
+
+    public void setTotSsPredCol(String totSsPredCol) {
+	this.totSsPredCol = totSsPredCol;
+	saveConfig(totSsPredColKey, totSsPredCol);
+    }
+
+    
+    
     public String getTotPredCol() {
 	return totPredCol;
     }

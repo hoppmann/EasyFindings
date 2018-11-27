@@ -6,6 +6,9 @@
 
 package de.hoppmann.database.geneInfoDB;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author hoppmann
@@ -21,8 +24,8 @@ public class GeneInfoModel implements IGeneInfoModel{
     private String ncbiRefSeq;
     private int transcriptLength;
     private int chr;
-    private String genomicStart;
-    private String genomicEnd;
+    private int genomicStart;
+    private int genomicEnd;
     private String cytoLocation;
     private String geneMim;
     private String geneAlias;
@@ -45,13 +48,26 @@ public class GeneInfoModel implements IGeneInfoModel{
     private double exacPli;
     private double exacPrec;
     private double exacPnull;
-    
-    
     private int codingRegion;
 
     
     
+    public GeneInfoModel(String geneName) {
+	this.geneName = geneName;
+    }
+
     
+    
+    private void prepareMoiString () {
+	List moiList = new LinkedList();
+	if (AR) {moiList.add("AR");}
+	if (AD) {moiList.add("AD");}
+	if (XLR) {moiList.add("XLR");}
+	if (XLD) {moiList.add("XLD");}
+	
+	moi = String.join(", ", moiList);
+	
+    }
     
     
     
@@ -66,6 +82,7 @@ public class GeneInfoModel implements IGeneInfoModel{
 
     @Override
     public void setGeneName(String geneName) {
+	geneName = geneName.toUpperCase();
 	this.geneName = geneName;
     }
 
@@ -100,22 +117,22 @@ public class GeneInfoModel implements IGeneInfoModel{
     }
 
     @Override
-    public String getGenomicStart() {
+    public int getGenomicStart() {
 	return genomicStart;
     }
 
     @Override
-    public void setGenomicStart(String genomicStart) {
+    public void setGenomicStart(int genomicStart) {
 	this.genomicStart = genomicStart;
     }
 
     @Override
-    public String getGenomicEnd() {
+    public int getGenomicEnd() {
 	return genomicEnd;
     }
 
     @Override
-    public void setGenomicEnd(String genomicEnd) {
+    public void setGenomicEnd(int genomicEnd) {
 	this.genomicEnd = genomicEnd;
     }
 
@@ -251,6 +268,7 @@ public class GeneInfoModel implements IGeneInfoModel{
 
     @Override
     public String getMoi() {
+	prepareMoiString();
 	return moi;
     }
 

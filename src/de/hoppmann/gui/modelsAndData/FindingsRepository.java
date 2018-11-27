@@ -138,9 +138,12 @@ public class FindingsRepository {
     
     
     // get header index
-    public int getColIndex (String colName) {
-	int index = header.get(colName);
-	return index;
+    public Integer getColIndex (String colName) {
+	if (header.get(colName) != null) {
+	    return header.get(colName);
+	} else {
+	    return -1;
+	}
 	
     }
     

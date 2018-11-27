@@ -54,8 +54,9 @@ public class TableData {
 	
 	// get entry of choise and split
 	
-	entryList.addAll(Arrays.asList(inputLine.get(i).split(delim)));
-	
+	if (i >= 0){
+	    entryList.addAll(Arrays.asList(inputLine.get(i).split(delim)));
+	}
 	return entryList;
 	
     }

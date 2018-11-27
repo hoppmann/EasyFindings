@@ -20,6 +20,12 @@
             <Font size="14.0" />
          </font></Label>
 	<ComboBox fx:id="impactColBox" layoutX="123.0" layoutY="57.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="60.0" />
+      <Label fx:id="zygocityLabel" layoutX="381.0" layoutY="507.0" prefHeight="25.0" prefWidth="90.0" text="Zygocity" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="zygocityColBox" layoutX="490.0" layoutY="504.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0" />
 	<Label fx:id="cNomenLabel" layoutX="14.0" layoutY="100.0" prefHeight="25.0" prefWidth="90.0" text="cDNA" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="140.0">
          <font>
             <Font size="14.0" />
@@ -35,13 +41,17 @@
             <Font size="14.0" />
          </font></Label>
 	<ComboBox fx:id="pubMedIdColBox" layoutX="123.0" layoutY="177.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="220.0" />
+      <Label fx:id="rsIdLabel" layoutX="24.0" layoutY="230.0" prefHeight="25.0" prefWidth="90.0" text="RSId" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="260.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="rsIdColBox" layoutX="133.0" layoutY="227.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="260.0" />
 	<Label fx:id="predScoreLabel" layoutX="14.0" layoutY="220.0" prefHeight="25.0" prefWidth="90.0" text="Pred score" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="300.0">
          <font>
             <Font size="14.0" />
          </font></Label>
 	<ComboBox fx:id="predScoreColBox" layoutX="123.0" layoutY="217.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="300.0" />
-	<Button fx:id="closeButton" layoutX="10.0" layoutY="291.0" mnemonicParsing="false" onAction="#closeButtonEvent" prefHeight="25.0" prefWidth="130.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-      <Button fx:id="okButton" layoutX="140.0" layoutY="291.0" mnemonicParsing="false" onAction="#okButtonEvent" prefHeight="3.0" prefWidth="130.0" text="Ok" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="150.0" />
       <Label fx:id="totPredlabel" layoutX="9.0" layoutY="259.0" prefHeight="25.0" prefWidth="90.0" text="tot pred" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="340.0">
          <font>
             <Font size="14.0" />
@@ -54,57 +64,49 @@
          </font>
       </Label>
       <ComboBox fx:id="clinVarColBox" layoutX="110.0" layoutY="382.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="380.0" />
-      <Label fx:id="splice45Label" layoutX="289.0" layoutY="140.0" prefHeight="25.0" prefWidth="90.0" text="Splice 45" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="60.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="splice45ColBox" layoutX="379.0" layoutY="140.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="60.0" />
-      <Label fx:id="splice15Label" layoutX="289.0" layoutY="100.0" prefHeight="25.0" prefWidth="90.0" text="Splice 15" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="20.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="splice15ColBox" layoutX="379.0" layoutY="100.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="20.0" />
       <Label fx:id="hgmdLabel" layoutX="10.0" layoutY="422.0" prefHeight="25.0" prefWidth="90.0" text="HGMD" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="422.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="hgmdColBox" layoutX="110.0" layoutY="422.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="422.0" />
-      <Label fx:id="rsIdLabel" layoutX="24.0" layoutY="230.0" prefHeight="25.0" prefWidth="90.0" text="RSId" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="260.0">
+      <Label fx:id="splice15Label" layoutX="289.0" layoutY="100.0" prefHeight="25.0" prefWidth="90.0" text="Splice 15" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="rsIdColBox" layoutX="133.0" layoutY="227.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="260.0" />
-      <Label fx:id="zygocityLabel" layoutX="381.0" layoutY="507.0" prefHeight="25.0" prefWidth="90.0" text="Zygocity" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0">
+      <ComboBox fx:id="splice15ColBox" layoutX="379.0" layoutY="100.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="20.0" />
+      <Label fx:id="splice45Label" layoutX="289.0" layoutY="140.0" prefHeight="25.0" prefWidth="90.0" text="Splice 45" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="zygocityColBox" layoutX="490.0" layoutY="504.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0" />
-      <Label fx:id="mafAllLabel" layoutX="289.0" layoutY="180.0" prefHeight="25.0" prefWidth="90.0" text="MAF all" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="100.0">
+      <ComboBox fx:id="splice45ColBox" layoutX="379.0" layoutY="140.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="60.0" />
+      <Label fx:id="totSsPredLable" layoutX="299.0" layoutY="105.0" prefHeight="25.0" prefWidth="90.0" text="tot SS-Pred" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="100.0" />
+      <ComboBox fx:id="totSsPredBox" layoutX="390.0" layoutY="100.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="100.0" />
+      <Label fx:id="mafAllLabel" layoutX="289.0" layoutY="180.0" prefHeight="25.0" prefWidth="90.0" text="MAF all" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="140.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="mafAllBox" layoutX="379.0" layoutY="180.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="100.0" />
-      <Label fx:id="mafNfeLabel" layoutX="290.0" layoutY="142.0" prefHeight="25.0" prefWidth="90.0" text="MAF NFE" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="140.0" />
-      <ComboBox fx:id="mafNfeBox" layoutX="390.0" layoutY="137.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="140.0" />
-      <Label fx:id="mafAfrLabel" layoutX="290.0" layoutY="185.0" prefHeight="25.0" prefWidth="90.0" text="MAF AFR" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="180.0" />
-      <ComboBox fx:id="mafAfrBox" layoutX="380.0" layoutY="177.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="180.0" />
-      <Label fx:id="mafSasLabel" layoutX="290.0" layoutY="212.0" prefHeight="25.0" prefWidth="90.0" text="MAF SAS" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="220.0">
+      <ComboBox fx:id="mafAllBox" layoutX="379.0" layoutY="180.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="140.0" />
+      <Label fx:id="mafNfeLabel" layoutX="290.0" layoutY="142.0" prefHeight="25.0" prefWidth="90.0" text="MAF NFE" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="180.0" />
+      <ComboBox fx:id="mafNfeBox" layoutX="390.0" layoutY="137.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="180.0" />
+      <Label fx:id="mafAfrLabel" layoutX="290.0" layoutY="185.0" prefHeight="25.0" prefWidth="90.0" text="MAF AFR" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="220.0" />
+      <ComboBox fx:id="mafAfrBox" layoutX="380.0" layoutY="177.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="220.0" />
+      <Label fx:id="mafSasLabel" layoutX="290.0" layoutY="212.0" prefHeight="25.0" prefWidth="90.0" text="MAF SAS" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="260.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="mafSasBox" layoutX="390.0" layoutY="220.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="220.0" />
-      <Label fx:id="mafEasLabel" layoutX="290.0" layoutY="252.0" prefHeight="25.0" prefWidth="90.0" text="MAF EAS" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="260.0" />
-      <ComboBox fx:id="mafEasBox" layoutX="396.0" layoutY="255.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="260.0" />
-      <Label fx:id="rmskLabel" layoutX="299.0" layoutY="292.0" prefHeight="25.0" prefWidth="90.0" text="RMSK" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="300.0" />
-      <ComboBox fx:id="rmskBox" layoutX="390.0" layoutY="300.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="300.0" />
-      <Label fx:id="conservationLabel" layoutX="290.0" layoutY="332.0" prefHeight="25.0" prefWidth="90.0" text="Conservation" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="340.0" />
-      <ComboBox fx:id="conservationBox" layoutX="390.0" layoutY="335.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="340.0" />
+      <ComboBox fx:id="mafSasBox" layoutX="390.0" layoutY="220.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="260.0" />
+      <Label fx:id="mafEasLabel" layoutX="290.0" layoutY="252.0" prefHeight="25.0" prefWidth="90.0" text="MAF EAS" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="300.0" />
+      <ComboBox fx:id="mafEasBox" layoutX="396.0" layoutY="255.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="300.0" />
+      <Label fx:id="rmskLabel" layoutX="299.0" layoutY="292.0" prefHeight="25.0" prefWidth="90.0" text="RMSK" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="340.0" />
+      <ComboBox fx:id="rmskBox" layoutX="390.0" layoutY="300.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="340.0" />
+      <Label fx:id="conservationLabel" layoutX="290.0" layoutY="332.0" prefHeight="25.0" prefWidth="90.0" text="Conservation" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="380.0" />
+      <ComboBox fx:id="conservationBox" layoutX="390.0" layoutY="335.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="380.0" />
+	<Button fx:id="closeButton" layoutX="10.0" layoutY="291.0" mnemonicParsing="false" onAction="#closeButtonEvent" prefHeight="25.0" prefWidth="130.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <Button fx:id="okButton" layoutX="140.0" layoutY="291.0" mnemonicParsing="false" onAction="#okButtonEvent" prefHeight="3.0" prefWidth="130.0" text="Ok" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="150.0" />
     </children>
 </AnchorPane>

@@ -8,8 +8,10 @@ package de.hoppmann.gui.view.mainView;
 import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.InputRepository;
-import de.hoppmann.operations.CreateTable;
-import de.hoppmann.operations.LoadInputFile;
+import de.hoppmann.openFile.CatagorizeAcmg;
+import de.hoppmann.openFile.CreateTable;
+import de.hoppmann.openFile.ICatagorize;
+import de.hoppmann.openFile.LoadInputFile;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,6 +39,7 @@ public class DataTabViewController implements Initializable {
     private LoadInputFile loadInput;
     private InputRepository input;
     private FindingsRepository findings = null;
+    private ICatagorize catagorize;
     
     
     
@@ -73,18 +76,19 @@ public class DataTabViewController implements Initializable {
             config.setInputPath(inputFile.getParent());
             loadInput = new LoadInputFile();
             loadInput.openFile(inputFile,input);
-            String warning = loadInput.catagorize(input);
+	    catagorize = new CatagorizeAcmg();
+	    catagorize.createCatagories(input);
             
             
             
             
             createTable();
             
-	    if(warning != "") {
-                infoLabel.setText(warning);
-            } else {
-		infoLabel.setText(inputFile.getName() + " read in.");
-	    }
+//	    if(warning != "") {
+//                infoLabel.setText(warning);
+//            } else {
+//		infoLabel.setText(inputFile.getName() + " read in.");
+//	    }
         }
         
     }

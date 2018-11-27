@@ -25,6 +25,7 @@ public class ColViewTooltipTexts {
     public static final String CLINVAR_COL_TP_TEXT = "";
     public static final String SPLICE45_COL_TP_TEXT = "";
     public static final String SPLICE15_COL_TP_TEXT = "";
+    public static final String TOT_SS_PRED_TP_COL = "Total number of  splice side predictions";
     public static final String RSID_COL_TP_TEXT = "";
     public static final String ZYGOCITY_COL_TP_TEXT = "";
     public static final String MAF_ALL_COL_TP_TEXT = "";
