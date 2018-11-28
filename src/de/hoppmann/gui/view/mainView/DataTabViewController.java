@@ -76,8 +76,7 @@ public class DataTabViewController implements Initializable {
             config.setInputPath(inputFile.getParent());
             loadInput = new LoadInputFile();
             loadInput.openFile(inputFile,input);
-	    catagorize = new CatagorizeAcmg();
-	    catagorize.createCatagories(input);
+	    loadInput.catagorize(new CatagorizeAcmg(), input);
             
             
             

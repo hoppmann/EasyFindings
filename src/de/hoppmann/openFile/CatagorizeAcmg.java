@@ -6,6 +6,8 @@
 
 package de.hoppmann.openFile;
 
+import com.google.common.base.Ascii;
+import com.lowagie.text.pdf.codec.PngImage;
 import de.hoppmann.config.Config;
 import de.hoppmann.database.geneInfoDB.GeneInfoModel;
 import de.hoppmann.database.geneInfoDB.GeneInfoRepository;
@@ -16,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -60,29 +63,119 @@ public class CatagorizeAcmg implements ICatagorize {
 	boolean pvs1 = false; 
 	
 	
-//	Set<String> impactCatagories = new TreeSet<>();
-//	impactCatagories.add("stop_gained");
-//	impactCatagories.add("frameshift_variant");
-//	impactCatagories.add("start_lost");
-//	impactCatagories.add("stop_lost");
+	
+	
+	 String geneName = "";
+	if (catIndices.get(config.getGeneCol()) >= 0) {
+	    geneName = curLine.getEntry(catIndices.get(config.getGeneCol()));
+	}
+
+	
+	List<String> cNomenList = new LinkedList();
+	if (catIndices.get(config.getcNomenCol()) >= 0) {
+	    cNomenList = curLine.getSplitEntry(catIndices.get(config.getcNomenCol()), ",");
+	}
 
 	
 	
-//	String impactEntry = curLine.getEntry(catIndices.get(config.getImpactCol()));
-//	Set<String> impactSet = new TreeSet<>(Arrays.asList(impactEntry.split(",")));
-//	
-//	// check for null vaiant
-//	if (!Collections.disjoint(impactSet, impactCatagories)){
-//	    
-//	    
-//	    // check if LOF is common mechanism
-//	    int pliScore = Integer.parseInt(curLine.getEntry(catIndices.get(config.getPliScoreCol())));
-//	    if (pliScore >= 0.9 ){
-//		
-//	    }
-//
-//
-//	}
+	List<Integer> transLengthIntList = new LinkedList<>();
+	if (catIndices.get(config.getTranscritpLengthCol()) >= 0) {
+	    List<String> transLengthStringList = curLine.getSplitEntry(catIndices.get(config.getTranscritpLengthCol()), ",");
+
+	    for (String curTrans : transLengthStringList) {
+		transLengthIntList.add(Integer.valueOf(curTrans));
+	    }
+	}
+
+
+	
+	// avoid db query when gene info was already queried
+	if (!lastGene.equals(geneName)) {
+	    GeneInfoRepository geneInfoRepo = new GeneInfoRepository();
+	    geneData = new GeneInfoModel(geneName);
+	    geneInfoRepo.queryForGene(geneData);
+	    lastGene = geneName;
+	}
+	
+	
+
+
+
+	///////////////////////////
+	///// check for null vaiant
+	Set<String> impactCatagories = new TreeSet<>();
+	impactCatagories.add("stop_gained");
+	impactCatagories.add("frameshift_variant");
+	impactCatagories.add("start_lost");
+	impactCatagories.add("stop_lost");
+
+	
+	
+	String impactEntry = curLine.getEntry(catIndices.get(config.getImpactCol()));
+	Set<String> impactSet = new TreeSet<>(Arrays.asList(impactEntry.split(",")));
+	if (!Collections.disjoint(impactSet, impactCatagories)){
+	    
+	    // check for each entry distance to end
+	    int index = 0;
+	    boolean closeToEnd = true;
+	    int distToEnd = 50;
+	    for (String curCNomen : cNomenList){
+		List<String> curSplit = Arrays.asList(curCNomen.split(":"));
+		int varPos = 99999;
+		if (curSplit.size() > 1){
+		    curSplit = Arrays.asList(curSplit.get(1).split("\\+"));
+		    curSplit = Arrays.asList(curSplit.get(0).split("_"));
+		    varPos = Integer.valueOf(curSplit.get(0).replaceAll("\\D", ""));
+		}
+		
+		if (transLengthIntList.size() > 0) {
+		    if (index <= transLengthIntList.size() - 1) {
+			if (varPos <= transLengthIntList.get(index) - distToEnd) {
+			    closeToEnd = false;
+			}
+		    } else {
+			if (varPos <= transLengthIntList.get(0) - distToEnd) {
+			    closeToEnd = false;
+			}
+
+		    }
+		}
+
+		index++;
+	    }
+
+
+	    if (geneData.getExacPli() > 0.9) {
+		if (!closeToEnd){
+		    pvs1 = true;
+		}
+	    }
+	}
+	    
+	    
+	//////// check for splice site mutations
+	Set spliceImpactCatagories = new TreeSet();
+	spliceImpactCatagories.add("splice_region_variant");
+	spliceImpactCatagories.add("splice_donor_variant");
+	spliceImpactCatagories.add("splice_acceptor_variant");
+
+	
+	if (!Collections.disjoint(impactSet, spliceImpactCatagories)) {
+	
+	    for (String curCNomen : cNomenList) {
+		List<String> curSplit = Arrays.asList(curCNomen.split(":"));
+		if (curSplit.size() > 1){
+		    curSplit = Arrays.asList(curSplit.get(1).split("\\+|\\-"));
+		}
+		if (curSplit.size() > 1) {
+		    String positionString = curSplit.get(curSplit.size() - 1).replaceAll("\\D", "");
+		    int ssPos = Integer.valueOf(positionString);
+		    if (ssPos <= 2) {
+			pvs1 = true;
+		    }
+		}
+	    }
+	}
 	
 	
 	
@@ -126,7 +219,6 @@ public class CatagorizeAcmg implements ICatagorize {
 	    }
 
 	}
-	
 	
 	return ps1;
     }
@@ -463,6 +555,7 @@ public class CatagorizeAcmg implements ICatagorize {
 	catIndices.put(config.getRmskCol(), -1);
 	catIndices.put(config.getConservationCol(), -1);
 	catIndices.put(config.getTotSsPredCol(), -1);
+	catIndices.put(config.getTranscritpLengthCol(), -1);
 	
 	
 	
@@ -483,38 +576,100 @@ public class CatagorizeAcmg implements ICatagorize {
     
     
     
-    private void checkCatagories(TableData curLine, HashMap<String, Integer> catIndices, CatagoryData catData) {
-	catData.setPvs1(checkPVS1(curLine, catIndices));
+    private void checkCatagories(TableData curLine, HashMap<String, Integer> catIndices) {
+	curLine.setPvs1(checkPVS1(curLine, catIndices));
 
-	catData.setPs1(checkPS1(curLine, catIndices));
-	catData.setPs4(checkPS4(curLine, catIndices));
+	curLine.setPs1(checkPS1(curLine, catIndices));
+	curLine.setPs4(checkPS4(curLine, catIndices));
 
-	catData.setPm2(checkPM2(curLine, catIndices));
-	catData.setPm4(checkPM4(curLine, catIndices));
+	curLine.setPm2(checkPM2(curLine, catIndices));
+	curLine.setPm4(checkPM4(curLine, catIndices));
 
-	catData.setPp2(checkPP2(curLine, catIndices));
-	catData.setPp3(checkPP3(curLine, catIndices));
+	curLine.setPp2(checkPP2(curLine, catIndices));
+	curLine.setPp3(checkPP3(curLine, catIndices));
 
-	
+
     }
     
     
     
     
-    private void classify(CatagoryData catData, TableData curLine) {
+    private void classify(TableData curLine, HashMap<String, Integer> catIndices) {
+	
+	curLine.setCatagory(Catagory.getUnclearCode());
 	
 	
-	if (catData.pvs1) {
-	    if (catData.ps1 || catData.ps4){
+	
+	// check for pathogenic variants
+		
+	if (curLine.isPvs1()){
+	    if (curLine.isPs1() || curLine.isPs4()){
 		curLine.setCatagory(Catagory.getPathoCode());
 	    }
 	    
+	    if (curLine.isPp2() && curLine.isPp3()){
+		curLine.setCatagory(Catagory.getPathoCode());
+	    }
 	    
+	    if (curLine.isPm2() || curLine.isPm4()){
+		if (curLine.isPp2() || curLine.isPp3()){
+		    curLine.setCatagory(Catagory.getPathoCode());
+		}
+	    }
 	    
+	    if (curLine.isPp2() && curLine.isPp3()){
+		curLine.setCatagory(Catagory.getPathoCode());
+	    }
 	    
-	} else {
-	    curLine.setCatagory(Catagory.getUnclearCode());
-	} 
+	}
+
+
+	if  (curLine.isPs1() && curLine.isPs4()){
+	    curLine.setCatagory(Catagory.getPathoCode());
+	}
+	
+	
+	if (curLine.isPs1() || curLine.isPs4()){
+	    if (curLine.isPm2() && curLine.isPm4()){
+		if (curLine.isPp2() && curLine.isPp3()){
+		    curLine.setCatagory(Catagory.getPathoCode());
+		}
+	    }
+	}
+	
+	
+	
+	
+	
+	// check for likely pathogenic variants
+	
+	
+	if (curLine.isPvs1()){
+	    if (curLine.isPs1() || curLine.isPs4()){
+		curLine.setCatagory(Catagory.getProbPathoCode());
+	    }
+	}
+	
+	
+	if (curLine.isPs1() || curLine.isPs4()){
+	    if (curLine.isPm2() || curLine.isPm4()){
+		curLine.setCatagory(Catagory.getProbPathoCode());
+	    }
+	    
+	    if (curLine.isPp2() && curLine.isPp3()){
+		curLine.setCatagory(Catagory.getProbPathoCode());
+	    }
+	}
+	
+	
+	if (curLine.isPm2() && curLine.isPm4()) {
+	    if (curLine.isPp2() && curLine.isPp3()){
+		curLine.setCatagory(Catagory.getProbPathoCode());
+	    }
+	}
+	
+	
+	
 	
 	
 	
@@ -533,103 +688,23 @@ public class CatagorizeAcmg implements ICatagorize {
 
 	extractColIndeces(header, catIndices);
 
+//	int c = 0;
 
 	for (TableData curLine : rowData) {
-	    
-	    CatagoryData catData = new CatagoryData();
-	    checkCatagories(curLine, catIndices,catData);
 
-	    classify(catData, curLine);
-	    
-//	    curLine.setCatagory(Catagory.getPathoCode());
+	    checkCatagories(curLine, catIndices);
 
+	    classify(curLine, catIndices);
+
+//	    if (curLine.isPs1()) {
+//		c++;
+//	    }
 	}
 	
+//	System.out.println(c);
+
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    protected class CatagoryData {
-
-	private boolean pvs1 = false;
-
-	private boolean ps1 = false;
-	private boolean ps4 = false;
-
-	private boolean pm2 = false;
-	private boolean pm4 = false;
-
-	private boolean pp2 = false;
-	private boolean pp3 = false;
-
-	public boolean isPvs1() {
-	    return pvs1;
-	}
-
-	public void setPvs1(boolean pvs1) {
-	    this.pvs1 = pvs1;
-	}
-
-	public boolean isPs1() {
-	    return ps1;
-	}
-
-	public void setPs1(boolean ps1) {
-	    this.ps1 = ps1;
-	}
-
-	public boolean isPs4() {
-	    return ps4;
-	}
-
-	public void setPs4(boolean ps4) {
-	    this.ps4 = ps4;
-	}
-
-	public boolean isPm2() {
-	    return pm2;
-	}
-
-	public void setPm2(boolean pm2) {
-	    this.pm2 = pm2;
-	}
-
-	public boolean isPm4() {
-	    return pm4;
-	}
-
-	public void setPm4(boolean pm4) {
-	    this.pm4 = pm4;
-	}
-
-	public boolean isPp2() {
-	    return pp2;
-	}
-
-	public void setPp2(boolean pp2) {
-	    this.pp2 = pp2;
-	}
-
-	public boolean isPp3() {
-	    return pp3;
-	}
-
-	public void setPp3(boolean pp3) {
-	    this.pp3 = pp3;
-	}
-
-
-    
-	
-	
-    
-    }
     
     
     

@@ -35,6 +35,7 @@ public class ColViewTooltipTexts {
     public static final String MAF_EAS_COL_TP_TEXT = "";
     public static final String RMSK_COL_TP_TEXT = "";
     public static final String CONSERVATION_COL_TP_TEXT = "A boolean value if a vatiant is conserved. Possible values (0/1; true/false)";
+    public static final String TRANSCRIPT_LENGTH_COL_TP_TEXT = "Column containing the total length of the current transcript";
 
 
 

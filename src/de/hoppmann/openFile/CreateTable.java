@@ -36,8 +36,6 @@ public class CreateTable {
     //////// variables ////////
     ///////////////////////////
     private final TableView<TableData> tableView;
-//    private TableColumn<TableData, Boolean> causalCol;
-//    private TableColumn<TableData, Catagory> catagoryCol;
 	
 	
 	
@@ -45,6 +43,8 @@ public class CreateTable {
     //////// constructor ////////
     /////////////////////////////
 
+    
+    
     public CreateTable(TableView<TableData> tableView) {
     	this.tableView = tableView;
     }
@@ -66,26 +66,55 @@ public class CreateTable {
 	// clear old header
 	tableView.getColumns().clear();
 	
+	tableView.getColumns().add(prepareCausalCol());		
 	
 	
-	TableColumn<TableData, Boolean> causalCol = prepareCausalCol();
-       	causalCol.setEditable(true);
-
-	tableView.getColumns().add(causalCol);		
-
+	TableColumn<TableData, String> acmgCol = new TableColumn<>("ACMG");
+	acmgCol.getColumns().addAll(prepareCatagoryCol(), prepareAcmgEvidenceCol());
+	tableView.getColumns().add(acmgCol);
 	
 	
-	// add column to table
-	tableView.getColumns().add(prepareCatagoryCol());
         
         tableView.setEditable(true);
-	
-	
-	
 	
     }
 	
 	
+    
+    
+    
+    
+    
+    
+    // add ACMG criteria list
+    
+    private TableColumn<TableData, String> prepareAcmgEvidenceCol() {
+	
+	TableColumn<TableData, String> acmgCol = new TableColumn<>("Evidence");
+	
+	
+	
+	
+	acmgCol.setCellValueFactory((TableColumn.CellDataFeatures<TableData, String> param) -> {
+	    
+	    TableData tableData = param.getValue();
+	    
+	    SimpleObjectProperty<String> stringProp = new SimpleObjectProperty<String>(tableData.getCatagoryEvidence());
+	    stringProp.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+		tableData.setCatagoryEvidence(newValue);
+	    });
+	    
+	    return stringProp;
+	});
+	
+	
+	acmgCol.setEditable(true);
+	
+	
+	
+	
+	return acmgCol;
+    }
     
     
     
@@ -110,8 +139,6 @@ public class CreateTable {
 	    public ObservableValue<Catagory> call(TableColumn.CellDataFeatures<TableData, Catagory> param) {
 		
 		TableData tableData = param.getValue();
-		
-		// select catagory
 		String catagoryString = tableData.getCatagory();
 		Catagory catagory = Catagory.getCatagoryByCode(catagoryString);
 		return new SimpleObjectProperty<>(catagory);

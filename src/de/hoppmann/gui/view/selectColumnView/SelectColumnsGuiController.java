@@ -102,6 +102,8 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML private ComboBox<String> totSsPredBox = new ComboBox<>();
     @FXML private Label totSsPredLable;
     
+    @FXML private ComboBox<String> transLengthBox = new ComboBox<>();
+    @FXML private Label translengthLabel;
     
     @FXML
     private Button closeButton;
@@ -187,6 +189,7 @@ public class SelectColumnsGuiController implements Initializable {
 	config.setRmskCol(rmskBox.getValue());
 	config.setConservationCol(conservationBox.getValue());
 	config.setTotSsPredCol(totSsPredBox.getValue());
+	config.setTranscritpLengthCol(transLengthBox.getValue());
 	
     }
     
@@ -475,7 +478,14 @@ public class SelectColumnsGuiController implements Initializable {
 	TextFields.bindAutoCompletion(conservationBox.getEditor(), header);
 	
 	
-	
+	// transcript length
+	translengthLabel.setTooltip(new Tooltip(ColViewTooltipTexts.TRANSCRIPT_LENGTH_COL_TP_TEXT));
+	transLengthBox.setEditable(true);
+	transLengthBox.getItems().addAll(header);
+	if (checkStringList(header, config.getTranscritpLengthCol())){
+	    transLengthBox.getSelectionModel().select(config.getTranscritpLengthCol());
+	}
+	TextFields.bindAutoCompletion(transLengthBox.getEditor(), header);
 	
         
         

@@ -32,8 +32,7 @@ public class LoadInputFile {
 
 
     private Config config = Config.getInstance();
-    private String lastGene = "";
-    private GeneInfoModel geneData = null;
+    private ICatagorize catagorize;
     
 
 
@@ -66,6 +65,14 @@ public class LoadInputFile {
 
     
     
+    
+    
+    
+    public void catagorize(ICatagorize catagorize, InputRepository input){
+	
+	catagorize.createCatagories(input);
+	
+    }
     
     
     

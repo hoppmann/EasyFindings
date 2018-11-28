@@ -97,6 +97,8 @@ public class Config {
     private String rmskCol = "";
     private final String conservationColKey = "conservationCol";
     private String conservationCol = "";
+    private final String transcriptLengthColKey = "transcriptLengthCol";
+    private String transcritpLengthCol = "";
     
     
     
@@ -158,6 +160,7 @@ public class Config {
 	if (prop.getProperty(mafEasColKey) != null ) {mafEasCol = prop.getProperty(mafEasColKey);}
 	if (prop.getProperty(rmskColKey) != null ) {rmskCol = prop.getProperty(rmskColKey);}
 	if (prop.getProperty(conservationColKey) != null ) {conservationCol = prop.getProperty(conservationColKey);}
+	if (prop.getProperty(transcriptLengthColKey) != null ) {transcritpLengthCol = prop.getProperty(transcriptLengthColKey);}
     }
     
     
@@ -506,6 +509,15 @@ public class Config {
     public void setConservationCol(String conservationCol) {
 	this.conservationCol = conservationCol;
 	saveConfig(conservationColKey, conservationCol);
+    }
+
+    public String getTranscritpLengthCol() {
+	return transcritpLengthCol;
+    }
+
+    public void setTranscritpLengthCol(String transcritpLengthCol) {
+	this.transcritpLengthCol = transcritpLengthCol;
+	saveConfig(transcriptLengthColKey, transcritpLengthCol);
     }
     
     
