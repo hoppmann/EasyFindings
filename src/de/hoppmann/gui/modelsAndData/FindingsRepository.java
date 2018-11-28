@@ -100,7 +100,9 @@ public class FindingsRepository {
 	List<String> list = new LinkedList<>();
 
 	for (TableData curEntry : storedData) {
-	    list.add(curEntry.getInputLine().get(header.get(headerKey)));
+            if (header.get(headerKey) != null){
+                list.add(curEntry.getInputLine().get(header.get(headerKey)));
+            }
 	}
 
 	return list;

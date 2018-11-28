@@ -109,9 +109,10 @@ public class CatagorizeAcmg implements ICatagorize {
 	impactCatagories.add("start_lost");
 	impactCatagories.add("stop_lost");
 
-	
-	
-	String impactEntry = curLine.getEntry(catIndices.get(config.getImpactCol()));
+	String impactEntry = "";
+	if (catIndices.get(config.getImpactCol()) >= 0){
+	impactEntry = curLine.getEntry(catIndices.get(config.getImpactCol()));
+        }
 	Set<String> impactSet = new TreeSet<>(Arrays.asList(impactEntry.split(",")));
 	if (!Collections.disjoint(impactSet, impactCatagories)){
 	    
