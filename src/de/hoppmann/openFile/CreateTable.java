@@ -21,8 +21,10 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 
 /**
@@ -98,8 +100,9 @@ public class CreateTable {
 	acmgCol.setCellValueFactory((TableColumn.CellDataFeatures<TableData, String> param) -> {
 	    
 	    TableData tableData = param.getValue();
-	    
 	    SimpleObjectProperty<String> stringProp = new SimpleObjectProperty<String>(tableData.getCatagoryEvidence());
+	    
+	    
 	    stringProp.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 		tableData.setCatagoryEvidence(newValue);
 	    });
@@ -107,11 +110,7 @@ public class CreateTable {
 	    return stringProp;
 	});
 	
-	
-	acmgCol.setEditable(true);
-	
-	
-	
+	acmgCol.setCellFactory(TextFieldTableCell.forTableColumn());
 	
 	return acmgCol;
     }
@@ -231,8 +230,6 @@ public class CreateTable {
 	});
         
         
-        
-	causalCol.setEditable(true);
         
         
         return causalCol;
