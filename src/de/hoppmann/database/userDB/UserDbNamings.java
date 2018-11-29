@@ -37,10 +37,10 @@ public class UserDbNamings {
     public static final String NAME_KEY = "fullName";
     public static final String ORGANISATION_KEY = "organisation";
     public static final String INSTITUTE_KEY = "institute";
-    public static final String ADDRESS_KEY = "Postal_address";
+    public static final String ADDRESS_KEY = "address";
     public static final String ZIP_CODE_KEY = "zipCode";
     public static final String CITY_KEY = "city";
-    public static final String COUNTRY_KEY = "countries";
+    public static final String COUNTRY_KEY = "country";
 
     
     
