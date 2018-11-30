@@ -166,16 +166,15 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
     @Override
     public void removeVariant(VariantInfo varInfo) {
 
-	    // prepare deletion query
-	String delQuery = "DELETE from " + VAR_TABLE + " WHERE "
-		+ GENE_COL + " = '" + varInfo.getGeneName() + "' AND " + VAR_COL
-		+ "= '" + varInfo.getVarName() + "'";
+        // prepare deletion query
+        String delQuery = "DELETE from " + VAR_TABLE + " WHERE "
+                + GENE_COL + " = '" + varInfo.getGeneName() + "' AND " + VAR_COL
+                + "= '" + varInfo.getVarName() + "'";
 
-	
-            DbOperations.execute(delQuery, ConnectionHolder.getInstance().getConnection());
-
+        DbOperations.execute(delQuery, ConnectionHolder.getInstance().getConnection());
+        
+        
     }
-
 
 
 

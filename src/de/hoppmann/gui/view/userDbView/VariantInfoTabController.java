@@ -88,6 +88,7 @@ public class VariantInfoTabController implements Initializable {
 	    infoLabel.setText("Removed: " + varInfo.getVarName());
 	    // update variant name list
 	    updateVarNameBox();
+            varInfoArea.setText("");
 
 	}
 
@@ -158,6 +159,10 @@ public class VariantInfoTabController implements Initializable {
     
    
     
+    protected void setNewVarName(VariantInfo varInfo) {
+        this.varInfo = varInfo;
+        varNameBox.getSelectionModel().select(varInfo.getVarName());
+    }
     
     
     
@@ -165,7 +170,9 @@ public class VariantInfoTabController implements Initializable {
     
     
     
-    public void inject (VariantTabController variantTabController,IVariantInfoRepository varInfoRepo) {
+    
+    
+    public void inject (VariantTabController variantTabController, IVariantInfoRepository varInfoRepo) {
 	this.variantTabController = variantTabController;
 	this.varInfoRepo = varInfoRepo;
     }

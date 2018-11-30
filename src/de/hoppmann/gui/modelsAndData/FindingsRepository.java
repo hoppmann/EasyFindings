@@ -117,7 +117,11 @@ public class FindingsRepository {
 	List<String> list = new LinkedList<>();
 	
 	for (TableData curEntry : storedData) {
-	    String value = curEntry.getInputLine().get(header.get(headerKey));
+            if (header.get(headerKey) == null){
+                continue;
+            }
+
+            String value = curEntry.getInputLine().get(header.get(headerKey));
 	    String dependency = curEntry.getInputLine().get(header.get(dependKey));
 
 	    // check if dependency is met

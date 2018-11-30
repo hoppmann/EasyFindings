@@ -136,8 +136,11 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
         removeCmd = "DELETE FROM " + GENE_TABLE
 	    + " where gene = '" + varInfo.getGeneName() + "'";
 
-            DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
+        
+        DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
 	
+        
+        
     }
     
     
