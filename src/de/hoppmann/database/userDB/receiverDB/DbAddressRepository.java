@@ -88,20 +88,22 @@ public class DbAddressRepository implements IAddressRepository {
                 String query = "select * from " + RECEIVER_TABLE + " where " + NAME_KEY + " == '" + aInfo.getReceiverName() + "'";
 
                 ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
-                if (rs.next()){
-                    aInfo.setReceiverId(Integer.parseInt(rs.getString(ID_KEY)));
-                    aInfo.setReceiverTitle(rs.getString(TITLE_KEY));
-                    aInfo.setReceiverAddress(rs.getString(ADDRESS_KEY));
-                    aInfo.setReceiverOrganisation(rs.getString(ORGANISATION_KEY));
-                    aInfo.setReceiverInstitute(rs.getString(INSTITUTE_KEY));
-                    aInfo.setReceiverZipCode(rs.getString(ZIP_CODE_KEY));
-                    aInfo.setReceiverCity(rs.getString(CITY_KEY));
-                    aInfo.setReceiverCountry(rs.getString(COUNTRY_KEY));
+                if (rs != null) {
+                    if (rs.next()) {
+                        aInfo.setReceiverId(Integer.parseInt(rs.getString(ID_KEY)));
+                        aInfo.setReceiverTitle(rs.getString(TITLE_KEY));
+                        aInfo.setReceiverAddress(rs.getString(ADDRESS_KEY));
+                        aInfo.setReceiverOrganisation(rs.getString(ORGANISATION_KEY));
+                        aInfo.setReceiverInstitute(rs.getString(INSTITUTE_KEY));
+                        aInfo.setReceiverZipCode(rs.getString(ZIP_CODE_KEY));
+                        aInfo.setReceiverCity(rs.getString(CITY_KEY));
+                        aInfo.setReceiverCountry(rs.getString(COUNTRY_KEY));
+                    }
                 }
 	    } else {
                 return false;
             }
-	    
+                
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbAddressRepository.class.getName()).log(Level.SEVERE, null, ex);
 	}
