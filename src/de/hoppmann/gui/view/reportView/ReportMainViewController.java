@@ -148,6 +148,11 @@ public class ReportMainViewController implements Initializable {
             }
         });
 
+	
+	
+	
+	
+	
         
         addressesTab.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override

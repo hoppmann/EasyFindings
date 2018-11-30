@@ -120,6 +120,10 @@ public class CreateReport {
     
     
     
+    
+    
+    
+    
     //// put together all inforamtion to creat receiver address
     private String prepareReceiverAddress() {
 	
@@ -152,11 +156,13 @@ public class CreateReport {
 	}
         
        
-        
 	addressParts.add(reportData.getReceiverAddress());
 	addressParts.add("<strong>" + reportData.getReceiverZipCode() + " " + reportData.getReceiverCity() + "</strong>");
 	addressParts.add(reportData.getReceiverCountry());
 
+	
+	
+	
 	// return address as string
 	return  String.join("<br>\n", addressParts);
 

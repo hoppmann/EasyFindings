@@ -211,12 +211,14 @@ public class ReportRepository implements IAddressInfo, IPanelInfo{
     
     
     
-        @Override
+    @Override
     public void clearStorage() {
         
         receiverTitle = "";
         receiverName = "";
-        receiverAddress = "";
+	receiverInstitute = "";
+	receiverOrganisation = "";
+	receiverAddress = "";
         receiverCity = "";
         receiverZipCode = "";
         receiverCountry = "";

@@ -8,6 +8,7 @@ package de.hoppmann.gui.view.mainView;
 import de.hoppmann.database.userDB.ConnectionBuilder;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -43,8 +44,7 @@ public class MainViewController implements Initializable {
             ConnectionBuilder.closeConnection();
         }
         
-        Stage stage = (Stage) infoLable.getScene().getWindow();
-        stage.close();
+	Platform.exit();
     }
     
     

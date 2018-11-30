@@ -94,14 +94,53 @@ public class AddressTabController implements Initializable {
     
     
     public void updateAddressInfoFromUI() {
-	aInfo.setReceiverTitle(titleField.getText());
-	aInfo.setReceiverName(nameBox.getValue());
-        aInfo.setReceiverOrganisation(organisationField.getText());
-        aInfo.setReceiverInstitute(instituteFiled.getText());
-	aInfo.setReceiverAddress(addressField.getText());
-	aInfo.setReceiverCity(cityField.getText());
-	aInfo.setReceiverZipCode(zipCodeField.getText());
-	aInfo.setReceiverCountry(countryField.getText());
+	if (titleField.getText() != null) {
+	    aInfo.setReceiverTitle(titleField.getText());
+	} else {
+	    aInfo.setReceiverTitle("");
+	}
+
+	if (nameBox.getValue() != null) {
+	    aInfo.setReceiverName(nameBox.getValue());
+	} else {
+	    aInfo.setReceiverName("");
+	}
+
+	if (organisationField.getText() != null) {
+	    aInfo.setReceiverOrganisation(organisationField.getText());
+	} else {
+	    aInfo.setReceiverOrganisation("");
+	}
+
+	if (instituteFiled.getText() != null) {
+	    aInfo.setReceiverInstitute(instituteFiled.getText());
+	} else {
+	    aInfo.setReceiverInstitute("");
+	}
+
+	if (addressField.getText() != null) {
+	    aInfo.setReceiverAddress(addressField.getText());
+	} else {
+	    aInfo.setReceiverAddress("");
+	}
+
+	if (cityField.getText() != null) {
+	    aInfo.setReceiverCity(cityField.getText());
+	} else {
+	    aInfo.setReceiverCity("");
+	}
+
+	if (zipCodeField.getText() != null) {
+	    aInfo.setReceiverZipCode(zipCodeField.getText());
+	} else {
+	    aInfo.setReceiverZipCode("");
+	}
+
+	if (countryField.getText() != null) {
+	    aInfo.setReceiverCountry(countryField.getText());
+	} else {
+	    aInfo.setReceiverCountry("");
+	}
     }
     
     
@@ -196,7 +235,8 @@ public class AddressTabController implements Initializable {
 	this.infoLabel = infoLable;
         this.aInfo = aInfo;
         
-        boolean isConnected = false;
+
+	boolean isConnected = false;
                 
         if (ConnectionBuilder.hasConnection()){
             isConnected = true;
@@ -214,6 +254,8 @@ public class AddressTabController implements Initializable {
             updateNameBox();
         } 
         
+	
+	fillAddressFields();
         return isConnected;
     }
     
