@@ -52,10 +52,9 @@ public class VariantTabController implements Initializable {
     }
 
     
-    
     protected void setNewGeneInfo() {
-        geneInfoTabController.setNewGeneInfo(varInfo);
-        variantInfoTabController.setNewVarName(varInfo);
+	geneInfoTabController.setNewGene(varInfo);
+	variantInfoTabController.setNewVar(varInfo);
     }
     
     

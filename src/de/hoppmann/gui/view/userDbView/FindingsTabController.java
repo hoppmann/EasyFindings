@@ -55,16 +55,12 @@ public class FindingsTabController implements Initializable {
         
         if (geneName == null) { return;}
         
+	variantTabController.getVarInfoTabPane().getSelectionModel().select(variantTabController.getGeneInfoTabView());
         varInfo = new VariantInfo(geneName);
         varInfo.setVarName(varName);
-        
-        variantTabController.setVarInfo(varInfo);
-        
-        variantTabController.getVarInfoTabPane().getSelectionModel().select(variantTabController.getGeneInfoTabView());
-        
-        variantTabController.setNewGeneInfo();
-        
-        
+	variantTabController.setVarInfo(varInfo);
+	variantTabController.setNewGeneInfo();
+
     }
     
     

@@ -102,7 +102,6 @@ public class VariantInfoTabController implements Initializable {
     private void varNameBoxAction (ActionEvent event) {
 	
 	setVarInfoFromGui();
-	
 	if (varInfo.getVarName() != null) {
 	    varInfo = varInfoRepo.getVariantInfo(varInfo);
 	    varInfoArea.setText(varInfo.getVarInfo());
@@ -156,15 +155,15 @@ public class VariantInfoTabController implements Initializable {
 	
     }
 
-    
    
     
-    protected void setNewVarName(VariantInfo varInfo) {
-        this.varInfo = varInfo;
-        varNameBox.getSelectionModel().select(varInfo.getVarName());
+    protected void setNewVar(VariantInfo varInfo){
+	this.varInfo = varInfo;
+	
+	varNameBox.getSelectionModel().select(varInfo.getVarName());
     }
     
-    
+   
     
     
     

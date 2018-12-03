@@ -187,12 +187,10 @@ public class GeneInfoTabController implements Initializable {
     
     
     
-    
-    protected void setNewGeneInfo (VariantInfo variantInfo) {
-        geneNameBox.getSelectionModel().select(varInfo.getGeneName());
+    protected void setNewGene (VariantInfo varInfo){
+	this.varInfo = varInfo;
+	geneNameBox.getSelectionModel().select(varInfo.getGeneName());
     }
-    
-
     
     
     
@@ -210,8 +208,9 @@ public class GeneInfoTabController implements Initializable {
     
     
     public void inject (VariantTabController variantTabController, FindingsTabController findingsTabController, 
-            VariantInfoTabController variantInfoTabController, IGeneInfoRepository geneInfoRepository){
-        this.variantTabController = variantTabController;
+	    VariantInfoTabController variantInfoTabController, IGeneInfoRepository geneInfoRepository){
+        
+	this.variantTabController = variantTabController;
         this.findingsTabController = findingsTabController;
         this.variantInfoTabController = variantInfoTabController;
         this.geneInfoRepository = geneInfoRepository;
