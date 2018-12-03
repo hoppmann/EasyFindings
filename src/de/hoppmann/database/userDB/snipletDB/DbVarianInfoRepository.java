@@ -1,4 +1,4 @@
-/*
+/*  
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -28,6 +28,7 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
     private final String VAR_TABLE = UserDbNamings.VAR_TABLE;
     private final String VAR_COL = UserDbNamings.VAR_COL;
     private final String VAR_INFO_COL = UserDbNamings.VAR_INFO_COL;
+    private static final String GENE_TABLE = UserDbNamings.GENE_TABLE;
 
     
     
@@ -49,9 +50,14 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ " (" + VAR_COL + " VARCHAR(60) not NULL, "
 		+ GENE_COL + " VARCHAR(60), "
 		+ VAR_INFO_COL + " TEXT, "
-		+ "PRIMARY KEY (" + VAR_COL + "))";
+		+ "PRIMARY KEY (" + VAR_COL + "))"
+		+ "FOREIGN KEY ("+ GENE_COL +")"
+		+ "REFERENCE " + GENE_TABLE +"(" + GENE_TABLE + ") "
+		+ "ON DELETE CASCADE";
 
-            DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
+	
+	System.out.println(createTableCmd);
+//            DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
 	
 	return hasVarTable();
     }

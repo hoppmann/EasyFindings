@@ -32,7 +32,6 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
     private static final String GENE_TABLE = UserDbNamings.GENE_TABLE;
     private static final String GENE_NAME_COL = UserDbNamings.GENE_NAME_COL;
     private static final String GENE_INFO_COL = UserDbNamings.GENE_INFO_COL;
-
     
     
     
@@ -167,10 +166,11 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 
 	boolean success = false;
 	
-	String createTableCmd = "create table " + GENE_TABLE
+	String createTableCmd = "CREATE TABLE " + GENE_TABLE
 	    + " (" + GENE_NAME_COL + " VARCHAR(60) not NULL, "
 	    + GENE_INFO_COL + " TEXT, "
 	    + "PRIMARY KEY ( " + GENE_NAME_COL + " ))";
+	    
         
             ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
 	
