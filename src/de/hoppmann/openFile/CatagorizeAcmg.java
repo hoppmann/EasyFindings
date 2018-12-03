@@ -6,8 +6,6 @@
 
 package de.hoppmann.openFile;
 
-import com.google.common.base.Ascii;
-import com.lowagie.text.pdf.codec.PngImage;
 import de.hoppmann.config.Config;
 import de.hoppmann.database.geneInfoDB.GeneInfoModel;
 import de.hoppmann.database.geneInfoDB.GeneInfoRepository;
@@ -243,7 +241,7 @@ public class CatagorizeAcmg implements ICatagorize {
 	
 	boolean ps4 = false;
 	
-	
+	// added as test
 	
 	
 	
@@ -269,12 +267,13 @@ public class CatagorizeAcmg implements ICatagorize {
     
     private boolean checkPM2(TableData curLine, HashMap<String, Integer> catIndices){
 	
-	boolean pm2 = true;
+	boolean pm2 = false;
+	
 	
 	if (catIndices.get(config.getMafAllCol()) > 0) {
 	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafAllCol())));
 	    if (maf <= 0){
-		pm2 = false;
+		pm2 = true;
 	    }
 	}
 	
@@ -283,7 +282,7 @@ public class CatagorizeAcmg implements ICatagorize {
 	if (catIndices.get(config.getMafNfeCol()) > 0 ){
 	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafNfeCol())));
 	    	    if (maf <= 0){
-		pm2 = false;
+		pm2 = true;
 	    }
 
 	}
@@ -292,7 +291,7 @@ public class CatagorizeAcmg implements ICatagorize {
 	if (catIndices.get(config.getMafAfrCol()) > 0) {
 	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafAfrCol())));
 	    if (maf <= 0){
-		pm2 = false;
+		pm2 = true;
 	    }
 	}
 	
@@ -300,7 +299,7 @@ public class CatagorizeAcmg implements ICatagorize {
 	if (catIndices.get(config.getMafSasCol()) > 0) {
 	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafSasCol())));
 	    if (maf <= 0){
-		pm2 = false;
+		pm2 = true;
 	    }
 	}
 	
@@ -308,7 +307,7 @@ public class CatagorizeAcmg implements ICatagorize {
 	if (catIndices.get(config.getMafEasCol()) > 0) {
 	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafEasCol())));
 	    if (maf <= 0){
-		pm2 = false;
+		pm2 = true;
 	    }
 	}
 
