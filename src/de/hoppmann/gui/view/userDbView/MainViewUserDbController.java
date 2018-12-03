@@ -215,9 +215,12 @@ public class MainViewUserDbController implements Initializable {
         this.connectDB = connectDB;
 	this.findings = findings;
 	
-        
-	boolean success = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
-        
+	boolean success = false;
+	if (ConnectionBuilder.hasConnection()) {
+	    success = true;
+	} else {
+	    success = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
+	}
 	
 	if (success){
             String dbName = "";
@@ -260,7 +263,6 @@ public class MainViewUserDbController implements Initializable {
 	    @Override
 	    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 		if (newValue){
-//		    addressTabController.init(new DbAddressRepository(), infoLabel, new AddressInfo(-1, "", "", "", "", "", "", "", ""));
                     addressTabController.init(new DbAddressRepository(), infoLabel, new AddressInfo());
 		}
 	    }
