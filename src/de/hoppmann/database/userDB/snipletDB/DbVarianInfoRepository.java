@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 public class DbVarianInfoRepository implements IVariantInfoRepository{
 
     private final String GENE_COL = UserDbNamings.GENE_NAME_COL;
+    private final String GENE_TABLE = UserDbNamings.GENE_TABLE;
     private final String VAR_TABLE = UserDbNamings.VAR_TABLE;
     private final String VAR_COL = UserDbNamings.VAR_COL;
     private final String VAR_INFO_COL = UserDbNamings.VAR_INFO_COL;
@@ -49,8 +50,12 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ " (" + VAR_COL + " VARCHAR(60) not NULL, "
 		+ GENE_COL + " VARCHAR(60), "
 		+ VAR_INFO_COL + " TEXT, "
-		+ "PRIMARY KEY (" + VAR_COL + "))";
-
+		+ "PRIMARY KEY (" + VAR_COL + ")"
+		+ "FOREIGN KEY (" + GENE_COL + ") REFERENCES " + GENE_TABLE + " (" + GENE_COL + ") "
+		+ "ON DELETE CASCADE"
+		+ ")";
+	
+		
             DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
 	
 	return hasVarTable();

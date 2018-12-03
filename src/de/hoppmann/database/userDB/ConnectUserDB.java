@@ -8,7 +8,6 @@ package de.hoppmann.database.userDB;
 
 import de.hoppmann.config.Config;
 import de.hoppmann.database.userDB.interfaces.IConnectDB;
-import java.io.File;
 
 /**
  *
@@ -55,23 +54,13 @@ public class ConnectUserDB {
     
     public boolean connectSqLiteUserDB(String dbPath, String user, String password){
         boolean success = false;
-        if (dbPath != null && new File(dbPath).exists()){
-            success = connect(new File(config.getDbFullPath()), user, password);
+	if (dbPath != null){
+	    success = connectDB.connect(dbPath, user, password);
         }
         return success;
 
     }
     
-    
-    
-    
-    
-    
-    private boolean connect(File dbFile, String user, String password){
-	boolean success = connectDB.connect(dbFile.getAbsolutePath(), user, password);
-	return success;
-    }
-
     
     
     

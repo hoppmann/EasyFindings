@@ -136,7 +136,6 @@ public class MainViewUserDbController implements Initializable {
 	File dbFile = chooser.showSaveDialog(new Stage());
 
 	
-	
         if (dbFile != null) {
             
 	    // add extension if not given
@@ -181,6 +180,7 @@ public class MainViewUserDbController implements Initializable {
 
         boolean success = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB(dbFile.getAbsolutePath(), user, password);
         
+
 	if (success) {
             String dbName = "";
             try {

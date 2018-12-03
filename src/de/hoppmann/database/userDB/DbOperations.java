@@ -34,10 +34,15 @@ public class DbOperations {
 	}
 	
 
+	// make foreign keys available
+	String pragma = "PRAGMA foreign_keys = ON;";
+	
+	
         
 	ResultSet rs = null;
 	try {
 	    Statement stmt = conn.createStatement();
+	    stmt.execute(pragma);
 	    stmt.execute(cmd);
 	    rs = stmt.getResultSet();
 	    
