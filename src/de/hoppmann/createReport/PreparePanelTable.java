@@ -6,11 +6,8 @@
 
 package de.hoppmann.createReport;
 
-import de.hoppmann.database.geneInfoDB.ConnectGeneInfoDb;
-import de.hoppmann.database.geneInfoDB.ConnectGeneInfoSQLite;
 import de.hoppmann.database.geneInfoDB.GeneInfoModel;
 import de.hoppmann.database.geneInfoDB.GeneInfoRepository;
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;

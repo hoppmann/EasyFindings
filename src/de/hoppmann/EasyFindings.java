@@ -17,6 +17,23 @@ import javafx.stage.Stage;
  */
 public class EasyFindings extends Application {
     
+//    private static Logger logger = Logger.getLogger("de.hoppmann.*");
+//    private static FileHandler fh;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     @Override
@@ -49,7 +66,37 @@ public class EasyFindings extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
+	
+//	System.out.println(logger.getHandlers());
+	
+//	
+//	try {
+//	    fh = new FileHandler("EasyFindings.log", 8096, 1, true);
+//	    logger.addHandler(fh);
+//	    logger.setLevel(Level.ALL);
+////	    logger.info("TEST");
+//	    
+//	    
+//	    
+//	    
+//	    
+//	    
+//	    
+//	} catch (IOException ex) {
+//	    Logger.getLogger(EasyFindings.class.getName()).log(Level.SEVERE, null, ex);
+//	} catch (SecurityException ex) {
+//	    Logger.getLogger(EasyFindings.class.getName()).log(Level.SEVERE, null, ex);
+//	}
+	    
+//	Logger.getLogger(EasyFindings.class.getName()).log(Level.SEVERE, null, "BLUB");
+
+	
+	    launch(args);
+	    
+	    
+	    
+	
+	
     }
     
 }

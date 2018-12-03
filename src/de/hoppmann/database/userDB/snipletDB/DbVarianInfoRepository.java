@@ -121,6 +121,10 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ VAR_COL + " = '" + varInfo.getVarName() + "'";
 	
 	
+	if (ConnectionHolder.getInstance().getConnection() == null){
+	    return varInfo;
+	}
+	
 	try {
             ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
 	    if (rs.next()) {

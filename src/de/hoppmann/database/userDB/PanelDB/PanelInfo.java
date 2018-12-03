@@ -50,13 +50,20 @@ public class PanelInfo implements IPanelInfo{
     
     @Override
     public void setGeneList(Set<String> geneList) {
-        this.geneList = geneList;
+	Set<String> newSet = new TreeSet<>();
+	for (String curGenen : geneList){
+	    curGenen = curGenen.replaceAll("\\s", "");
+	    curGenen = curGenen.toUpperCase();
+	    newSet.add(curGenen);
+	}
+	newSet.removeAll(Arrays.asList("", null));
+        this.geneList = newSet;
     }
     
     @Override
     public void setGeneList(String geneListString){
         Set<String> geneList = new TreeSet<>(Arrays.asList(geneListString.split("\n")));
-        this.geneList = geneList;
+        setGeneList(geneList);
     }
 
     

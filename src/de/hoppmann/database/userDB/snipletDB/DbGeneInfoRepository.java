@@ -85,7 +85,9 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 		+ " where " + GENE_NAME_COL + " == '" + varInfo.getGeneName() + "'";
 
 	
-	
+	if (ConnectionHolder.getInstance().getConnection() == null){
+	    return varInfo;
+	}
 	try {
             ResultSet rs = DbOperations.execute(queryGeneInfoCmd, ConnectionHolder.getInstance().getConnection());
 
@@ -136,11 +138,8 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
         removeCmd = "DELETE FROM " + GENE_TABLE
 	    + " where gene = '" + varInfo.getGeneName() + "'";
 
-        
-        DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
+            DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
 	
-        
-        
     }
     
     

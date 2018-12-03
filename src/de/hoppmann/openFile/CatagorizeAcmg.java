@@ -688,21 +688,18 @@ public class CatagorizeAcmg implements ICatagorize {
 
 	extractColIndeces(header, catIndices);
 
-//	int c = 0;
 
 	for (TableData curLine : rowData) {
 
-	    checkCatagories(curLine, catIndices);
+//	    checkCatagories(curLine, catIndices);
+//
+//	    classify(curLine, catIndices);
 
-	    classify(curLine, catIndices);
-
-//	    if (curLine.isPs1()) {
-//		c++;
-//	    }
+	    curLine.setCatagory(Catagory.getPathoCode());
 	}
 	
-//	System.out.println(c);
 
+	
     }
     
     

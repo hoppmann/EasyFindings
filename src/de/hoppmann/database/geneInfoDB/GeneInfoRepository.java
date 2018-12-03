@@ -62,7 +62,7 @@ public class GeneInfoRepository {
     
     public void queryForGene (IGeneInfoModel geneInfoModel){
 	try {
-	    connectGeneInfoDB();
+	    boolean success = connectGeneInfoDB();
 	    queryGene(geneInfoModel);
 	} catch (SQLException ex) {
 	    Logger.getLogger(GeneInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,7 +75,7 @@ public class GeneInfoRepository {
     
     
     
-    private void connectGeneInfoDB() {
+    private boolean connectGeneInfoDB() {
 	// get current path of program
 	String curDir = System.getProperty("user.dir");
 	geneInfoDB = new File(curDir + File.separator + "DBs" + File.separator + dbName);
@@ -83,6 +83,7 @@ public class GeneInfoRepository {
         
         boolean success = new ConnectGeneInfoDb(new ConnectGeneInfoSQLite()).connectGeneInfoDbSqLite();
 	
+	return success;
     }
     
     
@@ -102,7 +103,6 @@ public class GeneInfoRepository {
 	String query = "select * "
 		+ " from " + tableHg19
 		+ " where " + geneNameCol + " == '" + geneInfoModel.getGeneName() + "'";
-	
 	
 	
 	ResultSet rs = DbOperations.execute(query, GeneInfoDbConnectionHolder.getInstance().getConnection());
@@ -135,7 +135,6 @@ public class GeneInfoRepository {
 	    geneInfoModel.setExacPli(rs.getDouble(exacPliCol));
 	    geneInfoModel.setExacPrec(rs.getDouble(exacPrecCol));
 	    geneInfoModel.setExacPnull(rs.getDouble(exacPnullCol));
-	    
 	}
     }
 
