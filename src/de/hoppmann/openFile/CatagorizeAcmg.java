@@ -691,11 +691,11 @@ public class CatagorizeAcmg implements ICatagorize {
 
 	for (TableData curLine : rowData) {
 
-//	    checkCatagories(curLine, catIndices);
-//
-//	    classify(curLine, catIndices);
+	    checkCatagories(curLine, catIndices);
 
-	    curLine.setCatagory(Catagory.getPathoCode());
+	    classify(curLine, catIndices);
+
+//	    curLine.setCatagory(Catagory.getPathoCode());
 	}
 	
 
