@@ -199,6 +199,7 @@ public class AddressTabController implements Initializable {
     
     
     private void updateNameBox(){
+                
 	List<String> nameList = addressRepo.getNameList();
 	nameBox.getItems().clear();
 	nameBox.getItems().addAll(nameList);
@@ -244,7 +245,6 @@ public class AddressTabController implements Initializable {
             isConnected = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
         }
         
-
         
         if (isConnected){
             if (!addressRepo.isValidRepo()) {
@@ -254,11 +254,11 @@ public class AddressTabController implements Initializable {
             updateNameBox();
         } 
         
-	
+
+        
 	fillAddressFields();
         return isConnected;
     }
-    
     
     
     

@@ -6,6 +6,7 @@
 package de.hoppmann.gui.view.userDbView;
 
 import de.hoppmann.config.Config;
+import de.hoppmann.database.userDB.snipletDB.VariantInfo;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.openFile.CreateTable;
@@ -32,6 +33,8 @@ public class FindingsTabController implements Initializable {
     
     private Config config = Config.getInstance();
     private FindingsRepository findings;
+    private VariantInfo varInfo;
+
     @FXML private VariantTabController variantTabController;
     @FXML private AnchorPane findingsTab;
     @FXML private TableView<TableData> findingsTable;
@@ -47,8 +50,21 @@ public class FindingsTabController implements Initializable {
     
     @FXML
     private void saveButtonAction(ActionEvent event){
-	
-	System.out.println("TO BE IMPLEMENTED");
+	String geneName = geneNameBox.getValue();
+        String varName = variantNameBox.getValue();
+        
+        if (geneName == null) { return;}
+        
+        varInfo = new VariantInfo(geneName);
+        varInfo.setVarName(varName);
+        
+        variantTabController.setVarInfo(varInfo);
+        
+        variantTabController.getVarInfoTabPane().getSelectionModel().select(variantTabController.getGeneInfoTabView());
+        
+        variantTabController.setNewGeneInfo();
+        
+        
     }
     
     
@@ -145,7 +161,7 @@ public class FindingsTabController implements Initializable {
     
     
     
-    public void injectVariantTabController(VariantTabController variantTabController) {
+    public void injectController(VariantTabController variantTabController) {
 	this.variantTabController = variantTabController;
     }
     

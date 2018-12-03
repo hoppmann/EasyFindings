@@ -16,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -29,13 +30,33 @@ public class VariantTabController implements Initializable {
     private VariantInfo varInfo = new VariantInfo("");
     @FXML private MainViewUserDbController mainViewUserDbController;
     @FXML private AnchorPane variantTab;
+    @FXML private TabPane VarInfoTabPane;
     @FXML private FindingsTabController findingsTabController;
     @FXML private GeneInfoTabController geneInfoTabController;
     @FXML private VariantInfoTabController variantInfoTabController;
     @FXML private Tab findingsInfoTabView;
-    @FXML private Tab variantInfoTabView;
     @FXML private Tab geneInfoTabView;
     
+    
+    
+    public void setVarInfo(VariantInfo varInfo) {
+        this.varInfo = varInfo;
+    }
+
+    public TabPane getVarInfoTabPane() {
+        return VarInfoTabPane;
+    }
+
+    public Tab getGeneInfoTabView() {
+        return geneInfoTabView;
+    }
+
+    
+    
+    protected void setNewGeneInfo() {
+        geneInfoTabController.setNewGeneInfo(varInfo);
+        variantInfoTabController.setNewVarName(varInfo);
+    }
     
     
     
@@ -58,6 +79,12 @@ public class VariantTabController implements Initializable {
 
 	
     }
+
+    
+    
+    
+    
+    
     
     
     
@@ -77,13 +104,14 @@ public class VariantTabController implements Initializable {
     
     
     
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-	findingsTabController.injectVariantTabController(this);
+	findingsTabController.injectController(this);
         geneInfoTabController.inject(this, findingsTabController, variantInfoTabController, new DbGeneInfoRepository());
 	variantInfoTabController.inject(this, new DbVarianInfoRepository());
 	
