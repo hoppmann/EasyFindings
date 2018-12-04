@@ -220,6 +220,8 @@ public class DbAddressRepository implements IAddressRepository {
     public void newAddress(IAddressInfo aInfo) {
 	
 	// prepare query
+        
+        
 	String insertCmd = "INSERT INTO " + RECEIVER_TABLE 
 		+ " (" + TITLE_KEY + ", " + NAME_KEY + ", " + ORGANISATION_KEY + ", " + INSTITUTE_KEY + ", " + ADDRESS_KEY + ", " + ZIP_CODE_KEY
 		 + ", " + CITY_KEY + ", " + COUNTRY_KEY + ") " 
@@ -246,11 +248,13 @@ public class DbAddressRepository implements IAddressRepository {
     public void saveAddress(IAddressInfo aInfo) {
 	
         
-	// perpare update command
-	String updateCmd = "REPLACE INTO " + RECEIVER_TABLE + " VALUES ( '" + aInfo.getReceiverId() +
-		"', '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverOrganisation() + "', '" + aInfo.getReceiverInstitute() + "', '" + aInfo.getReceiverAddress() + "', '" +
-		aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
-
+        String updateCmd = "REPLACE INTO " + RECEIVER_TABLE
+                + " (" + ID_KEY + ", " + TITLE_KEY + ", " + NAME_KEY + ", " + ORGANISATION_KEY + ", " + INSTITUTE_KEY + ", " + ADDRESS_KEY + ", " + ZIP_CODE_KEY
+                + ", " + CITY_KEY + ", " + COUNTRY_KEY + ") "
+                + " VALUES ('" + aInfo.getReceiverId() + "', '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverOrganisation() + "', '" + aInfo.getReceiverInstitute() + "', '" + aInfo.getReceiverAddress() + "', '" 
+		+ aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
+                
+        
             DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());
     }
 

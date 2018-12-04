@@ -234,12 +234,6 @@ public interface IGeneInfoModel{
     public void setExacPnull(double exacPnull);
 	
     
-
-    public int getCodingRegion();
-	
-    
-
-    public void setCodingRegion(int codingRegion);
 	
     }
 

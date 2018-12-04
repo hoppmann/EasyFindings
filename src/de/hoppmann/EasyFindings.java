@@ -66,7 +66,6 @@ public class EasyFindings extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-	File logDir = redirectToLog();
 	
 	
 	stage.setTitle("EasyFindings");
@@ -76,6 +75,8 @@ public class EasyFindings extends Application {
 	stage.setScene(scene);
 
 	MainViewController mainViewController = loader.getController();
+        
+	File logDir = redirectToLog();
 	mainViewController.init(logDir);
 
         stage.show();

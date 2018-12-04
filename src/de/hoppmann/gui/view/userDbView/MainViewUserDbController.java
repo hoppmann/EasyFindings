@@ -135,17 +135,20 @@ public class MainViewUserDbController implements Initializable {
 	
 	File dbFile = chooser.showSaveDialog(new Stage());
 
-	
         if (dbFile != null) {
             
 	    // add extension if not given
-	    if (!FilenameUtils.getExtension(dbFile.getAbsolutePath()).equals(".db")){
+	    if (!FilenameUtils.getExtension(dbFile.getAbsolutePath()).equals("db")){
 		String path = dbFile.getAbsolutePath();
 		path += ".db";
 		dbFile = new File(path);
 	    }
 
-	    connect(dbFile, "", "");
+	    boolean success = connect(dbFile, "", "");
+            
+            if (success) {
+                config.setDbFullPath(dbFile.getAbsolutePath());
+            }
 
         }
     }

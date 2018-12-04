@@ -448,13 +448,20 @@ public class ReportRepository implements IAddressInfo, IPanelInfo{
 
     @Override
     public void setGeneList(Set<String> panelGeneList) {
-        this.panelGeneList = panelGeneList;
+        Set<String> newSet = new TreeSet<>();
+	for (String curGenen : panelGeneList){
+	    curGenen = curGenen.replaceAll("\\s", "");
+	    curGenen = curGenen.toUpperCase();
+	    newSet.add(curGenen);
+	}
+	newSet.removeAll(Arrays.asList("", null));
+        this.panelGeneList = newSet;
     }
 
     @Override
     public void setGeneList(String geneListString) {
-                Set<String> panelGeneList = new TreeSet<>(Arrays.asList(geneListString.split("\n")));
-        this.panelGeneList = panelGeneList;
+        Set<String> panelGeneList = new TreeSet<>(Arrays.asList(geneListString.split("\n")));
+        setGeneList(panelGeneList);
 
     }
 

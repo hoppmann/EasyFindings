@@ -247,6 +247,12 @@ public class PreparePositiveFindingsMethods {
     
     
     
+    
+    
+    
+    
+    
+    
     //// get all informations from the databse for current gene and it's variants
     private void retrieveVariantDbEntry(){
 	
@@ -256,7 +262,7 @@ public class PreparePositiveFindingsMethods {
         
         varSniplet = new LinkedHashMap<>();
         for (String varName : varNameList){
-            
+            varInfo.setVarName(varName);
             varInfo = varSnipletRepo.getVariantInfo(varInfo);
             varSniplet.put(varName, varInfo.getVarInfo());
             

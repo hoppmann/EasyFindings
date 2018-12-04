@@ -37,6 +37,7 @@ public class BillingReportTabViewController implements Initializable {
     
     public void init(ReportRepository reportRepo) {
         PreparePanelTable panelTable = new PreparePanelTable();
+        
         reportRepo.setBillingReport(panelTable.createBillingTable(reportRepo.getPanel()));
         billingEditor.setHtmlText(reportRepo.getBillingReport());
         

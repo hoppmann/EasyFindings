@@ -31,22 +31,7 @@ public class PreparePanelTable {
     private String billingTable;
     
     
-    private Set<String> panelGenes = new TreeSet<>();
-    private final String dbName = "geneInfos.db";
-    private final String tableHg19 = "hg19";
-
-    private String geneName;
-    protected final String geneNameCol =  "geneName";
-    protected final String geneMimCol = "GeneMim";
-    protected final String arCol = "AR";
-    protected final String adCol = "AD";
-    protected final String xlrCol = "XLR";
-    protected final String xldCol = "XLD";
-    protected final String ncbiRefSeqCol = "NCBI_RefSeq";
-    protected final String codingRegionCol = "TranscriptLength";
-    protected final String phenoCol = "Phenotypes";
-    protected final String phenoMimCol = "PhenoMim";
-
+    private Set<String> alreadyQueriedList = new TreeSet<>();
 
     private Map<String, GeneInfoModel> geneInfos = new HashMap<String, GeneInfoModel>();
 	
@@ -114,7 +99,7 @@ public class PreparePanelTable {
 	check if already queried list equals new list
 	if so skip database query
 	*/
-	if (panelGenes.equals(geneSet)){
+	if (alreadyQueriedList.equals(geneSet)){
 	    return;
 	}
 	
@@ -122,10 +107,9 @@ public class PreparePanelTable {
 	
 	
 	
-	
 	// get gene infos
 	for (String curGene : geneSet) {
-	   if (panelGenes.contains(curGene)) {
+	   if (alreadyQueriedList.contains(curGene)) {
 	       continue;
 	   }
 	    
@@ -139,9 +123,8 @@ public class PreparePanelTable {
 	}
 	
 	
-	
 	// save new gene list for later comparisment
-	panelGenes = geneSet;
+	alreadyQueriedList = geneSet;
 	
 	
     }
@@ -215,11 +198,11 @@ public class PreparePanelTable {
 		elements.add("\t\t\t<td><small><small>" + geneInfos.get(curGene).getGeneMim() + "</small></small></td>");
 		elements.add("\t\t\t<td><small><small>" + geneInfos.get(curGene).getMoi() + "</small></small></td>");
 		elements.add("\t\t\t<td><small><small>" + geneInfos.get(curGene).getNcbiRefSeq() + "</small></small></td>");
-		elements.add("\t\t\t<td><small><small>" + (double) geneInfos.get(curGene).getCodingRegion() / 1000 + "</small></small></td>");
+		elements.add("\t\t\t<td><small><small>" + (double) geneInfos.get(curGene).getTranscriptLength()/ 1000 + "</small></small></td>");
 		
 		// if table for billing add multiplier 
     		if(forBilling){
-		    int multiplier = geneInfos.get(curGene).getCodingRegion() / 250;
+		    int multiplier = geneInfos.get(curGene).getTranscriptLength()/ 250;
 		    elements.add("\t\t\t<td><small><small>" + multiplier + "</small></small></td>");
 		    totalMultiplier += multiplier;
 		}
@@ -227,7 +210,7 @@ public class PreparePanelTable {
 		elements.add("\t\t\t<td><small><small>" + phenoMim + "</small></small></td>");
 		
 		// add transcript size to panelsize
-		panelSize += geneInfos.get(curGene).getCodingRegion();
+		panelSize += geneInfos.get(curGene).getTranscriptLength();
 	    }
 	    elements.add("\t\t</tr>");
 	}
