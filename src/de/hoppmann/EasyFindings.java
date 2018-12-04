@@ -40,7 +40,7 @@ public class EasyFindings extends Application {
 	
 	
 	
-	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 	Date date = new Date();
 	String errorOut = logDir + File.separator + dateFormat.format(date) + "_ERROR";
 	String standardOut = logDir + File.separator + dateFormat.format(date) + "_STD-OUT";
