@@ -83,11 +83,6 @@ public class DataTabViewController implements Initializable {
             
             createTable();
             
-//	    if(warning != "") {
-//                infoLabel.setText(warning);
-//            } else {
-//		infoLabel.setText(inputFile.getName() + " read in.");
-//	    }
         }
         
     }

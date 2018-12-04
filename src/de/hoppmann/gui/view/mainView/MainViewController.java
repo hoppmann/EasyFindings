@@ -6,6 +6,7 @@
 package de.hoppmann.gui.view.mainView;
 
 import de.hoppmann.database.userDB.ConnectionBuilder;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -16,7 +17,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -32,6 +32,7 @@ public class MainViewController implements Initializable {
     @FXML private Tab dataTab;
     @FXML private FindingsTabViewController findingsTabViewController;
     @FXML private DataTabViewController dataTabViewController;
+    private File logDir;
     
     
     
@@ -44,8 +45,15 @@ public class MainViewController implements Initializable {
             ConnectionBuilder.closeConnection();
         }
         
+	
 	Platform.exit();
     }
+    
+    
+    public void init(File logDir){
+	this.logDir = logDir;
+    }
+    
     
     
     

@@ -5,6 +5,13 @@
  */
 package de.hoppmann;
 
+import de.hoppmann.gui.view.mainView.MainViewController;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,16 +24,36 @@ import javafx.stage.Stage;
  */
 public class EasyFindings extends Application {
     
-//    private static Logger logger = Logger.getLogger("de.hoppmann.*");
-//    private static FileHandler fh;
     
     
     
     
     
-    
-    
-    
+    private File redirectToLog() throws FileNotFoundException {
+	
+	String logDirName = "logs";
+	
+	File logDir = new File(logDirName);
+	if (!logDir.exists()){
+	    logDir.mkdir();
+	}
+	
+	
+	
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+	Date date = new Date();
+	String errorOut = logDir + File.separator + dateFormat.format(date) + "_ERROR";
+	String standardOut = logDir + File.separator + dateFormat.format(date) + "_STD-OUT";
+	
+	PrintStream errorStream = new PrintStream(errorOut);
+	System.setErr(errorStream);
+	
+	PrintStream standardStream = new PrintStream(standardOut);
+	System.setOut(standardStream);
+
+	
+	return logDir;
+    }
     
     
     
@@ -39,18 +66,18 @@ public class EasyFindings extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-
-	
-	
+	File logDir = redirectToLog();
 	
 	
 	stage.setTitle("EasyFindings");
-        Parent root = FXMLLoader.load(getClass().getResource("gui/view/mainView/MainView.fxml"));
-        
-        
-        Scene scene = new Scene(root);
-
+	FXMLLoader loader = new FXMLLoader(getClass().getResource("gui/view/mainView/MainView.fxml"));
+	Parent root = loader.load();
+	Scene scene = new Scene(root);
 	stage.setScene(scene);
+
+	MainViewController mainViewController = loader.getController();
+	mainViewController.init(logDir);
+
         stage.show();
 	
 
@@ -66,37 +93,7 @@ public class EasyFindings extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-	
-//	System.out.println(logger.getHandlers());
-	
-//	
-//	try {
-//	    fh = new FileHandler("EasyFindings.log", 8096, 1, true);
-//	    logger.addHandler(fh);
-//	    logger.setLevel(Level.ALL);
-////	    logger.info("TEST");
-//	    
-//	    
-//	    
-//	    
-//	    
-//	    
-//	    
-//	} catch (IOException ex) {
-//	    Logger.getLogger(EasyFindings.class.getName()).log(Level.SEVERE, null, ex);
-//	} catch (SecurityException ex) {
-//	    Logger.getLogger(EasyFindings.class.getName()).log(Level.SEVERE, null, ex);
-//	}
-	    
-//	Logger.getLogger(EasyFindings.class.getName()).log(Level.SEVERE, null, "BLUB");
-
-	
-	    launch(args);
-	    
-	    
-	    
-	
-	
+        launch(args);
     }
     
 }
