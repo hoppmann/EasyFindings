@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="EasyFindings.jar" size="164332" download="eager" />
+    <jar href="EasyFindings.jar" size="164377" download="eager" />
     <jar href="lib/commons-io-2.6.jar" size="214788" download="eager" />
     <jar href="lib/controlsfx-8.40.14.jar" size="1215643" download="eager" />
     <jar href="lib/java-util-1.3.1.jar" size="66384" download="eager" />
