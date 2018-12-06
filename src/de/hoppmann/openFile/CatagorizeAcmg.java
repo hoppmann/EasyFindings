@@ -14,6 +14,7 @@ import de.hoppmann.gui.modelsAndData.InputRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -234,8 +235,16 @@ public class CatagorizeAcmg implements ICatagorize {
 	
 	if (catIndices.get(config.getClinvarCol()) >= 0) {
 	    String clinVarEntry = curLine.getEntry(catIndices.get(config.getClinvarCol()));
-	    Set<String> clinVarSet = new TreeSet<>(Arrays.asList(clinVarEntry.split(",")));
-	    
+
+            Set<String> clinVarSet = new TreeSet<>(new Comparator<String>() {
+                @Override
+                public int compare(String a, String b) {
+                    return a.toLowerCase().compareTo(b.toLowerCase());
+                }
+            });
+            
+            clinVarSet.addAll(Arrays.asList(clinVarEntry.split(",")));
+            
 	    if (clinVarSet.contains("pathogenic")){
 		ps3 = true;
 	    }

@@ -56,7 +56,9 @@ public class PanelInfo implements IPanelInfo{
 	    curGenen = curGenen.toUpperCase();
 	    newSet.add(curGenen);
 	}
-	newSet.removeAll(Arrays.asList("", null));
+	       
+                
+        newSet.removeAll(Arrays.asList(""));
         this.geneList = newSet;
     }
     

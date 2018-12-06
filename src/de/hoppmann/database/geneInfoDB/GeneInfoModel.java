@@ -356,15 +356,15 @@ public class GeneInfoModel implements IGeneInfoModel{
 	this.exacPnull = exacPnull;
     }
 
-    @Override
-    public int getCodingRegion() {
-	return codingRegion;
-    }
-
-    @Override
-    public void setCodingRegion(int codingRegion) {
-	this.codingRegion = codingRegion;
-    }
+//    @Override
+//    public int getCodingRegion() {
+//	return codingRegion;
+//    }
+//
+//    @Override
+//    public void setCodingRegion(int codingRegion) {
+//	this.codingRegion = codingRegion;
+//    }
 
 
 

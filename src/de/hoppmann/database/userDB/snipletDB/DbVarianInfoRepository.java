@@ -125,7 +125,6 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ VAR_TABLE + " WHERE " + GENE_COL + " = '" + varInfo.getGeneName() + "' AND "
 		+ VAR_COL + " = '" + varInfo.getVarName() + "'";
 	
-	
 	if (ConnectionHolder.getInstance().getConnection() == null){
 	    return varInfo;
 	}

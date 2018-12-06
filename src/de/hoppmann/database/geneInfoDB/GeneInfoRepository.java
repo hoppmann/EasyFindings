@@ -106,12 +106,12 @@ public class GeneInfoRepository {
 	
 	
 	ResultSet rs = DbOperations.execute(query, GeneInfoDbConnectionHolder.getInstance().getConnection());
-
+                
 	while (rs.next()){
 	    geneInfoModel.setGeneName(rs.getString(geneNameCol));
 	    geneInfoModel.setNcbiRefSeq(rs.getString(ncbiRefSeqCol));
 	    geneInfoModel.setTranscriptLength(rs.getInt(transcriptLengthCol));
-	    geneInfoModel.setChr(rs.getInt(chrCol));
+            geneInfoModel.setChr(rs.getInt(chrCol));
 	    geneInfoModel.setGenomicStart(rs.getInt(genomicStartCol));
 	    geneInfoModel.setGenomicEnd(rs.getInt(genomicEnd));
 	    geneInfoModel.setCytoLocation(rs.getString(cytoLocationCol));
