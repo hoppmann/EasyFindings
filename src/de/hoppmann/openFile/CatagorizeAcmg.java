@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -81,7 +82,9 @@ public class CatagorizeAcmg implements ICatagorize {
 	    List<String> transLengthStringList = curLine.getSplitEntry(catIndices.get(config.getTranscritpLengthCol()), ",");
 
 	    for (String curTrans : transLengthStringList) {
-		transLengthIntList.add(Integer.valueOf(curTrans));
+		if (curTrans.matches("-?\\d+")){
+		    transLengthIntList.add(Integer.valueOf(curTrans));
+		}
 	    }
 	}
 
@@ -190,8 +193,8 @@ public class CatagorizeAcmg implements ICatagorize {
     
     
     /**
-     * ClinVar -> Pathogenic
-     * HGMD -> DM
+     * Known AA change in unknown baseChange
+     * 
      * @param curLine
      * @param catIndices
      * @return 
@@ -199,12 +202,32 @@ public class CatagorizeAcmg implements ICatagorize {
     private boolean checkPS1(TableData curLine, HashMap<String, Integer> catIndices) {
 	boolean ps1 = false;
 	
+	
+	
+	return ps1;
+    }
+    
+    
+    
+    /**
+     * ClinVar -> Pathogenic (case insensitive)
+     * HGMD -> DM
+     * @param curLine
+     * @param catIndices
+     * @return 
+     */
+    
+    
+    private boolean checkPS3 (TableData curLine, HashMap<String, Integer> catIndices){
+	
+	boolean ps3 = false;
+	
 	if (catIndices.get(config.getHgmdCol()) >= 0){
 	    String hgmdEntry = curLine.getEntry(catIndices.get(config.getHgmdCol()));
 	    Set<String> hgmdSet = new TreeSet<>(Arrays.asList(hgmdEntry.split(",")));
 	
 	    if (hgmdSet.contains("DM")){
-		ps1 = true;
+		ps3 = true;
 	    }
 	}
 	
@@ -214,15 +237,14 @@ public class CatagorizeAcmg implements ICatagorize {
 	    Set<String> clinVarSet = new TreeSet<>(Arrays.asList(clinVarEntry.split(",")));
 	    
 	    if (clinVarSet.contains("pathogenic")){
-		ps1 = true;
+		ps3 = true;
 	    }
 
 	}
 	
-	return ps1;
+	return ps3;
+	
     }
-    
-    
     
     
     
@@ -271,46 +293,98 @@ public class CatagorizeAcmg implements ICatagorize {
 	
 	
 	if (catIndices.get(config.getMafAllCol()) > 0) {
-	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafAllCol())));
-	    if (maf <= 0){
-		pm2 = true;
+
+	    List<String> splitMafString = (curLine.getSplitEntry(catIndices.get(config.getMafAllCol()), ","));
+	    List<Double> mafList = new LinkedList<>();
+	    for (String curMaf : splitMafString){
+		try {
+		    mafList.add(Double.valueOf(curMaf));
+		    double maf = Collections.max(mafList);
+		    if (maf <= 0){
+			pm2 = true;
+		    }
+		} catch (NumberFormatException e){
+		    
+		}
 	    }
+	    
 	}
 	
 	
 	
 	if (catIndices.get(config.getMafNfeCol()) > 0 ){
-	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafNfeCol())));
-	    	    if (maf <= 0){
-		pm2 = true;
+	    
+	    List<String> splitMafString = (curLine.getSplitEntry(catIndices.get(config.getMafNfeCol()), ","));
+	    List<Double> mafList = new LinkedList<>();
+	    for (String curMaf : splitMafString) {
+		try {
+		    mafList.add(Double.valueOf(curMaf));
+		    double maf = Collections.max(mafList);
+
+		    if (maf <= 0) {
+			pm2 = true;
+		    }
+		} catch (NumberFormatException e) {
+
+		}
 	    }
+	    
 
 	}
 	
 	
 	if (catIndices.get(config.getMafAfrCol()) > 0) {
-	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafAfrCol())));
-	    if (maf <= 0){
-		pm2 = true;
+	    List<String> splitMafString = (curLine.getSplitEntry(catIndices.get(config.getMafAfrCol()), ","));
+	    List<Double> mafList = new LinkedList<>();
+	    for (String curMaf : splitMafString) {
+		try {
+		    mafList.add(Double.valueOf(curMaf));
+		    double maf = Collections.max(mafList);
+		    if (maf <= 0) {
+			pm2 = true;
+		    }
+		} catch (NumberFormatException e) {
+
+		}
 	    }
+
 	}
 	
 	
 	if (catIndices.get(config.getMafSasCol()) > 0) {
-	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafSasCol())));
-	    if (maf <= 0){
-		pm2 = true;
+	    List<String> splitMafString = (curLine.getSplitEntry(catIndices.get(config.getMafSasCol()), ","));
+	    List<Double> mafList = new LinkedList<>();
+	    for (String curMaf : splitMafString) {
+		try {
+		    mafList.add(Double.valueOf(curMaf));
+		    double maf = Collections.max(mafList);
+		    if (maf <= 0) {
+			pm2 = true;
+		    }
+		} catch (NumberFormatException e) {
+
+		}
 	    }
+
 	}
 	
 	
 	if (catIndices.get(config.getMafEasCol()) > 0) {
-	    double maf = Double.valueOf(curLine.getEntry(catIndices.get(config.getMafEasCol())));
-	    if (maf <= 0){
-		pm2 = true;
+	    List<String> splitMafString = (curLine.getSplitEntry(catIndices.get(config.getMafEasCol()), ","));
+	    List<Double> mafList = new LinkedList<>();
+	    for (String curMaf : splitMafString) {
+		try {
+		    mafList.add(Double.valueOf(curMaf));
+		    double maf = Collections.max(mafList);
+		    if (maf <= 0) {
+			pm2 = true;
+		    }
+
+		} catch (NumberFormatException e) {
+
+		}
 	    }
 	}
-
 
 	return pm2;
     }
@@ -576,6 +650,7 @@ public class CatagorizeAcmg implements ICatagorize {
 	curLine.setPvs1(checkPVS1(curLine, catIndices));
 
 	curLine.setPs1(checkPS1(curLine, catIndices));
+	curLine.setPs3(checkPS3(curLine, catIndices));
 	curLine.setPs4(checkPS4(curLine, catIndices));
 
 	curLine.setPm2(checkPM2(curLine, catIndices));
@@ -595,43 +670,83 @@ public class CatagorizeAcmg implements ICatagorize {
 	curLine.setCatagory(Catagory.getUnclearCode());
 	
 	
+	int psCount = 0;
+	if (curLine.isPs1()){psCount++;}
+	if (curLine.isPs3()){psCount++;}
+	if (curLine.isPs4()){psCount++;}
+	
+	
+	int pmCount = 0;
+	if (curLine.isPm2()){pmCount++;}
+	if (curLine.isPm4()){pmCount++;}
+	
+	
+	int ppCount = 0;
+	if (curLine.isPp2()){ppCount++;}
+	if (curLine.isPp3()){ppCount++;}
+
+	
+	
+	
+	
 	
 	// check for pathogenic variants
 		
 	if (curLine.isPvs1()){
-	    if (curLine.isPs1() || curLine.isPs4()){
-		curLine.setCatagory(Catagory.getPathoCode());
+	    if (psCount >= 1){
+		setPatho(curLine);
 	    }
 	    
-	    if (curLine.isPp2() && curLine.isPp3()){
-		curLine.setCatagory(Catagory.getPathoCode());
+	    if (pmCount >= 2){
+		setPatho(curLine);
 	    }
 	    
-	    if (curLine.isPm2() || curLine.isPm4()){
-		if (curLine.isPp2() || curLine.isPp3()){
-		    curLine.setCatagory(Catagory.getPathoCode());
+	    if (pmCount >= 1){
+		if (ppCount >= 1){
+		    setPatho(curLine);
 		}
 	    }
 	    
-	    if (curLine.isPp2() && curLine.isPp3()){
-		curLine.setCatagory(Catagory.getPathoCode());
+	    if (ppCount >= 2){
+		setPatho(curLine);
 	    }
 	    
 	}
 
 
-	if  (curLine.isPs1() && curLine.isPs4()){
-	    curLine.setCatagory(Catagory.getPathoCode());
+	
+	
+	if (psCount >= 2){
+	    setPatho(curLine);
 	}
 	
+
 	
-	if (curLine.isPs1() || curLine.isPs4()){
-	    if (curLine.isPm2() && curLine.isPm4()){
-		if (curLine.isPp2() && curLine.isPp3()){
-		    curLine.setCatagory(Catagory.getPathoCode());
+	
+	if (psCount >= 1){
+	    
+	    if (pmCount > 3){
+		setPatho(curLine);
+	    } 
+	    
+	    
+	    if (pmCount >= 2){
+		if (ppCount >= 2){
+		    setPatho(curLine);
 		}
 	    }
+	    
+	    
+	    if (pmCount >= 1) {
+		if (ppCount >= 4){
+		    setPatho(curLine);
+		}
+	    }
+	    
+	    
 	}
+	
+	
 	
 	
 	
@@ -641,26 +756,21 @@ public class CatagorizeAcmg implements ICatagorize {
 	
 	
 	if (curLine.isPvs1()){
-	    if (curLine.isPs1() || curLine.isPs4()){
-		curLine.setCatagory(Catagory.getProbPathoCode());
+	    if (pmCount >= 1){
+		setProbPatho(curLine);
 	    }
 	}
 	
 	
-	if (curLine.isPs1() || curLine.isPs4()){
-	    if (curLine.isPm2() || curLine.isPm4()){
-		curLine.setCatagory(Catagory.getProbPathoCode());
+	
+	
+	if (psCount >= 1){
+	    if (pmCount >= 1){
+		setProbPatho(curLine);
 	    }
 	    
-	    if (curLine.isPp2() && curLine.isPp3()){
-		curLine.setCatagory(Catagory.getProbPathoCode());
-	    }
-	}
-	
-	
-	if (curLine.isPm2() && curLine.isPm4()) {
-	    if (curLine.isPp2() && curLine.isPp3()){
-		curLine.setCatagory(Catagory.getProbPathoCode());
+	    if (ppCount >= 2){
+		setProbPatho(curLine);
 	    }
 	}
 	
@@ -669,7 +779,47 @@ public class CatagorizeAcmg implements ICatagorize {
 	
 	
 	
-    }
+	if (pmCount >= 3){
+	    setProbPatho(curLine);
+	}
+	
+	
+	
+	
+	
+	
+	if (pmCount >= 2) {
+	    if (ppCount >= 2){
+		setProbPatho(curLine);
+	    }
+	}
+	
+	
+	
+	if (pmCount == 1){
+	    if (ppCount >= 4){
+		setProbPatho(curLine);
+	    }
+	}
+	
+	}
+    
+    
+    
+    
+    
+	private void setPatho(TableData curLine){
+	    curLine.setCatagory(Catagory.getPathoCode());
+	}
+	
+	private void setProbPatho(TableData curLine){
+	    if (!curLine.getCatagory().equals(Catagory.getPathoCode())){
+		curLine.setCatagory(Catagory.getProbPathoCode());
+	    }
+	}
+
+
+
     
     
     

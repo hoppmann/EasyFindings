@@ -27,6 +27,7 @@ public class TableData {
     private boolean pvs1 = false;
 
     private boolean ps1 = false;
+    private boolean ps3 = false;
     private boolean ps4 = false;
     
     private boolean pm2 = false;
@@ -74,6 +75,7 @@ public class TableData {
 	List<String> evidenceList = new LinkedList<>();
 	if (pvs1) {evidenceList.add("PVS1");}
 	if (ps1) {evidenceList.add("PS1");}
+	if (ps3) {evidenceList.add("PS3");}
 	if (ps4) {evidenceList.add("PS4");}
 	if (pm2) {evidenceList.add("PM2");}
 	if (pm4) {evidenceList.add("PM4");}
@@ -146,6 +148,14 @@ public class TableData {
     public void setPs1(boolean ps1) {
 	this.ps1 = ps1;
 	prepareEvidenceString();
+    }
+
+    public boolean isPs3() {
+	return ps3;
+    }
+
+    public void setPs3(boolean ps3) {
+	this.ps3 = ps3;
     }
 
     public boolean isPs4() {
