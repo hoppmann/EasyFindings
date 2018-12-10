@@ -76,8 +76,8 @@ public class EasyFindings extends Application {
 
 	MainViewController mainViewController = loader.getController();
 	
-	File logDir = redirectToLog();
-	mainViewController.init(logDir);
+//	File logDir = redirectToLog();
+//	mainViewController.init(logDir);
         
 
         stage.show();

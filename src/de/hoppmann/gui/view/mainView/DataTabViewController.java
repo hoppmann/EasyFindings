@@ -35,6 +35,7 @@ public class DataTabViewController implements Initializable {
     @FXML private TableView inputTable = new TableView();
     private MainViewController mainViewController;
     private Label infoLabel;
+    private Label curWorkingFileLabel;
     private Config config = Config.getInstance();
     private LoadInputFile loadInput;
     private InputRepository input;
@@ -78,8 +79,8 @@ public class DataTabViewController implements Initializable {
             loadInput.openFile(inputFile,input);
 	    loadInput.catagorize(new CatagorizeAcmg(), input);
             
-            
-            
+//            System.out.println(curWorkingFileLabel);
+	    curWorkingFileLabel.setText(inputFile.getName());
             
             createTable();
             
@@ -153,9 +154,10 @@ public class DataTabViewController implements Initializable {
     
     
     
-    public void inject (MainViewController mainViewController, Label infoLabel) {
+    public void inject (MainViewController mainViewController, Label infoLabel, Label curWorkingFileLabel) {
         this.mainViewController = mainViewController;
         this.infoLabel = infoLabel;
+	this.curWorkingFileLabel = curWorkingFileLabel;
     }
 
     public FindingsRepository getFindings() {

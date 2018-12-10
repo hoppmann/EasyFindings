@@ -6,9 +6,9 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.mainView.MainViewController">
+<AnchorPane id="AnchorPane" prefHeight="442.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.mainView.MainViewController">
    <children>
-      <TabPane layoutX="45.0" layoutY="36.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane layoutX="45.0" layoutY="36.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <tabs>
           <Tab fx:id="dataTab" text="Data">
                <content>
@@ -24,5 +24,7 @@
       </TabPane>
       <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
       <Label fx:id="infoLable" layoutX="174.0" layoutY="369.0" prefHeight="25.0" text="INFO" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="10.0" />
+      <Label layoutX="14.0" layoutY="22.0" prefHeight="25.0" prefWidth="90.0" text="Processing:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Label fx:id="curWorkingFileLabel" layoutX="146.0" layoutY="22.0" prefHeight="25.0" prefWidth="300.0" text="Current working file." AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>

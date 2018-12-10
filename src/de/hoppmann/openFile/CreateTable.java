@@ -17,14 +17,18 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.util.Callback;
 
 /**
@@ -67,21 +71,89 @@ public class CreateTable {
         
 	// clear old header
 	tableView.getColumns().clear();
+	tableView.getColumns().add(prepareCausalCol());	
+	tableView.getColumns().add(prepareCatagoryCol());
+	tableView.getColumns().add(prepareAcmgEvidenceCol());
 	
-	tableView.getColumns().add(prepareCausalCol());		
+
+	// creates conflict with copytToClipboard
+//	tableView.getColumns().add(prepareAcmgCol());
 	
+
 	
-	TableColumn<TableData, String> acmgCol = new TableColumn<>("ACMG");
-	acmgCol.getColumns().addAll(prepareCatagoryCol(), prepareAcmgEvidenceCol());
-	tableView.getColumns().add(acmgCol);
+	tableView.getSelectionModel().setCellSelectionEnabled(true);
+	tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
 	
-	
-        
         tableView.setEditable(true);
+	
+	final KeyCodeCombination keyCodeCopy =  new KeyCodeCombination(KeyCode.C, KeyCodeCombination.CONTROL_ANY);
+	tableView.setOnKeyPressed((event) -> {
+	    if (keyCodeCopy.match(event)){
+		copySelectionToClipboard(tableView);
+	    }
+	});
+	
+		
 	
     }
 	
 	
+    
+    
+    
+    public void copySelectionToClipboard(final TableView<?> table) {
+	
+	ObservableList<TablePosition> posList = table.getSelectionModel().getSelectedCells();
+	StringBuilder clipboardString = new StringBuilder();
+	int oldRow = -1;
+	
+	for (TablePosition p : posList){
+	    int row = p.getRow();
+	    int col = p.getColumn();
+	    
+	    Object cell = table.getColumns().get(col).getCellData(row);
+	    
+	    
+	    if (cell == null) 
+		cell = "";
+	    if (oldRow == row)
+		clipboardString.append('\t');
+	    else if (oldRow != -1)
+		clipboardString.append('\n');
+	    
+	    clipboardString.append(cell);
+	    
+	    oldRow = row;
+	}
+	
+
+	final ClipboardContent clipboardContent = new ClipboardContent();
+	clipboardContent.putString(clipboardString.toString());
+	Clipboard.getSystemClipboard().setContent(clipboardContent);
+	
+	
+    }  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private TableColumn<TableData, String> prepareAcmgCol(){
+	
+	TableColumn<TableData, String> acmgCol = new TableColumn<>("ACMG");
+	acmgCol.getColumns().addAll(prepareCatagoryCol(), prepareAcmgEvidenceCol());
+	return acmgCol;
+	
+    }
     
     
     
@@ -93,8 +165,7 @@ public class CreateTable {
     private TableColumn<TableData, String> prepareAcmgEvidenceCol() {
 	
 	TableColumn<TableData, String> acmgCol = new TableColumn<>("Evidence");
-	
-	
+
 	
 	
 	acmgCol.setCellValueFactory((TableColumn.CellDataFeatures<TableData, String> param) -> {
@@ -109,6 +180,10 @@ public class CreateTable {
 	    
 	    return stringProp;
 	});
+	
+	
+	
+	
 	
 	acmgCol.setCellFactory(TextFieldTableCell.forTableColumn());
 	
@@ -287,8 +362,7 @@ public class CreateTable {
     
     
 	
-	
-
-
+    
+    
 
 }

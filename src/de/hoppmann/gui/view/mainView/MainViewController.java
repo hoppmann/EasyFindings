@@ -28,6 +28,7 @@ public class MainViewController implements Initializable {
     
     
     @FXML private Label infoLable;
+    @FXML private Label curWorkingFileLabel;
     @FXML private Tab findingsTab;
     @FXML private Tab dataTab;
     @FXML private FindingsTabViewController findingsTabViewController;
@@ -64,7 +65,7 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         findingsTabViewController.inject(this, infoLable);
-        dataTabViewController.inject(this, infoLable);
+        dataTabViewController.inject(this, infoLable, curWorkingFileLabel);
         
         
         
