@@ -87,6 +87,7 @@ public class PreparePositiveFindingsMethods {
 	*/
 
 
+        
 	for (TableData curFinding : findings.getStoredData()) {
 
 	    // check if current variant is classified as causal -> prepare findings state
@@ -103,6 +104,8 @@ public class PreparePositiveFindingsMethods {
 		// prepare html table
 		prepareHtmlTable();
 		
+                // add predifined gene text
+                addGeneSnipletText();
 		
 		// add predefined variant text
 		addVarInfoText();
@@ -347,13 +350,19 @@ public class PreparePositiveFindingsMethods {
 	tableElements.add("</tbody>");
 	tableElements.add("</table>");
 
-	//// add gene description
-	tableElements.add("<p> <strong>" + geneName + "</strong> <br>" + geneSniplet + "</p>");
+//	//// add gene description
+//	tableElements.add("<p> <strong>" + geneName + "</strong> <br>" + geneSniplet + "</p>");
 
 	
     }
     
     
+    
+    
+    private void addGeneSnipletText() {
+        //// add gene description
+	tableElements.add("<p> <strong>" + geneName + "</strong> <br>" + geneSniplet + "</p>");
+    }
     
     
     
