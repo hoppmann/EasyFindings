@@ -32,6 +32,7 @@ public class TableData {
     
     private boolean pm2 = false;
     private boolean pm4 = false;
+    private boolean pm5 = false;
 
     private boolean pp2 = false;
     private boolean pp3 = false;
@@ -73,14 +74,15 @@ public class TableData {
     
     public void prepareEvidenceString () {
 	List<String> evidenceList = new LinkedList<>();
-	if (pvs1) {evidenceList.add("PVS1");}
-	if (ps1) {evidenceList.add("PS1");}
-	if (ps3) {evidenceList.add("PS3");}
-	if (ps4) {evidenceList.add("PS4");}
-	if (pm2) {evidenceList.add("PM2");}
-	if (pm4) {evidenceList.add("PM4");}
-	if (pp2) {evidenceList.add("PP2");}
-	if (pp3) {evidenceList.add("PP3");}
+	if (pvs1) evidenceList.add("PVS1");
+	if (ps1) evidenceList.add("PS1");
+	if (ps3) evidenceList.add("PS3");
+	if (ps4) evidenceList.add("PS4");
+	if (pm2) evidenceList.add("PM2");
+	if (pm4) evidenceList.add("PM4");
+        if (pm5) evidenceList.add("PM5");
+	if (pp2) evidenceList.add("PP2");
+	if (pp3) evidenceList.add("PP3");
 	
 	catagoryEvidence = String.join(", ", evidenceList);
     }
@@ -183,6 +185,15 @@ public class TableData {
     public void setPm4(boolean pm4) {
 	this.pm4 = pm4;
 	prepareEvidenceString();
+    }
+
+    public boolean isPm5() {
+        return pm5;
+    }
+
+    public void setPm5(boolean pm5) {
+        this.pm5 = pm5;
+        prepareEvidenceString();
     }
 
     public boolean isPp2() {

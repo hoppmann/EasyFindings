@@ -7,8 +7,10 @@
 package de.hoppmann.openFile;
 
 import de.hoppmann.config.Config;
-import de.hoppmann.database.geneInfoDB.GeneInfoModel;
-import de.hoppmann.database.geneInfoDB.GeneInfoRepository;
+import de.hoppmann.database.geneInfoDB.Hg19TableModel;
+import de.hoppmann.database.geneInfoDB.Hg19TableRepository;
+import de.hoppmann.database.geneInfoDB.HgmdTableRepository;
+import de.hoppmann.database.geneInfoDB.IHgmdTableModel;
 import de.hoppmann.gui.modelsAndData.Catagory;
 import de.hoppmann.gui.modelsAndData.InputRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
@@ -16,12 +18,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -31,8 +34,10 @@ public class CatagorizeAcmg implements ICatagorize {
 
     
     private Config config = Config.getInstance();
-    private String lastGene = "";
-    private GeneInfoModel geneData;
+    private String lastGenePp2 = "";
+    private String lastGeneHgmdQuery = "";
+    private Hg19TableModel geneData;
+    List<IHgmdTableModel> hgmdInfo = new LinkedList<>();
     
     
     
@@ -92,11 +97,11 @@ public class CatagorizeAcmg implements ICatagorize {
 
 	
 	// avoid db query when gene info was already queried
-	if (!lastGene.equals(geneName)) {
-	    GeneInfoRepository geneInfoRepo = new GeneInfoRepository();
-	    geneData = new GeneInfoModel(geneName);
+	if (!lastGenePp2.equals(geneName)) {
+	    Hg19TableRepository geneInfoRepo = new Hg19TableRepository();
+	    geneData = new Hg19TableModel(geneName);
 	    geneInfoRepo.queryForGene(geneData);
-	    lastGene = geneName;
+	    lastGenePp2 = geneName;
 	}
 	
 	
@@ -203,7 +208,49 @@ public class CatagorizeAcmg implements ICatagorize {
     private boolean checkPS1(TableData curLine, HashMap<String, Integer> catIndices) {
 	boolean ps1 = false;
 	
-	
+        
+        // check if columns are defined
+        if (catIndices.get(config.getGeneCol()) >= 0 && catIndices.get(config.getCodonChangeCol()) >= 0 && catIndices.get(config.getpNomenCol()) >= 0){
+                
+            String geneName = curLine.getEntry(catIndices.get(config.getGeneCol()));
+            
+            // don'r repeat if done before
+            if (!lastGeneHgmdQuery.equals(geneName)) {
+                HgmdTableRepository hgmdRepo = new HgmdTableRepository();
+                hgmdInfo = hgmdRepo.queryForGene(geneName);
+            }
+            if (hgmdInfo.size() > 0) {
+
+                List<String> pNomenList = curLine.getSplitEntry(catIndices.get(config.getpNomenCol()), ",");
+                for (String curPNomen : pNomenList) {
+
+                    curPNomen = curPNomen.replace("p.", "");
+                    if (curPNomen.matches("\\?")) {
+                        continue;
+                    }
+
+                    // if going here we got identical variants of the same gene
+                    for (IHgmdTableModel curModel : hgmdInfo) {
+                        if (curModel.getHgmdAaChange().equals(curPNomen)) {
+
+                            // check if triplet is different
+                            String hgmdCodon = curModel.getHgmdCodonChange();
+                            hgmdCodon = Arrays.asList(hgmdCodon.split("-")).get(1);
+
+                            String curLineCodonChange = curLine.getEntry(catIndices.get(config.getCodonChangeCol()));
+                            curLineCodonChange = Arrays.asList(curLineCodonChange.split("/")).get(1);
+
+                            if (!curLineCodonChange.toUpperCase().equals(hgmdCodon.toUpperCase())) {
+                                ps1 = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        
 	
 	return ps1;
     }
@@ -457,6 +504,65 @@ public class CatagorizeAcmg implements ICatagorize {
     
     
     
+    private boolean checkPM5 (TableData curLine, HashMap<String, Integer> catIndices){
+        
+        boolean pm5 = false;
+        
+        
+        if (catIndices.get(config.getGeneCol()) >= 0 && catIndices.get(config.getpNomenCol()) >= 0){
+            String geneName = curLine.getEntry(catIndices.get(config.getGeneCol()));
+            
+            // don't repeat if queried before
+            if (!lastGeneHgmdQuery.equals(geneName)){
+                HgmdTableRepository hgmdRepo = new HgmdTableRepository();
+                hgmdInfo = hgmdRepo.queryForGene(geneName);
+            }
+            
+            
+            if (hgmdInfo.size() > 0 ){
+                
+                List<String> pNomenList = curLine.getSplitEntry(catIndices.get(config.getpNomenCol()), ",");
+                
+                for (String curPNomen : pNomenList){
+                    
+
+                    if (curPNomen.equals("\\?") || curPNomen.equals("=")){
+                        continue;
+                    }
+                    
+                    // extract pNomen change in seperate variables
+                    curPNomen = curPNomen.replace("p.", "");
+                    String origAA = curPNomen.replaceAll("(\\w+\\d+)(\\D+)", "$1");
+                    String changedAA = curPNomen.replaceAll("(\\w+\\d+)(\\D+)", "$2");
+
+                    
+                    // get information from HGMD        
+                    Map<String, Set<String>> hgmdCodonChange = new HashMap<>();
+                    for (IHgmdTableModel hgmdModel : hgmdInfo){
+                        String curChanged = hgmdModel.getHgmdAaChange().replaceAll("(\\w+\\d+)(\\D+)", "$2");
+                        curChanged = curChanged.replace("Term", "*");
+                        String curOrig = hgmdModel.getHgmdAaChange().replaceAll("(\\w+\\d+)(\\D+)", "$1");
+                        hgmdCodonChange.putIfAbsent(curOrig, new HashSet<>());
+                        hgmdCodonChange.get(curOrig).add(curChanged);                    }
+
+
+                    if (hgmdCodonChange.keySet().contains(origAA)){
+                        if (!hgmdCodonChange.get(origAA).contains(changedAA)){
+                            pm5 = true;
+                        }
+                    }
+                }
+            }
+    }
+        
+        return pm5;
+    }
+    
+    
+    
+    
+    
+    
     /**
      * Missense var 
      *	    low rate of missense var and missense common mechanism (GDI = HIGH)   
@@ -470,11 +576,11 @@ public class CatagorizeAcmg implements ICatagorize {
 	if (catIndices.get(config.getGeneCol()) >= 0){
 	    String geneName = curLine.getEntry(catIndices.get(config.getGeneCol()));
 	    
-	    if (!lastGene.equals(geneName)){
-		GeneInfoRepository geneInfoRepo = new GeneInfoRepository();
-		geneData = new GeneInfoModel(geneName);
+	    if (!lastGenePp2.equals(geneName)){
+		Hg19TableRepository geneInfoRepo = new Hg19TableRepository();
+		geneData = new Hg19TableModel(geneName);
 		geneInfoRepo.queryForGene(geneData);
-		lastGene = geneName;
+		lastGenePp2 = geneName;
 	    }
 
 	    
@@ -565,11 +671,11 @@ public class CatagorizeAcmg implements ICatagorize {
 	if (catIndices.get(config.getGeneCol()) >= 0) {
 	    String geneName = curLine.getEntry(catIndices.get(config.getGeneCol()));
 
-	    if (!lastGene.equals(geneName)) {
-		GeneInfoRepository geneInfoRepo = new GeneInfoRepository();
-		geneData = new GeneInfoModel(geneName);
+	    if (!lastGenePp2.equals(geneName)) {
+		Hg19TableRepository geneInfoRepo = new Hg19TableRepository();
+		geneData = new Hg19TableModel(geneName);
 		geneInfoRepo.queryForGene(geneData);
-		lastGene = geneName;
+		lastGenePp2 = geneName;
 	    }
 
 	    
@@ -635,6 +741,7 @@ public class CatagorizeAcmg implements ICatagorize {
 	catIndices.put(config.getConservationCol(), -1);
 	catIndices.put(config.getTotSsPredCol(), -1);
 	catIndices.put(config.getTranscritpLengthCol(), -1);
+        catIndices.put(config.getCodonChangeCol(), -1);
 	
 	
 	
@@ -664,6 +771,7 @@ public class CatagorizeAcmg implements ICatagorize {
 
 	curLine.setPm2(checkPM2(curLine, catIndices));
 	curLine.setPm4(checkPM4(curLine, catIndices));
+        curLine.setPm5(checkPM5(curLine, catIndices));
 
 	curLine.setPp2(checkPP2(curLine, catIndices));
 	curLine.setPp3(checkPP3(curLine, catIndices));
@@ -680,19 +788,20 @@ public class CatagorizeAcmg implements ICatagorize {
 	
 	
 	int psCount = 0;
-	if (curLine.isPs1()){psCount++;}
-	if (curLine.isPs3()){psCount++;}
-	if (curLine.isPs4()){psCount++;}
+	if (curLine.isPs1())psCount++;
+	if (curLine.isPs3())psCount++;
+	if (curLine.isPs4())psCount++;
 	
 	
 	int pmCount = 0;
-	if (curLine.isPm2()){pmCount++;}
-	if (curLine.isPm4()){pmCount++;}
+	if (curLine.isPm2())pmCount++;
+	if (curLine.isPm4())pmCount++;
+        if (curLine.isPm5()) pmCount++;
 	
 	
 	int ppCount = 0;
-	if (curLine.isPp2()){ppCount++;}
-	if (curLine.isPp3()){ppCount++;}
+	if (curLine.isPp2())ppCount++;
+	if (curLine.isPp3())ppCount++;
 
 	
 	

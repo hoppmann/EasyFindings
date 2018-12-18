@@ -8,7 +8,7 @@
 
 <!--fx:controller="de.hoppmann.gui.view.SelectColumnsGuiController"-->
 
-<AnchorPane id="AnchorPane" prefHeight="519.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.selectColumnView.SelectColumnsGuiController">
     <children>
 	<Label fx:id="geneLabel" layoutX="14.0" layoutY="20.0" prefHeight="25.0" prefWidth="90.0" text="Gene" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0">
          <font>
@@ -64,12 +64,14 @@
          </font>
       </Label>
       <ComboBox fx:id="clinVarColBox" layoutX="110.0" layoutY="382.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="380.0" />
-      <Label fx:id="hgmdLabel" layoutX="10.0" layoutY="422.0" prefHeight="25.0" prefWidth="90.0" text="HGMD" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="422.0">
+      <Label fx:id="hgmdLabel" layoutX="10.0" layoutY="422.0" prefHeight="25.0" prefWidth="90.0" text="HGMD" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="420.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="hgmdColBox" layoutX="110.0" layoutY="422.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="422.0" />
+      <ComboBox fx:id="hgmdColBox" layoutX="110.0" layoutY="422.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="420.0" />
+      <Label fx:id="codonChangeLabel" layoutX="14.0" layoutY="471.0" prefHeight="25.0" prefWidth="90.0" text="Codon Change" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="460.0" />
+      <ComboBox fx:id="codonChangeBox" layoutX="110.0" layoutY="459.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="460.0" />
       <Label fx:id="splice15Label" layoutX="289.0" layoutY="100.0" prefHeight="25.0" prefWidth="90.0" text="Splice 15" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font size="14.0" />
@@ -106,9 +108,9 @@
       <ComboBox fx:id="rmskBox" layoutX="390.0" layoutY="300.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="340.0" />
       <Label fx:id="conservationLabel" layoutX="290.0" layoutY="332.0" prefHeight="25.0" prefWidth="90.0" text="Conservation" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="380.0" />
       <ComboBox fx:id="conservationBox" layoutX="390.0" layoutY="335.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="380.0" />
-	<Button fx:id="closeButton" layoutX="10.0" layoutY="291.0" mnemonicParsing="false" onAction="#closeButtonEvent" prefHeight="25.0" prefWidth="130.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-      <Button fx:id="okButton" layoutX="140.0" layoutY="291.0" mnemonicParsing="false" onAction="#okButtonEvent" prefHeight="3.0" prefWidth="130.0" text="Ok" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="150.0" />
       <Label fx:id="translengthLabel" layoutX="290.0" layoutY="427.0" prefHeight="25.0" prefWidth="90.0" text="Length" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="420.0" />
       <ComboBox fx:id="transLengthBox" layoutX="380.0" layoutY="414.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="420.0" />
+	<Button fx:id="closeButton" layoutX="10.0" layoutY="291.0" mnemonicParsing="false" onAction="#closeButtonEvent" prefHeight="25.0" prefWidth="130.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+      <Button fx:id="okButton" layoutX="140.0" layoutY="291.0" mnemonicParsing="false" onAction="#okButtonEvent" prefHeight="3.0" prefWidth="130.0" text="Ok" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="150.0" />
     </children>
 </AnchorPane>

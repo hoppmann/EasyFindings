@@ -63,6 +63,9 @@ public class SelectColumnsGuiController implements Initializable {
     @FXML private ComboBox<String> hgmdColBox = new ComboBox<>();
     @FXML private Label hgmdLabel;
     
+    @FXML private ComboBox<String> codonChangeBox = new ComboBox<>();
+    @FXML private Label codonChangeLabel;
+    
     @FXML private ComboBox<String> clinVarColBox = new ComboBox<>();
     @FXML private Label clinVarLabel;
     
@@ -190,7 +193,7 @@ public class SelectColumnsGuiController implements Initializable {
 	config.setConservationCol(conservationBox.getValue());
 	config.setTotSsPredCol(totSsPredBox.getValue());
 	config.setTranscritpLengthCol(transLengthBox.getValue());
-	
+	config.setCodonChangeCol(codonChangeBox.getValue());
     }
     
     
@@ -487,6 +490,15 @@ public class SelectColumnsGuiController implements Initializable {
 	}
 	TextFields.bindAutoCompletion(transLengthBox.getEditor(), header);
 	
+        
+        // codon change
+        codonChangeLabel.setTooltip(new Tooltip(ColViewTooltipTexts.CODON_CHANGE_COL_TP_TEXT));
+        codonChangeBox.setEditable(true);;
+        codonChangeBox.getItems().addAll(header);
+        if (checkStringList(header, config.getCodonChangeCol())){
+            codonChangeBox.getSelectionModel().select(config.getCodonChangeCol());
+        }
+        TextFields.bindAutoCompletion(codonChangeBox.getEditor(), header);
         
         
     }

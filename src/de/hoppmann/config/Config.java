@@ -58,6 +58,8 @@ public class Config {
     private String cNomenCol = "";
     private final String hgmdColKey = "hgmdCol";
     private String hgmdCol = "";
+    private final String codonChangeColKey = "codonChangeCol";
+    private String codonChangeCol = "";
     private final String clinvarColKey = "clinvarCol";
     private String clinvarCol = "";
     private final String splice45ColKey = "splice45";
@@ -142,6 +144,7 @@ public class Config {
 	if (prop.getProperty(cNomenColKey) != null ) {cNomenCol = prop.getProperty(cNomenColKey);}
 	if (prop.getProperty(inputPathKey) != null ) {inputPath = prop.getProperty(inputPathKey);}
 	if (prop.getProperty(hgmdColKey) != null ) {hgmdCol = prop.getProperty(hgmdColKey);}
+        if (prop.getProperty(codonChangeColKey) != null ) {codonChangeCol = prop.getProperty(codonChangeColKey);}
 	if (prop.getProperty(clinvarColKey) != null ) {clinvarCol = prop.getProperty(clinvarColKey);}
 	if (prop.getProperty(splice45ColKey) != null ) {splice45Col = prop.getProperty(splice45ColKey);}
 	if (prop.getProperty(splice15ColKey) != null ) {splice15Col = prop.getProperty(splice15ColKey);}
@@ -518,6 +521,15 @@ public class Config {
     public void setTranscritpLengthCol(String transcritpLengthCol) {
 	this.transcritpLengthCol = transcritpLengthCol;
 	saveConfig(transcriptLengthColKey, transcritpLengthCol);
+    }
+
+    public String getCodonChangeCol() {
+        return codonChangeCol;
+    }
+
+    public void setCodonChangeCol(String codonChangeCol) {
+        this.codonChangeCol = codonChangeCol;
+        saveConfig(codonChangeColKey, codonChangeCol);
     }
     
     

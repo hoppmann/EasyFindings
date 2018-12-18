@@ -6,8 +6,8 @@
 
 package de.hoppmann.createReport;
 
-import de.hoppmann.database.geneInfoDB.GeneInfoModel;
-import de.hoppmann.database.geneInfoDB.GeneInfoRepository;
+import de.hoppmann.database.geneInfoDB.Hg19TableModel;
+import de.hoppmann.database.geneInfoDB.Hg19TableRepository;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -33,7 +33,7 @@ public class PreparePanelTable {
     
     private Set<String> alreadyQueriedList = new TreeSet<>();
 
-    private Map<String, GeneInfoModel> geneInfos = new HashMap<String, GeneInfoModel>();
+    private Map<String, Hg19TableModel> geneInfos = new HashMap<String, Hg19TableModel>();
 	
     
     
@@ -114,9 +114,9 @@ public class PreparePanelTable {
 	   }
 	    
 	   
-	    GeneInfoModel geneInfoData = new GeneInfoModel(curGene);
+	    Hg19TableModel geneInfoData = new Hg19TableModel(curGene);
 	   
-	    GeneInfoRepository geneInfoRepo = new GeneInfoRepository();
+	    Hg19TableRepository geneInfoRepo = new Hg19TableRepository();
 	    geneInfoRepo.queryForGene(geneInfoData);
 	    
 	    geneInfos.put(curGene, geneInfoData);
@@ -255,7 +255,7 @@ public class PreparePanelTable {
 //
 //
 //
-//    protected class GeneInfoModel {
+//    protected class Hg19TableModel {
 //    
 //	///////////////////
 //	//// variables ////
