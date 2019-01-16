@@ -357,7 +357,8 @@ public class ReportRepository implements IAddressInfo, IPanelInfo{
     }
 
     public String getReceiverCoLine() {
-	return receiverCoLine;
+        
+    	return receiverCoLine.replaceAll("<br>", ";");
     }
 
     public void setReceiverCoLine(String receiverCoLine) {
@@ -454,7 +455,7 @@ public class ReportRepository implements IAddressInfo, IPanelInfo{
 	    curGenen = curGenen.toUpperCase();
 	    newSet.add(curGenen);
 	}
-	newSet.removeAll(Arrays.asList("", null));
+        newSet.removeAll(Arrays.asList(""));
         this.panelGeneList = newSet;
     }
 
