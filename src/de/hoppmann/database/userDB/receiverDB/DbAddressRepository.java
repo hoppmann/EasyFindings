@@ -6,6 +6,7 @@
 
 package de.hoppmann.database.userDB.receiverDB;
 
+import de.hoppmann.database.userDB.ConnectUserDB;
 import de.hoppmann.database.userDB.DbOperations;
 import de.hoppmann.database.userDB.ConnectionHolder;
 import de.hoppmann.database.userDB.UserDbNamings;
@@ -56,14 +57,23 @@ public class DbAddressRepository implements IAddressRepository {
 	    
 	    String query = "select " + NAME_KEY + " from " + RECEIVER_TABLE;
 	    
+	    ConnectUserDB.connectSqLiteUserDB();
 	    ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
+
+
 	    while (rs.next()){
 		nameList.add(rs.getString(NAME_KEY));
 	    }
+
+
 	    
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbAddressRepository.class.getName()).log(Level.SEVERE, null, ex);
+	} finally {
+	    ConnectUserDB.closeDB();
 	}
+	
+	
 	Collections.sort(nameList, String.CASE_INSENSITIVE_ORDER);
                 
 	return nameList;
@@ -84,10 +94,15 @@ public class DbAddressRepository implements IAddressRepository {
     public boolean retrieveAddressInfo(IAddressInfo aInfo) {
 
 	try {
+	
+	    ConnectUserDB.connectSqLiteUserDB();
+	
 	    if (aInfo.getReceiverName() != null && ! aInfo.getReceiverName().equals("")){
                 String query = "select * from " + RECEIVER_TABLE + " where " + NAME_KEY + " == '" + aInfo.getReceiverName() + "'";
 
+	
                 ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
+		
                 if (rs != null) {
                     if (rs.next()) {
                         aInfo.setReceiverId(Integer.parseInt(rs.getString(ID_KEY)));
@@ -106,6 +121,8 @@ public class DbAddressRepository implements IAddressRepository {
                 
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbAddressRepository.class.getName()).log(Level.SEVERE, null, ex);
+	} finally {
+	    ConnectUserDB.closeDB();
 	}
 
 	
@@ -138,7 +155,6 @@ public class DbAddressRepository implements IAddressRepository {
     @Override
     public boolean makeRepoValid() {
 	
-	boolean success = false;
         // prepare command
         String createTableCmd = "CREATE TABLE " + RECEIVER_TABLE + "( "
                 + ID_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -151,16 +167,13 @@ public class DbAddressRepository implements IAddressRepository {
                 + CITY_KEY + " Varchar(60), "
                 + COUNTRY_KEY + " Varchar(60) )";
 
-            ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
-
-        if (hasReceiverTable()){
-            success = true;
-        }
-        
-        
-        
-        
-	return success;
+	
+	ConnectUserDB.connectSqLiteUserDB();
+        DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
+	
+	
+	return hasReceiverTable();
     }
     
     
@@ -175,14 +188,11 @@ public class DbAddressRepository implements IAddressRepository {
 	
 	boolean hasTable = false;
 	
-	if (DbOperations.hasTable(RECEIVER_TABLE, ConnectionHolder.getInstance().getConnection())){
-	    hasTable = true;
-	}
-	
+	ConnectUserDB.connectSqLiteUserDB();
+	hasTable = DbOperations.hasTable(RECEIVER_TABLE, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
 	
 	return hasTable;
-	
-	
     }
     
     
@@ -196,9 +206,9 @@ public class DbAddressRepository implements IAddressRepository {
 	
 	boolean tableHasEntry = false;
 	
-	if (DbOperations.tableHasEntry(RECEIVER_TABLE, ConnectionHolder.getInstance().getConnection())) {
-	    tableHasEntry = true;
-	}
+	ConnectUserDB.connectSqLiteUserDB();
+	tableHasEntry = DbOperations.tableHasEntry(RECEIVER_TABLE, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
 	
 	return tableHasEntry;
 	
@@ -228,7 +238,9 @@ public class DbAddressRepository implements IAddressRepository {
 		+ " VALUES ( '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverOrganisation() + "', '" + aInfo.getReceiverInstitute() + "', '" + aInfo.getReceiverAddress() + "', '" 
 		+ aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
         
-            DbOperations.execute(insertCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.connectSqLiteUserDB();
+        DbOperations.execute(insertCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
 	
     }
 
@@ -254,8 +266,9 @@ public class DbAddressRepository implements IAddressRepository {
                 + " VALUES ('" + aInfo.getReceiverId() + "', '" + aInfo.getReceiverTitle() + "', '" + aInfo.getReceiverName() + "', '" + aInfo.getReceiverOrganisation() + "', '" + aInfo.getReceiverInstitute() + "', '" + aInfo.getReceiverAddress() + "', '" 
 		+ aInfo.getReceiverZipCode() + "', '" + aInfo.getReceiverCity() + "', '" +  aInfo.getReceiverCountry() + "')";
                 
-        
-            DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());
+        ConnectUserDB.connectSqLiteUserDB();
+        DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
     }
 
     
@@ -277,8 +290,9 @@ public class DbAddressRepository implements IAddressRepository {
 	String removeCmd = "DELETE FROM " + RECEIVER_TABLE + " WHERE " + ID_KEY + 
 		" == '" + aInfo.getReceiverId() + "'";
 
-            ResultSet rs = DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
-	
+	ConnectUserDB.connectSqLiteUserDB();
+        DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
     }
     
     

@@ -7,7 +7,6 @@ package de.hoppmann.gui.view.userDbView;
 
 import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.database.userDB.ConnectUserDB;
-import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.receiverDB.IAddressRepository;
 import de.hoppmann.database.userDB.receiverDB.IAddressInfo;
 import java.net.URL;
@@ -239,21 +238,11 @@ public class AddressTabController implements Initializable {
 
 	boolean isConnected = false;
                 
-        if (ConnectionBuilder.hasConnection()){
-            isConnected = true;
-        } else {
-            isConnected = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
-        }
-        
-        
-        if (isConnected){
-            if (!addressRepo.isValidRepo()) {
-                addressRepo.makeRepoValid();
-            }
-            
-            updateNameBox();
-        } 
-        
+	if (!addressRepo.isValidRepo()) {
+	    addressRepo.makeRepoValid();
+	}
+
+	updateNameBox();
 
         
 	fillAddressFields();

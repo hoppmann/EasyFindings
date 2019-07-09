@@ -7,7 +7,6 @@
 package de.hoppmann.database.userDB;
 
 import de.hoppmann.config.Config;
-import de.hoppmann.database.userDB.interfaces.IConnectDB;
 import java.io.File;
 
 /**
@@ -16,30 +15,32 @@ import java.io.File;
  */
 public class ConnectUserDB {
 
-    Config config = Config.getInstance();
-    private IConnectDB connectDB;
-
-    public ConnectUserDB(IConnectDB connectDB) {
-        this.connectDB = connectDB;
-    }
-
-
     
     
     
-    
-    public boolean connectSqLiteUserDB(){
+   public static boolean connectSqLiteUserDB(){
         boolean success = connectSqLiteUserDB("", "");
         return success;
     }
 
     
     
+    
+    
+    public static boolean connectSqLiteUserDB (String dbPath) {
+	
+	boolean success = connectSqLiteUserDB(dbPath, "", "");
+	return success;
+    }
 
 
     
-    public boolean connectSqLiteUserDB(String user, String password) {
-        boolean success = false;
+    
+    
+    public static boolean connectSqLiteUserDB(String user, String password) {
+        Config config = Config.getInstance();
+	
+	boolean success = false;
         if (config.getDbFullPath() != null && new File(config.getDbFullPath()).exists()){
             success = connectSqLiteUserDB(config.getDbFullPath(), user, password);
         }
@@ -48,19 +49,27 @@ public class ConnectUserDB {
 
 
 
+    
 
 
 
     
     
-    public boolean connectSqLiteUserDB(String dbPath, String user, String password){
+    public static boolean connectSqLiteUserDB(String dbPath, String user, String password){
         boolean success = false;
 	if (dbPath != null){
-	    success = connectDB.connect(dbPath, user, password);
+	    success = ConnectSQLite.connect(dbPath, user, password);
         }
         return success;
 
     }
+    
+    
+    
+    public static void closeDB() {
+	ConnectSQLite.close();
+    }
+    
     
     
     

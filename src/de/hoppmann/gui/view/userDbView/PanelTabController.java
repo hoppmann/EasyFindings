@@ -7,7 +7,6 @@ package de.hoppmann.gui.view.userDbView;
 
 import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.database.userDB.ConnectUserDB;
-import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.PanelDB.IPanelInfo;
 import de.hoppmann.database.userDB.interfaces.IPanelRepository;
 import java.net.URL;
@@ -140,21 +139,11 @@ public class PanelTabController implements Initializable {
         
         boolean isConnected = false;
                 
-        if (ConnectionBuilder.hasConnection()){
-            isConnected = true;
-        } else {
-            isConnected = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
-        }
-        
+	if (!panelRepo.isRepoValid()) {
+	    panelRepo.makeRepoValid();
+	} 
 
-        
-        if (isConnected){
-            if (!panelRepo.isRepoValid()) {
-                panelRepo.makeRepoValid();
-            } 
-        
-            updatePanelBox();
-        } 
+	updatePanelBox();
 
         
         

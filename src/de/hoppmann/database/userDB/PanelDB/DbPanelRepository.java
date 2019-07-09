@@ -6,6 +6,7 @@
 
 package de.hoppmann.database.userDB.PanelDB;
 
+import de.hoppmann.database.userDB.ConnectUserDB;
 import de.hoppmann.database.userDB.ConnectionHolder;
 import de.hoppmann.database.userDB.DbOperations;
 import de.hoppmann.database.userDB.UserDbNamings;
@@ -57,8 +58,9 @@ public class DbPanelRepository implements IPanelRepository{
                 + "PRIMARY KEY (" + PANEL_NAME_COL + ")"
                 + ")";
         
-            ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
-	
+	ConnectUserDB.connectSqLiteUserDB();
+        DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
         
 	return hasPanelTable();
     }
@@ -80,6 +82,7 @@ public class DbPanelRepository implements IPanelRepository{
         String query = "SELECT " + PANEL_NAME_COL + " FROM " + PANEL_TABLE;
         
         try {
+	    ConnectUserDB.connectSqLiteUserDB();
             ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
             if (rs != null) {
                 while (rs.next()) {
@@ -90,7 +93,9 @@ public class DbPanelRepository implements IPanelRepository{
             }
         } catch (SQLException ex) {
             Logger.getLogger(DbPanelRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } finally {
+	    ConnectUserDB.closeDB();
+	}
         
             
         Collections.sort(panelNameList);
@@ -116,12 +121,15 @@ public class DbPanelRepository implements IPanelRepository{
 
 	
 	try {
+	    ConnectUserDB.connectSqLiteUserDB();
             ResultSet rs = DbOperations.execute(queryGeneInfoCmd, ConnectionHolder.getInstance().getConnection());
 	    if (rs.next()){
                 panelInfo.setGeneList(rs.getString(PANEL_GENES_COL));
 	    }
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbPanelRepository.class.getName()).log(Level.SEVERE, null, ex);
+	} finally {
+	    ConnectUserDB.closeDB();
 	}
 	
     }
@@ -145,8 +153,10 @@ public class DbPanelRepository implements IPanelRepository{
 		+ " (" + PANEL_NAME_COL + ", " + PANEL_GENES_COL + ") " 
 		+ " VALUES ( '" + panelInfo.getPanelName() + "', '" + panelInfo.getGeneListAsString() + "')";
         
+	
+	ConnectUserDB.connectSqLiteUserDB();
         DbOperations.execute(insertCmd, ConnectionHolder.getInstance().getConnection());
-        
+        ConnectUserDB.closeDB();
     }
     
     
@@ -165,8 +175,9 @@ public class DbPanelRepository implements IPanelRepository{
 	String updateCmd = "REPLACE INTO " + PANEL_TABLE + " VALUES ( '" + panelInfo.getPanelName() +
 		"', '" + panelInfo.getGeneListAsString() + "')";
 
-            DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());
-    
+	ConnectUserDB.connectSqLiteUserDB();
+        DbOperations.execute(updateCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
     }
     
     
@@ -185,8 +196,9 @@ public class DbPanelRepository implements IPanelRepository{
 	String removeCmd = "DELETE FROM " + PANEL_TABLE + " WHERE " + PANEL_NAME_COL + 
 		" == '" + panelInfo.getPanelName() + "'";
 
-            ResultSet rs = DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
-	
+	ConnectUserDB.connectSqLiteUserDB();
+        DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
         
     }
 
@@ -202,9 +214,9 @@ public class DbPanelRepository implements IPanelRepository{
 	
 	boolean hasTable = false;
 	
-	if (DbOperations.hasTable(PANEL_TABLE, ConnectionHolder.getInstance().getConnection())){
-	    hasTable = true;
-	}
+	ConnectUserDB.connectSqLiteUserDB();
+	hasTable = DbOperations.hasTable(PANEL_TABLE, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
 	
 	return hasTable;
     }

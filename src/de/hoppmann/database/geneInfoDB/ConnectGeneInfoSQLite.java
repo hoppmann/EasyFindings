@@ -6,20 +6,17 @@
 
 package de.hoppmann.database.geneInfoDB;
 
-import de.hoppmann.database.userDB.interfaces.IConnectDB;
-
 /**
  *
  * @author hoppmann
  */
-public class ConnectGeneInfoSQLite implements IConnectDB{
+public class ConnectGeneInfoSQLite {
     
     
-    private final String driver = "org.sqlite.JDBC";
+    private static final String driver = "org.sqlite.JDBC";
 
     
-    @Override
-    public boolean connect(String dbPath, String user, String password) {
+    public static boolean connect(String dbPath, String user, String password) {
         String url = "jdbc:sqlite:" + dbPath;
 
         
@@ -30,4 +27,19 @@ public class ConnectGeneInfoSQLite implements IConnectDB{
         } else {
             return false;
         }    }
+
+
+
+
+
+    public static void close() {
+	
+	GeneInfoDbConnectionBuilder.closeConnection();
+	
+    }
+
+
+
+
+
 }

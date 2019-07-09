@@ -6,7 +6,6 @@
 
 package de.hoppmann.database.geneInfoDB;
 
-import de.hoppmann.database.userDB.interfaces.IConnectDB;
 import java.io.File;
 
 /**
@@ -15,28 +14,23 @@ import java.io.File;
  */
 public class ConnectGeneInfoDb {
 
-    public ConnectGeneInfoDb(IConnectDB connecteDB) {
-        this.connecteDB = connecteDB;
-    }
-
     
     
     
     
     // get current path of program
-    private String curDir = System.getProperty("user.dir");
+    private  static String curDir = System.getProperty("user.dir");
 	
     
         
         
     // geneInfoDB variables
-    private final String dbName = "geneInfos.db";
-    private IConnectDB connecteDB;
+    private static final String dbName = "geneInfos.db";
 
     
     
-    public boolean connectGeneInfoDbSqLite(File dbFile, String user, String password) {
-        boolean success = connecteDB.connect(dbFile.getAbsolutePath(), user, password);
+    public static boolean connectGeneInfoDbSqLite(File dbFile, String user, String password) {
+        boolean success = ConnectGeneInfoSQLite.connect(dbFile.getAbsolutePath(), user, password);
 	return success;
 
     }
@@ -46,7 +40,7 @@ public class ConnectGeneInfoDb {
     
     
     
-    public boolean connectGeneInfoDbSqLite(String user, String password) {
+    public static boolean connectGeneInfoDbSqLite(String user, String password) {
         
         File dbFile = new File(curDir + File.separator + "DBs" + File.separator + dbName);
         boolean succsess = connectGeneInfoDbSqLite(dbFile, user, password);
@@ -58,7 +52,7 @@ public class ConnectGeneInfoDb {
     
     
     
-    public boolean connectGeneInfoDbSqLite(File dbFile) {
+    public static boolean connectGeneInfoDbSqLite(File dbFile) {
         boolean succsess = connectGeneInfoDbSqLite(dbFile, "", "");
         return succsess;
     }
@@ -67,7 +61,7 @@ public class ConnectGeneInfoDb {
     
     
     
-    public boolean connectGeneInfoDbSqLite() {
+    public static boolean connectGeneInfoDbSqLite() {
 	File dbFile = new File(curDir + File.separator + "DBs" + File.separator + dbName);
 
         boolean success = connectGeneInfoDbSqLite(dbFile, "", "");
@@ -75,5 +69,12 @@ public class ConnectGeneInfoDb {
     }
     
 
+    
+    public static void close() {
+	ConnectGeneInfoSQLite.close();
+    }
+    
+    
+    
 
 }

@@ -71,8 +71,6 @@ public class PrepareNegativeFindings{
 	this.findings = findings;
 	
         
-	connectGeneInfoDB();
-	
 	
 	/* 
 	prepare table with header and specifications
@@ -222,13 +220,6 @@ public class PrepareNegativeFindings{
     // below code should be outsourced
     
     
-    private void connectGeneInfoDB () {
-
-        
-        boolean success = new ConnectGeneInfoDb(new ConnectGeneInfoSQLite()).connectGeneInfoDbSqLite();
-
-    }
-    
     
     // retrieve MOI inforamtion of current gene
     private String getMoi(String geneName) {
@@ -247,7 +238,7 @@ public class PrepareNegativeFindings{
 		    + " from hg19 where " + geneNameCol + " == '" + geneName + "'";
 	    
             
-            
+            ConnectGeneInfoDb.connectGeneInfoDbSqLite();
 	    ResultSet rs = DbOperations.execute(query, GeneInfoDbConnectionHolder.getInstance().getConnection());
 	    Set<String> moiSet = new TreeSet();
             if (rs.next()) {
@@ -269,6 +260,8 @@ public class PrepareNegativeFindings{
 
 	} catch (SQLException ex) {
 	    Logger.getLogger(PrepareNegativeFindings.class.getName()).log(Level.SEVERE, null, ex);
+	} finally {
+	    ConnectGeneInfoDb.close();
 	}
 
 	

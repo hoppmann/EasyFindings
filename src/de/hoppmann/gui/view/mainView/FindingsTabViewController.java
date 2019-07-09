@@ -5,7 +5,6 @@
  */
 package de.hoppmann.gui.view.mainView;
 
-import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.gui.view.reportView.ReportMainViewController;
@@ -144,7 +143,7 @@ public class FindingsTabViewController implements Initializable {
 
 
     	    MainViewUserDbController controller = fxmlLoader.getController();
-	    controller.init(new ConnectSQLite(), findings);
+	    controller.init(findings);
 
 	    stage.show();
 

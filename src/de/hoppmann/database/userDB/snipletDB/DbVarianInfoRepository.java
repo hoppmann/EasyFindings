@@ -6,6 +6,7 @@
 
 package de.hoppmann.database.userDB.snipletDB;
 
+import de.hoppmann.database.userDB.ConnectUserDB;
 import de.hoppmann.database.userDB.ConnectionHolder;
 import de.hoppmann.database.userDB.DbOperations;
 import de.hoppmann.database.userDB.UserDbNamings;
@@ -55,8 +56,9 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ "ON DELETE CASCADE"
 		+ ")";
 	
-		
-            DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.connectSqLiteUserDB();
+        DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
 	
 	return hasVarTable();
     }
@@ -66,7 +68,11 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 
 
     private boolean hasVarTable() {
-	return DbOperations.hasTable(VAR_TABLE, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.connectSqLiteUserDB();
+	boolean hasTable = DbOperations.hasTable(VAR_TABLE, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
+	
+	return hasTable;
     }
 	    
 
@@ -88,6 +94,7 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 	
 	
 	try {
+	    ConnectUserDB.connectSqLiteUserDB();
             ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
             if (rs != null){
                 while (rs.next()) {
@@ -96,6 +103,8 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
             }
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbVarianInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
+	} finally{
+	    ConnectUserDB.closeDB();
 	}
 	
 
@@ -125,11 +134,9 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ VAR_TABLE + " WHERE " + GENE_COL + " = '" + varInfo.getGeneName() + "' AND "
 		+ VAR_COL + " = '" + varInfo.getVarName() + "'";
 	
-	if (ConnectionHolder.getInstance().getConnection() == null){
-	    return varInfo;
-	}
 	
 	try {
+	    ConnectUserDB.connectSqLiteUserDB();
             ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
 
 	    if (rs.next()) {
@@ -139,6 +146,8 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 	    }
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbVarianInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
+	} finally {
+	    ConnectUserDB.closeDB();
 	}
 	
 	return varInfo;
@@ -163,7 +172,9 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ ", '" + varInfo.getGeneName() + "'" 
 		+ ", '" + varInfo.getVarInfo() + "'" +  " )";
 
+	ConnectUserDB.connectSqLiteUserDB();
         DbOperations.execute(addEntryCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
     }
 
     
@@ -182,8 +193,9 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
                 + GENE_COL + " = '" + varInfo.getGeneName() + "' AND " + VAR_COL
                 + "= '" + varInfo.getVarName() + "'";
 
+	ConnectUserDB.connectSqLiteUserDB();
         DbOperations.execute(delQuery, ConnectionHolder.getInstance().getConnection());
-        
+        ConnectUserDB.closeDB();
         
     }
 

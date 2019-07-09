@@ -75,8 +75,7 @@ public class HgmdTableRepository {
 	String curDir = System.getProperty("user.dir");
 	geneInfoDB = new File(curDir + File.separator + "DBs" + File.separator + dbName);
 
-        
-        boolean success = new ConnectGeneInfoDb(new ConnectGeneInfoSQLite()).connectGeneInfoDbSqLite();
+        boolean success = ConnectGeneInfoDb.connectGeneInfoDbSqLite();
 	
 	return success;
     }
@@ -102,7 +101,6 @@ public class HgmdTableRepository {
 		+ " from " + tableHgmd
 		+ " where " + geneNameCol + " == '" + geneName + "'";
 	
-	
 	ResultSet rs = DbOperations.execute(query, GeneInfoDbConnectionHolder.getInstance().getConnection());
                 
 	while (rs.next()){
@@ -125,6 +123,7 @@ public class HgmdTableRepository {
             hgmdInfo.add(hgmdModel);
 	}
         
+	
         return hgmdInfo;
     }
 

@@ -80,8 +80,7 @@ public class Hg19TableRepository {
 	String curDir = System.getProperty("user.dir");
 	geneInfoDB = new File(curDir + File.separator + "DBs" + File.separator + dbName);
 
-        
-        boolean success = new ConnectGeneInfoDb(new ConnectGeneInfoSQLite()).connectGeneInfoDbSqLite();
+        boolean success = ConnectGeneInfoDb.connectGeneInfoDbSqLite();
 	
 	return success;
     }

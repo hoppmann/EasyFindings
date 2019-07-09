@@ -6,10 +6,6 @@
 package de.hoppmann.gui.view.userDbView;
 
 import de.hoppmann.config.Config;
-import de.hoppmann.database.userDB.ConnectSQLite;
-import de.hoppmann.database.userDB.ConnectUserDB;
-import de.hoppmann.database.userDB.ConnectionBuilder;
-import de.hoppmann.database.userDB.ConnectionHolder;
 import de.hoppmann.database.userDB.PanelDB.DbPanelRepository;
 import de.hoppmann.database.userDB.PanelDB.PanelInfo;
 import java.io.File;
@@ -22,13 +18,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import de.hoppmann.database.userDB.interfaces.IConnectDB;
 import de.hoppmann.database.userDB.receiverDB.DbAddressRepository;
 import de.hoppmann.database.userDB.receiverDB.AddressInfo;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tab;
@@ -44,7 +36,6 @@ public class MainViewUserDbController implements Initializable {
 
     
     private Config config = Config.getInstance();
-    private IConnectDB connectDB;
     private FindingsRepository findings;
     @FXML private Label dbConnectionLabel;
     @FXML private Label infoLabel;
@@ -65,12 +56,6 @@ public class MainViewUserDbController implements Initializable {
     private void openDB (ActionEvent e) {
 	
 	
-	// close if old connection exists
-	if (ConnectionBuilder.hasConnection()){
-	    ConnectionBuilder.closeConnection();
-	}
-	
-	
 	// get path from config if available
 	File dbPath = null;
 	if (config.getDbPath() != null && new File(config.getDbPath()).exists()){
@@ -89,19 +74,13 @@ public class MainViewUserDbController implements Initializable {
 	File dbFile = chooser.showOpenDialog(new Stage());
 	
 
-	// create connection to DB
-        if (dbFile != null) {
-	    
-	    config.setDbFullPath(dbFile.getAbsolutePath());
-	    boolean success = connect(dbFile, "", "");
-        
-            if (success){
-		variantTabController.init(findings);
-	    }
-        }
-        
-        
-	
+	// store DB path
+	config.setDbFullPath(dbFile.getAbsolutePath());
+	variantTabController.init(findings);
+
+
+	// set db connection label
+	dbConnectionLabel.setText(config.getDbFullPath());
 	
     }
     
@@ -112,12 +91,6 @@ public class MainViewUserDbController implements Initializable {
     @FXML
     private void newDB (ActionEvent e) {
 	
-	
-	// close if old connection exists
-	if (ConnectionBuilder.hasConnection()){
-	    ConnectionBuilder.closeConnection();
-	}
-
 	
 	// get path from config if available
 	File dbPath = null;
@@ -144,12 +117,10 @@ public class MainViewUserDbController implements Initializable {
 		dbFile = new File(path);
 	    }
 
-	    boolean success = connect(dbFile, "", "");
-            
-            if (success) {
-                config.setDbFullPath(dbFile.getAbsolutePath());
-            }
-
+	    
+            config.setDbFullPath(dbFile.getAbsolutePath());
+	    
+	    
         }
     }
     
@@ -174,72 +145,14 @@ public class MainViewUserDbController implements Initializable {
     
     
     
-    
-    
-    
-    
-    // connect to DB
-    private boolean connect(File dbFile, String user, String password){
-
-        boolean success = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB(dbFile.getAbsolutePath(), user, password);
-        
-
-	if (success) {
-            String dbName = "";
-            try {
-                String url = ConnectionHolder.getInstance().getConnection().getMetaData().getURL();
-                dbName = new File(url).getName();
-            } catch (SQLException ex) {
-                Logger.getLogger(MainViewUserDbController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            infoLabel.setText("Connection to " + dbName + " established.");
-            dbConnectionLabel.setText(dbName);
-
-        } else {
-	    infoLabel.setText("Unable to connect to DB.");
-	}
-
-	return success;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public void init(IConnectDB connectDB, FindingsRepository findings){
-        this.connectDB = connectDB;
+    public void init( FindingsRepository findings){
 	this.findings = findings;
 	
-	boolean success = false;
-	if (ConnectionBuilder.hasConnection()) {
-	    success = true;
-	} else {
-	    success = new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
-	}
 	
-	if (success){
-            String dbName = "";
-            try {
-                String url = ConnectionHolder.getInstance().getConnection().getMetaData().getURL();
-                dbName = new File(url).getName();
-            } catch (SQLException ex) {
-                Logger.getLogger(MainViewUserDbController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            infoLabel.setText("Connection to " + dbName + " established.");
-            dbConnectionLabel.setText(dbName);
-            
-            // initialize lower views
-	    variantTabController.init(findings);
-	}
+	// initialize lower views
+	variantTabController.init(findings);
+	
+	dbConnectionLabel.setText(config.getDbFullPath());
     }
 
     

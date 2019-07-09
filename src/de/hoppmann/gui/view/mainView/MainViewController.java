@@ -5,7 +5,6 @@
  */
 package de.hoppmann.gui.view.mainView;
 
-import de.hoppmann.database.userDB.ConnectionBuilder;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,11 +40,6 @@ public class MainViewController implements Initializable {
     
     @FXML
     private void closeButtonAction (ActionEvent event) {
-        
-        if (ConnectionBuilder.hasConnection()) {
-            ConnectionBuilder.closeConnection();
-        }
-        
 	
 	Platform.exit();
     }

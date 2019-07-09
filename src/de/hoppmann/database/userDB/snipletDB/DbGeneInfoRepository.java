@@ -6,6 +6,7 @@
 
 package de.hoppmann.database.userDB.snipletDB;
 
+import de.hoppmann.database.userDB.ConnectUserDB;
 import de.hoppmann.database.userDB.ConnectionHolder;
 import de.hoppmann.database.userDB.DbOperations;
 import de.hoppmann.database.userDB.UserDbNamings;
@@ -50,7 +51,7 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 	String query = "SELECT " + GENE_NAME_COL + " FROM " + GENE_TABLE;
 
 	
-	
+	ConnectUserDB.connectSqLiteUserDB();
 	try {
             ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
             if (rs != null){
@@ -60,6 +61,8 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
             }
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbGeneInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
+	} finally {
+	    ConnectUserDB.closeDB();
 	}
 	
 	
@@ -85,10 +88,9 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 		+ " where " + GENE_NAME_COL + " == '" + varInfo.getGeneName() + "'";
 
 	
-	if (ConnectionHolder.getInstance().getConnection() == null){
-	    return varInfo;
-	}
+	
 	try {
+	    ConnectUserDB.connectSqLiteUserDB();
             ResultSet rs = DbOperations.execute(queryGeneInfoCmd, ConnectionHolder.getInstance().getConnection());
 
 	    if (rs.next()){
@@ -96,6 +98,8 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 	    }
 	} catch (SQLException ex) {
 	    Logger.getLogger(DbGeneInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
+	} finally {
+	    ConnectUserDB.closeDB();
 	}
 	
 	
@@ -119,7 +123,9 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 	String addEntryCmd = "REPLACE INTO " + GENE_TABLE + " VALUES " 
 		+ "( '" + varInfo.getGeneName() + "' , '" + varInfo.getGeneInfo() + "')";
 	
-            DbOperations.execute(addEntryCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.connectSqLiteUserDB();
+        DbOperations.execute(addEntryCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
     }
 
     
@@ -138,8 +144,11 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
         removeCmd = "DELETE FROM " + GENE_TABLE
 	    + " where gene = '" + varInfo.getGeneName() + "'";
 
-            DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
 	
+	
+	ConnectUserDB.connectSqLiteUserDB();
+	DbOperations.execute(removeCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
     }
     
     
@@ -169,18 +178,21 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 
 	boolean success = false;
 	
+	
+	
+	
 	String createTableCmd = "create table " + GENE_TABLE
 	    + " (" + GENE_NAME_COL + " VARCHAR(60) not NULL, "
 	    + GENE_INFO_COL + " TEXT, "
 	    + "PRIMARY KEY ( " + GENE_NAME_COL + " ))";
         
-            ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
 	
-	if (hasGeneTable()){
-	    success = true;
-	}
+	ConnectUserDB.connectSqLiteUserDB();
+	ResultSet rs = DbOperations.execute(createTableCmd, ConnectionHolder.getInstance().getConnection());
+	ConnectUserDB.closeDB();
 	
-	return success;
+	    
+	return hasGeneTable();
 	
     }
 
@@ -197,10 +209,15 @@ public class DbGeneInfoRepository implements IGeneInfoRepository {
 	
 	boolean hasTable = false;
 	
-	if (DbOperations.hasTable(GENE_TABLE, ConnectionHolder.getInstance().getConnection())){
-	    hasTable = true;
+	boolean success = ConnectUserDB.connectSqLiteUserDB();
+	
+	if (success){
+	    if (DbOperations.hasTable(GENE_TABLE, ConnectionHolder.getInstance().getConnection())){
+		hasTable = true;
+	    }
 	}
 	
+	ConnectUserDB.closeDB();
 	
 	return hasTable;
 

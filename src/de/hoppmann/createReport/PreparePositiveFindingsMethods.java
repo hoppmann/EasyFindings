@@ -12,7 +12,6 @@ import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
 import de.hoppmann.database.userDB.ConnectSQLite;
 import de.hoppmann.database.userDB.ConnectUserDB;
-import de.hoppmann.database.userDB.ConnectionBuilder;
 import de.hoppmann.database.userDB.interfaces.IGeneInfoRepository;
 import de.hoppmann.database.userDB.interfaces.IVariantInfoRepository;
 import de.hoppmann.database.userDB.snipletDB.VariantInfo;
@@ -73,13 +72,6 @@ public class PreparePositiveFindingsMethods {
 
 	
 	
-	// check if existing DB is saved in config if so connect to it
-	if (!ConnectionBuilder.hasConnection()) {
-	    new ConnectUserDB(new ConnectSQLite()).connectSqLiteUserDB();
-	}
-	
-	
-
 	/* 
 	for each finding 
 	    retrieve gene and variant info

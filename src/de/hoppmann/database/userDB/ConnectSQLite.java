@@ -6,27 +6,26 @@
 
 package de.hoppmann.database.userDB;
 
-import de.hoppmann.database.userDB.interfaces.IConnectDB;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author hoppmann
  */
-public class ConnectSQLite implements IConnectDB {
+public class ConnectSQLite{
 
-    private final String driver = "org.sqlite.JDBC";
+    private static final String driver = "org.sqlite.JDBC";
     
-    // connect to db
-    private String url;
 
 
 
-
-    @Override
-    public boolean connect(String dbPath, String user, String password) {
+    public static boolean connect(String dbPath, String user, String password) {
         
-        url = "jdbc:sqlite:" + dbPath;
+       String url = "jdbc:sqlite:" + dbPath;
 
         
         ConnectionBuilder.openConnection(url, user, password, driver);
@@ -41,7 +40,7 @@ public class ConnectSQLite implements IConnectDB {
 
 
     
-    public boolean checkValidity(List<String> tables) {
+    public static boolean checkValidity(List<String> tables) {
 
 	boolean isValid = true;
 	for (String curTable : tables) {
@@ -57,6 +56,19 @@ public class ConnectSQLite implements IConnectDB {
     
     
     
+    
+    public static void close(){
+	
+	try {
+	    
+	   Connection conn = ConnectionHolder.getInstance().getConnection();
+	   conn.close();
+	   ConnectionHolder.getInstance().setConnection(null);
+       } catch (SQLException ex) {
+	   Logger.getLogger(ConnectionBuilder.class.getName()).log(Level.SEVERE, null, ex);
+       }
+	
+    }
     
     
     
