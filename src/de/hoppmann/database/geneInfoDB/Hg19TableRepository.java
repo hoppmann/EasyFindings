@@ -75,6 +75,8 @@ public class Hg19TableRepository {
     
     
     
+    
+    
     private boolean connectGeneInfoDB() {
 	// get current path of program
 	String curDir = System.getProperty("user.dir");
@@ -88,9 +90,15 @@ public class Hg19TableRepository {
     
     
     
+    
+    
     private void closeGeneInfoDB() {
 	GeneInfoDbConnectionBuilder.closeConnection();
     }
+    
+    
+    
+    
     
     
     

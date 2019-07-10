@@ -5,8 +5,6 @@
  */
 package de.hoppmann.gui.view.userDbView;
 
-import de.hoppmann.database.userDB.ConnectSQLite;
-import de.hoppmann.database.userDB.ConnectUserDB;
 import de.hoppmann.database.userDB.PanelDB.IPanelInfo;
 import de.hoppmann.database.userDB.interfaces.IPanelRepository;
 import java.net.URL;

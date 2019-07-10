@@ -7,7 +7,6 @@
 package de.hoppmann.openFile;
 
 import de.hoppmann.config.Config;
-import de.hoppmann.database.geneInfoDB.Hg19TableModel;
 import de.hoppmann.gui.messanges.CommonErrors;
 import de.hoppmann.gui.modelsAndData.InputRepository;
 import de.hoppmann.gui.modelsAndData.TableData;

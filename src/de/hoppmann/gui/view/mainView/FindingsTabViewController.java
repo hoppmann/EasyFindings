@@ -28,6 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.controlsfx.control.table.TableFilter;
 
 /**
  * FXML Controller class
@@ -41,6 +42,7 @@ public class FindingsTabViewController implements Initializable {
     private MainViewController mainViewController;
     private Label infoLabel;
     private FindingsRepository findings;
+    private TableFilter tableFilter;
     
     
     
@@ -189,6 +191,8 @@ public class FindingsTabViewController implements Initializable {
         create.prepareTable();
         create.fillHeader(findings.getHeaderList());
         create.fillTable(findings.getStoredData());
+	
+//	tableFilter = new TableFilter(findingsTable);
 
     }
     
