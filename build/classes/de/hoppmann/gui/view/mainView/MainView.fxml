@@ -23,9 +23,9 @@
         </tabs>
       </TabPane>
       <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-      <Label fx:id="infoLable" layoutX="70.0" layoutY="14.0" prefHeight="25.0" text="INFO" AnchorPane.bottomAnchor="403.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0" />
-      <Label layoutX="131.0" layoutY="407.0" prefHeight="25.0" prefWidth="90.0" text="Processing:" AnchorPane.leftAnchor="131.0" AnchorPane.topAnchor="407.0" />
-      <Label fx:id="curWorkingFileLabel" layoutX="211.0" layoutY="407.0" prefHeight="25.0" prefWidth="277.0" text="Current working file." AnchorPane.leftAnchor="211.0" AnchorPane.topAnchor="407.0" />
+      <Label fx:id="infoLable" layoutX="70.0" layoutY="14.0" prefHeight="25.0" text="INFO" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0" />
+      <Label layoutX="131.0" layoutY="407.0" prefHeight="25.0" prefWidth="90.0" text="Processing:" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="131.0" />
+      <Label fx:id="curWorkingFileLabel" layoutX="211.0" layoutY="407.0" prefHeight="25.0" prefWidth="277.0" text="Current working file." AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="211.0" />
       <Label layoutX="21.0" layoutY="18.0" prefHeight="25.0" prefWidth="50.0" text="INFO:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="15.0" />
    </children>
 </AnchorPane>
