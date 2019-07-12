@@ -41,7 +41,7 @@ public class ConnectUserDB {
         Config config = Config.getInstance();
 	
 	boolean success = false;
-        if (config.getDbFullPath() != null && new File(config.getDbFullPath()).exists()){
+        if (config.getDbFullPath() != null ){
             success = connectSqLiteUserDB(config.getDbFullPath(), user, password);
         }
         return success;

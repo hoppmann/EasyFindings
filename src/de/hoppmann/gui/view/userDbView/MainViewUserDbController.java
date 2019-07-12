@@ -73,15 +73,15 @@ public class MainViewUserDbController implements Initializable {
 	
 	File dbFile = chooser.showOpenDialog(new Stage());
 	
+        if (dbFile != null){
+            // store DB path
+            config.setDbFullPath(dbFile.getAbsolutePath());
+            variantTabController.init(findings);
 
-	// store DB path
-	config.setDbFullPath(dbFile.getAbsolutePath());
-	variantTabController.init(findings);
 
-
-	// set db connection label
-	dbConnectionLabel.setText(config.getDbFullPath());
-	
+            // set db connection label
+            dbConnectionLabel.setText(config.getDbFullPath());
+        }
     }
     
     
@@ -120,8 +120,8 @@ public class MainViewUserDbController implements Initializable {
 	    
             config.setDbFullPath(dbFile.getAbsolutePath());
 	    
-	    
         }
+        
     }
     
     
@@ -148,11 +148,16 @@ public class MainViewUserDbController implements Initializable {
     public void init( FindingsRepository findings){
 	this.findings = findings;
 	
-	
-	// initialize lower views
-	variantTabController.init(findings);
-	
-	dbConnectionLabel.setText(config.getDbFullPath());
+	if (config.getDbFullPath() == "" || config.getDbFullPath() == null){
+            openDB(new ActionEvent());
+        }
+                
+        if (config.getDbFullPath() != "" && config.getDbFullPath() != null){
+            
+            // initialize lower views
+            variantTabController.init(findings);
+            dbConnectionLabel.setText(config.getDbFullPath());
+        }
     }
 
     

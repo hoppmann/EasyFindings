@@ -26,7 +26,6 @@ public class ConnectSQLite{
     public static boolean connect(String dbPath, String user, String password) {
         
        String url = "jdbc:sqlite:" + dbPath;
-
         
         ConnectionBuilder.openConnection(url, user, password, driver);
 
@@ -57,17 +56,17 @@ public class ConnectSQLite{
     
     
     
-    public static void close(){
-	
-	try {
-	    
-	   Connection conn = ConnectionHolder.getInstance().getConnection();
-	   conn.close();
-	   ConnectionHolder.getInstance().setConnection(null);
-       } catch (SQLException ex) {
-	   Logger.getLogger(ConnectionBuilder.class.getName()).log(Level.SEVERE, null, ex);
-       }
-	
+    public static void close() {
+        Connection conn = ConnectionHolder.getInstance().getConnection();
+        if (conn != null) {
+            try {
+
+                conn.close();
+                ConnectionHolder.getInstance().setConnection(null);
+            } catch (SQLException ex) {
+                Logger.getLogger(ConnectionBuilder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     

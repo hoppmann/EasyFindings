@@ -13,7 +13,9 @@ import de.hoppmann.gui.view.userDbView.MainViewUserDbController;
 import de.hoppmann.openFile.CreateTable;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -97,6 +99,16 @@ public class FindingsTabViewController implements Initializable {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @FXML
     private void reportButtonAction(ActionEvent event){
         
@@ -109,13 +121,15 @@ public class FindingsTabViewController implements Initializable {
             stage.setTitle("Report View");
             stage.setScene(new Scene(root));
 
-            ReportMainViewController controller = fxmlLoader.getController();
-            boolean loaded = controller.init(findings);
+            ReportMainViewController reportMainViewController = fxmlLoader.getController();
 
-            if (!loaded){
-                infoLabel.setText("ERROR: Can't create report. Load findings first.");
-                return;
+            if (findings == null){
+                List<String> header = new ArrayList<>();
+                findings = new FindingsRepository(header);
             }
+
+            reportMainViewController.init(findings);
+
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(FindingsTabViewController.class.getName()).log(Level.SEVERE, null, ex);

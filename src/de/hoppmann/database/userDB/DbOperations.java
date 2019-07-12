@@ -70,6 +70,7 @@ public class DbOperations {
      */
     public static boolean hasTable (String tableName, Connection conn) {
 	
+        
 	boolean exists = false;
 	
 	// check if connected DB has table of interest

@@ -68,10 +68,12 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 
 
     private boolean hasVarTable() {
+        boolean hasTable = false;
 	ConnectUserDB.connectSqLiteUserDB();
-	boolean hasTable = DbOperations.hasTable(VAR_TABLE, ConnectionHolder.getInstance().getConnection());
-	ConnectUserDB.closeDB();
-	
+        if (isConnected()){
+            hasTable = DbOperations.hasTable(VAR_TABLE, ConnectionHolder.getInstance().getConnection());
+            ConnectUserDB.closeDB();
+        }
 	return hasTable;
     }
 	    
@@ -92,21 +94,22 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 	String query = "SELECT " + VAR_COL + " FROM " + VAR_TABLE + " WHERE " 
 		+ GENE_COL + " = '" + varInfo.getGeneName() + "'";
 	
-	
-	try {
-	    ConnectUserDB.connectSqLiteUserDB();
-            ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
-            if (rs != null){
-                while (rs.next()) {
-                    varList.add(rs.getString(VAR_COL));
+	ConnectUserDB.connectSqLiteUserDB();
+        if (isConnected()){
+            try {
+
+                ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
+                if (rs != null){
+                    while (rs.next()) {
+                        varList.add(rs.getString(VAR_COL));
+                    }
                 }
+            } catch (SQLException ex) {
+                Logger.getLogger(DbVarianInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
+            } finally{
+                ConnectUserDB.closeDB();
             }
-	} catch (SQLException ex) {
-	    Logger.getLogger(DbVarianInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
-	} finally{
-	    ConnectUserDB.closeDB();
-	}
-	
+        }
 
 	
 	// sort and return variant list
@@ -135,21 +138,23 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ VAR_COL + " = '" + varInfo.getVarName() + "'";
 	
 	
-	try {
-	    ConnectUserDB.connectSqLiteUserDB();
-            ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
+        ConnectUserDB.connectSqLiteUserDB();
+        if (isConnected()){
+            try {
 
-	    if (rs.next()) {
-		varInfo.setVarInfo(rs.getString(VAR_INFO_COL));
-	    } else {
-		varInfo.setVarInfo("");
-	    }
-	} catch (SQLException ex) {
-	    Logger.getLogger(DbVarianInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
-	} finally {
-	    ConnectUserDB.closeDB();
-	}
-	
+                ResultSet rs = DbOperations.execute(query, ConnectionHolder.getInstance().getConnection());
+
+                if (rs.next()) {
+                    varInfo.setVarInfo(rs.getString(VAR_INFO_COL));
+                } else {
+                    varInfo.setVarInfo("");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DbVarianInfoRepository.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                ConnectUserDB.closeDB();
+            }
+        }
 	return varInfo;
     
     }
@@ -173,8 +178,10 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
 		+ ", '" + varInfo.getVarInfo() + "'" +  " )";
 
 	ConnectUserDB.connectSqLiteUserDB();
-        DbOperations.execute(addEntryCmd, ConnectionHolder.getInstance().getConnection());
-	ConnectUserDB.closeDB();
+        if (isConnected()){
+            DbOperations.execute(addEntryCmd, ConnectionHolder.getInstance().getConnection());
+            ConnectUserDB.closeDB();
+        }
     }
 
     
@@ -194,14 +201,23 @@ public class DbVarianInfoRepository implements IVariantInfoRepository{
                 + "= '" + varInfo.getVarName() + "'";
 
 	ConnectUserDB.connectSqLiteUserDB();
-        DbOperations.execute(delQuery, ConnectionHolder.getInstance().getConnection());
-        ConnectUserDB.closeDB();
-        
+        if (isConnected()){
+            DbOperations.execute(delQuery, ConnectionHolder.getInstance().getConnection());
+            ConnectUserDB.closeDB();
+        }
     }
 
 
 
 
+    private boolean isConnected(){
+        boolean isConnected = false;
+        if (ConnectionHolder.getInstance().getConnection() != null){
+            isConnected = true;
+        }
+        
+        return isConnected;
+    }
 
 
 

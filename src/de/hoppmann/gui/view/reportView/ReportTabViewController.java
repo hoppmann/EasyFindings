@@ -42,7 +42,7 @@ public class ReportTabViewController implements Initializable {
     
     
     private FindingsRepository findings;
-    private ReportRepository reportRepo;
+    private ReportRepository reportRepo = new ReportRepository();
     
     
     

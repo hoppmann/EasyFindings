@@ -6,8 +6,6 @@
 package de.hoppmann.gui.view.mainView;
 
 import de.hoppmann.config.Config;
-import de.hoppmann.database.geneInfoDB.Hg19TableModel;
-import de.hoppmann.database.geneInfoDB.Hg19TableRepository;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.InputRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
@@ -15,18 +13,18 @@ import de.hoppmann.openFile.CatagorizeAcmg;
 import de.hoppmann.openFile.CreateTable;
 import de.hoppmann.openFile.ICatagorize;
 import de.hoppmann.openFile.LoadInputFile;
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
@@ -57,85 +55,13 @@ public class DataTabViewController implements Initializable {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @FXML
-    private void testButtonAction (ActionEvent event) {
+    private void testButtonAction (ActionEvent e) {
 
-//	TableData curLine = (TableData) inputTable.getSelectionModel().getSelectedItem();
-//
-//	int geneColIndex = inputRepository.getHeader().indexOf(config.getGeneCol());
-//	String curGene = curLine.getEntry(geneColIndex);
-//	
-//	
-//	
-//	Hg19TableRepository hg19Repo = new Hg19TableRepository();
-//	Hg19TableModel hg19Data = new Hg19TableModel(curGene);
-//	
-//	hg19Repo.queryForGene(hg19Data);
-//	System.out.println(hg19Data.getGeneMim());
-	
-	System.out.println("HERE");
-	
-	try {
-	    Desktop desktop = Desktop.getDesktop();
-//	    URI uri = new URI("http://www.google.de");
-	    desktop.browse(new URI("http://www.google.de"));
-
-	} catch (Exception ex) {
-	    Logger.getLogger(DataTabViewController.class.getName()).log(Level.SEVERE, null, ex);
-	}
-	
-//	
-//	try {
-//	    Desktop.getDesktop().browse(new URI("https:://google.de"));
-//	} catch (URISyntaxException ex) {
-//	    Logger.getLogger(DataTabViewController.class.getName()).log(Level.SEVERE, null, ex);
-//	} catch (IOException ex) {
-//	    Logger.getLogger(DataTabViewController.class.getName()).log(Level.SEVERE, null, ex);
-//	}
-	
-	
-	
-	
-	
-	
-//	System.out.println(input.getHeader().indexOf(config.getGeneCol()));
-//	System.out.println(curLine.getInputLine());
-	
-	
-	
-	
-	
-		
-//        System.out.println("NOTHING TO TEST");
-//        infoLabel.setText("NOTHING TO TEST");
+        infoLabel.setText("NOTHING TO TEST");
+        
+        
+        
     }
     
     
@@ -144,29 +70,36 @@ public class DataTabViewController implements Initializable {
     
     
     
+     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    @FXML
+    private void browsButtonAction (ActionEvent event) {
+
+        
+        TableData curLine = (TableData) inputTable.getSelectionModel().getSelectedItem();
+        
+        if (curLine != null) {
+
+            try {
+
+                FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/de/hoppmann/gui/view/mainView/ChooseBrowserView.fxml"));
+                Parent root = fXMLLoader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Open in Browser");
+                stage.setScene(new Scene(root));
+
+                ChooseBrowserViewController brwoserController = fXMLLoader.getController();
+                brwoserController.init(curLine, inputRepository, infoLabel, inputTable);
+
+                stage.show();
+
+            } catch (IOException ex) {
+                Logger.getLogger(DataTabViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            infoLabel.setText("No line chosen. Choose line first.");
+        }
+    }
     
     
     
@@ -198,7 +131,6 @@ public class DataTabViewController implements Initializable {
             loadInput.openFile(inputFile,inputRepository);
 	    loadInput.catagorize(new CatagorizeAcmg(), inputRepository);
             
-//            System.out.println(curWorkingFileLabel);
 	    curWorkingFileLabel.setText(inputFile.getName());
             
             createTable();
@@ -283,6 +215,11 @@ public class DataTabViewController implements Initializable {
     public FindingsRepository getFindings() {
         return findings;
     }
+
+    public TableView getInputTable() {
+        return inputTable;
+    }
+
     
     
     
@@ -298,7 +235,6 @@ public class DataTabViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
 	
-
 	
 
 
