@@ -30,7 +30,7 @@ import java.util.TreeSet;
  *
  * @author hoppmann
  */
-public class CatagorizeAcmg implements ICatagorize {
+public class CatagorizeAcmg {
 
     
     private Config config = Config.getInstance();
@@ -943,7 +943,6 @@ public class CatagorizeAcmg implements ICatagorize {
     
     
     
-    @Override
     public void createCatagories(InputRepository inputRepository) {
 
 	List<String> header = inputRepository.getHeader();
@@ -959,7 +958,6 @@ public class CatagorizeAcmg implements ICatagorize {
 
 	    classify(curLine, catIndices);
 
-//	    curLine.setCatagory(Catagory.getPathoCode());
 	}
 	
 

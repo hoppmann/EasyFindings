@@ -9,9 +9,7 @@ import de.hoppmann.config.Config;
 import de.hoppmann.gui.modelsAndData.FindingsRepository;
 import de.hoppmann.gui.modelsAndData.InputRepository;
 import de.hoppmann.gui.modelsAndData.TableData;
-import de.hoppmann.openFile.CatagorizeAcmg;
 import de.hoppmann.openFile.CreateTable;
-import de.hoppmann.openFile.ICatagorize;
 import de.hoppmann.openFile.LoadInputFile;
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +45,6 @@ public class DataTabViewController implements Initializable {
     private LoadInputFile loadInput;
     private InputRepository inputRepository;
     private FindingsRepository findings = null;
-    private ICatagorize catagorize;
     
     
     
@@ -129,7 +126,7 @@ public class DataTabViewController implements Initializable {
             config.setInputPath(inputFile.getParent());
             loadInput = new LoadInputFile();
             loadInput.openFile(inputFile,inputRepository);
-	    loadInput.catagorize(new CatagorizeAcmg(), inputRepository);
+	    loadInput.catagorize(inputRepository);
             
 	    curWorkingFileLabel.setText(inputFile.getName());
             
