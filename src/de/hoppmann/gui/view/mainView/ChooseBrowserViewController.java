@@ -196,7 +196,13 @@ public class ChooseBrowserViewController implements Initializable {
     private ObservableList splitEntries(String entry){
         ObservableList<String> splitEntry = FXCollections.observableArrayList();
         
-        splitEntry.addAll(entry.split(",|;"));
+        for (String curSplit : entry.split(",|;")) {
+            System.out.println(curSplit);
+            if (curSplit != null && !curSplit.equals("")){
+                splitEntry.add(curSplit);
+            }
+        }
+//        splitEntry.addAll(entry.split(",|;"));
         
         return splitEntry;
         
