@@ -77,6 +77,7 @@ public class CreateTable {
 	tableView.getColumns().add(prepareCausalCol());	
 	tableView.getColumns().add(prepareCatagoryCol());
 	tableView.getColumns().add(prepareAcmgEvidenceCol());
+        
 	
 
 	// creates conflict with copytToClipboard

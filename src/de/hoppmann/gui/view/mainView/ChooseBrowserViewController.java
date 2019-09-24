@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,12 +39,42 @@ public class ChooseBrowserViewController implements Initializable {
 
     @FXML private ComboBox<String> geneMimCBox = new ComboBox<>();
     @FXML private ComboBox<String> dbSnpCBox = new ComboBox<>();
+    @FXML private ComboBox<String> hgmdGeneNameCBox = new ComboBox<>();
+    
     
     private Config config = Config.getInstance();
     private TableData curLine;
     private InputRepository inputRepo;
     private Label infoLabel;
     private TableView<TableData> inputTable;
+    
+    
+    
+    
+    
+    
+    @FXML
+    private void hgmdButtonAction (ActionEvent event) {
+        
+        String hgmdURL = "https://portal.biobase-international.com/hgmd/pro/gene.php?gene=";
+        
+        String hgmdGeneName = hgmdGeneNameCBox.getValue();
+        
+        try {
+            Desktop.getDesktop().browse(new URI(hgmdURL + hgmdGeneName));
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ChooseBrowserViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ChooseBrowserViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        closeButtonAction(new ActionEvent());
+        
+    }
+    
+    
     
     
     
@@ -65,7 +97,7 @@ public class ChooseBrowserViewController implements Initializable {
         }
         
         
-        
+        closeButtonAction(new ActionEvent());
     }
     
      
@@ -87,6 +119,8 @@ public class ChooseBrowserViewController implements Initializable {
             Logger.getLogger(DataTabViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        
+        closeButtonAction(new ActionEvent());
     }
     
     
@@ -151,29 +185,36 @@ public class ChooseBrowserViewController implements Initializable {
         
         
         // get column entries
-        String geneName = curLine.getEntry(geneColIndex);
+        List<String> geneNames = splitEntries(curLine.getEntry(geneColIndex));
         String rsId = curLine.getEntry(rsIdColIndex);
         
         
+        List<String> geneMimList = new ArrayList<>();
         
-        Hg19TableModel hg19Data = new Hg19TableModel(geneName);
-        Hg19TableRepository hg19Repo = new Hg19TableRepository();
-        hg19Repo.queryForGene(hg19Data);
+        for (String curGene : geneNames){
+            
+            Hg19TableModel hg19Data = new Hg19TableModel(curGene);
+            Hg19TableRepository hg19Repo = new Hg19TableRepository();
+            hg19Repo.queryForGene(hg19Data);
+            
+            geneMimList.add(hg19Data.getGeneMim());
+        }
         
-        String geneMimId = hg19Data.getGeneMim();
         
         
         
         
         
         // fill boxes with choices
-        geneMimCBox.getItems().setAll(splitEntries(geneMimId));
+        
+        geneMimCBox.getItems().setAll(geneMimList);
         geneMimCBox.getSelectionModel().selectFirst();
         
         dbSnpCBox.getItems().setAll(splitEntries(rsId));
         dbSnpCBox.getSelectionModel().selectFirst();
         
-                
+        hgmdGeneNameCBox.getItems().setAll(geneNames);
+        hgmdGeneNameCBox.getSelectionModel().selectFirst();
         
         
         
@@ -207,6 +248,7 @@ public class ChooseBrowserViewController implements Initializable {
 
         dbSnpCBox.setEditable(true);
         geneMimCBox.setEditable(true);
+        hgmdGeneNameCBox.setEditable(true);
         	
     }    
     

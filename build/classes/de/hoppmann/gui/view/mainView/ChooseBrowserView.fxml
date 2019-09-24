@@ -4,14 +4,15 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="161.0" prefWidth="380.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="de.hoppmann.gui.view.mainView.ChooseBrowserViewController">
+<AnchorPane id="AnchorPane" prefHeight="161.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hoppmann.gui.view.mainView.ChooseBrowserViewController">
    <children>
       <Button layoutX="28.0" layoutY="39.0" mnemonicParsing="false" onAction="#omimButtonAction" prefHeight="25.0" prefWidth="110.0" text="Omim" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
       <Button layoutX="28.0" layoutY="90.0" mnemonicParsing="false" onAction="#dbSnpButtonAciton" prefHeight="25.0" prefWidth="110.0" text="dbSNP" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0" />
-      <Button layoutX="28.0" layoutY="160.0" mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="110.0" />
+      <Button layoutX="28.0" layoutY="160.0" mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="25.0" prefWidth="110.0" text="Close" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="130.0" />
       <ComboBox fx:id="geneMimCBox" layoutX="171.0" layoutY="39.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="10.0" />
       <ComboBox fx:id="dbSnpCBox" layoutX="163.0" layoutY="103.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="50.0" />
-      <Button layoutX="140.0" layoutY="110.0" mnemonicParsing="false" onAction="#refreshButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="110.0" />
+      <Button layoutX="140.0" layoutY="110.0" mnemonicParsing="false" onAction="#refreshButtonAction" prefHeight="25.0" prefWidth="110.0" text="Refresh" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="130.0" />
+      <Button layoutX="14.0" layoutY="87.0" mnemonicParsing="false" onAction="#hgmdButtonAction" prefHeight="25.0" prefWidth="110.0" text="HGMD" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="90.0" />
+      <ComboBox fx:id="hgmdGeneNameCBox" layoutX="140.0" layoutY="90.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
