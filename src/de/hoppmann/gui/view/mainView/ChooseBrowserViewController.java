@@ -16,6 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -40,6 +41,7 @@ public class ChooseBrowserViewController implements Initializable {
     @FXML private ComboBox<String> geneMimCBox = new ComboBox<>();
     @FXML private ComboBox<String> dbSnpCBox = new ComboBox<>();
     @FXML private ComboBox<String> hgmdGeneNameCBox = new ComboBox<>();
+    @FXML private ComboBox<String> refSeqGeneIdCBox = new ComboBox<>();
     
     
     private Config config = Config.getInstance();
@@ -47,6 +49,41 @@ public class ChooseBrowserViewController implements Initializable {
     private InputRepository inputRepo;
     private Label infoLabel;
     private TableView<TableData> inputTable;
+    
+    private HashMap<String, String> geneMimMap = new HashMap<>();
+    private HashMap<String, String> refSeqIdMap = new HashMap<>();
+    
+    
+    
+    
+    
+    
+    
+    @FXML
+    private void refSeqButtonAction (ActionEvent event) {
+        
+        
+        String refSeqURL = "https://www.ncbi.nlm.nih.gov/gene/";
+        
+        String refSeqGeneId = refSeqIdMap.get(refSeqGeneIdCBox.getValue());
+        
+        try {
+            Desktop.getDesktop().browse(new URI(refSeqURL + refSeqGeneId));
+        } catch (IOException ex) {
+            Logger.getLogger(ChooseBrowserViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ChooseBrowserViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        closeButtonAction(new ActionEvent());
+        
+    }
+    
+    
+    
+    
+    
     
     
     
@@ -86,7 +123,7 @@ public class ChooseBrowserViewController implements Initializable {
         
         String omimURL = "https://www.omim.org/entry/";
         
-        String geneMimId = geneMimCBox.getValue();
+        String geneMimId = geneMimMap.get(geneMimCBox.getValue());
         
         try {
             Desktop.getDesktop().browse(new URI(omimURL + geneMimId));
@@ -189,7 +226,9 @@ public class ChooseBrowserViewController implements Initializable {
         String rsId = curLine.getEntry(rsIdColIndex);
         
         
-        List<String> geneMimList = new ArrayList<>();
+//        List<String> geneMimList = new ArrayList<>();
+        geneMimMap = new HashMap<>();
+        refSeqIdMap = new HashMap<>();
         
         for (String curGene : geneNames){
             
@@ -197,9 +236,10 @@ public class ChooseBrowserViewController implements Initializable {
             Hg19TableRepository hg19Repo = new Hg19TableRepository();
             hg19Repo.queryForGene(hg19Data);
             
-            geneMimList.add(hg19Data.getGeneMim());
+            geneMimMap.put(curGene, hg19Data.getGeneMim());
+            refSeqIdMap.put(curGene, hg19Data.getRefSeqId());
+
         }
-        
         
         
         
@@ -207,7 +247,7 @@ public class ChooseBrowserViewController implements Initializable {
         
         // fill boxes with choices
         
-        geneMimCBox.getItems().setAll(geneMimList);
+        geneMimCBox.getItems().setAll(geneMimMap.keySet());
         geneMimCBox.getSelectionModel().selectFirst();
         
         dbSnpCBox.getItems().setAll(splitEntries(rsId));
@@ -215,6 +255,10 @@ public class ChooseBrowserViewController implements Initializable {
         
         hgmdGeneNameCBox.getItems().setAll(geneNames);
         hgmdGeneNameCBox.getSelectionModel().selectFirst();
+        
+        
+        refSeqGeneIdCBox.getItems().setAll(refSeqIdMap.keySet());
+        refSeqGeneIdCBox.getSelectionModel().selectFirst();
         
         
         
@@ -249,6 +293,7 @@ public class ChooseBrowserViewController implements Initializable {
         dbSnpCBox.setEditable(true);
         geneMimCBox.setEditable(true);
         hgmdGeneNameCBox.setEditable(true);
+        refSeqGeneIdCBox.setEditable(true);
         	
     }    
     

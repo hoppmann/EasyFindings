@@ -221,18 +221,20 @@ public interface IHg19TableModel{
 
     public double getExacPrec();
 	
-    
-
     public void setExacPrec(double exacPrec);
 	
     
 
     public double getExacPnull();
 	
-    
-
     public void setExacPnull(double exacPnull);
 	
+    
+    
+    public void setRefSeqId (String refSeqId);
+    
+    
+    public String getRefSeqId ();
     
 	
     }

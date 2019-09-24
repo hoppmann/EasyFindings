@@ -49,6 +49,7 @@ public class Hg19TableModel implements IHg19TableModel{
     private double exacPrec;
     private double exacPnull;
     private int codingRegion;
+    private String ncbiRefSeqGeneId;
 
     
     
@@ -356,16 +357,18 @@ public class Hg19TableModel implements IHg19TableModel{
 	this.exacPnull = exacPnull;
     }
 
-//    @Override
-//    public int getCodingRegion() {
-//	return codingRegion;
-//    }
-//
-//    @Override
-//    public void setCodingRegion(int codingRegion) {
-//	this.codingRegion = codingRegion;
-//    }
+    @Override
+    public void setRefSeqId(String refSeqId) {
+        this.ncbiRefSeqGeneId = refSeqId;
+    }
 
+    @Override
+    public String getRefSeqId() {
+        return ncbiRefSeqGeneId;
+    }
+
+    
+    
 
 
 

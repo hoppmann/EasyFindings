@@ -119,6 +119,7 @@ public class HgmdTableRepository {
             hgmdModel.setChr(rs.getString(chrCol));
             hgmdModel.setHg38Pos(rs.getInt(hg38Col));
             hgmdModel.setHg19Pos(rs.getInt(hg19Col));
+            
 
             hgmdInfo.add(hgmdModel);
 	}

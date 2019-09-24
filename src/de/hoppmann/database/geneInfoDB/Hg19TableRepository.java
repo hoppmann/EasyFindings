@@ -50,10 +50,11 @@ public class Hg19TableRepository {
     private final String gdiCol = "GDI";
     private final String gdiPhredCol = "GDI_phred";
     private final String gdiAllCol = "GDI_all";
-    private final String gdiAllMendelian = "GDI_all_mendelian";
+    private final String gdiAllMendelianCol = "GDI_all_mendelian";
     private final String exacPliCol = "ExAC_pLI";
     private final String exacPrecCol = "ExAC_pRec";
     private final String exacPnullCol = "ExAC_pNull";
+    private final String refSeqGeneIdCol = "NCBIGeneID";
 
 
 
@@ -138,10 +139,11 @@ public class Hg19TableRepository {
 	    geneInfoModel.setGdi(rs.getDouble(gdiCol));
 	    geneInfoModel.setGdiPhred(rs.getDouble(gdiPhredCol));
 	    geneInfoModel.setGdiAll(rs.getString(gdiAllCol));
-	    geneInfoModel.setGdiAllMendelian(rs.getString(gdiAllMendelian));
+	    geneInfoModel.setGdiAllMendelian(rs.getString(gdiAllMendelianCol));
 	    geneInfoModel.setExacPli(rs.getDouble(exacPliCol));
 	    geneInfoModel.setExacPrec(rs.getDouble(exacPrecCol));
 	    geneInfoModel.setExacPnull(rs.getDouble(exacPnullCol));
+            geneInfoModel.setRefSeqId(rs.getString(refSeqGeneIdCol));
 	}
     }
 
