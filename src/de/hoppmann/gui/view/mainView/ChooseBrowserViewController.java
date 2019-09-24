@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -222,7 +222,9 @@ public class ChooseBrowserViewController implements Initializable {
         
         
         // get column entries
-        List<String> geneNames = splitEntries(curLine.getEntry(geneColIndex));
+        Set<String> geneNames = new HashSet<>();
+        geneNames.addAll(splitEntries(curLine.getEntry(geneColIndex)));
+        
         String rsId = curLine.getEntry(rsIdColIndex);
         
         
@@ -236,9 +238,13 @@ public class ChooseBrowserViewController implements Initializable {
             Hg19TableRepository hg19Repo = new Hg19TableRepository();
             hg19Repo.queryForGene(hg19Data);
             
-            geneMimMap.put(curGene, hg19Data.getGeneMim());
-            refSeqIdMap.put(curGene, hg19Data.getRefSeqId());
-
+            if (hg19Data.getGeneMim() != null){
+                geneMimMap.put(curGene, hg19Data.getGeneMim());
+            }
+            
+            if (hg19Data.getRefSeqId() != null) {
+                refSeqIdMap.put(curGene, hg19Data.getRefSeqId());
+            }
         }
         
         
